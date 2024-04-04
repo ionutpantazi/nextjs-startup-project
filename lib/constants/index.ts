@@ -1,1 +1,0 @@
-export const { NEXT_PUBLIC_STRAPI_URL } = "test"
