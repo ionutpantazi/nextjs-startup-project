@@ -1,10 +1,13 @@
 import type { Config } from 'tailwindcss'
+const colors = require('tailwindcss/colors')
 
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{html,js}',
+    './node_modules/tw-elements/js/**/*.js'
   ],
   theme: {
     extend: {
@@ -14,7 +17,12 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    colors: {
+      ...colors,
+      brandColor: '#B97ECF',
+      brandColorLight: '#ddb7eb',
+    }
   },
-  plugins: [],
+  plugins: [require('tw-elements/plugin.cjs')],
 }
 export default config

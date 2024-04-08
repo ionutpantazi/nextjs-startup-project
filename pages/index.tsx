@@ -1,37 +1,50 @@
 import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
-import { initializeApollo } from '@/lib/apolloClient';
-import { nextApolloPageError } from '@/lib/serverHelpers';
-import { HOMEPAGE_QUERY } from '@/lib/queries/homepage';
+import { initializeApollo } from 'lib/apolloClient';
+import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
+import { nextApolloPageError } from 'lib/serverHelpers';
+import { HOMEPAGE_QUERY } from 'lib/queries/homepage';
+import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 
-const Layout = dnmc(() => import('@/components/Layout'));
+const Layout = dnmc(() => import('components/Layout'));
 
 export interface Props {
   data: any
+  error?: ErrorPageTemplateProps
+  navigationData: NavigationData
 }
 
 export default function Homepage({
-  data
+  data,
+  error,
+  navigationData,
 }: Props) {
+  if (error) {
+    return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
+  }
   return (
-    <div>
-      <Layout
-        title={data.title}
-      >
-      </Layout>
-    </div>
+    <Layout
+      title={data?.Title}
+      navigationData={navigationData}
+      seoMeta={data?.SEO_Meta[0]}
+    >
+      content
+    </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const apolloClient = initializeApollo();
-    const { data: {homepage: {data: {attributes}}} } = await apolloClient.query({
+    const navigationData = await fetchNavigation();
+    const { data: { homepage: { data: { attributes } } } } = await apolloClient.query({
       query: HOMEPAGE_QUERY
     })
+    // console.log(navigationData)
     return {
       props: {
-        data: attributes
+        data: attributes,
+        navigationData: navigationData,
       }
     }
   } catch (error) {
