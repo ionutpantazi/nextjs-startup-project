@@ -52,9 +52,6 @@ const Layout = ({
             <meta property='og:height' content={seoMeta?.metaImage?.data?.attributes?.height} />
           </>
         }
-        <script
-          type="text/javascript"
-          src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>
       </Head>
       <HeaderWrap>
         {navigationData && <Navbar navigationData={navigationData} />}
