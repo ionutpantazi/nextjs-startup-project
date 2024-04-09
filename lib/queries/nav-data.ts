@@ -6,7 +6,8 @@ import {
 import {
   StrapiFileFields
 } from 'interfaces'
-import { HEADER_NAVIGATION_ID_OR_SLUG } from 'lib/constants'
+import { HEADER_NAVIGATION_ID_OR_SLUG, FOOTER_NAVIGATION_ID_OR_SLUG } from 'lib/constants'
+import { generateMenuList } from 'utils/helpers'
 
 export const LOGO_QUERY = gql`
   ${CORE_UPLOAD_FILE_FIELDS}
@@ -27,20 +28,42 @@ export const LOGO_QUERY = gql`
   }
 `
 
-export const NAVIGATION_QUERY = gql`
+export const HEADER_NAVIGATION_QUERY = gql`
   query RenderNavigation($navigationIdOrSlug: String!) {
-    renderNavigation(navigationIdOrSlug: $navigationIdOrSlug) {
+    headerNavigation: renderNavigation(navigationIdOrSlug: $navigationIdOrSlug) {
       id
       order
       title
       externalPath
+      type
+      parent {
+        id
+      }
+    }
+  }
+`
+
+export const FOOTER_NAVIGATION_QUERY = gql`
+  query RenderNavigation($navigationIdOrSlug: String!) {
+    footerNavigation: renderNavigation(navigationIdOrSlug: $navigationIdOrSlug) {
+      id
+      order
+      title
+      externalPath
+      type
+      parent {
+        id
+      }
     }
   }
 `
 
 export type NavigationData = {
   siteLogo?: StrapiFileFields
-  navigationData?: [
+  headerNavigationData?: [
+    NavigationItem
+  ],
+  footerNavigationData?: [
     NavigationItem
   ]
 }
@@ -50,34 +73,50 @@ export type NavigationItem = {
   order: string,
   title: string,
   externalPath: string,
+  type: string,
+  parent: {
+    id: number
+  }
+  children?: NavigationItem[];
 }
 
 export const fetchNavigation = async () => {
   const apolloClient = initializeApollo();
-  const [
+  var [
     {
       data: { settingses: { data: { attributes } } }
     },
     {
-      data: { renderNavigation }
+      data: { headerNavigation }
+    },
+    {
+      data: { footerNavigation }
     }
   ] = await Promise.all([
     apolloClient.query({
       query: LOGO_QUERY
     }),
     apolloClient.query({
-      query: NAVIGATION_QUERY,
+      query: HEADER_NAVIGATION_QUERY,
       variables: {
         navigationIdOrSlug: HEADER_NAVIGATION_ID_OR_SLUG
+      }
+    }),
+    apolloClient.query({
+      query: FOOTER_NAVIGATION_QUERY,
+      variables: {
+        navigationIdOrSlug: FOOTER_NAVIGATION_ID_OR_SLUG
       }
     })
   ])
 
   let siteLogo = attributes?.SiteLogo?.data?.attributes;
-  let navigationData = renderNavigation;
+  let headerNavigationData = JSON.parse(JSON.stringify(headerNavigation));
+  let footerNavigationData = JSON.parse(JSON.stringify(footerNavigation));
 
   return {
     siteLogo: siteLogo,
-    navigationData: navigationData
+    headerNavigationData: generateMenuList(headerNavigationData),
+    footerNavigationData: generateMenuList(footerNavigationData),
   }
 }

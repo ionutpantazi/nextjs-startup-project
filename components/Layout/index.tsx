@@ -11,6 +11,7 @@ import Flex from 'components/Bootstrap/Flex'
 import styled from 'styled-components'
 
 const Navbar = dynamic(() => import('components/Navbar'))
+const Footer = dynamic(() => import('components/Footer'))
 
 type LayoutProps = {
   title: string
@@ -31,6 +32,9 @@ const HeaderWrap = styled.header`
   background:transparent;
 `
 
+const FooterWrap = styled.div`
+`
+
 const Layout = ({
   title,
   children,
@@ -38,7 +42,7 @@ const Layout = ({
   navigationData,
 }: LayoutProps) => {
   return (
-    <Flex flexDirection='column' height='auto'>
+    <div className='flex flex-col h-screen'>
       <Head>
         <title>{title}</title>
         {seoMeta?.metaViewport && <meta name='viewport' content={seoMeta?.metaViewport} />}
@@ -56,10 +60,11 @@ const Layout = ({
       <HeaderWrap>
         {navigationData && <Navbar navigationData={navigationData} />}
       </HeaderWrap>
-      <Flex flexDirection='column' flex='1'>
+      <Flex flexDirection='column' flex='1' className='mb-auto'>
         {children}
       </Flex>
-    </Flex>
+      {navigationData && <Footer navigationData={navigationData} />}
+    </div>
   )
 }
 

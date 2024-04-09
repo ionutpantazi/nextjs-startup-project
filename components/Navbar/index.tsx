@@ -12,7 +12,7 @@ const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   navigationData,
 }) => {
-  console.log(navigationData.navigationData)
+
   useEffect(() => {
     const init = async () => {
       const {
@@ -90,9 +90,9 @@ const Navbar: React.FC<NavbarProps> = ({
             id="navbarSupportedContent1"
             data-twe-collapse-item>
             <>
-              {navigationData?.navigationData?.length &&
+              {navigationData?.headerNavigationData?.length &&
                 <ul className="list-style-none flex flex-col ps-0 lg:mt-1 lg:flex-row" data-twe-navbar-nav-ref>
-                  {navigationData?.navigationData.map((navItem: NavigationItem) => (
+                  {navigationData?.headerNavigationData.map((navItem: NavigationItem) => (
                     <li className="mb-4 lg:mb-0 lg:pe-2" key={navItem.id} data-twe-nav-item-ref>
                       <a
                         className="text-gray-800 font-bold transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
