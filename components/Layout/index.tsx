@@ -7,7 +7,7 @@ import {
 } from 'interfaces'
 import { NavigationData } from 'lib/queries/nav-data'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import Flex from 'components/Bootstrap/Flex'
+import Box from 'components/Bootstrap/Box'
 import styled from 'styled-components'
 
 const Navbar = dynamic(() => import('components/Navbar'))
@@ -60,9 +60,9 @@ const Layout = ({
       <HeaderWrap>
         {navigationData && <Navbar navigationData={navigationData} />}
       </HeaderWrap>
-      <Flex flexDirection='column' flex='1' className='mb-auto'>
+      <Box className='mb-auto'>
         {children}
-      </Flex>
+      </Box>
       {navigationData && <Footer navigationData={navigationData} />}
     </div>
   )

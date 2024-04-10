@@ -7,6 +7,7 @@ import { HOMEPAGE_QUERY } from 'lib/queries/homepage';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 
 const Layout = dnmc(() => import('components/Layout'));
+const PageContent = dnmc(() => import('components/PageContent'));
 
 export interface Props {
   data: any
@@ -28,7 +29,7 @@ export default function Homepage({
       navigationData={navigationData}
       seoMeta={data?.SEO_Meta[0]}
     >
-      content
+      <PageContent data={data.Page_Content} />
     </Layout>
   )
 }
@@ -40,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const { data: { homepage: { data: { attributes } } } } = await apolloClient.query({
       query: HOMEPAGE_QUERY
     })
-    // console.log(navigationData)
+    // console.log(attributes)
     return {
       props: {
         data: attributes,

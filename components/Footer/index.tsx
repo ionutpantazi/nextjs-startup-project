@@ -12,9 +12,12 @@ const FooterContainer = styled.footer`
   padding: 50px 40px;
   border-radius: 20px 20px 0px 0px;
 
+  color: ${theme.colors.white};
+  font-family: ReadexProRegular;
+
   @media screen and (max-width: ${theme.screens.sm}) {
     margin: ${theme.margins.homepage_small};
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 0px;
   }
 `
@@ -25,10 +28,27 @@ const RightColumn = styled.div`
 `
 
 const FooterText = styled(Text)`
-  color: ${theme.colors.white};
+  font-size: 12px;
+  line-height: 16px;
 `
 
-const NavigationItemContainer = styled.div`
+const NavigationContainer = styled.div`
+`
+
+const NavigationParentContainer = styled.div`
+`
+
+const NavigationParentTitle = styled.div`
+  font-size: 14px;
+  line-height: 20px;
+`
+
+const NavigationChildrenContainer = styled.div`
+`
+
+const NavigationChildrenTitle = styled.div`
+  font-size: 12px;
+  line-height: 16px;
 `
 
 export interface FooterProps {
@@ -38,12 +58,10 @@ export interface FooterProps {
 const Footer: React.FC<FooterProps> = ({
   navigationData,
 }) => {
-  console.log(navigationData.footerNavigationData)
-
 
   return (
-    <FooterContainer className='flex flex-col sm:flex-row'>
-      <LeftColumn className='flex-auto w-50 content-between'>
+    <FooterContainer className='flex flex-col sm:flex-row gap-y-8'>
+      <LeftColumn className='sm:w-1/2 w-auto grid gap-y-4 content-between'>
         {/* Logo  */}
         {navigationData?.siteLogo &&
           <Link href="/">
@@ -58,12 +76,40 @@ const Footer: React.FC<FooterProps> = ({
           All content © Delegate Live Limited. All rights reserved.
         </FooterText>
       </LeftColumn>
-      <RightColumn className='flex-auto w-50 justify-between'>
-        <NavigationItemContainer>
-
-        </NavigationItemContainer>
+      <RightColumn className='sm:w-1/2 w-auto flex flex-row justify-between'>
+        {navigationData.footerNavigationData?.length &&
+          <>
+            {navigationData.footerNavigationData.map((navItem: NavigationItem) => (
+              <NavigationContainer className="w-1/3 flex" key={navItem.id}>
+                {navItem.type == 'WRAPPER' &&
+                  <NavigationParentContainer className="flex flex-col sm:gap-y-4 gap-y-2">
+                    <NavigationParentTitle className="font-semibold sm:mb-4 mb-2">
+                      {navItem.title}
+                    </NavigationParentTitle>
+                    {navItem.children?.length &&
+                      <>
+                        {navItem.children.map((navChild) => (
+                          <NavigationChildrenTitle className="font-medium" key={navChild.id}>
+                            <a
+                              className="transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none"
+                              href={navChild.externalPath}
+                            >
+                              {navChild.title}
+                            </a>
+                          </NavigationChildrenTitle>
+                        ))
+                        }
+                      </>
+                    }
+                  </NavigationParentContainer>
+                }
+              </NavigationContainer>
+            ))
+            }
+          </>
+        }
       </RightColumn>
-    </FooterContainer>
+    </FooterContainer >
   )
 }
 

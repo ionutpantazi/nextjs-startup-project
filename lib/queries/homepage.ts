@@ -18,12 +18,49 @@ export const HOMEPAGE_QUERY = gql`
           Title
           Page_Content {
             ... on ComponentIntrosLanding {
+              id
               Title
-              Sub_Title
+              Introduction
+              Content
               Background_Image {
                 data {
                   attributes {
                     ...CoreUploadFileFields
+                  }
+                }
+              }
+              Event_Details {
+                Event_Details {
+                  id
+                  Title
+                  Sub_Title
+                  Icon {
+                    data {
+                      attributes {
+                        ...CoreUploadFileFields
+                      }
+                    }
+                  }
+                }
+              }
+              I_Want_To {
+                Title
+                Items {
+                  id
+                  Title
+                  Icon {
+                    data {
+                      attributes {
+                        ...CoreUploadFileFields
+                      }
+                    }
+                  }
+                  Background_Image {
+                    data {
+                      attributes {
+                        ...CoreUploadFileFields
+                      }
+                    }
                   }
                 }
               }
