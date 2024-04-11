@@ -162,7 +162,7 @@ const ComponentIntrosLanding = ({
           {data.Title}
         </EventTitle>
         <EventContainer className='row-span-2 sm:col-span-2'>
-          <EventDetails className={`grid sm:grid-rows-${numberOfItems} grid-rows-2 sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
+          <EventDetails className={`grid sm:grid-rows-7 grid-rows-2 sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
             {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
               <EventDetailsItem className='grid sm:row-span-2 grid-rows-3 grid-cols-3' key={evendDetail.id}>
                 <EventDetailsIcon className='row-span-3'>
