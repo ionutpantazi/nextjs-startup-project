@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({
           </svg>
           <span>Menu</span>
         </button>
-        <button className="bg-brandColor hover:bg-brandColorLight text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center gap-x-1 max-sm:hidden">
+        <button className="bg-brandColor hover:bg-brandColorLight text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center gap-x-1 max-lg:hidden">
           <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.631348 0.297363H18.0367V17.7027H0.631348V0.297363Z" fill="white" fillOpacity="0.01" />
             <path d="M3.51416 4.63049H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -108,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({
               }
             </>
           </div>
-          <RightButtons className={"max-sm:hidden"} />
+          <RightButtons className={"max-lg:hidden"} />
         </div>
       </nav>
     </>

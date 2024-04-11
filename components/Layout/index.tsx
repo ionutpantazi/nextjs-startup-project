@@ -66,7 +66,7 @@ const Layout = ({
       <HeaderWrap>
         {navigationData && <Navbar navigationData={navigationData} />}
       </HeaderWrap>
-      <Box className='mb-auto'>
+      <Box className='mb-auto bg-black'>
         {children}
       </Box>
       <FooterWrap>

@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
-import { theme } from 'lib/theme'
-import { IMAGE_DOMAIN } from 'lib/constants'
 import {
   StrapiFile
 } from 'interfaces'
-import Flex from 'components/Bootstrap/Flex'
 
 export interface ButtonProps {
   __typename: string,
@@ -35,7 +32,6 @@ const ButtonContainer = styled.div <{ backgroundcolor?: string | null, backgroun
 const Button = ({
   data
 }: ComponentButtonProps) => {
-  console.log(data)
   return (
     <ButtonContainer as='a' className={data.ClassName} href={data.Link} textcolor={data.TextColor} texthovercolor={data.TextHoverColor}>
       {data.Text}

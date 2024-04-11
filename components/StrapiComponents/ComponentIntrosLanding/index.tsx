@@ -12,7 +12,15 @@ export type Event_Details_Item = {
   id: string
   Title: string
   Sub_Title: string
-  Icon: any
+  Icon: StrapiFile,
+}
+
+export type I_Want_To_Item = {
+  __typename: string
+  id: string
+  Title: string
+  Icon: StrapiFile,
+  Background_Image: StrapiFile,
 }
 
 export type Event_Details = {
@@ -51,6 +59,7 @@ const IntroLandingContainer = styled.div <{ backgroundimage?: string | null }>`
   `}
   padding: ${theme.margins.homepage_large};
   color: ${theme.colors.white};
+  overflow: hidden;
 
   @media screen and (max-width: ${theme.screens.sm}) {
     ${({ backgroundimage }) => css`
@@ -74,6 +83,20 @@ const BottomColumn = styled.div`
 `
 
 const UserContainer = styled.div`
+  @media screen and (max-width: ${theme.screens.sm}) {
+    display: none;
+  }
+`
+
+const UserAvatar = styled.div`
+  width: 40px;
+  height: 40px;
+`
+
+const UserText = styled.div`
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16px;
 `
 
 const EventContainer = styled.div`
@@ -139,15 +162,83 @@ const ButtonContainer = styled.div`
   line-height: 16px;
 `
 
+const IWantToContainer = styled.div`
+  margin-top: 60px;
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    margin-top: 20px;
+  }
+`
+
+const IWantToTitle = styled.div`
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  margin-bottom: 10px;
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    text-align: center;
+    font-size: 20px;
+    line-height: 21px;
+  }
+`
+
+const IWantToItemTitle = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28px;
+`
+
+const IWantToItem = styled.div <{ backgroundimage?: string | null }>`
+  ${({ backgroundimage }) => css`
+    ${backgroundimage ? 'background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("' + backgroundimage + '"); background-size: 100%; background-repeat: no-repeat; background-size: cover;' : ''}
+  `}
+  width: 184px;
+  height: 184px;
+  border-radius: 6px;
+  
+
+  &:hover {
+    filter: brightness(200%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+  }
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    margin: 0 auto;
+  }
+`
+
+const IWantToItemIcon = styled.div <{ backgroundimage?: string | null }>`
+  ${({ backgroundimage }) => css`
+    ${backgroundimage ? 'background-image: url("' + backgroundimage + '"); background-size: 100%; background-repeat: no-repeat; background-size: cover;' : ''}
+  `}
+  width: 20px;
+  height: 20px;
+`
+
+const EventContent = styled.div`
+  margin-top: 60px;
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    margin-top: 20px;
+  }
+`
 
 const ComponentIntrosLanding = ({
   data
 }: ComponentIntrosLandingProps) => {
-  // console.log(data.Event_Details)
+  console.log(data.Content)
 
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
 
-  const numberOfItems = ((data.Event_Details.Event_Details.length + 1) * 2) - 1;
+  const length = data.Event_Details.Event_Details.length;
+  const gridRowsS = ((length + 1) * 2) - 1;
+  const r = (length + 1) % 2;
+  const gridColsL = Math.ceil(length / 2) + r;
 
   return (
     <IntroLandingContainer className='flex flex-col' backgroundimage={backgroundImage}>
@@ -155,23 +246,34 @@ const ComponentIntrosLanding = ({
 
       </TopColumn>
       <BottomColumn className='grid sm:grid-cols-10 grid-flow-row gap-x-20 gap-y-4'>
-        <UserContainer className='row-span-1 sm:col-span-2'>
-
+        <UserContainer className='row-span-1 sm:col-span-4 lg:col-span-2 flex flex-row gap-2 items-end'>
+          <UserAvatar className='basis-1/4 flex-none'>
+            <img
+              src={'/images/elipse.png'}
+              alt={""}
+              loading="lazy"
+            />
+          </UserAvatar>
+          <UserText className='basis-2/4 shrink'>
+            Log in to view your personalised content
+          </UserText>
         </UserContainer>
-        <EventTitle as='h1' className='row-span-1 sm:col-span-8'>
+        <EventTitle as='h1' className='row-span-1 sm:col-span-6 lg:col-span-8'>
           {data.Title}
         </EventTitle>
-        <EventContainer className='row-span-2 sm:col-span-2'>
-          <EventDetails className={`grid sm:grid-rows-7 grid-rows-2 sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
+        <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
+          <EventDetails className={`grid sm:grid-rows-${gridRowsS} grid-rows-${gridColsL} sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
             {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
               <EventDetailsItem className='grid sm:row-span-2 grid-rows-3 grid-cols-3' key={evendDetail.id}>
-                <EventDetailsIcon className='row-span-3'>
-                  <img
-                    src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
-                    alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
-                    loading="lazy"
-                  />
-                </EventDetailsIcon>
+                {evendDetail?.Icon?.data?.attributes?.url &&
+                  <EventDetailsIcon className='row-span-3'>
+                    <img
+                      src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
+                      alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
+                      loading="lazy"
+                    />
+                  </EventDetailsIcon>
+                }
                 <EventDetailsTitle className='col-span-2'>
                   {evendDetail.Title}
                 </EventDetailsTitle>
@@ -181,18 +283,39 @@ const ComponentIntrosLanding = ({
               </EventDetailsItem>
             ))
             }
-            <ButtonContainer className='sm:row-span-1'>
+            <ButtonContainer className='flex items-center sm:row-span-1'>
               <Button data={data.Event_Details.Button} />
             </ButtonContainer>
           </EventDetails>
         </EventContainer>
-        <EventDetailsContainer className='row-span-2 sm:col-span-7'>
+        <EventDetailsContainer className='row-span-2 sm:col-span-4 lg:col-span-5'>
           <EventIntroduction as='p' className=''>
             {data.Introduction}
           </EventIntroduction>
+          <IWantToContainer>
+            <IWantToTitle>
+              {data.I_Want_To.Title}
+            </IWantToTitle>
+            <div className='flex flex-col sm:flex-row gap-4'>
+              {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
+                <IWantToItem as='a' href='#' backgroundimage={IMAGE_DOMAIN + item.Background_Image.data?.attributes?.url} className='flex flex-col justify-center items-center' key={item.id}>
+                  <IWantToItemIcon backgroundimage={IMAGE_DOMAIN + item.Icon.data?.attributes?.url} />
+                  <IWantToItemTitle className='text-center'>
+                    {item.Title}
+                  </IWantToItemTitle>
+                </IWantToItem>
+              ))
+              }
+            </div>
+          </IWantToContainer>
+          <EventContent
+            className=''
+            dangerouslySetInnerHTML={{
+              __html: data.Content
+            }}
+          >
+          </EventContent>
         </EventDetailsContainer>
-
-
       </BottomColumn>
     </IntroLandingContainer>
   )

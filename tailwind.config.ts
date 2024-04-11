@@ -24,5 +24,19 @@ const config: Config = {
     }
   },
   plugins: [require('tw-elements/plugin.cjs')],
+  safelist: [
+    'sm:grid-rows-1',
+    'sm:grid-rows-3',
+    'sm:grid-rows-5',
+    'sm:grid-rows-7',
+    'sm:grid-rows-9',
+    'sm:grid-rows-11',
+    'grid-rows-1',
+    'grid-rows-2',
+    'grid-rows-3',
+    'grid-rows-4',
+    'grid-rows-5',
+    'grid-rows-6',
+  ]
 }
 export default config
