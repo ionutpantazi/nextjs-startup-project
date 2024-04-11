@@ -7,6 +7,7 @@ export interface Theme {
   colors: {
     white: string
     grey: string
+    black: string
   },
   screens: {
     sm: string,
@@ -19,13 +20,15 @@ export interface Theme {
     homepage_small: string,
     homepage_medium: string,
     homepage_large: string,
-  }
+  },
+  pageWidth: string
 }
 
 export const theme: Theme = {
   colors: {
     white: '#fff',
     grey: '#1E1E1E',
+    black: '#000000'
   },
   screens: {
     sm: '640px',
@@ -35,8 +38,9 @@ export const theme: Theme = {
     '2xl': '1536px',
   },
   margins: {
-    homepage_small: '0px',
-    homepage_medium: '0px 20px',
-    homepage_large: '0px 40px',
-  }
+    homepage_small: '0px 20px',
+    homepage_medium: '0px 60px',
+    homepage_large: '0px 80px',
+  },
+  pageWidth: '1440px',
 }

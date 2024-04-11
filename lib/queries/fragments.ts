@@ -30,3 +30,23 @@ export const SEO_META = gql`
     structuredData
   }
 `
+
+export const BUTTON = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment Button on ComponentIncludesButton {
+    Text
+    Link
+    ClassName
+    Image {
+      data {
+        attributes {
+          ...CoreUploadFileFields
+        }
+      }
+    }
+    BackgroundColor
+    BackgroundHoverColor
+    TextColor
+    TextHoverColor
+  }
+`

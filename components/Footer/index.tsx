@@ -11,12 +11,13 @@ const FooterContainer = styled.footer`
   margin: ${theme.margins.homepage_large};
   padding: 50px 40px;
   border-radius: 20px 20px 0px 0px;
+  margin: 0 auto;
+  max-width: ${theme.pageWidth};
 
   color: ${theme.colors.white};
   font-family: ReadexProRegular;
 
   @media screen and (max-width: ${theme.screens.sm}) {
-    margin: ${theme.margins.homepage_small};
     padding: 20px 20px;
     border-radius: 0px;
   }

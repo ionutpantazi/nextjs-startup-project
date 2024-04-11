@@ -2,11 +2,13 @@ import { gql } from '@apollo/client';
 import {
   CORE_UPLOAD_FILE_FIELDS,
   SEO_META,
+  BUTTON,
 } from 'lib/queries/fragments'
 
 export const HOMEPAGE_QUERY = gql`
   ${CORE_UPLOAD_FILE_FIELDS}
   ${SEO_META}
+  ${BUTTON}
   query HomepageQuery {
     homepage {
       data {
@@ -41,6 +43,9 @@ export const HOMEPAGE_QUERY = gql`
                       }
                     }
                   }
+                }
+                Button {
+                  ...Button
                 }
               }
               I_Want_To {

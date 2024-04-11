@@ -9,6 +9,7 @@ import { NavigationData } from 'lib/queries/nav-data'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import Box from 'components/Bootstrap/Box'
 import styled from 'styled-components'
+import { theme } from 'lib/theme'
 
 const Navbar = dynamic(() => import('components/Navbar'))
 const Footer = dynamic(() => import('components/Footer'))
@@ -33,6 +34,11 @@ const HeaderWrap = styled.header`
 `
 
 const FooterWrap = styled.div`
+  background-color: ${theme.colors.black};
+`
+
+const LayoutContainer = styled.div`
+  background-color: ${theme.colors.black};
 `
 
 const Layout = ({
@@ -42,7 +48,7 @@ const Layout = ({
   navigationData,
 }: LayoutProps) => {
   return (
-    <div className='flex flex-col h-screen'>
+    <LayoutContainer className='flex flex-col h-screen'>
       <Head>
         <title>{title}</title>
         {seoMeta?.metaViewport && <meta name='viewport' content={seoMeta?.metaViewport} />}
@@ -63,8 +69,10 @@ const Layout = ({
       <Box className='mb-auto'>
         {children}
       </Box>
-      {navigationData && <Footer navigationData={navigationData} />}
-    </div>
+      <FooterWrap>
+        {navigationData && <Footer navigationData={navigationData} />}
+      </FooterWrap>
+    </LayoutContainer>
   )
 }
 

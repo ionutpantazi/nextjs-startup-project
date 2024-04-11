@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
+import styled, { css } from 'styled-components'
+import { theme } from 'lib/theme'
 import {
   IntrosLandingProps
 } from 'components/StrapiComponents/ComponentIntrosLanding'
@@ -18,6 +20,9 @@ export interface PageContentProps {
   ]
 }
 
+const PageContentContainer = styled.div`
+`
+
 const PageContent = ({
   data
 }: PageContentProps) => {
@@ -25,7 +30,7 @@ const PageContent = ({
   return (
     <>
       {data?.length &&
-        <>
+        <PageContentContainer>
           {data.map((component: PageContentComponent) => (
             <div key={component.id}>
               {component.__typename == 'ComponentIntrosLanding' &&
@@ -34,7 +39,7 @@ const PageContent = ({
             </div>
           ))
           }
-        </>
+        </PageContentContainer>
       }
     </>
   )
