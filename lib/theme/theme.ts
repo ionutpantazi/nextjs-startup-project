@@ -8,6 +8,8 @@ export interface Theme {
     white: string
     grey: string
     black: string
+    brand: string
+    brandlight: string
   },
   screens: {
     sm: string,
@@ -28,7 +30,9 @@ export const theme: Theme = {
   colors: {
     white: '#fff',
     grey: '#1E1E1E',
-    black: '#000000'
+    black: '#000000',
+    brand: '#B97ECF',
+    brandlight: '#ddb7eb',
   },
   screens: {
     sm: '640px',

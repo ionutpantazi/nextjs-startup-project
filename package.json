@@ -17,10 +17,12 @@
     "react-dom": "^18",
     "styled-components": "^6.1.8",
     "styled-system": "^5.1.5",
+    "swiper": "^11.1.1",
     "swr": "^2.2.5",
     "tw-elements": "^2.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

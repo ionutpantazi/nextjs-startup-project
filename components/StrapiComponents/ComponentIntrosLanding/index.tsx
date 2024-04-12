@@ -60,12 +60,14 @@ const IntroLandingContainer = styled.div <{ backgroundimage?: string | null }>`
   padding: ${theme.margins.homepage_large};
   color: ${theme.colors.white};
   overflow: hidden;
+  margin-bottom: 40px;
 
   @media screen and (max-width: ${theme.screens.sm}) {
     ${({ backgroundimage }) => css`
       ${backgroundimage ? 'background:linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1)), url("' + backgroundimage + '"); background-size: 100% 200px; background-repeat: no-repeat;' : ''}
     `}
     padding: ${theme.margins.homepage_small};
+    margin-bottom: 20px;
   }
 `
 
@@ -231,7 +233,6 @@ const EventContent = styled.div`
 const ComponentIntrosLanding = ({
   data
 }: ComponentIntrosLandingProps) => {
-  console.log(data.Content)
 
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
 

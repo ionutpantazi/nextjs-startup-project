@@ -3,12 +3,14 @@ import {
   CORE_UPLOAD_FILE_FIELDS,
   SEO_META,
   BUTTON,
+  SPEAKERS
 } from 'lib/queries/fragments'
 
 export const HOMEPAGE_QUERY = gql`
   ${CORE_UPLOAD_FILE_FIELDS}
   ${SEO_META}
   ${BUTTON}
+  ${SPEAKERS}
   query HomepageQuery {
     homepage {
       data {
@@ -66,6 +68,29 @@ export const HOMEPAGE_QUERY = gql`
                         ...CoreUploadFileFields
                       }
                     }
+                  }
+                }
+              }
+            }
+            ... on ComponentSectionsSectionTitle {
+              id
+              Title
+              Icon {
+                data {
+                  attributes {
+                    ...CoreUploadFileFields
+                  }
+                }
+              }
+            }
+            ... on ComponentSectionsSpeakersCarousel {
+              id
+              Title
+              Speakers {
+                data {
+                  id
+                  attributes {
+                    ...Speakers
                   }
                 }
               }

@@ -50,3 +50,30 @@ export const BUTTON = gql`
     TextHoverColor
   }
 `
+
+export const SPEAKERS = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment Speakers on Speake {
+    Name
+    Intro
+    Image {
+      data {
+        attributes {
+          ...CoreUploadFileFields
+        }
+      }
+    }
+    Position
+    Type
+    Linkedin
+    Workshops {
+      data {
+        id
+        attributes {
+          Title
+          Intro
+        }
+      }
+    }
+  }
+`
