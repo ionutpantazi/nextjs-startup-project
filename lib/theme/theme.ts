@@ -7,6 +7,7 @@ export interface Theme {
   colors: {
     white: string
     grey: string
+    lightgrey: string
     black: string
     brand: string
     brandlight: string
@@ -30,6 +31,7 @@ export const theme: Theme = {
   colors: {
     white: '#fff',
     grey: '#1E1E1E',
+    lightgrey: '#A7A7A7',
     black: '#000000',
     brand: '#B97ECF',
     brandlight: '#ddb7eb',

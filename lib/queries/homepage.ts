@@ -95,6 +95,23 @@ export const HOMEPAGE_QUERY = gql`
                 }
               }
             }
+            ... on ComponentSectionsCardsCarousel {
+              id
+              Title
+              Cards {
+                id
+                Type
+                Title
+                Sub_Title
+                Image {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

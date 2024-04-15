@@ -5,17 +5,20 @@ import { theme } from 'lib/theme'
 import ComponentIntrosLanding, { IntrosLandingProps } from 'components/StrapiComponents/ComponentIntrosLanding'
 import ComponentSectionsSectionTitle, { SectionsSectionTitleProps } from 'components/StrapiComponents/ComponentSectionsSectionTitle'
 import ComponentSectionsSpeakersCarousel, { SectionsSectionSpeakersCarousel } from 'components/StrapiComponents/ComponentSectionsSpeakersCarousel'
+import ComponentSectionsCardsCarousel, { SectionCardsCarousel } from 'components/StrapiComponents/ComponentSectionsCardsCarousel'
 
 
 export const components = {
   ComponentIntrosLanding: dynamic(() => import('components/StrapiComponents/ComponentIntrosLanding')),
   ComponentSectionsSectionTitle: dynamic(() => import('components/StrapiComponents/ComponentSectionsSectionTitle')),
   ComponentSectionsSpeakersCarousel: dynamic(() => import('components/StrapiComponents/ComponentSectionsSpeakersCarousel')),
+  ComponentSectionsCardsCarousel: dynamic(() => import('components/StrapiComponents/ComponentSectionsCardsCarousel')),
 };
 
 export type PageContentComponent = IntrosLandingProps
   & SectionsSectionTitleProps
   & SectionsSectionSpeakersCarousel
+  & SectionCardsCarousel
 
 export interface PageContentProps {
   data?: [
@@ -44,6 +47,9 @@ const PageContent = ({
               }
               {component.__typename == 'ComponentSectionsSpeakersCarousel' &&
                 <ComponentSectionsSpeakersCarousel data={component} />
+              }
+              {component.__typename == 'ComponentSectionsCardsCarousel' &&
+                <ComponentSectionsCardsCarousel data={component} />
               }
             </div>
           ))
