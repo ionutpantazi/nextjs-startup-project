@@ -112,6 +112,28 @@ export const HOMEPAGE_QUERY = gql`
                 }
               }
             }
+            ... on ComponentSectionsFaQs {
+              id
+              Title
+              FAQs {
+                data {
+                  id
+                  attributes {
+                    Question
+                    Answer
+                    Categories {
+                      data {
+                        id
+                        attributes {
+                          Title
+                          Slug
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
