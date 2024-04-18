@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Button, { ButtonProps } from 'components/StrapiComponents/Button'
 import {
   StrapiFile
 } from 'interfaces'
@@ -31,6 +31,14 @@ export type CategoryItem = {
   Slug: string,
 }
 
+export type InfoBox = {
+  id: string,
+  Title: string,
+  Sub_Title: string,
+  Icon: StrapiFile,
+  Button: ButtonProps,
+}
+
 export type SectionsFaQs = {
   id: string,
   Title: string;
@@ -39,6 +47,7 @@ export type SectionsFaQs = {
       FAQs
     ]
   }
+  Info_Box: InfoBox
 }
 
 const Container = styled.div`
@@ -114,26 +123,50 @@ const FaqAnswer = styled.div`
 
 const PlusIcon = () => {
   return (
-    <svg width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <g id="Icon-Set" transform="translate(-464.000000, -1087.000000)" fill="white">
-          <path d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z">
+    <div className='w-fit hidden transition-opacity duration-200 ease-in-out group-data-[twe-collapse-collapsed]:block'>
+      <svg width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+          <g id="Icon-Set" transform="translate(-464.000000, -1087.000000)" fill="white">
+            <path d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z">
 
-          </path>
+            </path>
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+    </div>
   )
 }
 
 const MinusIcon = () => {
   return (
-    <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15 12.75C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H15Z" fill="white" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M12 1.25C6.06294 1.25 1.25 6.06294 1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25ZM2.75 12C2.75 6.89137 6.89137 2.75 12 2.75C17.1086 2.75 21.25 6.89137 21.25 12C21.25 17.1086 17.1086 21.25 12 21.25C6.89137 21.25 2.75 17.1086 2.75 12Z" fill="#1C274C" />
-    </svg>
+    <div className='w-fit transition-opacity duration-200 ease-in-out group-data-[twe-collapse-collapsed]:hidden'>
+      <svg width="26px" height="26px" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 12.75C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H15Z" fill="white" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M12 1.25C6.06294 1.25 1.25 6.06294 1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25ZM2.75 12C2.75 6.89137 6.89137 2.75 12 2.75C17.1086 2.75 21.25 6.89137 21.25 12C21.25 17.1086 17.1086 21.25 12 21.25C6.89137 21.25 2.75 17.1086 2.75 12Z" fill="white" />
+      </svg>
+    </div>
   )
 }
+
+const InfoBoxContainer = styled.div`
+  border-radius: 6px;
+  background-color: ${theme.colors.grey};
+  padding: 30px 40px;
+`
+
+const InfoBoxTitle = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+`
+
+const InfoBoxSubTitle = styled.div`
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16px;
+  text-align: center;
+`
 
 const extractFaqCategories = (props: SectionsFaQs) => {
   let categoriesArray: any = [{
@@ -161,8 +194,6 @@ const ComponentSectionsFaQs = ({
   data
 }: ComponentSectionsFaQsProps) => {
 
-  const { width } = useWindowSize();
-  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
   const [faqs, setFaqs] = useState<any>(data.FAQs.data);
   const [activeFilter, setActiveFilter] = useState("all");
   const [faqCategories, setFaqCategories] = useState([]);
@@ -216,40 +247,63 @@ const ComponentSectionsFaQs = ({
           ))
           }
         </FiltersContainer>
-        <FaqsContainer id='accordionExample' key={`faq_accordion_${activeFilter}`}>
-          {faqs.map((faq: FAQs) => (
-            <FaqItem
-              key={faq.id}
-              data-twe-collapse-init
-              data-twe-target={`#faq_collapse_${faq.id}_${activeFilter}`}
-              aria-expanded="false"
-              aria-controls={`faq_collapse_${faq.id}_${activeFilter}`}
-              id={`faq_item_${faq.id}_${activeFilter}`}
-              data-twe-collapse-collapsed
-            >
-              <div className='flex flex-row gap-6'>
-                <PlusIcon />
-                <FaqQuestion>
-                  {faq.attributes.Question}
-                </FaqQuestion>
-              </div>
-
-              <FaqAnswer
-                id={`faq_collapse_${faq.id}_${activeFilter}`}
-                className="!visible hidden"
-                data-twe-collapse-item
-                aria-labelledby={`faq_item_${faq.id}_${activeFilter}`}
-                data-twe-parent="#accordionExample"
+        <div className='flex justify-between lg:flex-row flex-col gap-x-24 gap-y-6 '>
+          <FaqsContainer id='accordionExample' className='flex lg:w-4/5 w-full' key={`faq_accordion_${activeFilter}`}>
+            {faqs.map((faq: FAQs) => (
+              <FaqItem
+                key={faq.id}
+                className='group'
+                data-twe-collapse-init
+                data-twe-target={`#faq_collapse_${faq.id}_${activeFilter}`}
+                aria-expanded="false"
+                aria-controls={`faq_collapse_${faq.id}_${activeFilter}`}
+                id={`faq_item_${faq.id}_${activeFilter}`}
+                data-twe-collapse-collapsed
               >
-                <br />
-                <br />
-                <br />
-                {faq.attributes.Answer}
-              </FaqAnswer>
-            </FaqItem>
-          ))
+                <div className='flex flex-row gap-6'>
+                  <PlusIcon />
+                  <MinusIcon />
+                  <FaqQuestion>
+                    {faq.attributes.Question}
+                  </FaqQuestion>
+                </div>
+
+                <FaqAnswer
+                  id={`faq_collapse_${faq.id}_${activeFilter}`}
+                  className="!visible hidden"
+                  data-twe-collapse-item
+                  aria-labelledby={`faq_item_${faq.id}_${activeFilter}`}
+                  data-twe-parent="#accordionExample"
+                >
+                  <br />
+                  <br />
+                  <br />
+                  {faq.attributes.Answer}
+                </FaqAnswer>
+              </FaqItem>
+            ))
+            }
+          </FaqsContainer>
+          {data.Info_Box &&
+            <InfoBoxContainer className='flex flex-col gap-6 items-center h-fit lg:w-60 w-full'>
+              <div className=''>
+                <img
+                  src={IMAGE_DOMAIN + data.Info_Box.Icon.data?.attributes?.url}
+                  alt={data.Info_Box.Icon.data?.attributes?.alternativeText ?? ""}
+                  loading="lazy"
+                />
+              </div>
+              <InfoBoxTitle>
+                {data.Info_Box.Title}
+              </InfoBoxTitle>
+              <InfoBoxSubTitle>
+                {data.Info_Box.Sub_Title}
+              </InfoBoxSubTitle>
+              <Button data={data.Info_Box.Button} />
+            </InfoBoxContainer>
           }
-        </FaqsContainer>
+        </div>
+
       </InnerContainer>
     </Container>
   )

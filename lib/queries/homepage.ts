@@ -133,6 +133,33 @@ export const HOMEPAGE_QUERY = gql`
                   }
                 }
               }
+              Info_Box {
+                id
+                Title
+                Sub_Title
+                Icon {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
+                    }
+                  }
+                }
+                Button {
+                  ...Button
+                }
+              }
+            }
+            ... on ComponentIntrosSimpleSlider {
+              id
+              Title
+              Slides {
+                data {
+                  id
+                  attributes {
+                    ...CoreUploadFileFields
+                  }
+                }
+              }
             }
           }
         }
