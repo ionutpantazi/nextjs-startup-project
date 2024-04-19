@@ -1,7 +1,15 @@
+const IMAGE_DOMAINS = process.env.NEXT_PUBLIC_IMAGE_DOMAINS
+  ? process.env.NEXT_PUBLIC_IMAGE_DOMAINS?.split(',').map((i) => new URL(i).host)
+  : []
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
     styledComponents: true
+  },
+  images: {
+    domains: ['ionutpantazi.ddns.net'],
+    deviceSizes: [640, 768, 1024, 1280, 1536]
   }
 }
 

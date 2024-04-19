@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import NextImage from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   StrapiMultiFile,
@@ -113,7 +114,14 @@ const ComponentIntrosSimpleSlider = ({
         >
           {data.Slides?.data?.map((image: StrapiMultiFileFields) => (
             <SwiperSlide key={image.id}>
-              <ImageContainer backgroundimage={IMAGE_DOMAIN + image.attributes?.url} />
+              <ImageContainer>
+                <NextImage
+                  src={IMAGE_DOMAIN + image.attributes?.url}
+                  alt=''
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </ImageContainer>
             </SwiperSlide>
           ))
           }
