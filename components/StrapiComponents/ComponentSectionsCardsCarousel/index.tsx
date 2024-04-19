@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import NextImage from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   StrapiFile
@@ -59,10 +60,8 @@ const CardContainer = styled.div`
   background-color: ${theme.colors.grey};
 `
 
-const ImageContainer = styled.div <{ backgroundimage?: string | null }>`
-  ${({ backgroundimage }) => css`
-    ${backgroundimage ? 'background :linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1)), url("' + backgroundimage + '"); background-repeat: no-repeat; background-size: cover;' : 'background: ' + theme.colors.brand + ';'}
-  `}
+const ImageContainer = styled.div`
+  background: ${theme.colors.brand};
   border-radius: 6px;
   height: 150px;
   // width: 250px;
@@ -90,6 +89,14 @@ const CardSubTitle = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+`
+
+const RadialContainer = styled.div`
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width:100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1));
 `
 
 export interface ComponentSectionsCardsCarouselProps {
@@ -130,8 +137,19 @@ const ComponentSectionsCardsCarousel = ({
             {data.Cards.map((card: Card) => (
               <SwiperSlide key={card.id} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
                 <CardContainer>
-                  <ImageContainer backgroundimage={card.Image.data?.attributes?.url ? IMAGE_DOMAIN + card.Image.data?.attributes?.url : null}>
-
+                  <ImageContainer className='relative'>
+                    {card.Image.data?.attributes?.url &&
+                      <>
+                        <RadialContainer />
+                        <NextImage
+                          src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
+                          className=''
+                          alt=''
+                          layout='fill'
+                          objectFit='cover'
+                        />
+                      </>
+                    }
                   </ImageContainer>
                   <CardTitle>
                     {card.Title}

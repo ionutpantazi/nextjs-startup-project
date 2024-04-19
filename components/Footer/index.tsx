@@ -5,6 +5,7 @@ import { IMAGE_DOMAIN } from 'lib/constants'
 import { NavigationData, NavigationItem } from 'lib/queries/nav-data'
 import Link from 'next/link'
 import Text from 'components/Bootstrap/Text'
+import NextImage from 'next/image'
 
 const FooterContainer = styled.footer`
   background-color: ${theme.colors.grey};
@@ -66,11 +67,15 @@ const Footer: React.FC<FooterProps> = ({
         {/* Logo  */}
         {navigationData?.siteLogo &&
           <Link href="/">
-            <img
-              src={IMAGE_DOMAIN + navigationData.siteLogo.url}
-              alt={navigationData.siteLogo.alternativeText ?? ""}
-              loading="lazy"
-            />
+            {navigationData?.siteLogo?.url &&
+              <NextImage
+                src={IMAGE_DOMAIN + navigationData.siteLogo.url}
+                className=''
+                alt={navigationData.siteLogo.alternativeText ?? ""}
+                width={64}
+                height={20}
+              />
+            }
           </Link>
         }
         <FooterText>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import NextImage from 'next/image'
 import Button, { ButtonProps } from 'components/StrapiComponents/Button'
 import {
   StrapiFile
@@ -287,10 +288,12 @@ const ComponentSectionsFaQs = ({
           {data.Info_Box &&
             <InfoBoxContainer className='flex flex-col gap-6 items-center h-fit lg:w-60 w-full'>
               <div className=''>
-                <img
+                <NextImage
                   src={IMAGE_DOMAIN + data.Info_Box.Icon.data?.attributes?.url}
+                  className=''
                   alt={data.Info_Box.Icon.data?.attributes?.alternativeText ?? ""}
-                  loading="lazy"
+                  width={72}
+                  height={72}
                 />
               </div>
               <InfoBoxTitle>

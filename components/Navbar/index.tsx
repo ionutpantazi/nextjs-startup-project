@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import { NavigationData, NavigationItem } from 'lib/queries/nav-data'
 import Link from 'next/link'
+import NextImage from 'next/image'
 
 export interface NavbarProps {
   isOpen?: boolean
@@ -76,11 +77,15 @@ const Navbar: React.FC<NavbarProps> = ({
             <Link
               className="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
               href="/">
-              <img
-                src={IMAGE_DOMAIN + navigationData.siteLogo.url}
-                alt={navigationData.siteLogo.alternativeText ?? ""}
-                loading="lazy"
-              />
+              {navigationData?.siteLogo?.url &&
+                <NextImage
+                  src={IMAGE_DOMAIN + navigationData.siteLogo.url}
+                  className=''
+                  alt={navigationData.siteLogo.alternativeText ?? ""}
+                  width={64}
+                  height={20}
+                />
+              }
             </Link>
           }
           <RightButtons className={"lg:hidden"} />

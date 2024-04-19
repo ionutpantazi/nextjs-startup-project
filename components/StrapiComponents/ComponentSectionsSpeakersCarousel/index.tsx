@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import { RadialContainer } from 'components/Bootstrap/RadialContainer'
+import NextImage from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   StrapiFile
@@ -83,10 +85,8 @@ const SpeakerCard = styled.div`
 const FiltersContainer = styled.div`
 `
 
-const SpeakerIcon = styled.div <{ backgroundimage?: string | null }>`
-  ${({ backgroundimage }) => css`
-    ${backgroundimage ? 'background :linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1)), url("' + backgroundimage + '"); background-repeat: no-repeat; background-size: cover;' : ';'}
-  `}
+const SpeakerIcon = styled.div`
+  z-index: 2;
   padding: 10px 10px 20px 10px;
   border-radius: 6px;
 
@@ -99,6 +99,7 @@ const SpeakerType = styled.div <{ active?: any }>`
     ${active == 'true' ? 'background-color: ' + theme.colors.brand : 'background-color: ' + theme.colors.grey};
   `}
 
+  z-index: 2;
   border-radius: 12px;
   padding: 4px 10px;
   width: fit-content;
@@ -111,22 +112,30 @@ const SpeakerType = styled.div <{ active?: any }>`
   }
 `
 
+const StyledNextImage = styled(NextImage)`
+  border-radius: 6px;
+`
+
 const SpeakerDetails = styled.div`
+  z-index: 2;
 `
 
 const SpeakerName = styled.div`
+  z-index: 2;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
 `
 
 const SpeakerPosition = styled.div`
+  z-index: 2;
   font-size: 14px;
   font-weight: 300;
   line-height: 29px;
 `
 
 const IconContainer = styled.div`
+  z-index: 2;
   width: 40px;
   height: 40px;
 `
@@ -246,9 +255,21 @@ const ComponentSectionsSpeakersCarousel = ({
             slidesPerView={'auto'}
           >
             {speakers.map((speaker: Speaker) => (
-              <SwiperSlide key={speaker.id} style={{ 'width': `${applySpeakerIconStyle(width, speaker)?.width}`}}>
+              <SwiperSlide key={speaker.id} style={{ 'width': `${applySpeakerIconStyle(width, speaker)?.width}` }}>
                 <SpeakerCard className={`grid grid-rows-4 ${generateGridLayout(speaker)} grid-flow-col gap-2`}>
-                  <SpeakerIcon className='row-span-4 col-span-2 grid content-between' backgroundimage={IMAGE_DOMAIN + speaker.attributes.Image.data?.attributes?.url}>
+                  <SpeakerIcon className='row-span-4 col-span-2 grid content-between relative'>
+                    {speaker?.attributes?.Image?.data?.attributes?.url &&
+                      <>
+                        <RadialContainer />
+                        <StyledNextImage
+                          src={IMAGE_DOMAIN + speaker.attributes.Image.data.attributes.url}
+                          className=''
+                          alt={speaker.attributes.Image.data.attributes.alternativeText ?? ""}
+                          layout='fill'
+                          objectFit='cover'
+                        />
+                      </>
+                    }
                     <SpeakerType className='' active={'true'}>
                       {speaker.attributes.Type}
                     </SpeakerType>

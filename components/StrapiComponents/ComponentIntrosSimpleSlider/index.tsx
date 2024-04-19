@@ -55,10 +55,7 @@ const Title = styled.div`
 const SwiperContainer = styled.div`
 `
 
-const ImageContainer = styled.div <{ backgroundimage?: string | null }>`
-  ${({ backgroundimage }) => css`
-    ${backgroundimage ? 'background-image: url("' + backgroundimage + '"); background-repeat: no-repeat; background-size: cover;' : ';'}
-  `}
+const ImageContainer = styled.div`
   height: 600px;
 
   @media screen and (max-width: ${theme.screens.sm}) {

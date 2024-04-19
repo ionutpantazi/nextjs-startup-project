@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import NextImage from 'next/image'
+import { RadialContainer } from 'components/Bootstrap/RadialContainer'
 import {
   StrapiFile
 } from 'interfaces'
@@ -115,8 +117,6 @@ const EventDetailsItem = styled.div`
 `
 
 const EventDetailsIcon = styled.div`
-  width: 40px;
-  height: 40px;
 `
 
 const EventDetailsTitle = styled.div`
@@ -186,15 +186,17 @@ const IWantToTitle = styled.div`
 `
 
 const IWantToItemTitle = styled.div`
+  z-index: 2;
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
 `
 
-const IWantToItem = styled.div <{ backgroundimage?: string | null }>`
-  ${({ backgroundimage }) => css`
-    ${backgroundimage ? 'background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("' + backgroundimage + '"); background-size: 100%; background-repeat: no-repeat; background-size: cover;' : ''}
-  `}
+const StyledNextImage = styled(NextImage)`
+  border-radius: 6px;
+`
+
+const IWantToItem = styled.div`
   width: 184px;
   height: 184px;
   border-radius: 6px;
@@ -214,10 +216,8 @@ const IWantToItem = styled.div <{ backgroundimage?: string | null }>`
   }
 `
 
-const IWantToItemIcon = styled.div <{ backgroundimage?: string | null }>`
-  ${({ backgroundimage }) => css`
-    ${backgroundimage ? 'background-image: url("' + backgroundimage + '"); background-size: 100%; background-repeat: no-repeat; background-size: cover;' : ''}
-  `}
+const IWantToItemIcon = styled.div`
+  z-index: 2;
   width: 20px;
   height: 20px;
 `
@@ -268,11 +268,15 @@ const ComponentIntrosLanding = ({
               <EventDetailsItem className='grid sm:row-span-2 grid-rows-3 grid-cols-3' key={evendDetail.id}>
                 {evendDetail?.Icon?.data?.attributes?.url &&
                   <EventDetailsIcon className='row-span-3'>
-                    <img
-                      src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
-                      alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
-                      loading="lazy"
-                    />
+                    {evendDetail?.Icon?.data?.attributes?.url &&
+                      <NextImage
+                        src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
+                        className=''
+                        alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
+                        width={40}
+                        height={40}
+                      />
+                    }
                   </EventDetailsIcon>
                 }
                 <EventDetailsTitle className='col-span-2'>
@@ -299,8 +303,31 @@ const ComponentIntrosLanding = ({
             </IWantToTitle>
             <div className='flex flex-col sm:flex-row gap-4'>
               {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
-                <IWantToItem as='a' href='#' backgroundimage={IMAGE_DOMAIN + item.Background_Image.data?.attributes?.url} className='flex flex-col justify-center items-center' key={item.id}>
-                  <IWantToItemIcon backgroundimage={IMAGE_DOMAIN + item.Icon.data?.attributes?.url} />
+                <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
+                  {item?.Background_Image?.data?.attributes?.url &&
+                    <>
+                      <RadialContainer />
+                      <StyledNextImage
+                        src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
+                        className=''
+                        alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </>
+                  }
+
+                  <IWantToItemIcon>
+                    {item.Icon.data?.attributes?.url &&
+                      <NextImage
+                        src={IMAGE_DOMAIN + item.Icon.data?.attributes?.url}
+                        className=''
+                        alt={item.Icon.data?.attributes?.alternativeText ?? ""}
+                        width={26}
+                        height={26}
+                      />
+                    }
+                  </IWantToItemIcon>
                   <IWantToItemTitle className='text-center'>
                     {item.Title}
                   </IWantToItemTitle>
