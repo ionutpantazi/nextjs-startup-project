@@ -1,0 +1,12 @@
+{
+  "images": {
+    "remotePatterns": [
+      {
+        "protocol": "http",
+        "hostname": "ionutpantazi.ddns.net",
+        "port": "1337",
+        "pathname": "/uploads/**"
+      }
+    ]
+  }
+}
