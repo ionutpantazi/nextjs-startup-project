@@ -230,6 +230,14 @@ const EventContent = styled.div`
   }
 `
 
+const ImageContainer = styled.div`
+  height: 400px;
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    height: 200px;
+  }
+`
+
 const ComponentIntrosLanding = ({
   data
 }: ComponentIntrosLandingProps) => {
@@ -242,110 +250,125 @@ const ComponentIntrosLanding = ({
   const gridColsL = Math.ceil(length / 2) + r;
 
   return (
-    <IntroLandingContainer className='flex flex-col' backgroundimage={backgroundImage}>
-      <TopColumn className=''>
-
-      </TopColumn>
-      <BottomColumn className='grid sm:grid-cols-10 grid-flow-row gap-x-20 gap-y-4'>
-        <UserContainer className='row-span-1 sm:col-span-4 lg:col-span-2 flex flex-row gap-2 items-end'>
-          <UserAvatar className='basis-1/4 flex-none'>
-            <img
-              src={'/images/elipse.png'}
-              alt={""}
-              loading="lazy"
-            />
-          </UserAvatar>
-          <UserText className='basis-2/4 shrink'>
-            Log in to view your personalised content
-          </UserText>
-        </UserContainer>
-        <EventTitle as='h1' className='row-span-1 sm:col-span-6 lg:col-span-8'>
-          {data.Title}
-        </EventTitle>
-        <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
-          <EventDetails className={`grid sm:grid-rows-${gridRowsS} grid-rows-${gridColsL} sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
-            {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
-              <EventDetailsItem className='grid sm:row-span-2 grid-rows-3 grid-cols-3' key={evendDetail.id}>
-                {evendDetail?.Icon?.data?.attributes?.url &&
-                  <EventDetailsIcon className='row-span-3'>
-                    {evendDetail?.Icon?.data?.attributes?.url &&
-                      <NextImage
-                        src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
-                        className=''
-                        alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
-                        width={40}
-                        height={40}
-                      />
-                    }
-                  </EventDetailsIcon>
-                }
-                <EventDetailsTitle className='col-span-2'>
-                  {evendDetail.Title}
-                </EventDetailsTitle>
-                <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                  {evendDetail.Sub_Title}
-                </EventDetailsSubTitle>
-              </EventDetailsItem>
-            ))
-            }
-            <ButtonContainer className='flex items-center sm:row-span-1'>
-              <Button data={data.Event_Details.Button} />
-            </ButtonContainer>
-          </EventDetails>
-        </EventContainer>
-        <EventDetailsContainer className='row-span-2 sm:col-span-4 lg:col-span-5'>
-          <EventIntroduction as='p' className=''>
-            {data.Introduction}
-          </EventIntroduction>
-          <IWantToContainer>
-            <IWantToTitle>
-              {data.I_Want_To.Title}
-            </IWantToTitle>
-            <div className='flex flex-col sm:flex-row gap-4'>
-              {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
-                <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
-                  {item?.Background_Image?.data?.attributes?.url &&
-                    <>
-                      <RadialContainer />
-                      <StyledNextImage
-                        src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
-                        className=''
-                        alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
-                        layout='fill'
-                        objectFit='cover'
-                      />
-                    </>
+    <>
+      {backgroundImage &&
+        <ImageContainer className='relative w-screen'>
+          {backgroundImage &&
+            <>
+              <RadialContainer />
+              <NextImage
+                src={backgroundImage}
+                className=''
+                alt=''
+                layout='fill'
+                objectFit='cover'
+              />
+            </>
+          }
+        </ImageContainer>
+      }
+      <IntroLandingContainer className='flex flex-col relative'>
+        <BottomColumn className='grid sm:grid-cols-10 grid-flow-row gap-x-20 gap-y-4'>
+          <UserContainer className='row-span-1 sm:col-span-4 lg:col-span-2 flex flex-row gap-2 items-end'>
+            <UserAvatar className='basis-1/4 flex-none'>
+              <img
+                src={'/images/elipse.png'}
+                alt={""}
+                loading="lazy"
+              />
+            </UserAvatar>
+            <UserText className='basis-2/4 shrink'>
+              Log in to view your personalised content
+            </UserText>
+          </UserContainer>
+          <EventTitle as='h1' className='row-span-1 sm:col-span-6 lg:col-span-8'>
+            {data.Title}
+          </EventTitle>
+          <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
+            <EventDetails className={`grid sm:grid-rows-${gridRowsS} grid-rows-${gridColsL} sm:grid-cols-1 grid-cols-2 grid-flow-col gap-2`}>
+              {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
+                <EventDetailsItem className='grid sm:row-span-2 grid-rows-3 grid-cols-3' key={evendDetail.id}>
+                  {evendDetail?.Icon?.data?.attributes?.url &&
+                    <EventDetailsIcon className='row-span-3'>
+                      {evendDetail?.Icon?.data?.attributes?.url &&
+                        <NextImage
+                          src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
+                          className=''
+                          alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
+                          width={40}
+                          height={40}
+                        />
+                      }
+                    </EventDetailsIcon>
                   }
-
-                  <IWantToItemIcon>
-                    {item.Icon.data?.attributes?.url &&
-                      <NextImage
-                        src={IMAGE_DOMAIN + item.Icon.data?.attributes?.url}
-                        className=''
-                        alt={item.Icon.data?.attributes?.alternativeText ?? ""}
-                        width={26}
-                        height={26}
-                      />
-                    }
-                  </IWantToItemIcon>
-                  <IWantToItemTitle className='text-center'>
-                    {item.Title}
-                  </IWantToItemTitle>
-                </IWantToItem>
+                  <EventDetailsTitle className='col-span-2'>
+                    {evendDetail.Title}
+                  </EventDetailsTitle>
+                  <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                    {evendDetail.Sub_Title}
+                  </EventDetailsSubTitle>
+                </EventDetailsItem>
               ))
               }
-            </div>
-          </IWantToContainer>
-          <EventContent
-            className=''
-            dangerouslySetInnerHTML={{
-              __html: data.Content
-            }}
-          >
-          </EventContent>
-        </EventDetailsContainer>
-      </BottomColumn>
-    </IntroLandingContainer>
+              <ButtonContainer className='flex items-center sm:row-span-1'>
+                <Button data={data.Event_Details.Button} />
+              </ButtonContainer>
+            </EventDetails>
+          </EventContainer>
+          <EventDetailsContainer className='row-span-2 sm:col-span-4 lg:col-span-5'>
+            <EventIntroduction as='p' className=''>
+              {data.Introduction}
+            </EventIntroduction>
+            <IWantToContainer>
+              <IWantToTitle>
+                {data.I_Want_To.Title}
+              </IWantToTitle>
+              <div className='flex flex-col sm:flex-row gap-4'>
+                {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
+                  <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
+                    {item?.Background_Image?.data?.attributes?.url &&
+                      <>
+                        <RadialContainer />
+                        <StyledNextImage
+                          src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
+                          className=''
+                          alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
+                          layout='fill'
+                          objectFit='cover'
+                        />
+                      </>
+                    }
+
+                    <IWantToItemIcon>
+                      {item.Icon.data?.attributes?.url &&
+                        <NextImage
+                          src={IMAGE_DOMAIN + item.Icon.data?.attributes?.url}
+                          className=''
+                          alt={item.Icon.data?.attributes?.alternativeText ?? ""}
+                          width={26}
+                          height={26}
+                        />
+                      }
+                    </IWantToItemIcon>
+                    <IWantToItemTitle className='text-center'>
+                      {item.Title}
+                    </IWantToItemTitle>
+                  </IWantToItem>
+                ))
+                }
+              </div>
+            </IWantToContainer>
+            <EventContent
+              className=''
+              dangerouslySetInnerHTML={{
+                __html: data.Content
+              }}
+            >
+            </EventContent>
+          </EventDetailsContainer>
+        </BottomColumn>
+      </IntroLandingContainer>
+    </>
   )
 }
 
