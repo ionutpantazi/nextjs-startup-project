@@ -161,6 +161,25 @@ export const HOMEPAGE_QUERY = gql`
                 }
               }
             }
+            ... on ComponentSectionsVideo {
+              id
+              Title
+              Videos {
+                id
+                Title
+                Sub_Title
+                YouTubeID
+                Categories {
+                  data {
+                    id
+                    attributes {
+                      Title
+                      Slug
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

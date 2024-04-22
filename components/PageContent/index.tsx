@@ -8,7 +8,7 @@ import ComponentSectionsSpeakersCarousel, { SectionsSectionSpeakersCarousel } fr
 import ComponentSectionsCardsCarousel, { SectionCardsCarousel } from 'components/StrapiComponents/ComponentSectionsCardsCarousel'
 import ComponentSectionsFaQs, { SectionsFaQs } from 'components/StrapiComponents/ComponentSectionsFaQs'
 import ComponentIntrosSimpleSlider, { SimpleSlider } from 'components/StrapiComponents/ComponentIntrosSimpleSlider'
-
+import ComponentSectionsVideo, { VideoProps } from 'components/StrapiComponents/ComponentSectionsVideo'
 
 export const components = {
   ComponentIntrosLanding: dynamic(() => import('components/StrapiComponents/ComponentIntrosLanding')),
@@ -17,6 +17,7 @@ export const components = {
   ComponentSectionsCardsCarousel: dynamic(() => import('components/StrapiComponents/ComponentSectionsCardsCarousel')),
   ComponentSectionsFaQs: dynamic(() => import('components/StrapiComponents/ComponentSectionsFaQs')),
   ComponentIntrosSimpleSlider: dynamic(() => import('components/StrapiComponents/ComponentIntrosSimpleSlider')),
+  ComponentSectionsVideo: dynamic(() => import('components/StrapiComponents/ComponentSectionsVideo')),
 };
 
 export type PageContentComponent = IntrosLandingProps
@@ -25,6 +26,7 @@ export type PageContentComponent = IntrosLandingProps
   & SectionCardsCarousel
   & SectionsFaQs
   & SimpleSlider
+  & VideoProps
 
 export interface PageContentProps {
   data?: [
@@ -62,6 +64,9 @@ const PageContent = ({
               }
               {component.__typename == 'ComponentIntrosSimpleSlider' &&
                 <ComponentIntrosSimpleSlider data={component} />
+              }
+              {component.__typename == 'ComponentSectionsVideo' &&
+                <ComponentSectionsVideo data={component} />
               }
             </div>
           ))

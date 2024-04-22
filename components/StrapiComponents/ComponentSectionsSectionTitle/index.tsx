@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
+import NextImage from 'next/image'
 import {
   StrapiFile
 } from 'interfaces'
@@ -35,8 +36,6 @@ const SectionTitleInnerContainer = styled.div`
 `
 
 const Icon = styled.div`
-  width: 40px;
-  height: 40px;
 `
 
 const SectionTitle = styled.div`
@@ -53,11 +52,15 @@ const ComponentSectionsSectionTitle = ({
     <SectionTitleContainer className=''>
       <SectionTitleInnerContainer className='flex flex-row items-center gap-4'>
         <Icon className='flex items-center'>
-          <img
-            src={IMAGE_DOMAIN + data.Icon.data?.attributes?.url}
-            alt={""}
-            loading="lazy"
-          />
+          {data.Icon.data?.attributes?.url &&
+            <NextImage
+              src={IMAGE_DOMAIN + data.Icon.data?.attributes?.url}
+              className=''
+              alt={data.Icon.data?.attributes?.alternativeText ?? ""}
+              width={28}
+              height={28}
+            />
+          }
         </Icon>
         <SectionTitle>
           {data.Title}

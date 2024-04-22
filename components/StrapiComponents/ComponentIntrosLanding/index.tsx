@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
-import { RadialContainer } from 'components/Bootstrap/RadialContainer'
+import { RadialContainer } from '@/components/Bootstrap/Common'
 import {
   StrapiFile
 } from 'interfaces'

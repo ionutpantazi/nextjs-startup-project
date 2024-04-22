@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import { RadialContainer } from 'components/Bootstrap/RadialContainer'
+import { RadialContainer } from '@/components/Bootstrap/Common'
 import NextImage from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
