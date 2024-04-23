@@ -261,7 +261,7 @@ const ComponentSectionsVideo = ({
             </FiltersContainer>
             <List className='flex flex-col gap-3'>
               {videos.map((video: Videos) => (
-                <ListItem className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video.id)} active={activeVideo == video.id ? 'true' : 'false'}>
+                <ListItem key={video.id} className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video.id)} active={activeVideo == video.id ? 'true' : 'false'}>
                   <ListItemVideo className='w-1/3'>
 
                   </ListItemVideo>
