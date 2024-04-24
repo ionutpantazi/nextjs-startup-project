@@ -9,6 +9,7 @@ export interface Theme {
     grey: string
     lightgrey: string
     darkgrey: string
+    darkestgrey: string
     black: string
     brand: string
     brandlight: string
@@ -24,8 +25,17 @@ export interface Theme {
     homepage_small: string,
     homepage_medium: string,
     homepage_large: string,
+    small: string,
+    medium: string,
+    large: string,
   },
-  pageWidth: string
+  pageWidth: string,
+  borderRadius: {
+    components: {
+      small: string
+      large: string
+    }
+  }
 }
 
 export const theme: Theme = {
@@ -34,6 +44,7 @@ export const theme: Theme = {
     grey: '#1E1E1E',
     lightgrey: '#A7A7A7',
     darkgrey: '#242424',
+    darkestgrey: '#121212',
     black: '#000000',
     brand: '#B97ECF',
     brandlight: '#ddb7eb',
@@ -49,6 +60,15 @@ export const theme: Theme = {
     homepage_small: '0px 20px',
     homepage_medium: '0px 60px',
     homepage_large: '0px 80px',
+    small: '0px 20px',
+    medium: '0px 60px',
+    large: '0px 80px',
   },
   pageWidth: '1440px',
+  "borderRadius": {
+    "components": {
+      "small": "8px",
+      "large": "24px"
+    }
+  }
 }

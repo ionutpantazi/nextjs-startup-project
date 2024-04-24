@@ -35,6 +35,7 @@ export const BUTTON = gql`
   ${CORE_UPLOAD_FILE_FIELDS}
   fragment Button on ComponentIncludesButton {
     Text
+    Sub_Title
     Link
     ClassName
     Image {

@@ -21,3 +21,16 @@ export function generateMenuList(items: NavigationItem[]): NavigationItem[] {
 
   return result;
 }
+
+export const sanitiseValue = (value: string) => {
+  return value.toLowerCase()
+}
+
+export const sanitiseURLParam = (
+  params: Record<string, string | string[] | undefined> | undefined,
+  key: string
+): string | undefined => {
+  if (params && params[key]) {
+    return sanitiseValue(params[key] as string)
+  }
+}

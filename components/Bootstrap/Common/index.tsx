@@ -9,21 +9,26 @@ export const RadialContainer = styled.div`
   background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1));
 `
 
+export const OuterContainer = styled.div`
+  color: ${props => props.theme.colors.white};
+  margin-bottom: 40px;
+`
+
 export const Container = styled.div`
-  padding: ${theme.margins.homepage_large};
-  color: ${theme.colors.white};
+  padding: ${props => props.theme.margins.homepage_large};
+  color: ${props => props.theme.colors.white};
   overflow: hidden;
   margin-bottom: 40px;
 
-  @media screen and (max-width: ${theme.screens.sm}) {
-    padding: ${theme.margins.homepage_small};
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    padding: ${props => props.theme.margins.homepage_small};
     margin-bottom: 20px;
   }
 `
 
 export const InnerContainer = styled.div`
   margin: 0 auto;
-  max-width: ${theme.pageWidth};
+  max-width: ${props => props.theme.pageWidth};
 `
 
 export const Title = styled.div`
