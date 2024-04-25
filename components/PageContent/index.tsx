@@ -38,8 +38,8 @@ export interface PageContentProps {
   data?: [
     PageContentComponent
   ],
-  senddatatolayout: any,
-  isdefaulttheme: any,
+  senddatatolayout?: any,
+  isdefaulttheme?: any,
 }
 
 const PageContentContainer = styled.div`
