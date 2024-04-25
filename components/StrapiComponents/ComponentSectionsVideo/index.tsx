@@ -170,7 +170,6 @@ const InfoDetails = styled.div`
 const parseYoutubeData = (videos: [Videos]) => {
   videos.map(async (video) => {
     let YouTubeID = video.YouTubeID;
-    console.log(YouTubeID)
     if (YouTubeID) {
       let data = await axios.post('api/youtube', {
         videoId: YouTubeID

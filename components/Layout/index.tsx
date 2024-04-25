@@ -1,5 +1,5 @@
 
-import React, { ReactNode } from 'react'
+import React, { useState, ReactNode } from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import {
@@ -51,7 +51,20 @@ const Layout = ({
   seoMeta,
   navigationData,
 }: LayoutProps) => {
-  const themeData = customTheme ? customTheme : theme;
+
+  const [isDefaultTheme, setIsDefaultTheme] = useState<boolean>(customTheme ? false : true)
+  const [themeData, setThemeData] = useState(customTheme ? customTheme : theme);
+
+  const handleChildData = (data: any) => {
+    if (data?.useDefaultTheme == true) {
+      setIsDefaultTheme(true)
+      setThemeData(theme);
+    } else {
+      setIsDefaultTheme(false)
+      setThemeData(customTheme ? customTheme : theme);
+    }
+  };
+
   return (
     <ThemeProvider theme={themeData}>
       <LayoutContainer className='flex flex-col h-screen'>
@@ -73,7 +86,9 @@ const Layout = ({
           {navigationData && <Navbar navigationData={navigationData} />}
         </HeaderWrap>
         <Box className='mb-auto bg-black'>
-          {children}
+          {React.Children.map(children, child =>
+            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme })
+          )}
         </Box>
         <FooterWrap>
           {navigationData && <Footer navigationData={navigationData} />}

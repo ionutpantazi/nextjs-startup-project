@@ -104,6 +104,9 @@ export const PAGES_QUERY = gql`
                       }
                     }
                   }
+                  Button {
+                    ...Button
+                  }
                 }
                 Button {
                   ...Button
@@ -237,6 +240,28 @@ export const PAGES_QUERY = gql`
                     attributes {
                       Title
                       Slug
+                    }
+                  }
+                }
+              }
+            }
+            ... on ComponentSectionsIWantTo {
+              id
+              Title
+              Items {
+                id
+                Title
+                Icon {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
+                    }
+                  }
+                }
+                Background_Image {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
                     }
                   }
                 }

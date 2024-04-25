@@ -5,14 +5,16 @@ declare module 'styled-components' {
 
 export interface Theme {
   colors: {
-    white: string
-    grey: string
-    lightgrey: string
-    darkgrey: string
-    darkestgrey: string
-    black: string
-    brand: string
-    brandlight: string
+    white?: string
+    grey?: string
+    grey1?: string
+    lightgrey?: string
+    darkgrey?: string
+    darkestgrey?: string
+    black?: string
+    brand?: string
+    brandlight?: string
+    branddark?: string
   },
   screens: {
     sm: string,

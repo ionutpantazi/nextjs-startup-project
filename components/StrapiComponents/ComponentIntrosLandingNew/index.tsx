@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
@@ -13,7 +13,7 @@ import {
   InnerContainer,
   Title,
 } from 'components/Bootstrap/Common'
-import Button, { ButtonProps } from 'components/StrapiComponents/Button'
+import ButtonNew, { ButtonNewProps } from 'components/StrapiComponents/ButtonNew'
 
 export type Event_Details_Item = {
   __typename: string
@@ -21,6 +21,7 @@ export type Event_Details_Item = {
   Title: string
   Sub_Title: string
   Icon: StrapiFile,
+  Button: ButtonNewProps,
 }
 
 export type I_Want_To_Item = {
@@ -36,7 +37,7 @@ export type Event_Details = {
   Event_Details: [
     Event_Details_Item
   ]
-  Button: ButtonProps
+  Button: ButtonNewProps
 }
 
 export type I_Want_To = {
@@ -46,7 +47,7 @@ export type I_Want_To = {
   ]
 }
 
-export type IntrosLandingProps = {
+export type LandingNewProps = {
   id: string,
   __typename: string,
   Title: string,
@@ -55,10 +56,13 @@ export type IntrosLandingProps = {
   Background_Image: StrapiFile,
   Event_Details: Event_Details,
   I_Want_To: I_Want_To,
+  Button: ButtonNewProps,
 }
 
-export interface LandingNewProps {
-  data: IntrosLandingProps
+export interface IntrosLandingProps {
+  data: LandingNewProps,
+  senddatatolayout: any,
+  isdefaulttheme: any,
 }
 
 const ImageContainer = styled.div`
@@ -128,13 +132,31 @@ const EventDetails = styled(ComponentContainer)`
 
 const EventDetailsItemContainer = styled.div`
   width: 100%;
+  &:not(:last-child) {
+    border-right: 2px solid ${props => props.theme.colors.darkestgrey};
+  }
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    padding-bottom: 10px;
+    padding-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    &:not(:last-child) {
+      border-right: 0px;
+      border-bottom: 2px solid ${props => props.theme.colors.darkestgrey};
+    }
+  }
 `
 
 const EventDetailsItem = styled.div`
   width: 90%;
   height: 100%;
-  padding-right: 10px;
-  border-right: 2px solid ${props => props.theme.colors.darkestgrey};
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    width: 100%;
+  }
 `
 
 const EventDetailsIcon = styled.div`
@@ -150,28 +172,163 @@ const EventDetailsSubTitle = styled.div`
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;
+  color: ${props => props.theme.colors.grey1};
 `
 
 const EventDetailsContainer = styled.div`
   max-width: 150px;
 `
 
-const ButtonContainer = styled.div`
+const EventDetailsLastContainer = styled.div`
   width: 40%;
+  padding: 10px 0px;
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    width: 50%;
+    margin: 0 auto;
+  }
+`
+
+const EventDetailsButtonContainer = styled.div`
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  color: ${props => props.theme.colors.brand};
+
+  &:hover {
+    color: ${props => props.theme.colors.brandlight};
+  }
+`
+
+const EventButtonContainer = styled.div`
   padding: 10px 20px;
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
+  height: 50px;
+  border-radius: ${props => props.theme.borderRadius.components.small};
+  background-color: ${props => props.theme.colors.brand};
+
+  &:hover {
+    background-color: ${props => props.theme.colors.brandlight};
+  }
+`
+
+const EventDetailsLastContainerText = styled.div`
+  font-size: 8px;
+  font-weight: 300;
+  line-height: 11px;
+  padding-top: 10px;
+  color: ${props => props.theme.colors.grey1};
+`
+
+const EventSectionContainer = styled.div`
+  padding: 60px 40px 0px 40px;
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    padding: 20px 20px 0px 20px;
+  }
+`
+
+const IWantToContainer = styled.div`
+  
+`
+
+const IWantToItem = styled.div`
+  width: 184px;
+  height: 184px;
+  border-radius: 6px;
+  
+
+  &:hover {
+    filter: brightness(200%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+  }
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    margin: 0 auto;
+  }
+`
+
+const IWantToItemIcon = styled.div`
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+`
+
+const StyledNextImage = styled(NextImage)`
+  border-radius: 6px;
+`
+
+const IWantToItemTitle = styled.div`
+  z-index: 2;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28px;
+`
+
+const EventContentContainer = styled.div`
+`
+
+const EventContent = styled.div`
+`
+
+const Toggle = styled.label`
+  width: 100%;
+  border-radius: 40px;
+  background-color: ${props => props.theme.colors.darkgrey};
+  filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+`
+
+const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
+  border-radius: 40px;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  width: 100%;
+  transition: 0.3s;
+  ${({ isdefaulttheme }) => css`
+    ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
+  `}
+`
+
+const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
+  border-radius: 40px;
+  padding: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  width: 100%;
+  transition: 0.3s;
+  ${({ isdefaulttheme }) => css`
+    ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
+  `}
 `
 
 const ComponentIntrosLandingNew = ({
-  data
-}: LandingNewProps) => {
-  const theme = useContext(ThemeContext);
-  console.log(theme)
+  data,
+  senddatatolayout,
+  isdefaulttheme,
+}: IntrosLandingProps) => {
 
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
-  const length = data.Event_Details.Event_Details.length;
+
+  const handleDefaultThemeChange = () => {
+    if (senddatatolayout instanceof Function) {
+      if (isdefaulttheme == 'false' || isdefaulttheme == false) {
+        senddatatolayout({ useDefaultTheme: true })
+      } else {
+        senddatatolayout({ useDefaultTheme: false })
+      }
+    }
+  }
 
   return (
     <OuterContainer className=''>
@@ -202,6 +359,41 @@ const ComponentIntrosLandingNew = ({
             </EventIntroduction>
             <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
               <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
+                <EventDetailsItemContainer>
+                  <EventDetailsItem className='flex flex-col gap-4'>
+                    <div className='flex flex-row gap-4'>
+                      <EventDetailsIcon className='row-span-3'>
+                        <NextImage
+                          src={'/images/avatar.png'}
+                          className=''
+                          alt={""}
+                          width={40}
+                          height={40}
+                        />
+                      </EventDetailsIcon>
+                      <EventDetailsContainer className='flex flex-col gap-2'>
+                        <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                          Hi Ruth, welcome back to [your event name]
+                        </EventDetailsSubTitle>
+                      </EventDetailsContainer>
+                    </div>
+                    <Toggle className='flex justify-between cursor-pointer'>
+                      <input
+                        type='checkbox'
+                        className='sr-only'
+                        checked={isdefaulttheme}
+                        onChange={handleDefaultThemeChange}
+                      />
+                      <CustomThemeToggle className='' isdefaulttheme={isdefaulttheme?.toString()}>
+                        Adventurer
+                      </CustomThemeToggle>
+                      <DefaultThemeToggle className='' isdefaulttheme={isdefaulttheme?.toString()}>
+                        Default View
+                      </DefaultThemeToggle>
+                    </Toggle>
+                  </EventDetailsItem>
+
+                </EventDetailsItemContainer>
                 {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
                   <EventDetailsItemContainer key={evendDetail.id}>
                     <EventDetailsItem className='flex flex-row gap-4'>
@@ -225,20 +417,88 @@ const ComponentIntrosLandingNew = ({
                         <EventDetailsSubTitle className='row-span-2 col-span-2'>
                           {evendDetail.Sub_Title}
                         </EventDetailsSubTitle>
+                        {evendDetail.Button &&
+                          <ButtonNew data={evendDetail.Button}>
+                            <EventDetailsButtonContainer>
+                              {evendDetail.Button.Text}
+                            </EventDetailsButtonContainer>
+                          </ButtonNew>
+                        }
                       </EventDetailsContainer>
                     </EventDetailsItem>
                   </EventDetailsItemContainer>
                 ))
                 }
-                  <ButtonContainer className='flex items-center sm:row-span-1'>
-                    <Button data={data.Event_Details.Button} />
-                  </ButtonContainer>
+                {/* <EventDetailsLastContainer>
+                  <ButtonNew data={data.Event_Details.Button}>
+                    <EventButtonContainer className='flex items-center justify-center sm:row-span-1'>
+                      {data.Event_Details.Button.Text}
+                    </EventButtonContainer>
+                  </ButtonNew>
+                  <EventDetailsLastContainerText>
+                    {data.Event_Details.Button.Sub_Title}
+                  </EventDetailsLastContainerText>
+                </EventDetailsLastContainer> */}
               </EventDetails>
             </EventContainer>
+            <EventSectionContainer className='flex flex-col sm:flex-row gap-6'>
+              <IWantToContainer className='flex flex-col sm:flex-row gap-4'>
+                {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
+                  <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
+                    {item?.Background_Image?.data?.attributes?.url &&
+                      <>
+                        <RadialContainer />
+                        <StyledNextImage
+                          src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
+                          className=''
+                          alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
+                          layout='fill'
+                          objectFit='cover'
+                        />
+                      </>
+                    }
+
+                    <IWantToItemIcon>
+                      {item.Icon.data?.attributes?.url &&
+                        <NextImage
+                          src={IMAGE_DOMAIN + item.Icon.data?.attributes?.url}
+                          className=''
+                          alt={item.Icon.data?.attributes?.alternativeText ?? ""}
+                          width={26}
+                          height={26}
+                        />
+                      }
+                    </IWantToItemIcon>
+                    <IWantToItemTitle className='text-center'>
+                      {item.Title}
+                    </IWantToItemTitle>
+                  </IWantToItem>
+                ))
+                }
+              </IWantToContainer>
+              <EventContentContainer className='flex flex-col gap-2'>
+                <EventContent
+                  className=''
+                  dangerouslySetInnerHTML={{
+                    __html: data.Content
+                  }}
+                >
+                </EventContent>
+                {data.Button &&
+                  <ButtonNew data={data.Button}>
+                    <EventDetailsButtonContainer>
+                      {data.Button.Text}
+                    </EventDetailsButtonContainer>
+                  </ButtonNew>
+                }
+              </EventContentContainer>
+            </EventSectionContainer>
           </IntroLandingContainer>
         </InnerContainer>
       </Container>
-    </OuterContainer>
+
+
+    </OuterContainer >
   )
 }
 
