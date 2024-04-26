@@ -12,6 +12,7 @@ import {
   Container,
   InnerContainer,
   Title,
+  ComponentContainer,
 } from 'components/Bootstrap/Common'
 import ButtonNew, { ButtonNewProps } from 'components/StrapiComponents/ButtonNew'
 
@@ -70,14 +71,6 @@ const ImageContainer = styled.div`
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 200px;
-  }
-`
-
-const ComponentContainer = styled.div`
-  border-radius: ${props => props.theme.borderRadius.components.large};
-  background-color: ${props => props.theme.colors.grey};
-
-  @media screen and (max-width: ${props => props.theme.screens.lg}) {
   }
 `
 
@@ -293,7 +286,6 @@ const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   font-weight: 500;
   line-height: 16px;
   width: 100%;
-  transition: 0.3s;
   ${({ isdefaulttheme }) => css`
     ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
   `}
@@ -306,7 +298,6 @@ const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   font-weight: 500;
   line-height: 16px;
   width: 100%;
-  transition: 0.3s;
   ${({ isdefaulttheme }) => css`
     ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
   `}
@@ -442,7 +433,7 @@ const ComponentIntrosLandingNew = ({
               </EventDetails>
             </EventContainer>
             <EventSectionContainer className='flex flex-col sm:flex-row gap-6'>
-              <IWantToContainer className='flex flex-col sm:flex-row gap-4'>
+              <IWantToContainer className='flex justify-stretch flex-col sm:flex-row gap-4 sm:w-1/2 w-auto'>
                 {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
                   <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
                     {item?.Background_Image?.data?.attributes?.url &&
@@ -476,7 +467,7 @@ const ComponentIntrosLandingNew = ({
                 ))
                 }
               </IWantToContainer>
-              <EventContentContainer className='flex flex-col gap-2'>
+              <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
                 <EventContent
                   className=''
                   dangerouslySetInnerHTML={{

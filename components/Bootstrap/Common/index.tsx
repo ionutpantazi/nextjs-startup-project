@@ -37,3 +37,19 @@ export const Title = styled.div`
   line-height: 28px;
   margin-bottom: 10px;
 `
+
+export const SectionTitle = styled.div`
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+`
+
+export const ComponentContainer = styled.div`
+  border-radius: ${props => props.theme.borderRadius.components.large};
+  background-color: ${props => props.theme.colors.grey};
+  padding: 40px 60px;
+
+  @media screen and (max-width: ${props => props.theme.screens.lg}) {
+    padding: 20px 30px;
+  }
+`

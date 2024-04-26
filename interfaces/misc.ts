@@ -37,3 +37,11 @@ export interface StrapiMultiFileFields {
     height: string,
   }
 }
+
+export interface FAIconProps {
+  id: string,
+  Color: string,
+  Height: object,
+  Icon: string,
+  Width: string,
+}

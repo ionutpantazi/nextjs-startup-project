@@ -267,6 +267,70 @@ export const PAGES_QUERY = gql`
                 }
               }
             }
+            ... on ComponentSectionsSection1 {
+              id
+              TextAndIcons {
+                id
+                Title
+                Introduction
+                Icon {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
+                    }
+                  }
+                }
+                FAIcon {
+                  id
+                  Width
+                  Icon
+                  Height
+                  Color
+                }
+                Icons {
+                  id
+                  Type
+                  Title
+                  Icons {
+                    id
+                    Title
+                    Icon {
+                      data {
+                        attributes {
+                          ...CoreUploadFileFields
+                        }
+                      }
+                    }
+                    FAIcon {
+                      id
+                      Width
+                      Icon
+                      Height
+                      Color
+                    }
+                  }
+                }
+              }
+              CardsCarousel {
+                id
+                Title
+                Cards {
+                  id
+                  Type
+                  Title
+                  Sub_Title
+                  Impressions
+                  Link
+                  Image {
+                    data {
+                      attributes {
+                        ...CoreUploadFileFields
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
