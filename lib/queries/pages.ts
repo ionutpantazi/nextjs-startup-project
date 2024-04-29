@@ -3,7 +3,10 @@ import {
   CORE_UPLOAD_FILE_FIELDS,
   SEO_META,
   BUTTON,
-  SPEAKERS
+  SPEAKERS,
+  DISCUSSION_DATA,
+  TEXT_AND_ICONS,
+  AGENDA,
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -11,6 +14,9 @@ export const PAGES_QUERY = gql`
   ${SEO_META}
   ${BUTTON}
   ${SPEAKERS}
+  ${DISCUSSION_DATA}
+  ${TEXT_AND_ICONS}
+  ${AGENDA}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -270,46 +276,7 @@ export const PAGES_QUERY = gql`
             ... on ComponentSectionsSection1 {
               id
               TextAndIcons {
-                id
-                Title
-                Introduction
-                Icon {
-                  data {
-                    attributes {
-                      ...CoreUploadFileFields
-                    }
-                  }
-                }
-                FAIcon {
-                  id
-                  Width
-                  Icon
-                  Height
-                  Color
-                }
-                Icons {
-                  id
-                  Type
-                  Title
-                  Icons {
-                    id
-                    Title
-                    Icon {
-                      data {
-                        attributes {
-                          ...CoreUploadFileFields
-                        }
-                      }
-                    }
-                    FAIcon {
-                      id
-                      Width
-                      Icon
-                      Height
-                      Color
-                    }
-                  }
-                }
+                ...TextAndIcons
               }
               CardsCarousel {
                 id
@@ -326,6 +293,43 @@ export const PAGES_QUERY = gql`
                       attributes {
                         ...CoreUploadFileFields
                       }
+                    }
+                  }
+                }
+              }
+              Discussion {
+                id
+                Title
+                FeaturedDiscussions {
+                  data {
+                    id
+                    attributes {
+                      ...DiscussionData
+                    }
+                  }
+                }
+                OtherDiscussions {
+                  data {
+                    id
+                    attributes {
+                      ...DiscussionData
+                    }
+                  }
+                }
+              }
+            }
+            ... on ComponentSectionsSection2 {
+              id
+              TextAndIcons {
+                ...TextAndIcons
+              }
+              Agenda {
+                id
+                Title
+                Items {
+                  data {
+                    attributes {
+                      ...Agenda
                     }
                   }
                 }

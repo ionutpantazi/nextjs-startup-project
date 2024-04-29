@@ -78,3 +78,124 @@ export const SPEAKERS = gql`
     }
   }
 `
+
+export const DISCUSSION_DATA = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment DiscussionData on Discussion {
+    createdAt
+    Title
+    Slug
+    Impressions
+    Content
+    Author {
+      data {
+        id
+        attributes {
+        ...Speakers
+        }
+      }
+    }
+    Category {
+      data {
+        id
+        attributes {
+          Title
+          Slug
+        }
+      }
+    }
+    Comments {
+      data {
+        id
+        attributes {
+          createdAt
+          Title
+          Slug
+          Impressions
+          Content
+          Author {
+            data {
+              id
+              attributes {
+                ...Speakers
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const TEXT_AND_ICONS = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment TextAndIcons on ComponentIncludesTextAndIcons {
+    id
+    Title
+    Introduction
+    Icon {
+      data {
+        attributes {
+          ...CoreUploadFileFields
+        }
+      }
+    }
+    FAIcon {
+      id
+      Width
+      Icon
+      Height
+      Color
+    }
+    Icons {
+      id
+      Type
+      Title
+      Icons {
+        id
+        Title
+        Icon {
+          data {
+            attributes {
+              ...CoreUploadFileFields
+            }
+          }
+        }
+        FAIcon {
+          id
+          Width
+          Icon
+          Height
+          Color
+        }
+      }
+    }
+  }
+`
+
+export const AGENDA = gql`
+  ${SPEAKERS}
+  fragment Agenda on Agenda {
+    Title
+    Sub_Title
+    Date
+    Start_Time
+    End_Time
+    Room
+    Tags {
+      data {
+        attributes {
+          Name
+          Slug
+        }
+      }
+    }
+    Participants {
+      data {
+        attributes {
+          ...Speakers
+        }
+      }
+    }
+  }
+`

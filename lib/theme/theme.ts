@@ -44,6 +44,7 @@ export const theme: Theme = {
   colors: {
     white: '#fff',
     grey: '#1E1E1E',
+    "grey1": "#D9D9D9",
     lightgrey: '#A7A7A7',
     darkgrey: '#242424',
     darkestgrey: '#121212',
