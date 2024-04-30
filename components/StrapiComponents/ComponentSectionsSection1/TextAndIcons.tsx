@@ -12,7 +12,7 @@ import {
 } from 'components/Bootstrap/Common'
 var moment = require('moment');
 import FAIcon from 'components/Bootstrap/FAIcon'
-import { AgendaItems } from '../ComponentSectionsSection2'
+import { AgendaItems } from '../ComponentSectionsSection2/Agenda'
 
 export type IconsProps = {
   id: string
@@ -156,6 +156,27 @@ const AgendaDayNumber = styled.div`
   line-height: 44px;
 `
 
+const SocialsContainer = styled.div`
+  padding-top: 10px;
+`
+
+const Social = styled.div`
+  span {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  svg {
+    color: ${props => props.theme.colors.brand};
+  }
+
+  &:hover {
+    svg {
+      color: ${props => props.theme.colors.brandlight};
+    }
+  }
+`
+
 const generateAgendaDatesArray = (agendaItems: [AgendaItems]) => {
   const uniqueDatesSet = new Set();
   if (!agendaItems) return []
@@ -250,6 +271,30 @@ const TextAndIcons = ({
             ))
             }
           </DatesContainer>
+        }
+        {data.Icons.Type == 'Social' &&
+          <>
+            <IconsTitle>
+              {data.Icons.Title}
+            </IconsTitle>
+            <SocialsContainer className='flex flex-wrap gap-4'>
+              {data.Icons.Icons.map((icon: IconsProps) => (
+                <Social as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4'>
+                  {icon?.FAIcon?.Icon &&
+                    <FAIcon
+                      icon={icon?.FAIcon?.Icon}
+                      width={Number(icon.FAIcon.Width)}
+                      height={Number(icon.FAIcon?.Width)}
+                    />
+                  }
+                  <span>
+                    {icon.Title}
+                  </span>
+                </Social>
+              ))
+              }
+            </SocialsContainer>
+          </>
         }
       </SecondColumn>
     </TextAndIconsContainer>

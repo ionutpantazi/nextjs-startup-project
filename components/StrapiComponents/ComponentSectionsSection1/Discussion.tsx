@@ -80,7 +80,6 @@ export interface DiscussionDataProps {
 }
 
 const DiscussionContainer = styled.div`
-  margin-top: 350px;
 `
 
 const DiscussionTitle = styled.div`

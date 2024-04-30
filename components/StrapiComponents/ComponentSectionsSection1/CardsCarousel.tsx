@@ -59,6 +59,11 @@ const CarouselShowAll = styled.div`
   }
 `
 
+const CarouselMoreDetails = styled(CarouselShowAll)`
+  position: absolute;
+  right: 16px;
+`
+
 const CardsContainer = styled.div`
   width: 100vw;
   position: absolute;
@@ -147,6 +152,10 @@ const CustomPagination = styled.div`
   }
 `
 
+const EmptyComponent = styled.div`
+  height: 350px;
+`
+
 const CardsCarousel = ({
   data
 }: CardsCarouselDataProps) => {
@@ -169,87 +178,97 @@ const CardsCarousel = ({
   }
 
   return (
-    <CardsCarouselContainer className=''>
-      <div className='flex flex-row justify-between mb-4 items-center'>
-        <CarouselTitle>
-          {data.Title}
-        </CarouselTitle>
-        <CarouselShowAll>
-          Show all
-        </CarouselShowAll>
-      </div>
-      <CardsContainer className=''>
-        <Swiper
-          spaceBetween={isMobile ? '10%' : 40}
-          slidesPerView={'auto'}
-          pagination={{
-            el: '.swiper-custom-pagination',
-            clickable: true,
-          }}
-          modules={[Pagination]}
-        >
-          {data.Cards.map((card: CardProps) => (
-            <SwiperSlide key={card.id} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
-              <CardContainer>
-                <ImageContainer className='relative' hidebackground={card.Image.data?.attributes?.url ? 'true' : 'false'}>
-                  {card.Image.data?.attributes?.url &&
-                    <>
-                      <RadialContainer />
-                      <NextImage
-                        src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
-                        className=''
-                        alt={card.Image.data?.attributes?.alternativeText ?? ''}
-                        layout='fill'
-                        objectFit='cover'
+    <>
+      <CardsCarouselContainer className=''>
+        <div className='flex flex-row justify-between mb-4 items-center'>
+          <CarouselTitle>
+            {data.Title}
+          </CarouselTitle>
+          <CarouselShowAll>
+            Show all
+          </CarouselShowAll>
+        </div>
+        <CardsContainer className=''>
+          <Swiper
+            spaceBetween={isMobile ? '10%' : 40}
+            slidesPerView={'auto'}
+            pagination={{
+              el: `.swiper-custom-pagination-${data.id}`,
+              clickable: true,
+            }}
+            modules={[Pagination]}
+          >
+            {data.Cards.map((card: CardProps) => (
+              <SwiperSlide key={card.id} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
+                <CardContainer>
+                  <ImageContainer className='relative' hidebackground={card.Image.data?.attributes?.url ? 'true' : 'false'}>
+                    {card.Image.data?.attributes?.url &&
+                      <>
+                        <RadialContainer />
+                        <NextImage
+                          src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
+                          className=''
+                          alt={card.Image.data?.attributes?.alternativeText ?? ''}
+                          layout='fill'
+                          objectFit='cover'
+                        />
+                      </>
+                    }
+                  </ImageContainer>
+                  {!card.Link &&
+                    <ImageIcon className=''>
+                      <FAIcon
+                        icon={'fa-leaf'}
+                        width={18}
+                        height={18}
                       />
-                    </>
+                    </ImageIcon>
                   }
-                </ImageContainer>
-                <ImageIcon className=''>
-                  <FAIcon
-                    icon={'fa-leaf'}
-                    width={18}
-                    height={18}
-                  />
-                </ImageIcon>
-                <CardTitle>
-                  {card.Title}
-                </CardTitle>
-                <CardSubTitle>
-                  {card.Sub_Title}
-                </CardSubTitle>
-                <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
-                  <div className='flex flex-row items-center'>
+                  <CardTitle>
+                    {card.Title}
+                  </CardTitle>
+                  <CardSubTitle>
+                    {card.Sub_Title}
+                  </CardSubTitle>
+                  <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
+                    <div className='flex flex-row items-center'>
+                      <FAIcon
+                        icon={'fa-heart'}
+                        width={16}
+                        height={16}
+                      />
+                      <span>
+                        {card.Impressions}
+                      </span>
+                    </div>
                     <FAIcon
-                      icon={'fa-heart'}
+                      icon={'fa-comment-dots'}
                       width={16}
                       height={16}
                     />
-                    <span>
-                      {card.Impressions}
-                    </span>
-                  </div>
-                  <FAIcon
-                    icon={'fa-comment-dots'}
-                    width={16}
-                    height={16}
-                  />
-                  <FAIcon
-                    icon={'fa-share'}
-                    width={16}
-                    height={16}
-                  />
-                </ButtonsContainer>
-              </CardContainer>
-            </SwiperSlide>
-          ))
-          }
-        </Swiper>
-        <CustomPagination className=''>
-          <div className="flex justify-center gap-2 swiper-custom-pagination" />
-        </CustomPagination>
-      </CardsContainer>
-    </CardsCarouselContainer>
+                    <FAIcon
+                      icon={'fa-share'}
+                      width={16}
+                      height={16}
+                    />
+                    {card.Link &&
+                      <CarouselMoreDetails>
+                        More Details
+                      </CarouselMoreDetails>
+                    }
+                  </ButtonsContainer>
+                </CardContainer>
+              </SwiperSlide>
+            ))
+            }
+          </Swiper>
+          <CustomPagination className=''>
+            <div className={`flex justify-center gap-2 swiper-custom-pagination-${data.id}`} />
+          </CustomPagination>
+        </CardsContainer>
+      </CardsCarouselContainer>
+      <EmptyComponent />
+    </>
   )
 }
 

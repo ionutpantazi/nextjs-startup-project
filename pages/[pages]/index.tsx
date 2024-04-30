@@ -29,6 +29,7 @@ export default function Page({
       title={data?.Title}
       navigationData={navigationData}
       customTheme={data.Theme?.data?.attributes?.Data}
+      themedata={data.Theme?.data?.attributes}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <PageContent data={data.Page_Content} />

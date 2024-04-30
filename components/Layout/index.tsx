@@ -20,6 +20,7 @@ type LayoutProps = {
   title: string
   children?: ReactNode
   customTheme?: any
+  themedata?: any
   seoMeta?: {
     canonicalURL?: string
     keywords?: string
@@ -50,18 +51,27 @@ const Layout = ({
   children,
   seoMeta,
   navigationData,
+  themedata,
 }: LayoutProps) => {
 
+  const defaultThemeData = {
+    Name: 'Default',
+    Data: theme
+  }
   const [isDefaultTheme, setIsDefaultTheme] = useState<boolean>(customTheme ? false : true)
   const [themeData, setThemeData] = useState(customTheme ? customTheme : theme);
+  // const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
+  const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
 
   const handleChildData = (data: any) => {
     if (data?.useDefaultTheme == true) {
       setIsDefaultTheme(true)
       setThemeData(theme);
+      // setThemeDataProp(defaultThemeData)
     } else {
       setIsDefaultTheme(false)
       setThemeData(customTheme ? customTheme : theme);
+      // setThemeDataProp(customTheme ? themedata : theme);
     }
   };
 
@@ -87,7 +97,7 @@ const Layout = ({
         </HeaderWrap>
         <Box className='mb-auto bg-black'>
           {React.Children.map(children, child =>
-            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme })
+            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp })
           )}
         </Box>
         <FooterWrap>

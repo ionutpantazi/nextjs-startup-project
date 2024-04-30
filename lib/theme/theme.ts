@@ -34,7 +34,9 @@ export interface Theme {
   pageWidth: string,
   borderRadius: {
     components: {
+      xsmall: string
       small: string
+      medium: string
       large: string
     }
   }
@@ -70,6 +72,8 @@ export const theme: Theme = {
   pageWidth: '1440px',
   "borderRadius": {
     "components": {
+      "xsmall": "2px",
+      "medium": "12px",
       "small": "8px",
       "large": "24px"
     }

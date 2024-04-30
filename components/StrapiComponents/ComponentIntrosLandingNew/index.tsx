@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
-import { ThemeContext } from 'components/Layout';
+import FAIcon from 'components/Bootstrap/FAIcon'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import {
-  StrapiFile
+  StrapiFile,
+  FAIconProps
 } from 'interfaces'
 import {
   OuterContainer,
@@ -22,6 +23,7 @@ export type Event_Details_Item = {
   Title: string
   Sub_Title: string
   Icon: StrapiFile,
+  FAIcon: FAIconProps
   Button: ButtonNewProps,
 }
 
@@ -30,6 +32,7 @@ export type I_Want_To_Item = {
   id: string
   Title: string
   Icon: StrapiFile,
+  FAIcon: FAIconProps
   Background_Image: StrapiFile,
 }
 
@@ -64,6 +67,7 @@ export interface IntrosLandingProps {
   data: LandingNewProps,
   senddatatolayout: any,
   isdefaulttheme: any,
+  themedata: any,
 }
 
 const ImageContainer = styled.div`
@@ -153,6 +157,9 @@ const EventDetailsItem = styled.div`
 `
 
 const EventDetailsIcon = styled.div`
+  svg {
+    color: ${props => props.theme.colors.brand};
+  }
 `
 
 const EventDetailsTitle = styled.div`
@@ -232,6 +239,10 @@ const IWantToItem = styled.div`
   height: 184px;
   border-radius: 6px;
   
+  svg {
+    z-index: 3;
+    color: ${props => props.theme.colors.brand};
+  }
 
   &:hover {
     filter: brightness(200%);
@@ -271,7 +282,6 @@ const EventContent = styled.div`
 `
 
 const Toggle = styled.label`
-  width: 100%;
   border-radius: 40px;
   background-color: ${props => props.theme.colors.darkgrey};
   filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
@@ -281,11 +291,10 @@ const Toggle = styled.label`
 
 const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   border-radius: 40px;
-  padding: 10px;
+  padding: 10px 20px;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
-  width: 100%;
   ${({ isdefaulttheme }) => css`
     ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
   `}
@@ -293,7 +302,7 @@ const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
 
 const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   border-radius: 40px;
-  padding: 10px;
+  padding: 10px 20px;
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
@@ -307,6 +316,7 @@ const ComponentIntrosLandingNew = ({
   data,
   senddatatolayout,
   isdefaulttheme,
+  themedata,
 }: IntrosLandingProps) => {
 
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
@@ -368,18 +378,32 @@ const ComponentIntrosLandingNew = ({
                         </EventDetailsSubTitle>
                       </EventDetailsContainer>
                     </div>
-                    <Toggle className='flex justify-between cursor-pointer'>
+                    <Toggle className='flex justify-between cursor-pointer w-fit'>
                       <input
                         type='checkbox'
                         className='sr-only'
                         checked={isdefaulttheme}
                         onChange={handleDefaultThemeChange}
                       />
-                      <CustomThemeToggle className='' isdefaulttheme={isdefaulttheme?.toString()}>
-                        Adventurer
+                      <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                        <FAIcon
+                          icon={themedata.FAIcon.Icon}
+                          width={Number(themedata.FAIcon.Width)}
+                          height={Number(themedata.FAIcon.Height)}
+                        />
+                        <span>
+                          {themedata.Name}
+                        </span>
                       </CustomThemeToggle>
-                      <DefaultThemeToggle className='' isdefaulttheme={isdefaulttheme?.toString()}>
-                        Default View
+                      <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                        <span>
+                          Default View
+                        </span>
+                        <FAIcon
+                          icon={'fa-solid fa-circle-xmark'}
+                          width={20}
+                          height={20}
+                        />
                       </DefaultThemeToggle>
                     </Toggle>
                   </EventDetailsItem>
@@ -388,8 +412,8 @@ const ComponentIntrosLandingNew = ({
                 {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
                   <EventDetailsItemContainer key={evendDetail.id}>
                     <EventDetailsItem className='flex flex-row gap-4'>
-                      {evendDetail?.Icon?.data?.attributes?.url &&
-                        <EventDetailsIcon className='row-span-3'>
+                      <EventDetailsIcon className='row-span-3'>
+                        <>
                           {evendDetail?.Icon?.data?.attributes?.url &&
                             <NextImage
                               src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
@@ -399,8 +423,15 @@ const ComponentIntrosLandingNew = ({
                               height={40}
                             />
                           }
-                        </EventDetailsIcon>
-                      }
+                          {evendDetail?.FAIcon &&
+                            <FAIcon
+                              icon={evendDetail.FAIcon.Icon}
+                              width={Number(evendDetail.FAIcon.Width)}
+                              height={Number(evendDetail.FAIcon.Height)}
+                            />
+                          }
+                        </>
+                      </EventDetailsIcon>
                       <EventDetailsContainer className='flex flex-col gap-2'>
                         <EventDetailsTitle className='col-span-2'>
                           {evendDetail.Title}
@@ -448,7 +479,13 @@ const ComponentIntrosLandingNew = ({
                         />
                       </>
                     }
-
+                    {item.FAIcon &&
+                      <FAIcon
+                        icon={item.FAIcon.Icon}
+                        width={Number(item.FAIcon.Width)}
+                        height={Number(item.FAIcon.Height)}
+                      />
+                    }
                     <IWantToItemIcon>
                       {item.Icon.data?.attributes?.url &&
                         <NextImage

@@ -7,6 +7,7 @@ import {
   DISCUSSION_DATA,
   TEXT_AND_ICONS,
   AGENDA,
+  CARDS_CAROUSEL,
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -17,6 +18,7 @@ export const PAGES_QUERY = gql`
   ${DISCUSSION_DATA}
   ${TEXT_AND_ICONS}
   ${AGENDA}
+  ${CARDS_CAROUSEL}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -31,6 +33,13 @@ export const PAGES_QUERY = gql`
               attributes {
                 Name
                 Data
+                FAIcon {
+                  id
+                  Width
+                  Icon
+                  Height
+                  Color
+                }
               }
             }
           }
@@ -110,6 +119,13 @@ export const PAGES_QUERY = gql`
                       }
                     }
                   }
+                  FAIcon {
+                    id
+                    Width
+                    Icon
+                    Height
+                    Color
+                  }
                   Button {
                     ...Button
                   }
@@ -129,6 +145,13 @@ export const PAGES_QUERY = gql`
                         ...CoreUploadFileFields
                       }
                     }
+                  }
+                  FAIcon {
+                    id
+                    Width
+                    Icon
+                    Height
+                    Color
                   }
                   Background_Image {
                     data {
@@ -279,23 +302,7 @@ export const PAGES_QUERY = gql`
                 ...TextAndIcons
               }
               CardsCarousel {
-                id
-                Title
-                Cards {
-                  id
-                  Type
-                  Title
-                  Sub_Title
-                  Impressions
-                  Link
-                  Image {
-                    data {
-                      attributes {
-                        ...CoreUploadFileFields
-                      }
-                    }
-                  }
-                }
+                ...CardsCarousel
               }
               Discussion {
                 id
@@ -330,6 +337,42 @@ export const PAGES_QUERY = gql`
                   data {
                     attributes {
                       ...Agenda
+                    }
+                  }
+                }
+              }
+              CardsCarousel {
+                ...CardsCarousel
+              }
+            }
+            ... on ComponentSectionsSection3 {
+              id
+              TextAndIcons {
+                ...TextAndIcons
+              }
+              CardsCarousel2 {
+                id
+                Cards {
+                  id
+                  Title
+                  FAIcon {
+                    id
+                    Width
+                    Icon
+                    Height
+                    Color
+                  }
+                }
+              }
+              CardsCarousel3 {
+                id
+                Cards {
+                  Type
+                  Image {
+                    data {
+                      attributes {
+                        ...CoreUploadFileFields
+                      }
                     }
                   }
                 }

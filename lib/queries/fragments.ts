@@ -199,3 +199,26 @@ export const AGENDA = gql`
     }
   }
 `
+
+export const CARDS_CAROUSEL = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment CardsCarousel on ComponentSectionsCardsCarousel {
+    id
+    Title
+    Cards {
+      id
+      Type
+      Title
+      Sub_Title
+      Impressions
+      Link
+      Image {
+        data {
+          attributes {
+            ...CoreUploadFileFields
+          }
+        }
+      }
+    }
+  }
+`

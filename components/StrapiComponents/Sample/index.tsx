@@ -10,34 +10,35 @@ import {
   OuterContainer,
   Container,
   InnerContainer,
-  Title,
+  ComponentContainer,
 } from 'components/Bootstrap/Common'
 
 
-export type SampleProps = {
+export type Section3Props = {
   id: string,
 }
 
-export interface SectionsSampleProps {
-  data: SampleProps
+export interface ComponentSectionsSection3Props {
+  data: Section3Props
   senddatatolayout?: any,
   isdefaulttheme?: any,
 }
 
 
-const Sample = ({
+const ComponentSectionsSection3 = ({
   data
-}: SectionsSampleProps) => {
+}: ComponentSectionsSection3Props) => {
 
   return (
     <OuterContainer className=''>
       <Container className=''>
         <InnerContainer className=''>
-          
+          <ComponentContainer className='flex flex-col'>
+          </ComponentContainer>
         </InnerContainer>
       </Container>
     </OuterContainer>
   )
 }
 
-export default Sample
+export default ComponentSectionsSection3

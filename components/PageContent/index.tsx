@@ -13,6 +13,7 @@ import ComponentIntrosLandingNew, { LandingNewProps } from 'components/StrapiCom
 import ComponentSectionsIWantTo, { IWantToProps } from 'components/StrapiComponents/ComponentSectionsIWantTo'
 import ComponentSectionsSection1, { Section1Props } from 'components/StrapiComponents/ComponentSectionsSection1'
 import ComponentSectionsSection2, { Section2Props } from 'components/StrapiComponents/ComponentSectionsSection2'
+import ComponentSectionsSection3, { Section3Props } from 'components/StrapiComponents/ComponentSectionsSection3'
 
 export const components = {
   ComponentIntrosLanding: dynamic(() => import('components/StrapiComponents/ComponentIntrosLanding')),
@@ -26,6 +27,7 @@ export const components = {
   ComponentSectionsIWantTo: dynamic(() => import('components/StrapiComponents/ComponentSectionsIWantTo')),
   ComponentSectionsSection1: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection1')),
   ComponentSectionsSection2: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection2')),
+  ComponentSectionsSection3: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection3')),
 };
 
 export type PageContentComponent = IntrosLandingProps
@@ -39,6 +41,7 @@ export type PageContentComponent = IntrosLandingProps
   & IWantToProps
   & Section1Props
   & Section2Props
+  & Section3Props
 
 export interface PageContentProps {
   data?: [
@@ -46,6 +49,7 @@ export interface PageContentProps {
   ],
   senddatatolayout?: any,
   isdefaulttheme?: any,
+  themedata?: any,
 }
 
 const PageContentContainer = styled.div`
@@ -55,6 +59,7 @@ const PageContent = ({
   data,
   senddatatolayout,
   isdefaulttheme,
+  themedata,
 }: PageContentProps) => {
 
   return (
@@ -67,7 +72,7 @@ const PageContent = ({
                 <ComponentIntrosLanding data={component} />
               }
               {component.__typename == 'ComponentIntrosLandingNew' &&
-                <ComponentIntrosLandingNew data={component} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme} />
+                <ComponentIntrosLandingNew data={component} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme} themedata={themedata} />
               }
               {component.__typename == 'ComponentSectionsSectionTitle' &&
                 <ComponentSectionsSectionTitle data={component} />
@@ -95,6 +100,9 @@ const PageContent = ({
               }
               {component.__typename == 'ComponentSectionsSection2' &&
                 <ComponentSectionsSection2 data={component} />
+              }
+              {component.__typename == 'ComponentSectionsSection3' &&
+                <ComponentSectionsSection3 data={component} />
               }
             </div>
           ))
