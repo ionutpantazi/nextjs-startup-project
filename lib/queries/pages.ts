@@ -351,6 +351,39 @@ export const PAGES_QUERY = gql`
                   }
                 }
               }
+              Lists {
+                id
+                Title
+                List {
+                  id
+                  Title
+                  Visible
+                  Speakers {
+                    data {
+                      id
+                      attributes {
+                        ...Speakers
+                      }
+                    }
+                  }
+                  Workshops {
+                    data {
+                      id
+                      attributes {
+                        Title
+                        Intro
+                        Image {
+                          data {
+                            attributes {
+                              ...CoreUploadFileFields
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
               CardsCarousel {
                 ...CardsCarousel
               }

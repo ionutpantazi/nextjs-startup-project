@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
@@ -16,7 +16,7 @@ import {
 import TextAndIcons, { TextAndIconsProps } from '../ComponentSectionsSection1/TextAndIcons'
 import Agenda, { AgendaItems } from './Agenda'
 import CardsCarousel, { CardsCarouselProps } from '../ComponentSectionsSection1/CardsCarousel'
-
+import Lists, { ListsProps } from './Lists'
 
 export type Section2Props = {
   id: string
@@ -29,6 +29,7 @@ export type Section2Props = {
     }
   }
   CardsCarousel: CardsCarouselProps
+  Lists?: ListsProps
 }
 
 export interface ComponentSectionsSection2Props {
@@ -42,14 +43,43 @@ const ComponentSectionsSection2 = ({
   data
 }: ComponentSectionsSection2Props) => {
 
+  const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>(data.Agenda.Items.data[0].attributes.Date);
+  var [agendaData, setAgendaData] = useState<any>(data.Agenda);
+
+  useEffect(() => {
+    handleAgendaDateChange(data.Agenda.Items.data[0].attributes.Date)
+  }, []);
+
+  const handleAgendaDateChange = (date: string) => {
+    setSelectedAgendaDate(date);
+
+    let filteredAgenda = data.Agenda.Items.data.filter((agenda: any) => {
+      if (agenda.attributes.Date == date) return agenda;
+    });
+    var propData = {
+      id: agendaData.id,
+      Title: agendaData.Title,
+      Items: {
+        data: [...filteredAgenda]
+      }
+    }
+    setAgendaData(propData)
+  };
+
+
   return (
     <OuterContainer className=''>
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            <TextAndIcons data={data.TextAndIcons} agendaItems={data.Agenda.Items.data} />
-            <CardsCarousel data={data.CardsCarousel} />
-            <Agenda data={data.Agenda} />
+            <TextAndIcons data={data.TextAndIcons} agendaItems={data.Agenda.Items.data} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
+            {data.CardsCarousel &&
+              <CardsCarousel data={data.CardsCarousel} />
+            }
+            {data.Lists &&
+              <Lists data={data.Lists} />
+            }
+            <Agenda data={agendaData} />
           </ComponentContainer>
         </InnerContainer>
       </Container>

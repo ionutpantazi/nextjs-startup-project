@@ -50,6 +50,6 @@ export const ComponentContainer = styled.div`
   padding: 40px 60px;
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 20px 30px;
+    padding: 20px 10px;
   }
 `

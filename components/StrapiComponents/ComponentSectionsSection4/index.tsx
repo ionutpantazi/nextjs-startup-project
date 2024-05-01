@@ -28,11 +28,7 @@ export interface ComponentSectionsSection4Props {
 }
 
 export const Section4Container = styled.div`
-  padding: 40px 60px;
 
-  @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 20px 30px;
-  }
 `
 
 const FirstColumn = styled.div`

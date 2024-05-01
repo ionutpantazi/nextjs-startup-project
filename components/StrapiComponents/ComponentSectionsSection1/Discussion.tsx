@@ -160,6 +160,7 @@ const CustomPagination = styled.div`
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding-top: 10px;
+    padding-bottom: 20px;
   }
 `
 

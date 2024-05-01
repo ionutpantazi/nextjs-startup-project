@@ -45,7 +45,11 @@ const CarouselTitle = styled.div`
   font-size: 22px;
   font-weight: 600;
   line-height: 28px;
-  padding-left: 40px;
+  padding-left: 60px;
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    padding-left: 20px;
+  }
 `
 
 const CarouselShowAll = styled.div`

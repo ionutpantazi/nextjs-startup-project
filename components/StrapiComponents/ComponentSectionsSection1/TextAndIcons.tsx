@@ -38,6 +38,8 @@ export type TextAndIconsProps = {
 export interface TextAndIconsDataProps {
   data: TextAndIconsProps
   agendaItems?: any
+  handleAgendaDateChange?: (data: string) => void;
+  selectedAgendaData?: string;
 }
 
 const TextAndIconsContainer = styled.div`
@@ -134,6 +136,7 @@ const DateContainer = styled.div <{ active?: any }>`
   }
 
   &:hover {
+    cursor: pointer;
     border-radius: ${props => props.theme.borderRadius.components.small};
     border-style: solid;
     border-width: 2px;
@@ -188,7 +191,9 @@ const generateAgendaDatesArray = (agendaItems: [AgendaItems]) => {
 
 const TextAndIcons = ({
   data,
-  agendaItems
+  agendaItems,
+  handleAgendaDateChange,
+  selectedAgendaData,
 }: TextAndIconsDataProps) => {
 
   return (
@@ -257,7 +262,9 @@ const TextAndIcons = ({
         {data.Icons.Type == 'Agenda' && generateAgendaDatesArray(agendaItems).length &&
           <DatesContainer className='flex flex-row flex-wrap gap-2'>
             {generateAgendaDatesArray(agendaItems).map((agendaDate: any, index: number) => (
-              <DateContainer as='a' href='#' key={index} className='flex flex-col gap-2 justify-center' active={index == 0 ? 'true' : 'false'}>
+              <DateContainer key={index} className='flex flex-col gap-2 justify-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
+                onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
+              >
                 <AgendaDay className=''>
                   {moment(agendaDate).format('ddd')}
                 </AgendaDay>

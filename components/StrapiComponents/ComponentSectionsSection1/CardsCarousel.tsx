@@ -65,10 +65,6 @@ const CarouselMoreDetails = styled(CarouselShowAll)`
 `
 
 const CardsContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  height: 200px;
 `
 
 const CardContainer = styled.div`
@@ -149,6 +145,7 @@ const CustomPagination = styled.div`
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding-top: 20px;
+    padding-bottom: 40px;
   }
 `
 
@@ -165,8 +162,8 @@ const ShowAll = styled.div`
       color: ${props => props.theme.colors.lightgrey};
     }
   }
-  
-  height: 310px;
+
+  margin-top: 30px;
 `
 
 const EmptyComponent = styled.div`
@@ -292,15 +289,12 @@ const CardsCarousel = ({
           }
         </CardsContainer>
       </CardsCarouselContainer>
-      {!data.Title
-        ?
+      {!data.Title &&
         <ShowAll className='flex justify-center items-end'>
           <span className='w-fit'>
             Show all
           </span>
         </ShowAll>
-        :
-        <EmptyComponent />
       }
 
     </>

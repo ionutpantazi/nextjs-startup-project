@@ -57,10 +57,6 @@ const CarouselTitle = styled.div`
 `
 
 const CardsContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  height: 200px;
 `
 
 const CardContainer = styled.div`
@@ -232,7 +228,6 @@ const CardsCarousel4 = ({
           </Swiper>
         </CardsContainer>
       </CardsCarouselContainer>
-      <EmptyComponent />
     </>
   )
 }

@@ -34,6 +34,7 @@ export type Workshop = {
   attributes: {
     Title: string
     Intro: string
+    Image: StrapiFile,
   }
 }
 

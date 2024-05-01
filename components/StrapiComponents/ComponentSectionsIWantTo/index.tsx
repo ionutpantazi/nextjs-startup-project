@@ -38,7 +38,7 @@ const ItemsContainer = styled.div`
 const ItemContainer = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.small};
   background-color: ${props => props.theme.colors.grey};
-  padding: 20px 30px;
+  padding: 20px 10px;
 
   &:hover {
     background-color: ${props => props.theme.colors.darkgrey};

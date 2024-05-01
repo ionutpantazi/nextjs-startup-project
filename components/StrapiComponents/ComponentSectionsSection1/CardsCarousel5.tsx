@@ -63,10 +63,6 @@ const CarouselMoreDetails = styled(CarouselShowAll)`
 `
 
 const CardsContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  height: 200px;
 `
 
 const CardContainer = styled.div`
@@ -148,8 +144,8 @@ const ShowAll = styled.div`
       color: ${props => props.theme.colors.lightgrey};
     }
   }
-  
-  height: 350px;
+
+  margin-top: 30px;
 `
 
 const ActiveSlide = styled.div <{ hidebackground?: any }>`

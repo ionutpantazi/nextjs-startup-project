@@ -37,10 +37,6 @@ const CardsCarousel3Container = styled.div`
 `
 
 const CardsContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  height: 200px;
 `
 
 const CardContainer = styled.div`
@@ -69,6 +65,7 @@ const CustomPagination = styled.div`
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding-top: 20px;
+    padding-bottom: 40px;
   }
 `
 
@@ -138,7 +135,6 @@ const CardsCarousel3 = ({
           </CustomPagination>
         </CardsContainer>
       </CardsCarousel3Container>
-      <EmptyComponent />
     </>
   )
 }
