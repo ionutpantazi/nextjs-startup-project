@@ -204,7 +204,7 @@ const Button2 = styled.div`
   }
 `
 
-function removeMinutes(momentTime: string) {
+export function removeMinutes(momentTime: string) {
   return momentTime.replace(/(:00)/g, '');
 }
 

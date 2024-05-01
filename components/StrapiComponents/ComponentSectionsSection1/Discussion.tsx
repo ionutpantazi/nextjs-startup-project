@@ -134,14 +134,14 @@ const Author = styled.div`
   margin: 4px 0px -17px 10px;
 `
 
-const StyledNextImage = styled(NextImage)`
+export const StyledNextImage = styled(NextImage)`
   margin-left: 5px;
   border-radius: 50%;
   width: 30px;
   height: 30px;
 `
 
-const AuthorDetails = styled.div`
+export const AuthorDetails = styled.div`
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;
@@ -163,7 +163,7 @@ const CustomPagination = styled.div`
   }
 `
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
   margin-top: 12px;
   span {
     padding-left: 4px;
@@ -177,7 +177,7 @@ const ButtonsContainer = styled.div`
   }
 `
 
-const Divider = styled.div`
+export const Divider = styled.div`
   padding-top: 10px;
   border-bottom: 2px solid black;
 `
@@ -219,7 +219,7 @@ const CommentBox = styled.div`
   padding: 10px;
 `
 
-const CommentAuthor = styled.div`
+export const CommentAuthor = styled.div`
 `
 
 const CommentText = styled.div`
@@ -230,7 +230,7 @@ const CommentText = styled.div`
   line-height: 16px;
 `
 
-const OtherDiscussionCommentText = styled(CommentText)`
+export const OtherDiscussionCommentText = styled(CommentText)`
   padding: 10px 0px 0px 0px; 
   font-weight: 500;
 `
@@ -255,7 +255,7 @@ const CommentActionButtons = styled.div`
   padding-left: 50px;
 `
 
-const OtherDiscussionActionButtons = styled(CommentActionButtons)`
+export const OtherDiscussionActionButtons = styled(CommentActionButtons)`
   margin-top: 6px;
   padding-left: 0px;
   svg {
@@ -285,13 +285,13 @@ const Category = styled.div <{ active?: any }>`
   }
 `
 
-const OtherDiscussionsContainer = styled.div`
+export const OtherDiscussionsContainer = styled.div`
 `
 
-const OtherDiscussionInnerBox = styled.div`
+export const OtherDiscussionInnerBox = styled.div`
 `
 
-const SeeAllButton = styled.div`
+export const SeeAllButton = styled.div`
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
@@ -320,7 +320,7 @@ const extractDiscussionCategories = (props: [DiscussionData]) => {
   return categoriesArray
 }
 
-const ActionButtons = (props: any) => {
+export const ActionButtons = (props: any) => {
   return (
     <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
       <div className='flex flex-row items-center'>
@@ -379,7 +379,7 @@ const CommentContent = (props: any) => {
   )
 }
 
-const OtherDiscussion = (props: any) => {
+export const OtherDiscussion = (props: any) => {
   let discussion = props?.discussion;
   if (!discussion) return <></>
   return (

@@ -8,6 +8,8 @@ import {
   TEXT_AND_ICONS,
   AGENDA,
   CARDS_CAROUSEL,
+  CARDS_CAROUSEL4,
+  CARDS_CAROUSEL5,
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -19,6 +21,8 @@ export const PAGES_QUERY = gql`
   ${TEXT_AND_ICONS}
   ${AGENDA}
   ${CARDS_CAROUSEL}
+  ${CARDS_CAROUSEL4}
+  ${CARDS_CAROUSEL5}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -301,6 +305,12 @@ export const PAGES_QUERY = gql`
               TextAndIcons {
                 ...TextAndIcons
               }
+              CardsCarousel5 {
+                ...CardsCarousel5
+              }
+              CardsCarousel4 {
+                ...CardsCarousel4
+              }
               CardsCarousel {
                 ...CardsCarousel
               }
@@ -373,6 +383,24 @@ export const PAGES_QUERY = gql`
                       attributes {
                         ...CoreUploadFileFields
                       }
+                    }
+                  }
+                }
+              }
+            }
+            ... on ComponentSectionsSection4 {
+              id
+              CardsCarousel {
+                ...CardsCarousel
+              }
+              DiscussionBox {
+                id
+                Title
+                Discussions {
+                  data {
+                    id
+                    attributes {
+                      ...DiscussionData
                     }
                   }
                 }

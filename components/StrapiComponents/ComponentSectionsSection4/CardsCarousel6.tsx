@@ -27,14 +27,14 @@ export type CardProps = {
   Image?: StrapiFile
 }
 
-export type CardsCarouselProps = {
+export type CardsCarousel6Props = {
   id: string
   Title: string
   Cards: [CardProps]
 }
 
 export interface CardsCarouselDataProps {
-  data: CardsCarouselProps
+  data: CardsCarousel6Props
 }
 
 const CardsCarouselContainer = styled.div`
@@ -45,12 +45,14 @@ const CarouselTitle = styled.div`
   font-size: 22px;
   font-weight: 600;
   line-height: 28px;
+  padding-left: 40px;
 `
 
 const CarouselShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
   line-height: 16px;
+  padding-right: 40px;
   color: ${props => props.theme.colors.grey1};
 
   &:hover {
@@ -60,15 +62,13 @@ const CarouselShowAll = styled.div`
 `
 
 const CarouselMoreDetails = styled(CarouselShowAll)`
+  padding-right: 16px;
   position: absolute;
-  right: 16px;
+  right: 0px;
 `
 
 const CardsContainer = styled.div`
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  height: 200px;
+  height: auto;
 `
 
 const CardContainer = styled.div`
@@ -146,31 +146,11 @@ const CustomPagination = styled.div`
   }
 
   padding-top: 30px;
+  padding-bottom: 30px;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding-top: 20px;
   }
-`
-
-const ShowAll = styled.div`
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
-  span {
-    height: fit-content;
-
-    &:hover {
-      cursor: pointer;
-      color: ${props => props.theme.colors.lightgrey};
-    }
-  }
-  
-  height: 310px;
-`
-
-const EmptyComponent = styled.div`
-  height: 350px;
 `
 
 const CardsCarousel = ({
@@ -203,9 +183,6 @@ const CardsCarousel = ({
               <CarouselTitle>
                 {data.Title}
               </CarouselTitle>
-              <CarouselShowAll>
-                Show all
-              </CarouselShowAll>
             </>
           }
         </div>
@@ -213,8 +190,10 @@ const CardsCarousel = ({
           <Swiper
             spaceBetween={isMobile ? '10%' : 40}
             slidesPerView={'auto'}
+            loop={true}
+            centeredSlides={true}
             pagination={{
-              el: `.swiper-custom-pagination-${data.id}`,
+              el: `.swiper-cards-carousel6-${data.id}`,
               clickable: true,
             }}
             modules={[Pagination]}
@@ -287,22 +266,11 @@ const CardsCarousel = ({
           </Swiper>
           {data.Title &&
             <CustomPagination className=''>
-              <div className={`flex justify-center gap-2 swiper-custom-pagination-${data.id}`} />
+              <div className={`flex justify-center gap-2 swiper-cards-carousel6-${data.id}`} />
             </CustomPagination>
           }
         </CardsContainer>
       </CardsCarouselContainer>
-      {!data.Title
-        ?
-        <ShowAll className='flex justify-center items-end'>
-          <span className='w-fit'>
-            Show all
-          </span>
-        </ShowAll>
-        :
-        <EmptyComponent />
-      }
-
     </>
   )
 }

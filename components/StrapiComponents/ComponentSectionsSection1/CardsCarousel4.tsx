@@ -17,24 +17,33 @@ import {
 } from 'components/Bootstrap/Common'
 import FAIcon from 'components/Bootstrap/FAIcon'
 
+export type Tagsprops = {
+  id: string
+  attributes: {
+    Name: string
+    Slug: string
+  }
+}
+
 export type CardProps = {
   id: string,
   Title?: string
   Sub_Title?: string
-  Type?: string
   Impressions?: string
   Link?: string
-  Image?: StrapiFile
+  Tags?: {
+    data: [Tagsprops]
+  }
 }
 
-export type CardsCarouselProps = {
+export type CardsCarousel4Props = {
   id: string
   Title: string
   Cards: [CardProps]
 }
 
-export interface CardsCarouselDataProps {
-  data: CardsCarouselProps
+export interface CardsCarousel4DataProps {
+  data: CardsCarousel4Props
 }
 
 const CardsCarouselContainer = styled.div`
@@ -45,23 +54,6 @@ const CarouselTitle = styled.div`
   font-size: 22px;
   font-weight: 600;
   line-height: 28px;
-`
-
-const CarouselShowAll = styled.div`
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
-
-  &:hover {
-    cursor: pointer;
-    color: ${props => props.theme.colors.lightgrey};
-  }
-`
-
-const CarouselMoreDetails = styled(CarouselShowAll)`
-  position: absolute;
-  right: 16px;
 `
 
 const CardsContainer = styled.div`
@@ -77,24 +69,11 @@ const CardContainer = styled.div`
   background-color: ${props => props.theme.colors.darkestgrey};
 `
 
-const ImageContainer = styled.div <{ hidebackground?: any }>`
-  ${({ hidebackground }) => css`
-    ${props => hidebackground == 'true' ? '' : 'background: ' + props.theme.colors.brand + ';'};
-  `}
-  border-radius: ${props => props.theme.borderRadius.components.small};
-  height: 150px;
-  overflow: hidden;
-`
-
 const ImageIcon = styled.div`
   background: ${props => props.theme.colors.brand};
   border-radius: 50%;
   height: 22px;
   width: 22px;
-  position: relative;
-  z-index: 2;
-  margin-left: 10px;
-  margin-top: -10px;
   svg {
     color: ${props => props.theme.colors.white};
   }
@@ -106,7 +85,7 @@ const CardTitle = styled.div`
   font-weight: 600;
   line-height: 24px;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 `
@@ -123,6 +102,15 @@ const CardSubTitle = styled.div`
   overflow: hidden;
 `
 
+const AgendaTag = styled.div`
+  border-radius: ${props => props.theme.borderRadius.components.xsmall};
+  background-color: ${props => props.theme.colors.grey};
+  padding: 4px;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 11px;
+`
+
 const ButtonsContainer = styled.div`
   margin-top: 6px;
   span {
@@ -137,52 +125,20 @@ const ButtonsContainer = styled.div`
   }
 `
 
-const CustomPagination = styled.div`
-  .swiper-pagination-bullet {
-    background: white;
-  }
-  .swiper-pagination-bullet-active {
-    background: ${props => props.theme.colors.brand};
-  }
-
-  padding-top: 30px;
-
-  @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    padding-top: 20px;
-  }
-`
-
-const ShowAll = styled.div`
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
-  span {
-    height: fit-content;
-
-    &:hover {
-      cursor: pointer;
-      color: ${props => props.theme.colors.lightgrey};
-    }
-  }
-  
-  height: 310px;
-`
-
 const EmptyComponent = styled.div`
-  height: 350px;
+  height: 180px;
 `
 
-const CardsCarousel = ({
+const CardsCarousel4 = ({
   data
-}: CardsCarouselDataProps) => {
+}: CardsCarousel4DataProps) => {
 
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
 
   const applyCardStyle = (width: number | undefined, card: CardProps) => {
-    let isLarge = card.Type == 'large';
+    let isLarge = false;
     if (isMobile) {
       return {
         width: isLarge ? '100%' : '45%',
@@ -198,45 +154,19 @@ const CardsCarousel = ({
     <>
       <CardsCarouselContainer className=''>
         <div className='flex flex-row justify-between mb-4 items-center'>
-          {data.Title &&
-            <>
-              <CarouselTitle>
-                {data.Title}
-              </CarouselTitle>
-              <CarouselShowAll>
-                Show all
-              </CarouselShowAll>
-            </>
-          }
+          <CarouselTitle>
+            {data.Title}
+          </CarouselTitle>
         </div>
         <CardsContainer className=''>
           <Swiper
             spaceBetween={isMobile ? '10%' : 40}
             slidesPerView={'auto'}
-            pagination={{
-              el: `.swiper-custom-pagination-${data.id}`,
-              clickable: true,
-            }}
-            modules={[Pagination]}
           >
             {data.Cards.map((card: CardProps) => (
               <SwiperSlide key={card.id} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
                 <CardContainer>
-                  <ImageContainer className='relative' hidebackground={card.Image?.data?.attributes?.url ? 'true' : 'false'}>
-                    {card.Image?.data?.attributes?.url &&
-                      <>
-                        <RadialContainer />
-                        <NextImage
-                          src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
-                          className=''
-                          alt={card.Image.data?.attributes?.alternativeText ?? ''}
-                          layout='fill'
-                          objectFit='cover'
-                        />
-                      </>
-                    }
-                  </ImageContainer>
-                  {!card.Link &&
+                  <div className='flex flex-row gap-1'>
                     <ImageIcon className=''>
                       <FAIcon
                         icon={'fa-leaf'}
@@ -244,13 +174,28 @@ const CardsCarousel = ({
                         height={18}
                       />
                     </ImageIcon>
-                  }
+                    <ImageIcon className=''>
+                      <FAIcon
+                        icon={'fa-leaf'}
+                        width={18}
+                        height={18}
+                      />
+                    </ImageIcon>
+                  </div>
                   <CardTitle>
                     {card.Title}
                   </CardTitle>
                   <CardSubTitle>
                     {card.Sub_Title}
                   </CardSubTitle>
+                  <div className='flex flex-row gap-1 pt-1'>
+                    {card.Tags?.data.map((tag: Tagsprops, index: number) => (
+                      <AgendaTag key={index} className=''>
+                        {tag.attributes.Name}
+                      </AgendaTag>
+                    ))
+                    }
+                  </div>
                   {card.Impressions &&
                     <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
                       <div className='flex flex-row items-center'>
@@ -273,11 +218,11 @@ const CardsCarousel = ({
                         width={16}
                         height={16}
                       />
-                      {card.Link &&
-                        <CarouselMoreDetails>
-                          More Details
-                        </CarouselMoreDetails>
-                      }
+                      <FAIcon
+                        icon={'fa-file-pdf'}
+                        width={16}
+                        height={16}
+                      />
                     </ButtonsContainer>
                   }
                 </CardContainer>
@@ -285,26 +230,11 @@ const CardsCarousel = ({
             ))
             }
           </Swiper>
-          {data.Title &&
-            <CustomPagination className=''>
-              <div className={`flex justify-center gap-2 swiper-custom-pagination-${data.id}`} />
-            </CustomPagination>
-          }
         </CardsContainer>
       </CardsCarouselContainer>
-      {!data.Title
-        ?
-        <ShowAll className='flex justify-center items-end'>
-          <span className='w-fit'>
-            Show all
-          </span>
-        </ShowAll>
-        :
-        <EmptyComponent />
-      }
-
+      <EmptyComponent />
     </>
   )
 }
 
-export default CardsCarousel
+export default CardsCarousel4

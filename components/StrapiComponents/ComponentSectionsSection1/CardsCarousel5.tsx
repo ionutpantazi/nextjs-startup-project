@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled, { css } from 'styled-components'
-import { theme } from 'lib/theme'
 import { ThemeContext } from 'components/Layout';
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
@@ -10,7 +9,6 @@ import {
 } from 'interfaces'
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import {
   RadialContainer,
@@ -27,14 +25,14 @@ export type CardProps = {
   Image?: StrapiFile
 }
 
-export type CardsCarouselProps = {
+export type CardsCarousel5Props = {
   id: string
   Title: string
   Cards: [CardProps]
 }
 
-export interface CardsCarouselDataProps {
-  data: CardsCarouselProps
+export interface CardsCarousel5DataProps {
+  data: CardsCarousel5Props
 }
 
 const CardsCarouselContainer = styled.div`
@@ -75,6 +73,10 @@ const CardContainer = styled.div`
   border-radius: 6px;
   padding: 10px;
   background-color: ${props => props.theme.colors.darkestgrey};
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const ImageContainer = styled.div <{ hidebackground?: any }>`
@@ -91,10 +93,6 @@ const ImageIcon = styled.div`
   border-radius: 50%;
   height: 22px;
   width: 22px;
-  position: relative;
-  z-index: 2;
-  margin-left: 10px;
-  margin-top: -10px;
   svg {
     color: ${props => props.theme.colors.white};
   }
@@ -106,7 +104,7 @@ const CardTitle = styled.div`
   font-weight: 600;
   line-height: 24px;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 `
@@ -137,21 +135,6 @@ const ButtonsContainer = styled.div`
   }
 `
 
-const CustomPagination = styled.div`
-  .swiper-pagination-bullet {
-    background: white;
-  }
-  .swiper-pagination-bullet-active {
-    background: ${props => props.theme.colors.brand};
-  }
-
-  padding-top: 30px;
-
-  @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    padding-top: 20px;
-  }
-`
-
 const ShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
@@ -166,20 +149,32 @@ const ShowAll = styled.div`
     }
   }
   
-  height: 310px;
-`
-
-const EmptyComponent = styled.div`
   height: 350px;
 `
 
-const CardsCarousel = ({
+const ActiveSlide = styled.div <{ hidebackground?: any }>`
+  ${({ hidebackground }) => css`
+    ${props => hidebackground == 'true' ? '' : 'background: ' + props.theme.colors.brand + ';'};
+  `}
+  border-radius: ${props => props.theme.borderRadius.components.large};
+  height: 600px;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    height: 300px;
+    margin-bottom: 10px;
+  }
+`
+
+const CardsCarousel5 = ({
   data
-}: CardsCarouselDataProps) => {
+}: CardsCarousel5DataProps) => {
 
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+  const [activeSlide, setActiveSlide] = useState<any>(data.Cards[0]);
 
   const applyCardStyle = (width: number | undefined, card: CardProps) => {
     let isLarge = card.Type == 'large';
@@ -197,31 +192,42 @@ const CardsCarousel = ({
   return (
     <>
       <CardsCarouselContainer className=''>
-        <div className='flex flex-row justify-between mb-4 items-center'>
-          {data.Title &&
+        <ActiveSlide className='relative' hidebackground={activeSlide.Image?.data?.attributes?.url ? 'true' : 'false'}>
+          {activeSlide.Image?.data?.attributes?.url &&
             <>
-              <CarouselTitle>
-                {data.Title}
-              </CarouselTitle>
-              <CarouselShowAll>
-                Show all
-              </CarouselShowAll>
+              <RadialContainer />
+              <NextImage
+                src={IMAGE_DOMAIN + activeSlide.Image.data?.attributes?.url}
+                className=''
+                alt={activeSlide.Image.data?.attributes?.alternativeText ?? ''}
+                layout='fill'
+                objectFit='cover'
+              />
             </>
           }
+        </ActiveSlide>
+        <div className='flex flex-row justify-between mb-4 items-center'>
+          <CarouselTitle>
+            {data.Title}
+          </CarouselTitle>
+          <CarouselShowAll>
+            Show all
+          </CarouselShowAll>
         </div>
         <CardsContainer className=''>
           <Swiper
             spaceBetween={isMobile ? '10%' : 40}
             slidesPerView={'auto'}
-            pagination={{
-              el: `.swiper-custom-pagination-${data.id}`,
-              clickable: true,
+            onSlideChange={(swiperCore) => {
+              const {
+                activeIndex,
+              } = swiperCore;
+              setActiveSlide(data.Cards[activeIndex])
             }}
-            modules={[Pagination]}
           >
             {data.Cards.map((card: CardProps) => (
               <SwiperSlide key={card.id} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
-                <CardContainer>
+                <CardContainer onClick={() => setActiveSlide(card)}>
                   <ImageContainer className='relative' hidebackground={card.Image?.data?.attributes?.url ? 'true' : 'false'}>
                     {card.Image?.data?.attributes?.url &&
                       <>
@@ -285,26 +291,15 @@ const CardsCarousel = ({
             ))
             }
           </Swiper>
-          {data.Title &&
-            <CustomPagination className=''>
-              <div className={`flex justify-center gap-2 swiper-custom-pagination-${data.id}`} />
-            </CustomPagination>
-          }
         </CardsContainer>
       </CardsCarouselContainer>
-      {!data.Title
-        ?
-        <ShowAll className='flex justify-center items-end'>
-          <span className='w-fit'>
-            Show all
-          </span>
-        </ShowAll>
-        :
-        <EmptyComponent />
-      }
-
+      <ShowAll className='flex justify-center items-end'>
+        <span className='w-fit'>
+          Show all
+        </span>
+      </ShowAll>
     </>
   )
 }
 
-export default CardsCarousel
+export default CardsCarousel5

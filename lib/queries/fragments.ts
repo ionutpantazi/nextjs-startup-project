@@ -222,3 +222,48 @@ export const CARDS_CAROUSEL = gql`
     }
   }
 `
+
+export const CARDS_CAROUSEL4 = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment CardsCarousel4 on ComponentSectionsCardsCarousel4 {
+    id
+    Title
+    Cards {
+      id
+      Title
+      Sub_Title
+      Impressions
+      Tags {
+        data {
+          attributes {
+            Name
+            Slug
+          }
+        }
+      } 
+    }
+  }
+`
+
+export const CARDS_CAROUSEL5 = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment CardsCarousel5 on ComponentSectionsCardsCarousel5 {
+    id
+    Title
+    Cards {
+      id
+      Type
+      Title
+      Sub_Title
+      Impressions
+      Link
+      Image {
+        data {
+          attributes {
+            ...CoreUploadFileFields
+          }
+        }
+      }
+    }
+  }
+`

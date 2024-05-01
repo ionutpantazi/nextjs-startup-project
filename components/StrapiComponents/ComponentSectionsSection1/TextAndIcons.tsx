@@ -236,8 +236,8 @@ const TextAndIcons = ({
               {data.Icons.Title}
             </IconsTitle>
             <IconsContainer className='flex flex-row flex-wrap gap-4'>
-              {data.Icons.Icons.map((icon: IconsProps) => (
-                <IconButton as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4' active={icon.id == '1' ? 'true' : 'false'}>
+              {data.Icons.Icons.map((icon: IconsProps, index: number) => (
+                <IconButton as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
                   {icon?.FAIcon?.Icon &&
                     <FAIcon
                       icon={icon?.FAIcon?.Icon}

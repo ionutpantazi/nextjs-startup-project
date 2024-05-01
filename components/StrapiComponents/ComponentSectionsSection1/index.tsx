@@ -24,11 +24,15 @@ import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import TextAndIcons, { TextAndIconsProps } from 'components/StrapiComponents/ComponentSectionsSection1/TextAndIcons'
 import Discussion, { DiscussionProps } from 'components/StrapiComponents/ComponentSectionsSection1/Discussion'
 import CardsCarousel, { CardsCarouselProps } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel'
+import CardsCarousel4, { CardsCarousel4Props } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel4'
+import CardsCarousel5, { CardsCarousel5Props } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel5'
 
 export type Section1Props = {
   id: string,
   TextAndIcons: TextAndIconsProps
   CardsCarousel: CardsCarouselProps
+  CardsCarousel4: CardsCarousel4Props
+  CardsCarousel5: CardsCarousel5Props
   Discussion: DiscussionProps
 }
 
@@ -47,9 +51,21 @@ const ComponentSectionsSection1 = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            <TextAndIcons data={data.TextAndIcons}/>
-            <CardsCarousel data={data.CardsCarousel} />
-            <Discussion data={data.Discussion} />
+            {data.TextAndIcons &&
+              <TextAndIcons data={data.TextAndIcons}/>
+            }
+            {data.CardsCarousel5 &&
+              <CardsCarousel5 data={data.CardsCarousel5} />
+            }
+            {data.CardsCarousel4 &&
+              <CardsCarousel4 data={data.CardsCarousel4} />
+            }
+            {data.CardsCarousel &&
+              <CardsCarousel data={data.CardsCarousel}/>
+            }
+            {data.Discussion &&
+              <Discussion data={data.Discussion} />
+            }
           </ComponentContainer>
         </InnerContainer>
       </Container>
