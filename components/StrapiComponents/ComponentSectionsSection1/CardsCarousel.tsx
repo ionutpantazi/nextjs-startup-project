@@ -51,11 +51,11 @@ const CarouselShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
   line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
+  color: ${props => props.theme.colors.font1};
 
   &:hover {
     cursor: pointer;
-    color: ${props => props.theme.colors.lightgrey};
+    color: ${props => props.theme.colors.font5};
   }
 `
 
@@ -70,7 +70,7 @@ const CardsContainer = styled.div`
 const CardContainer = styled.div`
   border-radius: 6px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.darkestgrey};
+  background-color: ${props => props.theme.colors.backgrounds?.carousel1};
 `
 
 const ImageContainer = styled.div <{ hidebackground?: any }>`
@@ -153,13 +153,13 @@ const ShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
   line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
+  color: ${props => props.theme.colors.font1};
   span {
     height: fit-content;
 
     &:hover {
       cursor: pointer;
-      color: ${props => props.theme.colors.lightgrey};
+      color: ${props => props.theme.colors.font5};
     }
   }
 

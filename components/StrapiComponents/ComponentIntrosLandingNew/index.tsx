@@ -71,15 +71,24 @@ export interface IntrosLandingProps {
 }
 
 const ImageContainer = styled.div`
-  height: 400px;
+  height: 500px;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 200px;
   }
+  margin-top: 40px;
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    margin-top: -80px;
+  }
+`
+
+const StyledRadialContainer = styled(RadialContainer)`
+  ${props => props.theme.colors.backgrounds?.radial_header_image == 'unset' ? 'background: unset' : ''};
 `
 
 const IntroLandingContainer = styled(ComponentContainer)`
   padding: 40px 20px;
+  background-color: ${props => props.theme.colors.backgrounds?.header_bg};
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 20px 10px;
@@ -91,6 +100,7 @@ const EventTitle = styled.div`
   font-weight: 400;
   line-height: 64px;
   text-align: center;
+  color: ${props => props.theme.colors.headings.h1};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 36px;
@@ -115,15 +125,15 @@ const EventContainer = styled.div`
 `
 
 const EventDetails = styled(ComponentContainer)`
-  background-color: ${props => props.theme.colors.darkgrey};
+  background-color: ${props => props.theme.colors.backgrounds?.event_details};
   filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   -moz-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   padding: 24px 50px 24px 50px;
+  border-radius: ${props => props.theme.borderRadius.large};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding: 24px;
-
   }
 `
 
@@ -172,7 +182,7 @@ const EventDetailsSubTitle = styled.div`
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;
-  color: ${props => props.theme.colors.grey1};
+  color: ${props => props.theme.colors.font1};
 `
 
 const EventDetailsContainer = styled.div`
@@ -193,10 +203,10 @@ const EventDetailsButtonContainer = styled.div`
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
-  color: ${props => props.theme.colors.brand};
+  color: ${props => props.theme.colors.font3};
 
   &:hover {
-    color: ${props => props.theme.colors.brandlight};
+    color: ${props => props.theme.colors.font4};
   }
 `
 
@@ -273,6 +283,7 @@ const IWantToItemTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
+  color: ${props => props.theme.colors.font2};
 `
 
 const EventContentContainer = styled.div`
@@ -283,7 +294,7 @@ const EventContent = styled.div`
 
 const Toggle = styled.label`
   border-radius: 40px;
-  background-color: ${props => props.theme.colors.darkgrey};
+  background-color: ${props => props.theme.colors.backgrounds?.theme_toggle_off};
   filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   -moz-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
@@ -296,7 +307,7 @@ const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   font-weight: 500;
   line-height: 16px;
   ${({ isdefaulttheme }) => css`
-    ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
+    ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.backgrounds?.theme_toggle_off};
   `}
 `
 
@@ -308,7 +319,7 @@ const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   line-height: 16px;
   width: 100%;
   ${({ isdefaulttheme }) => css`
-    ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.darkgrey};
+    ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.backgrounds?.theme_toggle_off};
   `}
 `
 
@@ -337,7 +348,7 @@ const ComponentIntrosLandingNew = ({
         <ImageContainer className='relative w-screen'>
           {backgroundImage &&
             <>
-              <RadialContainer />
+              <StyledRadialContainer />
               <NextImage
                 src={backgroundImage}
                 className=''

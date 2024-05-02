@@ -26,6 +26,8 @@ import Discussion, { DiscussionProps } from 'components/StrapiComponents/Compone
 import CardsCarousel, { CardsCarouselProps } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel'
 import CardsCarousel4, { CardsCarousel4Props } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel4'
 import CardsCarousel5, { CardsCarousel5Props } from 'components/StrapiComponents/ComponentSectionsSection1/CardsCarousel5'
+import Lists, { ListsProps } from 'components/StrapiComponents/ComponentSectionsSection2/Lists'
+import Section4, { Section4Props } from 'components/StrapiComponents/ComponentSectionsSection1/Section4'
 
 export type Section1Props = {
   id: string,
@@ -34,6 +36,8 @@ export type Section1Props = {
   CardsCarousel4: CardsCarousel4Props
   CardsCarousel5: CardsCarousel5Props
   Discussion: DiscussionProps
+  Lists?: ListsProps
+  Section4?: Section4Props
 }
 
 export interface ComponentSectionsSection1Props {
@@ -52,7 +56,7 @@ const ComponentSectionsSection1 = ({
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
             {data.TextAndIcons &&
-              <TextAndIcons data={data.TextAndIcons}/>
+              <TextAndIcons data={data.TextAndIcons} />
             }
             {data.CardsCarousel5 &&
               <CardsCarousel5 data={data.CardsCarousel5} />
@@ -61,10 +65,16 @@ const ComponentSectionsSection1 = ({
               <CardsCarousel4 data={data.CardsCarousel4} />
             }
             {data.CardsCarousel &&
-              <CardsCarousel data={data.CardsCarousel}/>
+              <CardsCarousel data={data.CardsCarousel} />
             }
             {data.Discussion &&
               <Discussion data={data.Discussion} />
+            }
+            {data.Lists &&
+              <Lists data={data.Lists} />
+            }
+            {data.Section4 &&
+              <Section4 data={data.Section4} />
             }
           </ComponentContainer>
         </InnerContainer>

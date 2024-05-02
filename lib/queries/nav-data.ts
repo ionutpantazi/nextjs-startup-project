@@ -4,7 +4,8 @@ import {
   CORE_UPLOAD_FILE_FIELDS,
 } from 'lib/queries/fragments'
 import {
-  StrapiFileFields
+  StrapiFile,
+  FAIconProps
 } from 'interfaces'
 import { HEADER_NAVIGATION_ID_OR_SLUG, FOOTER_NAVIGATION_ID_OR_SLUG } from 'lib/constants'
 import { generateMenuList } from 'utils/helpers'
@@ -58,14 +59,36 @@ export const FOOTER_NAVIGATION_QUERY = gql`
   }
 `
 
-export type NavigationData = {
-  siteLogo?: StrapiFileFields
-  headerNavigationData?: [
-    NavigationItem
-  ],
-  footerNavigationData?: [
-    NavigationItem
+export type PillarsProps = {
+  id: string
+  Title: string
+  FAIcon: FAIconProps
+  Items: [
+    id: string,
+    Title: string,
+    FAIcon: FAIconProps,
   ]
+}
+
+export type HeaderNavigationProps = {
+  Logo: StrapiFile
+  Pillars: [PillarsProps]
+  MorePillars: [PillarsProps]
+}
+
+export type FooterNavigationProps = {
+  Logo: StrapiFile
+  Pillars: [PillarsProps]
+  Disclaimer: string
+}
+
+export type NavigationData = {
+  data: {
+    attributes: {
+      Header_Navigation: HeaderNavigationProps
+      Footer_Navigation: FooterNavigationProps
+    }
+  }
 }
 
 export type NavigationItem = {

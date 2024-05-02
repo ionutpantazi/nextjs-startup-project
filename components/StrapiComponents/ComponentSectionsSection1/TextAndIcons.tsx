@@ -63,7 +63,7 @@ const DescriptionContainer = styled.div`
   font-weight: 300;
   line-height: 24px;
   padding-top: 20px;
-  color: ${props => props.theme.colors.grey1};
+  color: ${props => props.theme.colors.font1};
 `
 
 const ReadMore = styled.div`

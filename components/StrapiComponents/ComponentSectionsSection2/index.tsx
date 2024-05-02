@@ -17,6 +17,7 @@ import TextAndIcons, { TextAndIconsProps } from '../ComponentSectionsSection1/Te
 import Agenda, { AgendaItems } from './Agenda'
 import CardsCarousel, { CardsCarouselProps } from '../ComponentSectionsSection1/CardsCarousel'
 import Lists, { ListsProps } from './Lists'
+import ComponentSectionsVideo, { VideoProps } from 'components/StrapiComponents/ComponentSectionsVideo'
 
 export type Section2Props = {
   id: string
@@ -30,6 +31,7 @@ export type Section2Props = {
   }
   CardsCarousel: CardsCarouselProps
   Lists?: ListsProps
+  Video?: VideoProps
 }
 
 export interface ComponentSectionsSection2Props {
@@ -43,11 +45,13 @@ const ComponentSectionsSection2 = ({
   data
 }: ComponentSectionsSection2Props) => {
 
-  const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>(data.Agenda.Items.data[0].attributes.Date);
+  const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>(data.Agenda?.Items.data[0].attributes.Date);
   var [agendaData, setAgendaData] = useState<any>(data.Agenda);
 
   useEffect(() => {
-    handleAgendaDateChange(data.Agenda.Items.data[0].attributes.Date)
+    if(data.Agenda){
+      handleAgendaDateChange(data.Agenda.Items.data[0].attributes.Date)
+    }
   }, []);
 
   const handleAgendaDateChange = (date: string) => {
@@ -72,14 +76,19 @@ const ComponentSectionsSection2 = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            <TextAndIcons data={data.TextAndIcons} agendaItems={data.Agenda.Items.data} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
+            <TextAndIcons data={data.TextAndIcons} agendaItems={data.Agenda?.Items.data} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
             {data.CardsCarousel &&
               <CardsCarousel data={data.CardsCarousel} />
             }
             {data.Lists &&
               <Lists data={data.Lists} />
             }
-            <Agenda data={agendaData} />
+            {data.Agenda &&
+              <Agenda data={agendaData} />
+            }
+            {data.Video &&
+              <ComponentSectionsVideo data={data.Video} />
+            }
           </ComponentContainer>
         </InnerContainer>
       </Container>

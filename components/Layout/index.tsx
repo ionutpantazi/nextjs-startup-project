@@ -45,6 +45,8 @@ const LayoutContainer = styled.div`
   background-color: ${theme.colors.black};
 `
 
+
+
 const Layout = ({
   title,
   customTheme,
@@ -75,6 +77,10 @@ const Layout = ({
     }
   };
 
+  const PageContentComponents = styled.div`
+    background-color: ${themeData.colors.backgrounds?.layout};
+  `
+
   return (
     <ThemeProvider theme={themeData}>
       <LayoutContainer className='flex flex-col h-screen'>
@@ -93,13 +99,13 @@ const Layout = ({
           }
         </Head>
         <HeaderWrap>
-          {navigationData && <Navbar navigationData={navigationData} />}
+          {navigationData && <Navbar navigationData={navigationData.data.attributes.Header_Navigation} />}
         </HeaderWrap>
-        <Box className='mb-auto bg-black'>
+        <PageContentComponents className='mb-auto'>
           {React.Children.map(children, child =>
             React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp })
           )}
-        </Box>
+        </PageContentComponents>
         <FooterWrap>
           {navigationData && <Footer navigationData={navigationData} />}
         </FooterWrap>

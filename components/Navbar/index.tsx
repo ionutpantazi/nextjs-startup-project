@@ -1,13 +1,133 @@
 import { useEffect } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import { NavigationData, NavigationItem } from 'lib/queries/nav-data'
-import Link from 'next/link'
+import { HeaderNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import NextImage from 'next/image'
+import FAIcon from 'components/Bootstrap/FAIcon'
+import styled, { css } from 'styled-components'
 
 export interface NavbarProps {
   isOpen?: boolean
-  navigationData: NavigationData
+  navigationData: HeaderNavigationProps
 }
+
+const NavigationContainer = styled.nav`
+  z-index: 99;
+  background-color: ${props => props.theme.colors.navbg};
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    height: 80px;
+  }
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    position: fixed;
+    top: 0px;
+    background-color: ${props => props.theme.colors.white};
+  }
+`
+
+const LogoContainer = styled.div`
+`
+
+const RightButtonsContainer = styled.div <{ show?: any }>`
+ 
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    ${({ show }) => css`
+      ${props => show == 'hidemobile' ? 'display: none' : ''};
+    `}
+  }
+
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    ${({ show }) => css`
+      ${props => show == 'hidedesktop' ? 'display: none' : ''};
+    `}
+  }
+`
+
+const RegisterBtn = styled.div`
+  border-radius: ${props => props.theme.borderRadius.components.large};
+  background-color: ${props => props.theme.colors.grey1};
+  padding: 10px 20px;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: ${props => props.theme.colors.black};
+  }
+  svg {
+    color: ${props => props.theme.colors.brand};
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${props => props.theme.colors.lightgrey};
+    svg {
+      color: ${props => props.theme.colors.brandlight};
+    }
+  }
+`
+
+const MenuBtn = styled.div`
+  border-radius: ${props => props.theme.borderRadius.components.large};
+  background-color: ${props => props.theme.colors.brand};
+  padding: 10px 20px;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: ${props => props.theme.colors.black};
+  }
+  svg {
+    color: ${props => props.theme.colors.darkestgrey};
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${props => props.theme.colors.brandlight};
+    svg {
+      color: ${props => props.theme.colors.darkgrey};
+    }
+  }
+`
+
+const MenuBtnMobile = styled(MenuBtn)`
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    display: none;
+  }
+`
+
+const MenuBtnDesktop = styled(MenuBtn)`
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    display: none;
+  }
+`
+
+const Pillar = styled.div`
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: ${props => props.theme.colors.black};
+  }
+  svg {
+    color: ${props => props.theme.colors.brand};
+  }
+  &:hover {
+    cursor: pointer;
+    span {
+      color: ${props => props.theme.colors.darkgrey};
+    }
+    svg {
+      color: ${props => props.theme.colors.brandlight};
+    }
+  }
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    justify-content: left;
+  }
+`
+
+const CollapsibleMenu = styled.div`
+  @media screen and (min-width: ${props => props.theme.screens.md}) {
+    // display: none;
+  }
+`
 
 const Navbar: React.FC<NavbarProps> = ({
   isOpen,
@@ -28,95 +148,87 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const RightButtons = (props: any) => {
     return (
-      <div className={`flex items-center gap-x-1 ${props.className}`}>
-        <button className="bg-gray-300 bg-neutral-100 hover:bg-neutral-300 text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center gap-x-1">
-          <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0.684326H14.6313V15.3157H0V0.684326Z" fill="white" fillOpacity="0.01" />
-            <path d="M7.316 6.78068C8.66278 6.78068 9.75456 5.6889 9.75456 4.34212C9.75456 2.99534 8.66278 1.90356 7.316 1.90356C5.96922 1.90356 4.87744 2.99534 4.87744 4.34212C4.87744 5.6889 5.96922 6.78068 7.316 6.78068Z" stroke="#B97ECF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M12.8026 14.0964C12.8026 11.0661 10.3461 8.60962 7.31586 8.60962C4.28561 8.60962 1.8291 11.0661 1.8291 14.0964" stroke="#B97ECF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+      <RightButtonsContainer show={props.show} className={`flex items-center gap-x-1`}>
+        <RegisterBtn className='flex items-center justify-center gap-x-1'>
+          <FAIcon
+            icon={'fa-user'}
+            width={20}
+            height={20}
+          />
           <span>Register</span>
-        </button>
+        </RegisterBtn>
         {/* Hamburger button for mobile view */}
-        <button
-          className="bg-brandColor hover:bg-brandColorLight text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center gap-x-1 lg:hidden"
-          type="button"
+        <MenuBtnDesktop
+          className='flex items-center justify-center gap-x-1'
           data-twe-collapse-init
           data-twe-target="#navbarSupportedContent1"
           aria-controls="navbarSupportedContent1"
           aria-expanded="false"
-          aria-label="Toggle navigation">
-          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.631348 0.297363H18.0367V17.7027H0.631348V0.297363Z" fill="white" fillOpacity="0.01" />
-            <path d="M3.51416 4.63049H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M3.51416 8.98181H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M3.51416 13.3331H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          aria-label="Toggle navigation"
+        >
+          <FAIcon
+            icon={'fa-bars'}
+            width={20}
+            height={20}
+          />
           <span>Menu</span>
-        </button>
-        <button className="bg-brandColor hover:bg-brandColorLight text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center gap-x-1 max-lg:hidden">
-          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.631348 0.297363H18.0367V17.7027H0.631348V0.297363Z" fill="white" fillOpacity="0.01" />
-            <path d="M3.51416 4.63049H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M3.51416 8.98181H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M3.51416 13.3331H15.1177" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        </MenuBtnDesktop>
+        <MenuBtnMobile className='flex items-center justify-center gap-x-1'>
+          <FAIcon
+            icon={'fa-bars'}
+            width={20}
+            height={20}
+          />
           <span>More</span>
-        </button>
-      </div>
+        </MenuBtnMobile>
+      </RightButtonsContainer>
     )
   }
 
   return (
-    <>
-      {/* Main navigation container */}
-      <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4">
-        <div className="flex w-full flex-wrap items-center justify-between px-3">
-          {/* Logo  */}
-          {navigationData?.siteLogo &&
-            <Link
-              className="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-              href="/">
-              {navigationData?.siteLogo?.url &&
+    <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
+      <div className="flex w-full flex-wrap items-center justify-between px-3">
+        {/* Logo  */}
+        {navigationData?.Logo?.data &&
+          <LogoContainer as='a' href='#' className='flex items-center'>
+            <>
+              {navigationData?.Logo?.data.attributes?.url &&
                 <NextImage
-                  src={IMAGE_DOMAIN + navigationData.siteLogo.url}
+                  src={IMAGE_DOMAIN + navigationData.Logo.data.attributes.url}
                   className=''
-                  alt={navigationData.siteLogo.alternativeText ?? ""}
+                  alt={navigationData.Logo.data.attributes.alternativeText ?? ""}
                   width={64}
                   height={20}
                 />
               }
-            </Link>
-          }
-          <RightButtons className={"lg:hidden"} />
-          {/* Collapsible navigation container */}
-          <div
-            className="!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center lg:mt-0 lg:!flex lg:basis-auto"
-            id="navbarSupportedContent1"
-            data-twe-collapse-item>
-            <>
-              {navigationData?.headerNavigationData?.length &&
-                <ul className="list-style-none flex flex-col ps-0 lg:mt-1 lg:flex-row" data-twe-navbar-nav-ref>
-                  {navigationData?.headerNavigationData.map((navItem: NavigationItem) => (
-                    <li className="mb-4 lg:mb-0 lg:pe-2" key={navItem.id} data-twe-nav-item-ref>
-                      <a
-                        className="text-gray-800 font-bold transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                        href={navItem.externalPath}
-                        data-twe-nav-link-ref
-                      >
-                        {navItem.title}
-                      </a>
-                    </li>
-                  ))
-                  }
-                </ul>
-              }
             </>
-          </div>
-          <RightButtons className={"max-lg:hidden"} />
-        </div>
-      </nav>
-    </>
+          </LogoContainer>
+        }
+        <RightButtons show={'hidedesktop'} />
+        <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
+          {navigationData?.Pillars?.length &&
+            <ul className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
+              {navigationData?.Pillars.map((navItem: PillarsProps) => (
+                <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+                  <Pillar className='flex gap-2' data-twe-nav-link-ref>
+                    <FAIcon
+                      icon={navItem.FAIcon.Icon}
+                      width={Number(navItem.FAIcon.Width)}
+                      height={Number(navItem.FAIcon.Height)}
+                    />
+                    <span>
+                      {navItem.Title}
+                    </span>
+                  </Pillar>
+                </li>
+              ))
+              }
+            </ul>
+          }
+        </CollapsibleMenu>
+        <RightButtons show={'hidemobile'} />
+      </div>
+    </NavigationContainer>
   )
 }
 

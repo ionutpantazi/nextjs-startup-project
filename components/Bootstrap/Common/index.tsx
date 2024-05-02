@@ -10,13 +10,13 @@ export const RadialContainer = styled.div`
 `
 
 export const OuterContainer = styled.div`
-  color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.font};
   margin-bottom: 40px;
 `
 
 export const Container = styled.div`
   padding: ${props => props.theme.margins.homepage_large};
-  color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.font};
   overflow: hidden;
   margin-bottom: 40px;
 
@@ -46,7 +46,7 @@ export const SectionTitle = styled.div`
 
 export const ComponentContainer = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.large};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.colors.backgrounds?.section_bg};
   padding: 40px 60px;
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {

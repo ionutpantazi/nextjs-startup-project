@@ -10,6 +10,9 @@ import {
   CARDS_CAROUSEL,
   CARDS_CAROUSEL4,
   CARDS_CAROUSEL5,
+  LISTS,
+  VIDEO,
+  NAVIGATION,
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -23,6 +26,9 @@ export const PAGES_QUERY = gql`
   ${CARDS_CAROUSEL}
   ${CARDS_CAROUSEL4}
   ${CARDS_CAROUSEL5}
+  ${LISTS}
+  ${VIDEO}
+  ${NAVIGATION}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -46,6 +52,9 @@ export const PAGES_QUERY = gql`
                 }
               }
             }
+          }
+          Navigation {
+            ...Navigation
           }
           Page_Content {
             ... on ComponentIntrosLanding {
@@ -334,6 +343,27 @@ export const PAGES_QUERY = gql`
                   }
                 }
               }
+              Lists {
+                ...Lists
+              }
+              Section4 {
+                id
+                CardsCarousel {
+                  ...CardsCarousel
+                }
+                DiscussionBox {
+                  id
+                  Title
+                  Discussions {
+                    data {
+                      id
+                      attributes {
+                        ...DiscussionData
+                      }
+                    }
+                  }
+                }
+              }
             }
             ... on ComponentSectionsSection2 {
               id
@@ -352,40 +382,13 @@ export const PAGES_QUERY = gql`
                 }
               }
               Lists {
-                id
-                Title
-                List {
-                  id
-                  Title
-                  Visible
-                  Speakers {
-                    data {
-                      id
-                      attributes {
-                        ...Speakers
-                      }
-                    }
-                  }
-                  Workshops {
-                    data {
-                      id
-                      attributes {
-                        Title
-                        Intro
-                        Image {
-                          data {
-                            attributes {
-                              ...CoreUploadFileFields
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+                ...Lists
               }
               CardsCarousel {
                 ...CardsCarousel
+              }
+              Video {
+                ...Video
               }
             }
             ... on ComponentSectionsSection3 {

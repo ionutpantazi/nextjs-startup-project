@@ -31,12 +31,12 @@ export const Section4Container = styled.div`
 
 `
 
-const FirstColumn = styled.div`
+export const FirstColumn = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.large};
   background-color: ${props => props.theme.colors.grey};
 `
 
-const SecondColumn = styled.div`
+export const SecondColumn = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.large};
   background-color: ${props => props.theme.colors.grey};
 `

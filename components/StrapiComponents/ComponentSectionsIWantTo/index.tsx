@@ -61,7 +61,7 @@ const ItemTitle = styled.div`
 const ComponentSectionsIWantTo = ({
   data
 }: SectionsIWantToProps) => {
-  console.log(data)
+
   return (
     <Container className=''>
       <InnerContainer className='flex flex-col gap-4'>

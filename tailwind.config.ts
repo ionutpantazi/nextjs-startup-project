@@ -54,5 +54,5 @@ const config: Config = {
     'grid-rows-6',
   ]
 }
-console.log(config)
+
 export default config

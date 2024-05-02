@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
       return {
         props: {
           data: attributes,
-          navigationData: navigationData,
+          navigationData: attributes.Navigation,
         }
       }
     }

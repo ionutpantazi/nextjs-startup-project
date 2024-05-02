@@ -46,30 +46,33 @@ export type CategoryItem = {
   Slug: string,
 }
 
+const ComponentVideoContainer = styled.div`
+`
+
 const VideoContainer = styled.div`
   border-radius: 8px;
-  background-color: ${theme.colors.grey};
+  background-color: ${props => props.theme.colors.grey};
   padding: 10px;
   max-height: 520px;
 
-  @media screen and (max-width: ${theme.screens.lg}) {
+  @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 8px;
     max-height: 700px;
   }
 `
 
 const VideoPlayerContainer = styled.div`
-  background: ${theme.colors.brand};
+  background: ${props => props.theme.colors.brand};
   border-radius: 6px;
   height: 500px;
 
-  @media screen and (max-width: ${theme.screens.sm}) {
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 200px;
   }
 `
 
 const VideoListing = styled.div`
-  @media screen and (max-width: ${theme.screens.lg}) {
+  @media screen and (max-width: ${props => props.theme.screens.lg}) {
     max-height: 350px;
   }
 `
@@ -80,7 +83,7 @@ const FiltersContainer = styled.div`
 
 const Category = styled.div <{ active?: any }>`
   ${({ active }) => css`
-    ${active == 'true' ? 'background-color: ' + theme.colors.brand : 'background-color: black'};
+    ${props => active == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: black'};
   `}
 
   border-radius: 12px;
@@ -103,15 +106,15 @@ const List = styled.div`
     display: none;
   }
 
-  @media screen and (max-width: ${theme.screens.sm}) {
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding: 0px;
   }
 `
 
 const ListItem = styled.div <{ active?: any }>`
   ${({ active }) => css`
-    ${active == 'true' ?
-      'filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); border-radius: 8px; background-color: ' + theme.colors.darkgrey + ';'
+    ${props => active == 'true' ?
+      'filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); border-radius: 8px; background-color: ' + props.theme.colors.darkgrey + ';'
       : 'unset'
     };
   `}
@@ -125,16 +128,16 @@ const ListItem = styled.div <{ active?: any }>`
     -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
     box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
     border-radius: 8px;
-    background-color: ${theme.colors.darkgrey};
+    background-color: ${props => props.theme.colors.darkgrey};
   }
 
-  @media screen and (max-width: ${theme.screens.sm}) {
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
     padding: 6px 0px 0px;
   }
 `
 
 const ListItemVideo = styled.div`
-  background: ${theme.colors.brand};
+  background: ${props => props.theme.colors.brand};
   border-radius: 6px;
   height: auto;
   width: 140px;
@@ -151,7 +154,7 @@ const InfoPlaying = styled.div <{ active?: any }>`
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
-  color: ${theme.colors.lightgrey};
+  color: ${props => props.theme.colors.lightgrey};
 `
 
 const InfoTitle = styled.div`
@@ -164,7 +167,7 @@ const InfoDetails = styled.div`
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;
-  color: ${theme.colors.lightgrey};
+  color: ${props => props.theme.colors.lightgrey};
 `
 
 const parseYoutubeData = (videos: [Videos]) => {
@@ -241,8 +244,7 @@ const ComponentSectionsVideo = ({
   }
 
   return (
-    <Container className=''>
-      <InnerContainer className='flex flex-col gap-4'>
+      <ComponentVideoContainer className='flex flex-col gap-4'>
         <Title>
           {data.Title}
         </Title>
@@ -280,8 +282,7 @@ const ComponentSectionsVideo = ({
             </List>
           </VideoListing>
         </VideoContainer>
-      </InnerContainer>
-    </Container>
+      </ComponentVideoContainer>
   )
 }
 

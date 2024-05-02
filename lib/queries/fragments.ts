@@ -31,6 +31,74 @@ export const SEO_META = gql`
   }
 `
 
+export const PILLARS = gql`
+  fragment Pillars on ComponentNavPillars {
+    id
+    Title
+    Items {
+      id
+      Title
+      FAIcon {
+        id
+        Width
+        Icon
+        Height
+        Color
+      }
+    }
+    FAIcon {
+      id
+      Width
+      Icon
+      Height
+      Color
+    }
+  }
+`
+
+export const NAVIGATION = gql`
+  ${CORE_UPLOAD_FILE_FIELDS}
+  ${PILLARS}
+  fragment Navigation on NavEntityResponse {
+    data {
+      id
+      attributes {
+        Title
+        Header_Navigation {
+          id
+          Logo {
+            data {
+              attributes {
+                ...CoreUploadFileFields
+              }
+            }
+          }
+          Pillars {
+            ...Pillars
+          }
+          More_Pillars {
+            ...Pillars
+          }
+        }
+        Footer_Navigation {
+          id
+          Disclaimer
+          Logo {
+            data {
+              attributes {
+                ...CoreUploadFileFields
+              }
+            }
+          }
+          Pillars {
+            ...Pillars
+          }
+        }
+      }
+    }
+  }
+`
+
 export const BUTTON = gql`
   ${CORE_UPLOAD_FILE_FIELDS}
   fragment Button on ComponentIncludesButton {
@@ -261,6 +329,66 @@ export const CARDS_CAROUSEL5 = gql`
         data {
           attributes {
             ...CoreUploadFileFields
+          }
+        }
+      }
+    }
+  }
+`
+
+export const LISTS = gql`
+  ${SPEAKERS}
+  ${CORE_UPLOAD_FILE_FIELDS}
+  fragment Lists on ComponentIncludesLists {
+    id
+    Title
+    List {
+      id
+      Title
+      Visible
+      Speakers {
+        data {
+          id
+          attributes {
+            ...Speakers
+          }
+        }
+      }
+      Workshops {
+        data {
+          id
+          attributes {
+            Title
+            Intro
+            Image {
+              data {
+                attributes {
+                  ...CoreUploadFileFields
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export const VIDEO = gql`
+  fragment Video on ComponentSectionsVideo {
+    id
+    Title
+    Videos {
+      id
+      Title
+      Sub_Title
+      YouTubeID
+      Categories {
+        data {
+          id
+          attributes {
+            Title
+            Slug
           }
         }
       }
