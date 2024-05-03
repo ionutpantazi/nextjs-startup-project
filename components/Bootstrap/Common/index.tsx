@@ -15,6 +15,8 @@ export const OuterContainer = styled.div`
 `
 
 export const Container = styled.div`
+  position: relative;
+  z-index: 1;
   padding: ${props => props.theme.margins.homepage_large};
   color: ${props => props.theme.components?.Common?.ContainerColor};
   overflow: hidden;

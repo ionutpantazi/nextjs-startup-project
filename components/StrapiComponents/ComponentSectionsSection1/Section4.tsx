@@ -56,8 +56,10 @@ const ShowAll = styled.div`
   color: ${props => props.theme.colors.grey1};
 
   &:hover {
-    cursor: pointer;
-    color: ${props => props.theme.colors.lightgrey};
+    span {
+      cursor: pointer;
+      color: ${props => props.theme.colors.lightgrey};
+    }
   }
 `
 

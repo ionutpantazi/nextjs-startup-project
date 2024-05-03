@@ -159,6 +159,10 @@ export const theme: Theme = {
       "EventDetailsSubTitle": "#D9D9D9",
       "IWantToItemTitleColor": "white",
       "ToggleOff": "#242424",
+      "ImageContainerHeight": "500px",
+      "ImageContainerMobileHeight": "200px",
+      "HeaderImageHeight": "500px",
+      "HeaderImageMobileHeight": "200px"
     },
     "TextAndIcons": {
       "DescriptionContainerColor": "#D9D9D9",

@@ -71,10 +71,10 @@ export interface IntrosLandingProps {
 }
 
 const ImageContainer = styled.div`
-  height: 500px;
+  height: ${props => props.theme.components?.Header?.ImageContainerHeight};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    height: 200px;
+    height: ${props => props.theme.components?.Header?.ImageContainerMobileHeight};
   }
   margin-top: 40px;
   @media screen and (min-width: ${props => props.theme.screens.md}) {
@@ -84,6 +84,16 @@ const ImageContainer = styled.div`
 
 const StyledRadialContainer = styled(RadialContainer)`
   ${props => props.theme.components?.Header?.StyledRadialContainer == 'unset' ? 'background: unset' : ''};
+`
+
+const HeaderImage = styled(NextImage)`
+  position: relative;
+  width: 100vw;
+  height: ${props => props.theme.components?.Header?.HeaderImageHeight};
+
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    height: ${props => props.theme.components?.Header?.HeaderImageMobileHeight};
+  }
 `
 
 const IntroLandingContainer = styled.div`
@@ -350,12 +360,12 @@ const ComponentIntrosLandingNew = ({
           {backgroundImage &&
             <>
               <StyledRadialContainer />
-              <NextImage
+              <HeaderImage
                 src={backgroundImage}
                 className=''
                 alt=''
-                layout='fill'
-                objectFit='cover'
+                height={1200}
+                width={800}
               />
             </>
           }
