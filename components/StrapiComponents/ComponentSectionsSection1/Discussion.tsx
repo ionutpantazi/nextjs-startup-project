@@ -180,7 +180,7 @@ export const ButtonsContainer = styled.div`
 
 export const Divider = styled.div`
   padding-top: 10px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid ${props => props.theme.components?.Discussion?.Divider};
 `
 
 const StyledInputContainer = styled.div`
@@ -225,7 +225,7 @@ export const CommentAuthor = styled.div`
 
 const CommentText = styled.div`
   padding: 6px 0px 0px 50px;
-  color: ${props => props.theme.colors.grey1}; 
+  color: ${props => props.theme.components?.Discussion?.CommentTextColor};
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;

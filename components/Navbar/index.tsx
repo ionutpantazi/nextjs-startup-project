@@ -12,7 +12,7 @@ export interface NavbarProps {
 
 const NavigationContainer = styled.nav`
   z-index: 99;
-  background-color: ${props => props.theme.colors.navbg};
+  background-color: ${props => props.theme.components?.Navbar?.NavigationContainerBackground};
   @media screen and (min-width: ${props => props.theme.screens.md}) {
     height: 80px;
   }
@@ -42,7 +42,7 @@ const RightButtonsContainer = styled.div <{ show?: any }>`
 `
 
 const RegisterBtn = styled.div`
-  border-radius: ${props => props.theme.borderRadius.components.large};
+  border-radius: ${props => props.theme.components?.Navbar?.BtnRadius};
   background-color: ${props => props.theme.colors.grey1};
   padding: 10px 20px;
   span {
@@ -65,7 +65,7 @@ const RegisterBtn = styled.div`
 `
 
 const MenuBtn = styled.div`
-  border-radius: ${props => props.theme.borderRadius.components.large};
+  border-radius: ${props => props.theme.components?.Navbar?.BtnRadius};
   background-color: ${props => props.theme.colors.brand};
   padding: 10px 20px;
   span {

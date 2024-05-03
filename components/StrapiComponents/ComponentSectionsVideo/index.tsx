@@ -51,7 +51,7 @@ const ComponentVideoContainer = styled.div`
 
 const VideoContainer = styled.div`
   border-radius: 8px;
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.Video?.VideoContainerBackground};
   padding: 10px;
   max-height: 520px;
 
@@ -83,7 +83,7 @@ const FiltersContainer = styled.div`
 
 const Category = styled.div <{ active?: any }>`
   ${({ active }) => css`
-    ${props => active == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: black'};
+    ${props => active == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.components?.Video?.CategoryBackground};
   `}
 
   border-radius: 12px;
@@ -114,7 +114,7 @@ const List = styled.div`
 const ListItem = styled.div <{ active?: any }>`
   ${({ active }) => css`
     ${props => active == 'true' ?
-      'filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75); border-radius: 8px; background-color: ' + props.theme.colors.darkgrey + ';'
+      'filter: -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15); -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15); box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15); border-radius: 8px; background-color: ' + props.theme.components?.Video?.ListItemBackground + ';'
       : 'unset'
     };
   `}
@@ -124,11 +124,11 @@ const ListItem = styled.div <{ active?: any }>`
 
   &:hover {
     cursor: pointer;
-    filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-    box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
+    filter: -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
     border-radius: 8px;
-    background-color: ${props => props.theme.colors.darkgrey};
+    background-color: ${props => props.theme.components?.Video?.ListItemHoverColor};
   }
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {

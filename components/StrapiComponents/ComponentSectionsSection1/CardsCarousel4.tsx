@@ -62,7 +62,7 @@ const CardsContainer = styled.div`
 const CardContainer = styled.div`
   border-radius: 6px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.darkestgrey};
+  background-color: ${props => props.theme.components?.CardsCarousel4?.CardContainerBackground};
 `
 
 const ImageIcon = styled.div`
@@ -100,7 +100,7 @@ const CardSubTitle = styled.div`
 
 const AgendaTag = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.xsmall};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.CardsCarousel4?.AgendaTagBackground};
   padding: 4px;
   font-size: 8px;
   font-weight: 500;

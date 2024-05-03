@@ -67,7 +67,7 @@ const StyledInnerContainer = styled(InnerContainer) <{ hasinfobox?: any }>`
 
 const Category = styled.div <{ active?: any }>`
   ${({ active }) => css`
-    ${props => active == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.grey};
+    ${props => active == 'true' ? 'background-color: ' + props.theme?.components?.FAQs?.CategoryActiveBackground : 'background-color: ' + props.theme?.components?.FAQs?.CategoryBackground};
   `}
 
   border-radius: ${props => props.theme.borderRadius.components.medium};
@@ -97,7 +97,7 @@ const FaqsContainer = styled.div <{ hasinfobox?: any }>`
 
 const FaqItem = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.small};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.FAQs?.FaqItemBackground};
   padding: 20px 10px;
   &:hover {
     cursor: pointer;

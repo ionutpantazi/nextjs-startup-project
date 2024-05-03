@@ -82,7 +82,7 @@ const ReadMore = styled.div`
   font-weight: 500;
   line-height: 16px;
   padding-top: 20px;
-  color: ${props => props.theme.colors.font7};
+  color: ${props => props.theme.components?.Lists?.ReadMoreColor};
   &:hover {
     cursor: pointer;
     color: ${props => props.theme.colors.brandlight};
@@ -100,26 +100,26 @@ const ImageIcon = styled.div`
   width: 24px;
   svg {
     padding: 4px;
-    color: ${props => props.theme.colors.font6};
+    color: ${props => props.theme.components?.Lists?.ImageIconSvgColor};
   }
 
   &:hover {
     cursor: pointer;
     background: ${props => props.theme.colors.brandlight};
     svg {
-      color: ${props => props.theme.colors.font6};
+      color: ${props => props.theme.components?.Lists?.ImageIconSvgHoverColor};
     
   }
 `
 
 const StyledImageIcon = styled(ImageIcon)`
-  background: ${props => props.theme.colors.font5};
+  background: ${props => props.theme.components?.Lists?.StyledImageIconBackground};
 `
 
 const StyledTextImageIcon = styled(ImageIcon)`
   border-radius: ${props => props.theme.borderRadius.components.medium};
   padding: 8px 10px;
-  background: ${props => props.theme.colors.font5};
+  background: ${props => props.theme.components?.Lists?.StyledTextImageIconBackground};
   width: auto;
   span {
     font-size: 11px;
@@ -128,7 +128,7 @@ const StyledTextImageIcon = styled(ImageIcon)`
   }
 
   &:hover {
-    color: ${props => props.theme.colors.font6};
+    color: ${props => props.theme.components?.Lists?.StyledTextImageIconHoverColor};
   }
 `
 

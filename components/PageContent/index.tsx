@@ -75,7 +75,7 @@ const PageContent = ({
                 <ComponentIntrosLanding data={component} />
               }
               {component.__typename == 'ComponentIntrosLandingNew' &&
-                <ComponentIntrosLandingNew data={component} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme} themedata={themedata} />
+                <ComponentIntrosLandingNew data={component} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
               }
               {component.__typename == 'ComponentSectionsSectionTitle' &&
                 <ComponentSectionsSectionTitle data={component} />

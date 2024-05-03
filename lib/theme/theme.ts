@@ -66,7 +66,8 @@ export interface Theme {
       medium: string
       large: string
     }
-  }
+  },
+  components: any
 }
 
 export const theme: Theme = {
@@ -83,7 +84,7 @@ export const theme: Theme = {
     navbg: 'white',
     "font": "white",
     "font1": "#D9D9D9",
-    "font2": "white", 
+    "font2": "white",
     "font3": "#B97ECF",
     "font4": "#ddb7eb",
     "font5": "#242424",
@@ -130,6 +131,87 @@ export const theme: Theme = {
       "medium": "12px",
       "small": "8px",
       "large": "24px"
+    }
+  },
+  "components": {
+    "Navbar": {
+      "NavigationContainerBackground": "white",
+      "BtnRadius": "24px",
+    },
+    "Layout": {
+      "PageContentComponentsBackground": "black",
+      "FooterWrapBackground": "black"
+    },
+    "Common": {
+      "OuterContainerColor": "white",
+      "ContainerColor": "white",
+      "ContainerPadding": "0px 20px",
+      "InnerContainerMaxWidth": "1440px",
+      "ComponentContainerBorder": "24px",
+      "ComponentContainerBackground": "#1E1E1E",
+      "ComponentContainerCorner": "hide",
+    },
+    "Header": {
+      "StyledRadialContainer": "false",
+      "IntroLandingContainerBackground": "#1E1E1E",
+      "EventTitleColor": "#B97ECF", //brand
+      "EventDetailsBackground": "#242424",
+      "EventDetailsSubTitle": "#D9D9D9",
+      "IWantToItemTitleColor": "white",
+      "ToggleOff": "#242424",
+    },
+    "TextAndIcons": {
+      "DescriptionContainerColor": "#D9D9D9",
+    },
+    "CardsCarousel": {
+      "CardContainerBacground": "#121212",
+      "CarouselShowAllColor": "#D9D9D9",
+      "CarouselShowAllHoverColor": "#D9D9D9",
+      "ShowAllColor": "#D9D9D9",
+      "ShowAllHoverColor": "#242424",
+    },
+    "Lists": {
+      "ReadMoreColor": "#B97ECF",
+      "ImageIconSvgColor": "#white",
+      "ImageIconSvgHoverColor": "#white",
+      "StyledImageIconBackground": "#242424",
+      "StyledTextImageIconBackground": "#242424",
+      "StyledTextImageIconHoverColor": "#white",
+    },
+    "Video": {
+      "VideoContainerBackground": "#1E1E1E",
+      "CategoryBackground": "black",
+      "ListItemBackground": "#242424",
+      "ListItemHoverColor": "#242424",
+    },
+    "CardsCarousel4": {
+      "CardContainerBackground": "#121212",
+      "AgendaTagBackground": "#1E1E1E"
+    },
+    "Section1": {
+      "StyledFirstColumnBackgroundColor": "#242424",
+      "StyledSecondColumnBackgroundColor": "#242424"
+    },
+    "Section4": {
+      "FirstColumnBackgroundColor": "#1E1E1E",
+      "SecondColumnBackgroundColor": "#1E1E1E"
+    },
+    "CardsCarousel6": {
+      "CarouselShowAllColor": "#D9D9D9",
+      "CarouselShowAllHoverColor": "#A7A7A7",
+      "CardContainerBackground": "#121212"
+    },
+    "Discussion": {
+      "Divider": "black",
+      "CommentTextColor": "#D9D9D9"
+    },
+    "FAQs": {
+      "CategoryActiveBackground": "#B97ECF", //brand
+      "CategoryBackground": "#1E1E1E",
+      "FaqItemBackground": "#1E1E1E"
+    },
+    "Footer": {
+      "FooterContainerBackground": "#1E1E1E"
     }
   }
 }

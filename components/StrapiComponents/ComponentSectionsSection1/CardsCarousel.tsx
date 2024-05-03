@@ -51,11 +51,11 @@ const CarouselShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
   line-height: 16px;
-  color: ${props => props.theme.colors.font1};
+  color: ${props => props.theme.components?.CardsCarousel?.CarouselShowAllColor};
 
   &:hover {
     cursor: pointer;
-    color: ${props => props.theme.colors.font5};
+    color: ${props => props.theme.components?.CardsCarousel?.CarouselShowAllHoverColor};
   }
 `
 
@@ -70,7 +70,7 @@ const CardsContainer = styled.div`
 const CardContainer = styled.div`
   border-radius: 6px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.backgrounds?.carousel1};
+  background-color: ${props => props.theme.components?.CardsCarousel?.CardContainerBacground};
 `
 
 const ImageContainer = styled.div <{ hidebackground?: any }>`
@@ -135,7 +135,7 @@ const ButtonsContainer = styled.div`
 
 const CustomPagination = styled.div`
   .swiper-pagination-bullet {
-    background: white;
+    background: ${props => props.theme.colors.lightgrey};
   }
   .swiper-pagination-bullet-active {
     background: ${props => props.theme.colors.brand};
@@ -153,13 +153,13 @@ const ShowAll = styled.div`
   font-size: 13px;
   font-weight: 700;
   line-height: 16px;
-  color: ${props => props.theme.colors.font1};
+  color: ${props => props.theme.components?.CardsCarousel?.ShowAllColor};
   span {
     height: fit-content;
 
     &:hover {
       cursor: pointer;
-      color: ${props => props.theme.colors.font5};
+      color: ${props => props.theme.components?.CardsCarousel?.ShowAllHoverColor};
     }
   }
 

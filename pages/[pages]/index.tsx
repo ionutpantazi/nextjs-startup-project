@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
 }) => {
   try {
     const apolloClient = initializeApollo();
-    const navigationData = await fetchNavigation();
+    // const navigationData = await fetchNavigation();
     const slug = typeof query.pages === 'string' ? query.pages : null;
     const { data: { pages: { data } } } = await apolloClient.query({
       query: PAGES_QUERY,

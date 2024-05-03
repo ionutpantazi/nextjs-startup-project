@@ -33,12 +33,12 @@ export const Section4Container = styled.div`
 
 export const FirstColumn = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.large};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.Section4?.FirstColumnBackgroundColor};
 `
 
 export const SecondColumn = styled.div`
   border-radius: ${props => props.theme.borderRadius.components.large};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.Section4?.SecondColumnBackgroundColor};
 `
 
 const ComponentSectionsSection4 = ({

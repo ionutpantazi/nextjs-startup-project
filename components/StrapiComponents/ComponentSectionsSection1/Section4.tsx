@@ -35,17 +35,17 @@ const InnerComponentContainer = styled.div`
 `
 
 const StyledFirstColumn = styled(FirstColumn)`
-  background-color: ${props => props.theme.colors.darkgrey};
-  filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
+  background-color: ${props => props.theme.components?.Section1?.StyledFirstColumnBackgroundColor};
+  filter: -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
 `
 
 const StyledSecondColumn = styled(SecondColumn)`
-  background-color: ${props => props.theme.colors.darkgrey};
-  filter: -webkit-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);
-  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.75);  
+  background-color: ${props => props.theme.components?.Section1?.StyledSecondColumnBackgroundColor};
+  filter: -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);  
 `
 
 const ShowAll = styled.div`

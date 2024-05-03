@@ -57,11 +57,11 @@ const CarouselShowAll = styled.div`
   font-weight: 700;
   line-height: 16px;
   padding-right: 40px;
-  color: ${props => props.theme.colors.grey1};
+  color: ${props => props.theme.components?.CardsCarousel6?.CarouselShowAllColor};
 
   &:hover {
     cursor: pointer;
-    color: ${props => props.theme.colors.lightgrey};
+    color: ${props => props.theme.components?.CardsCarousel6?.CarouselShowAllHoverColor};
   }
 `
 
@@ -78,7 +78,7 @@ const CardsContainer = styled.div`
 const CardContainer = styled.div`
   border-radius: 6px;
   padding: 10px;
-  background-color: ${props => props.theme.colors.darkestgrey};
+  background-color: ${props => props.theme.components?.CardsCarousel6?.CardContainerBackground};
 `
 
 const ImageContainer = styled.div <{ hidebackground?: any }>`

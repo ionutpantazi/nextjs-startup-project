@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import { NavigationData, NavigationItem } from 'lib/queries/nav-data'
+import { FooterNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import Link from 'next/link'
 import Text from 'components/Bootstrap/Text'
 import NextImage from 'next/image'
 
 const FooterContainer = styled.footer`
-  background-color: ${theme.colors.grey};
+  background-color: ${props => props.theme.components?.Footer?.FooterContainerBackground};
   margin: ${theme.margins.homepage_large};
   padding: 50px 40px;
   border-radius: 20px 20px 0px 0px;
@@ -52,9 +52,11 @@ const NavigationChildrenTitle = styled.div`
   font-size: 12px;
   line-height: 16px;
 `
+const LogoContainer = styled.div`
+`
 
 export interface FooterProps {
-  navigationData: NavigationData
+  navigationData: FooterNavigationProps
 }
 
 const Footer: React.FC<FooterProps> = ({
@@ -64,43 +66,44 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <FooterContainer className='flex flex-col sm:flex-row gap-y-8'>
       <LeftColumn className='sm:w-1/2 w-auto grid gap-y-4 content-between'>
-        {/* Logo  */}
-        {navigationData?.siteLogo &&
-          <Link href="/">
-            {navigationData?.siteLogo?.url &&
-              <NextImage
-                src={IMAGE_DOMAIN + navigationData.siteLogo.url}
-                className=''
-                alt={navigationData.siteLogo.alternativeText ?? ""}
-                width={64}
-                height={20}
-              />
-            }
-          </Link>
+        {navigationData?.Logo?.data &&
+          <LogoContainer as='a' href='#' className='flex items-center'>
+            <>
+              {navigationData?.Logo?.data.attributes?.url &&
+                <NextImage
+                  src={IMAGE_DOMAIN + navigationData.Logo.data.attributes.url}
+                  className=''
+                  alt={navigationData.Logo.data.attributes.alternativeText ?? ""}
+                  width={64}
+                  height={20}
+                />
+              }
+            </>
+          </LogoContainer>
         }
         <FooterText>
-          All content © Delegate Live Limited. All rights reserved.
+          {navigationData.Disclaimer}
         </FooterText>
       </LeftColumn>
       <RightColumn className='sm:w-1/2 w-auto flex flex-row justify-between'>
-        {navigationData.footerNavigationData?.length &&
+        {navigationData.Pillars?.length &&
           <>
-            {navigationData.footerNavigationData.map((navItem: NavigationItem) => (
+            {navigationData.Pillars.map((navItem: PillarsProps) => (
               <NavigationContainer className="w-1/3 flex" key={navItem.id}>
-                {navItem.type == 'WRAPPER' &&
+                {navItem.Title &&
                   <NavigationParentContainer className="flex flex-col sm:gap-y-4 gap-y-2">
                     <NavigationParentTitle className="font-semibold sm:mb-4 mb-2">
-                      {navItem.title}
+                      {navItem.Title}
                     </NavigationParentTitle>
-                    {navItem.children?.length &&
+                    {navItem.Items?.length &&
                       <>
-                        {navItem.children.map((navChild) => (
-                          <NavigationChildrenTitle className="font-medium" key={navChild.id}>
+                        {navItem.Items.map((navItemChild: any) => (
+                          <NavigationChildrenTitle className="font-medium" key={navItemChild.id}>
                             <a
                               className="transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none"
-                              href={navChild.externalPath}
+                              href={'#'}
                             >
-                              {navChild.title}
+                              {navItemChild.Title}
                             </a>
                           </NavigationChildrenTitle>
                         ))

@@ -83,12 +83,13 @@ const ImageContainer = styled.div`
 `
 
 const StyledRadialContainer = styled(RadialContainer)`
-  ${props => props.theme.colors.backgrounds?.radial_header_image == 'unset' ? 'background: unset' : ''};
+  ${props => props.theme.components?.Header?.StyledRadialContainer == 'unset' ? 'background: unset' : ''};
 `
 
-const IntroLandingContainer = styled(ComponentContainer)`
+const IntroLandingContainer = styled.div`
+  border-radius: ${props => props.theme.components?.Common?.ComponentContainerBorder};
   padding: 40px 20px;
-  background-color: ${props => props.theme.colors.backgrounds?.header_bg};
+  background-color: ${props => props.theme.components?.Header?.IntroLandingContainerBackground};
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 20px 10px;
@@ -100,7 +101,7 @@ const EventTitle = styled.div`
   font-weight: 400;
   line-height: 64px;
   text-align: center;
-  color: ${props => props.theme.colors.headings.h1};
+  color: ${props => props.theme.components?.Header?.EventTitleColor};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 36px;
@@ -124,8 +125,8 @@ const EventContainer = styled.div`
   padding-top: 20px;
 `
 
-const EventDetails = styled(ComponentContainer)`
-  background-color: ${props => props.theme.colors.backgrounds?.event_details};
+const EventDetails = styled.div`
+  background-color: ${props => props.theme.components?.Header?.EventDetailsBackground};
   filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   -moz-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
@@ -182,7 +183,7 @@ const EventDetailsSubTitle = styled.div`
   font-size: 12px;
   font-weight: 300;
   line-height: 16px;
-  color: ${props => props.theme.colors.font1};
+  color: ${props => props.theme.components?.Header?.EventDetailsSubTitle};
 `
 
 const EventDetailsContainer = styled.div`
@@ -283,7 +284,7 @@ const IWantToItemTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
-  color: ${props => props.theme.colors.font2};
+  color: ${props => props.theme.components?.Header?.IWantToItemTitleColor};
 `
 
 const EventContentContainer = styled.div`
@@ -294,7 +295,7 @@ const EventContent = styled.div`
 
 const Toggle = styled.label`
   border-radius: 40px;
-  background-color: ${props => props.theme.colors.backgrounds?.theme_toggle_off};
+  background-color: ${props => props.theme.components?.Header?.ToggleOff};
   filter: -webkit-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   -moz-box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
@@ -307,7 +308,7 @@ const CustomThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   font-weight: 500;
   line-height: 16px;
   ${({ isdefaulttheme }) => css`
-    ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.backgrounds?.theme_toggle_off};
+    ${props => isdefaulttheme == 'false' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.components?.Header?.ToggleOff};
   `}
 `
 
@@ -319,7 +320,7 @@ const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   line-height: 16px;
   width: 100%;
   ${({ isdefaulttheme }) => css`
-    ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.colors.backgrounds?.theme_toggle_off};
+    ${props => isdefaulttheme == 'true' ? 'background-color: ' + props.theme.colors.brand : 'background-color: ' + props.theme.components?.Header?.ToggleOff};
   `}
 `
 
@@ -335,9 +336,9 @@ const ComponentIntrosLandingNew = ({
   const handleDefaultThemeChange = () => {
     if (senddatatolayout instanceof Function) {
       if (isdefaulttheme == 'false' || isdefaulttheme == false) {
-        senddatatolayout({ useDefaultTheme: true })
+        senddatatolayout({ useDefaultTheme: 'true' })
       } else {
-        senddatatolayout({ useDefaultTheme: false })
+        senddatatolayout({ useDefaultTheme: 'false' })
       }
     }
   }
@@ -345,7 +346,7 @@ const ComponentIntrosLandingNew = ({
   return (
     <OuterContainer className=''>
       {backgroundImage &&
-        <ImageContainer className='relative w-screen'>
+        <ImageContainer className='relative'>
           {backgroundImage &&
             <>
               <StyledRadialContainer />
@@ -393,7 +394,7 @@ const ComponentIntrosLandingNew = ({
                       <input
                         type='checkbox'
                         className='sr-only'
-                        checked={isdefaulttheme}
+                        checked={isdefaulttheme == 'true' ? true : false}
                         onChange={handleDefaultThemeChange}
                       />
                       <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>

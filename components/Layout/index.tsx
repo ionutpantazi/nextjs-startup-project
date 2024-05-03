@@ -37,10 +37,6 @@ const HeaderWrap = styled.header`
   background:transparent;
 `
 
-const FooterWrap = styled.div`
-  background-color: ${theme.colors.black};
-`
-
 const LayoutContainer = styled.div`
   background-color: ${theme.colors.black};
 `
@@ -60,25 +56,29 @@ const Layout = ({
     Name: 'Default',
     Data: theme
   }
-  const [isDefaultTheme, setIsDefaultTheme] = useState<boolean>(customTheme ? false : true)
+  const [isDefaultTheme, setIsDefaultTheme] = useState<string>(customTheme ? 'false' : 'true')
   const [themeData, setThemeData] = useState(customTheme ? customTheme : theme);
   // const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
   const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
 
   const handleChildData = (data: any) => {
-    if (data?.useDefaultTheme == true) {
-      setIsDefaultTheme(true)
+    if (data?.useDefaultTheme == 'true') {
+      setIsDefaultTheme('true')
       setThemeData(theme);
       // setThemeDataProp(defaultThemeData)
     } else {
-      setIsDefaultTheme(false)
+      setIsDefaultTheme('false')
       setThemeData(customTheme ? customTheme : theme);
       // setThemeDataProp(customTheme ? themedata : theme);
     }
   };
 
   const PageContentComponents = styled.div`
-    background-color: ${themeData.colors.backgrounds?.layout};
+    background-color: ${themeData.components?.Layout?.PageContentComponentsBackground};
+  `
+
+  const FooterWrap = styled.div`
+    background-color:  ${themeData.components?.Layout?.FooterWrapBackground};
   `
 
   return (
@@ -107,7 +107,7 @@ const Layout = ({
           )}
         </PageContentComponents>
         <FooterWrap>
-          {navigationData && <Footer navigationData={navigationData} />}
+          {navigationData && <Footer navigationData={navigationData.data.attributes.Footer_Navigation} />}
         </FooterWrap>
       </LayoutContainer>
     </ThemeProvider>
