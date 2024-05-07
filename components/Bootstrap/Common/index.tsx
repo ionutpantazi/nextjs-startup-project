@@ -31,6 +31,7 @@ export const Container = styled.div`
 export const InnerContainer = styled.div`
   margin: 0 auto;
   max-width: ${props => props.theme.components?.Common?.InnerContainerMaxWidth};
+  padding-bottom: 6px;
 `
 
 export const Title = styled.div`
@@ -50,6 +51,10 @@ export const ComponentContainer = styled.div`
   border-radius: ${props => props.theme.components?.Common?.ComponentContainerBorder};
   background-color: ${props => props.theme.components?.Common?.ComponentContainerBackground};
   padding: 40px 60px;
+
+  filter: -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+  box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 20px 10px;

@@ -6,7 +6,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
-import { parseYoutube } from 'utils/youtube'
+// import { parseYoutube } from 'utils/youtube'
 
 const Layout = dnmc(() => import('components/Layout'));
 const PageContent = dnmc(() => import('components/PageContent'));
@@ -44,6 +44,8 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
   req,
 }) => {
   try {
+    let scheme = req.headers['x-forwarded-proto'];
+    let host = `${scheme}://${req.headers.host}`
     const apolloClient = initializeApollo();
     // const navigationData = await fetchNavigation();
     const slug = typeof query.pages === 'string' ? query.pages : null;
@@ -67,7 +69,8 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
       }
     } else {
       let attributes = data[0].attributes;
-      attributes = parseYoutube(attributes);
+      // parseYoutube(host, attributes)
+      // attributes = await parseYoutube(host, attributes);
       // console.log(attributes)
       return {
         props: {

@@ -101,6 +101,10 @@ const IntroLandingContainer = styled.div`
   padding: 40px 20px;
   background-color: ${props => props.theme.components?.Header?.IntroLandingContainerBackground};
 
+  filter: -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+  box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
+
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 20px 10px;
   }
@@ -214,11 +218,15 @@ const EventDetailsButtonContainer = styled.div`
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
-  color: ${props => props.theme.colors.font3};
+  color: ${props => props.theme.colors.brand};
 
   &:hover {
-    color: ${props => props.theme.colors.font4};
+    color: ${props => props.theme.colors.brandlight};
   }
+`
+
+const ReadMoreContainer = styled(EventDetailsButtonContainer)`
+
 `
 
 const EventButtonContainer = styled.div`
@@ -536,9 +544,9 @@ const ComponentIntrosLandingNew = ({
                 </EventContent>
                 {data.Button &&
                   <ButtonNew data={data.Button}>
-                    <EventDetailsButtonContainer>
+                    <ReadMoreContainer>
                       {data.Button.Text}
-                    </EventDetailsButtonContainer>
+                    </ReadMoreContainer>
                   </ButtonNew>
                 }
               </EventContentContainer>

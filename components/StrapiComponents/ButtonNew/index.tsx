@@ -39,7 +39,7 @@ const Button = ({
     return <></>
   }
   return (
-    <ButtonContainer as='a' className={data.ClassName} href={data.Link} textcolor={data.TextColor} texthovercolor={data.TextHoverColor}>
+    <ButtonContainer as='a' className={'w-fit ' + data.ClassName} href={data.Link} textcolor={data.TextColor} texthovercolor={data.TextHoverColor}>
       {children}
     </ButtonContainer>
   )

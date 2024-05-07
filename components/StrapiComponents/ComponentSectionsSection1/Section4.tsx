@@ -53,12 +53,14 @@ const ShowAll = styled.div`
   font-weight: 700;
   line-height: 16px;
   text-align: center;
-  color: ${props => props.theme.colors.grey1};
+  width: fit-content;
+  margin: 0 auto;
+  color: ${props => props.theme.components?.Section1?.Section4ShowAllColor};
 
   &:hover {
     span {
       cursor: pointer;
-      color: ${props => props.theme.colors.lightgrey};
+      color: ${props => props.theme.components?.Section1?.Section4ShowAllHoverColor};
     }
   }
 `

@@ -143,7 +143,7 @@ const ButtonsContainer = styled.div`
 
 const CustomPagination = styled.div`
   .swiper-pagination-bullet {
-    background: white;
+    background: ${props => props.theme.colors.lightgrey};
   }
   .swiper-pagination-bullet-active {
     background: ${props => props.theme.colors.brand};

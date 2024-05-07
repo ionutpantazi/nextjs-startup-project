@@ -194,7 +194,9 @@ export const theme: Theme = {
     },
     "Section1": {
       "StyledFirstColumnBackgroundColor": "#242424",
-      "StyledSecondColumnBackgroundColor": "#242424"
+      "StyledSecondColumnBackgroundColor": "#242424",
+      "Section4ShowAllColor": "#D9D9D9",
+      "Section4ShowAllHoverColor": "#A7A7A7"
     },
     "Section4": {
       "FirstColumnBackgroundColor": "#1E1E1E",
