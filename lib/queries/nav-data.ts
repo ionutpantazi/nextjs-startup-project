@@ -71,13 +71,23 @@ export type PillarsProps = {
 }
 
 export type HeaderNavigationProps = {
-  Logo: StrapiFile
+  Logo: {
+    id: string
+    Width: string
+    Height: string
+    Image: StrapiFile
+  }
   Pillars: [PillarsProps]
   MorePillars: [PillarsProps]
 }
 
 export type FooterNavigationProps = {
-  Logo: StrapiFile
+  Logo: {
+    id: string
+    Width: string
+    Height: string
+    Image: StrapiFile
+  }
   Pillars: [PillarsProps]
   Disclaimer: string
 }

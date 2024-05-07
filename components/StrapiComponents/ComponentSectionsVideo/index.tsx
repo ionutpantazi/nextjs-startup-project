@@ -177,7 +177,7 @@ const parseYoutubeData = (videos: [Videos]) => {
       let data = await axios.post('api/youtube', {
         videoId: YouTubeID
       });
-      console.log(data)
+      // console.log(data)
     }
   })
 

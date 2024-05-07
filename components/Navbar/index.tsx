@@ -24,6 +24,12 @@ const NavigationContainer = styled.nav`
 `
 
 const LogoContainer = styled.div`
+  position: absolute;
+  top: 1px;
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    display: none;
+  }
 `
 
 const RightButtonsContainer = styled.div <{ show?: any }>`
@@ -189,21 +195,24 @@ const Navbar: React.FC<NavbarProps> = ({
     <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
       <div className="flex w-full flex-wrap items-center justify-between px-3">
         {/* Logo  */}
-        {navigationData?.Logo?.data &&
+        {navigationData?.Logo?.Image?.data &&
           <LogoContainer as='a' href='#' className='flex items-center'>
             <>
-              {navigationData?.Logo?.data.attributes?.url &&
+              {navigationData?.Logo?.Image?.data?.attributes &&
                 <NextImage
-                  src={IMAGE_DOMAIN + navigationData.Logo.data.attributes.url}
+                  src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
                   className=''
-                  alt={navigationData.Logo.data.attributes.alternativeText ?? ""}
-                  width={64}
-                  height={20}
+                  alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
+                  width={Number(navigationData.Logo.Width)}
+                  height={Number(navigationData.Logo.Height)}
                 />
               }
             </>
           </LogoContainer>
         }
+        <div>
+
+        </div>
         <RightButtons show={'hidedesktop'} />
         <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
           {navigationData?.Pillars?.length &&

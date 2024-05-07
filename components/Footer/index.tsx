@@ -53,6 +53,11 @@ const NavigationChildrenTitle = styled.div`
   line-height: 16px;
 `
 const LogoContainer = styled.div`
+  margin-top: -50px;
+
+  @media screen and (max-width: ${theme.screens.sm}) {
+    margin-top: -20px;
+  }
 `
 
 export interface FooterProps {
@@ -66,16 +71,16 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <FooterContainer className='flex flex-col sm:flex-row gap-y-8'>
       <LeftColumn className='sm:w-1/2 w-auto grid gap-y-4 content-between'>
-        {navigationData?.Logo?.data &&
+        {navigationData?.Logo?.Image?.data &&
           <LogoContainer as='a' href='#' className='flex items-center'>
             <>
-              {navigationData?.Logo?.data.attributes?.url &&
+              {navigationData?.Logo?.Image?.data?.attributes &&
                 <NextImage
-                  src={IMAGE_DOMAIN + navigationData.Logo.data.attributes.url}
+                  src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
                   className=''
-                  alt={navigationData.Logo.data.attributes.alternativeText ?? ""}
-                  width={64}
-                  height={20}
+                  alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
+                  width={Number(navigationData.Logo.Width)}
+                  height={Number(navigationData.Logo.Height)}
                 />
               }
             </>

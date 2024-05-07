@@ -67,9 +67,14 @@ export const NAVIGATION = gql`
         Header_Navigation {
           id
           Logo {
-            data {
-              attributes {
-                ...CoreUploadFileFields
+            id
+            Height
+            Width
+            Image {
+              data {
+                attributes {
+                  ...CoreUploadFileFields
+                }
               }
             }
           }
@@ -84,9 +89,14 @@ export const NAVIGATION = gql`
           id
           Disclaimer
           Logo {
-            data {
-              attributes {
-                ...CoreUploadFileFields
+            id
+            Height
+            Width
+            Image {
+              data {
+                attributes {
+                  ...CoreUploadFileFields
+                }
               }
             }
           }

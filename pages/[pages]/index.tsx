@@ -6,6 +6,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
+import { parseYoutube } from 'utils/youtube'
 
 const Layout = dnmc(() => import('components/Layout'));
 const PageContent = dnmc(() => import('components/PageContent'));
@@ -66,6 +67,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
       }
     } else {
       let attributes = data[0].attributes;
+      attributes = parseYoutube(attributes);
       // console.log(attributes)
       return {
         props: {
