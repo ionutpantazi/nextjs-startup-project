@@ -119,8 +119,8 @@ const CardsCarousel3 = ({
                           src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
                           className=''
                           alt={card.Image.data?.attributes?.alternativeText ?? ''}
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

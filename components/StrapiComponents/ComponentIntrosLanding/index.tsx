@@ -260,8 +260,8 @@ const ComponentIntrosLanding = ({
                 src={backgroundImage}
                 className=''
                 alt=''
-                layout='fill'
-                objectFit='cover'
+                fill
+                style={{ objectFit: 'cover' }}
               />
             </>
           }
@@ -333,8 +333,8 @@ const ComponentIntrosLanding = ({
                           src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
                           className=''
                           alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

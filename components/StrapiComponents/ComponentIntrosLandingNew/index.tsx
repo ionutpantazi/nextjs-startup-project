@@ -168,7 +168,7 @@ const EventDetailsItemContainer = styled.div`
     margin-left: 0px;
     &:not(:last-child) {
       border-right: 0px;
-      border-bottom: 2px solid ${props => props.theme.colors.darkestgrey};
+      border-bottom: 1px solid ${props => props.theme.colors.darkestgrey};
     }
   }
 `
@@ -504,8 +504,8 @@ const ComponentIntrosLandingNew = ({
                           src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
                           className=''
                           alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

@@ -12,6 +12,7 @@ import {
   StrapiFile
 } from 'interfaces'
 import axios from 'axios'
+import { get_youtube_thumbnail } from 'utils/helpers'
 
 
 export type VideoProps = {
@@ -65,6 +66,7 @@ const VideoPlayerContainer = styled.div`
   background: ${props => props.theme.colors.brand};
   border-radius: 6px;
   height: 500px;
+  overflow: hidden;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 200px;
@@ -141,6 +143,7 @@ const ListItemVideo = styled.div`
   border-radius: 6px;
   height: auto;
   width: 140px;
+  overflow: hidden;
 `
 
 const ListItemInfo = styled.div`
@@ -184,17 +187,17 @@ const ShowAll = styled.div`
   }
 `
 
-const parseYoutubeData = (videos: [Videos]) => {
-  videos.map(async (video) => {
-    let YouTubeID = video.YouTubeID;
-    if (YouTubeID) {
-      let data = await axios.post('api/youtube', {
-        videoId: YouTubeID
-      });
-      // console.log(data)
-    }
-  })
-
+const VideoPlayer = (props: any) => {
+  if(!props?.activeVideo?.YouTubeID) return <></>
+  return (
+    <iframe
+      src={`https://www.youtube.com/embed/${props?.activeVideo?.YouTubeID}`}
+      frameBorder='0'
+      allow='autoplay; encrypted-media'
+      allowFullScreen
+      width={'100%'}
+    />
+  )
 }
 
 const extractVideoCategories = (props: VideoProps) => {
@@ -217,9 +220,9 @@ const extractVideoCategories = (props: VideoProps) => {
 
 const selectFirstVideo = (props: VideoProps) => {
   if (props.Videos.length) {
-    return props.Videos[0].id;
+    return props.Videos[0];
   }
-  return '0';
+  return null;
 }
 
 export interface ComponentSectionsVideoProps {
@@ -229,16 +232,14 @@ export interface ComponentSectionsVideoProps {
 const ComponentSectionsVideo = ({
   data
 }: ComponentSectionsVideoProps) => {
-  // console.log(data)
+
   const [videos, setVideos] = useState<any>(data.Videos);
   const [activeFilter, setActiveFilter] = useState("all");
   const [videoCategories, setVideoCategories] = useState([]);
-  const [activeVideo, setActiveVideo] = useState('0');
+  const [activeVideo, setActiveVideo] = useState(selectFirstVideo(data));
 
   useEffect(() => {
     setVideoCategories(extractVideoCategories(data));
-    setActiveVideo(selectFirstVideo(data));
-    parseYoutubeData(data.Videos)
   }, []);
 
   function setActiveCategory(e: any) {
@@ -264,6 +265,17 @@ const ComponentSectionsVideo = ({
       </Title>
       <VideoContainer className='flex justify-between lg:flex-row flex-col gap-x-4 gap-y-4 '>
         <VideoPlayerContainer className='flex lg:w-2/3 w-full'>
+          {/* {activeVideo &&
+            <NextImage
+              src={get_youtube_thumbnail(`https://youtu.be/${activeVideo.YouTubeID}`, 'low')}
+              className=''
+              alt={''}
+              width={809}
+              height={100}
+              quality={80}
+            />
+          } */}
+          <VideoPlayer activeVideo={activeVideo} />
         </VideoPlayerContainer>
         <VideoListing className='flex flex-col gap-2 lg:w-1/3 w-full'>
           <FiltersContainer className='flex flex-row gap-2'>
@@ -276,12 +288,19 @@ const ComponentSectionsVideo = ({
           </FiltersContainer>
           <List className='flex flex-col gap-3'>
             {videos.map((video: Videos) => (
-              <ListItem key={video.id} className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video.id)} active={activeVideo == video.id ? 'true' : 'false'}>
+              <ListItem key={video.id} className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video)} active={activeVideo?.id == video.id ? 'true' : 'false'}>
                 <ListItemVideo className='w-1/3'>
-
+                  <NextImage
+                    src={get_youtube_thumbnail(`https://youtu.be/${video.YouTubeID}`, 'low')}
+                    className=''
+                    alt={''}
+                    width={140}
+                    height={100}
+                    quality={10}
+                  />
                 </ListItemVideo>
                 <ListItemInfo className='flex flex-col w-2/3'>
-                  <InfoPlaying active={activeVideo == video.id ? 'true' : 'false'}>
+                  <InfoPlaying active={activeVideo?.id == video.id ? 'true' : 'false'}>
                     Currently Playing
                   </InfoPlaying>
                   <InfoTitle>

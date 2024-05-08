@@ -8,7 +8,7 @@ const nextConfig = {
     styledComponents: true
   },
   images: {
-    domains: ['ionutpantazi.ddns.net'],
+    domains: ['ionutpantazi.ddns.net', 'img.youtube.com'],
     deviceSizes: [640, 768, 1024, 1280, 1536]
   }
 }

@@ -145,8 +145,8 @@ const ComponentSectionsCardsCarousel = ({
                           src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
                           className=''
                           alt=''
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

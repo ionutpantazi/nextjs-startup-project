@@ -180,7 +180,7 @@ export const ButtonsContainer = styled.div`
 
 export const Divider = styled.div`
   padding-top: 10px;
-  border-bottom: 2px solid ${props => props.theme.components?.Discussion?.Divider};
+  border-bottom: 1px solid ${props => props.theme.components?.Discussion?.Divider};
 `
 
 const StyledInputContainer = styled.div`

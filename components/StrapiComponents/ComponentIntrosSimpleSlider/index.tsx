@@ -115,8 +115,8 @@ const ComponentIntrosSimpleSlider = ({
                 <NextImage
                   src={IMAGE_DOMAIN + image.attributes?.url}
                   alt=''
-                  layout='fill'
-                  objectFit='cover'
+                  fill
+                  style={{ objectFit: 'cover' }}
                 />
               </ImageContainer>
             </SwiperSlide>

@@ -266,8 +266,8 @@ const ComponentSectionsSpeakersCarousel = ({
                           src={IMAGE_DOMAIN + speaker.attributes.Image.data.attributes.url}
                           className=''
                           alt={speaker.attributes.Image.data.attributes.alternativeText ?? ""}
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

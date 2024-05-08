@@ -8,7 +8,7 @@ export const config = {
 
 const getThumbnail = async (videoId: string) => {
   let data = await axios
-    .get(`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`)
+    .get(`https://img.youtube.com/vi/${videoId}/sddefault.jpg`)
     .then((res) => { return res })
     .catch((err) => { })
   if (data?.status == 200) {
@@ -34,6 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         thumbnail
       })
     }
+    res.status(200).json({
+      error: 'thumbnail not found'
+    })
   } catch (e) {
     res.status(500);
   }
