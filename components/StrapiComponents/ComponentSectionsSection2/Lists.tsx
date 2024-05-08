@@ -90,7 +90,21 @@ const ReadMore = styled.div`
 `
 
 const Spacer = styled.div`
-  height: 60px
+  height: 40px
+`
+
+const ShowAll = styled.div`
+  span {
+    font-size: 12.8px;
+    font-weight: 700;
+    line-height: 16px;
+    padding-bottom: 10px;
+    color: ${props => props.theme.components?.Lists?.ShowAllColor};
+    &:hover {
+      cursor: pointer;
+      color: ${props => props.theme.components?.Lists?.ShowAllHoverColor};
+    }
+  }
 `
 
 const ImageIcon = styled.div`
@@ -236,6 +250,9 @@ const Lists = ({
         }
       </ListsInnerContainer>
       <Spacer />
+      <ShowAll className='flex flex-col items-center justify-center'>
+        <span className='w-fit'>Show All</span>
+      </ShowAll>
     </ListsContainer>
   )
 }

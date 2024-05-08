@@ -155,7 +155,7 @@ const EventDetails = styled.div`
 const EventDetailsItemContainer = styled.div`
   width: 100%;
   &:not(:last-child) {
-    border-right: 2px solid ${props => props.theme.colors.darkestgrey};
+    border-right: 1px solid ${props => props.theme.colors.darkestgrey};
   }
   &:not(:first-child) {
     margin-left: 10px;

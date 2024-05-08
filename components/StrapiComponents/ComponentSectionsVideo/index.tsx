@@ -170,6 +170,20 @@ const InfoDetails = styled.div`
   color: ${props => props.theme.colors.lightgrey};
 `
 
+const ShowAll = styled.div`
+  span {
+    font-size: 12.8px;
+    font-weight: 700;
+    line-height: 16px;
+    padding-bottom: 10px;
+    color: ${props => props.theme.components?.Video?.ShowAllColor};
+    &:hover {
+      cursor: pointer;
+      color: ${props => props.theme.components?.Video?.ShowAllHoverColor};
+    }
+  }
+`
+
 const parseYoutubeData = (videos: [Videos]) => {
   videos.map(async (video) => {
     let YouTubeID = video.YouTubeID;
@@ -244,45 +258,48 @@ const ComponentSectionsVideo = ({
   }
 
   return (
-      <ComponentVideoContainer className='flex flex-col gap-4'>
-        <Title>
-          {data.Title}
-        </Title>
-        <VideoContainer className='flex justify-between lg:flex-row flex-col gap-x-4 gap-y-4 '>
-          <VideoPlayerContainer className='flex lg:w-2/3 w-full'>
-          </VideoPlayerContainer>
-          <VideoListing className='flex flex-col gap-2 lg:w-1/3 w-full'>
-            <FiltersContainer className='flex flex-row gap-2'>
-              {videoCategories.map((category: CategoryItem, index) => (
-                <Category className='' data-value={category.Slug} onClick={e => setActiveCategory(e)} active={activeFilter == category.Slug ? 'true' : 'false'} key={index}>
-                  {category.Title}
-                </Category>
-              ))
-              }
-            </FiltersContainer>
-            <List className='flex flex-col gap-3'>
-              {videos.map((video: Videos) => (
-                <ListItem key={video.id} className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video.id)} active={activeVideo == video.id ? 'true' : 'false'}>
-                  <ListItemVideo className='w-1/3'>
+    <ComponentVideoContainer className='flex flex-col gap-4'>
+      <Title>
+        {data.Title}
+      </Title>
+      <VideoContainer className='flex justify-between lg:flex-row flex-col gap-x-4 gap-y-4 '>
+        <VideoPlayerContainer className='flex lg:w-2/3 w-full'>
+        </VideoPlayerContainer>
+        <VideoListing className='flex flex-col gap-2 lg:w-1/3 w-full'>
+          <FiltersContainer className='flex flex-row gap-2'>
+            {videoCategories.map((category: CategoryItem, index) => (
+              <Category className='' data-value={category.Slug} onClick={e => setActiveCategory(e)} active={activeFilter == category.Slug ? 'true' : 'false'} key={index}>
+                {category.Title}
+              </Category>
+            ))
+            }
+          </FiltersContainer>
+          <List className='flex flex-col gap-3'>
+            {videos.map((video: Videos) => (
+              <ListItem key={video.id} className='flex flex-row gap-4 drop-shadow-md' onClick={() => setActiveVideo(video.id)} active={activeVideo == video.id ? 'true' : 'false'}>
+                <ListItemVideo className='w-1/3'>
 
-                  </ListItemVideo>
-                  <ListItemInfo className='flex flex-col w-2/3'>
-                    <InfoPlaying active={activeVideo == video.id ? 'true' : 'false'}>
-                      Currently Playing
-                    </InfoPlaying>
-                    <InfoTitle>
-                      {video.Title}
-                    </InfoTitle>
-                    <InfoDetails>
-                      {video.Sub_Title}
-                    </InfoDetails>
-                  </ListItemInfo>
-                </ListItem>
-              ))}
-            </List>
-          </VideoListing>
-        </VideoContainer>
-      </ComponentVideoContainer>
+                </ListItemVideo>
+                <ListItemInfo className='flex flex-col w-2/3'>
+                  <InfoPlaying active={activeVideo == video.id ? 'true' : 'false'}>
+                    Currently Playing
+                  </InfoPlaying>
+                  <InfoTitle>
+                    {video.Title}
+                  </InfoTitle>
+                  <InfoDetails>
+                    {video.Sub_Title}
+                  </InfoDetails>
+                </ListItemInfo>
+              </ListItem>
+            ))}
+          </List>
+        </VideoListing>
+      </VideoContainer>
+      <ShowAll className='flex flex-col items-center justify-center'>
+        <span className='w-fit'>Show All</span>
+      </ShowAll>
+    </ComponentVideoContainer>
   )
 }
 

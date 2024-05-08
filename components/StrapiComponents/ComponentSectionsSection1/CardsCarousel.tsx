@@ -108,7 +108,7 @@ const CardTitle = styled.div`
 `
 
 const CardSubTitle = styled.div`
-  color: ${props => props.theme.colors.lightgrey};
+  color: ${props => props.theme.components?.CardsCarousel?.CardSubTitleColor};
   margin-top: 6px;
   font-size: 14px;
   font-weight: 300;
@@ -123,7 +123,7 @@ const ButtonsContainer = styled.div`
   margin-top: 6px;
   span {
     padding-left: 4px;
-    color: ${props => props.theme.colors.lightgrey};
+    color: ${props => props.theme.components?.CardsCarousel?.ButtonsContainerColor};
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;

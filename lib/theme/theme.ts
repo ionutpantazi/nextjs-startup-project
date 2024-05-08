@@ -173,6 +173,8 @@ export const theme: Theme = {
       "CarouselShowAllHoverColor": "#D9D9D9",
       "ShowAllColor": "#D9D9D9",
       "ShowAllHoverColor": "#242424",
+      "CardSubTitleColor": "#A7A7A7",
+      "ButtonsContainerColor": "#A7A7A7"
     },
     "Lists": {
       "ReadMoreColor": "#B97ECF",
@@ -181,12 +183,16 @@ export const theme: Theme = {
       "StyledImageIconBackground": "#242424",
       "StyledTextImageIconBackground": "#242424",
       "StyledTextImageIconHoverColor": "#white",
+      "ShowAllColor": "#B3B3B3",
+      "ShowAllHoverColor": "#A7A7A7"
     },
     "Video": {
       "VideoContainerBackground": "#1E1E1E",
       "CategoryBackground": "black",
       "ListItemBackground": "#242424",
       "ListItemHoverColor": "#242424",
+      "ShowAllColor": "#B3B3B3",
+      "ShowAllHoverColor": "#A7A7A7"
     },
     "CardsCarousel4": {
       "CardContainerBackground": "#121212",
