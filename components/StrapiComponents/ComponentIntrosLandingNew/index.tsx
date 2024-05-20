@@ -16,6 +16,7 @@ import {
   ComponentContainer,
 } from 'components/Bootstrap/Common'
 import ButtonNew, { ButtonNewProps } from 'components/StrapiComponents/ButtonNew'
+import useSession from "lib/use-session";
 
 export type Event_Details_Item = {
   __typename: string
@@ -349,6 +350,8 @@ const ComponentIntrosLandingNew = ({
   themedata,
 }: IntrosLandingProps) => {
 
+  const { session, isLoading } = useSession();
+
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
 
   const handleDefaultThemeChange = () => {
@@ -403,9 +406,14 @@ const ComponentIntrosLandingNew = ({
                         />
                       </EventDetailsIcon>
                       <EventDetailsContainer className='flex flex-col gap-2'>
-                        <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                          Hi Ruth, welcome back to [your event name]
-                        </EventDetailsSubTitle>
+                        {session.isLoggedIn
+                          ? <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                            Hi {session.username}, welcome back to [your event name]
+                          </EventDetailsSubTitle>
+                          : <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                            unauth
+                          </EventDetailsSubTitle>
+                        }
                       </EventDetailsContainer>
                     </div>
                     <Toggle className='flex justify-between cursor-pointer w-fit'>
@@ -505,7 +513,7 @@ const ComponentIntrosLandingNew = ({
                           className=''
                           alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
                           fill
-                          style={{objectFit:'cover'}}
+                          style={{ objectFit: 'cover' }}
                         />
                       </>
                     }

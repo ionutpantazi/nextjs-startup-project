@@ -4,6 +4,9 @@ import { HeaderNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import styled, { css } from 'styled-components'
+import LoginModal from './LoginModal'
+import useSession from "lib/use-session";
+import { defaultSession } from "lib/session";
 
 export interface NavbarProps {
   isOpen?: boolean
@@ -140,14 +143,17 @@ const Navbar: React.FC<NavbarProps> = ({
   navigationData,
 }) => {
 
+  const { session, isLoading, logout } = useSession();
+
   useEffect(() => {
     const init = async () => {
       const {
         Collapse,
         Dropdown,
         initTWE,
+        Modal,
       } = await import("tw-elements");
-      initTWE({ Collapse, Dropdown });
+      initTWE({ Collapse, Dropdown, Modal });
     };
     init();
   }, []);
@@ -155,14 +161,35 @@ const Navbar: React.FC<NavbarProps> = ({
   const RightButtons = (props: any) => {
     return (
       <RightButtonsContainer show={props.show} className={`flex items-center gap-x-1`}>
-        <RegisterBtn className='flex items-center justify-center gap-x-1'>
-          <FAIcon
-            icon={'fa-user'}
-            width={20}
-            height={20}
-          />
-          <span>Register</span>
-        </RegisterBtn>
+        {session.isLoggedIn
+          ? <RegisterBtn className='flex items-center justify-center gap-x-1'
+            onClick={(event) => {
+              event.preventDefault();
+              logout(null, {
+                optimisticData: defaultSession,
+              });
+            }}
+          >
+            <FAIcon
+              icon={'fa-user'}
+              width={20}
+              height={20}
+            />
+            <span>Logout</span>
+          </RegisterBtn>
+          : <RegisterBtn className='flex items-center justify-center gap-x-1'
+            data-twe-toggle="modal"
+            data-twe-target="#loginModal"
+          >
+            <FAIcon
+              icon={'fa-user'}
+              width={20}
+              height={20}
+            />
+            <span>Login</span>
+          </RegisterBtn>
+        }
+
         {/* Hamburger button for mobile view */}
         <MenuBtnDesktop
           className='flex items-center justify-center gap-x-1'
@@ -192,52 +219,55 @@ const Navbar: React.FC<NavbarProps> = ({
   }
 
   return (
-    <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
-      <div className="flex w-full flex-wrap items-center justify-between px-3">
-        {/* Logo  */}
-        {navigationData?.Logo?.Image?.data &&
-          <LogoContainer as='a' href='#' className='flex items-center'>
-            <>
-              {navigationData?.Logo?.Image?.data?.attributes &&
-                <NextImage
-                  src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
-                  className=''
-                  alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
-                  width={Number(navigationData.Logo.Width)}
-                  height={Number(navigationData.Logo.Height)}
-                />
-              }
-            </>
-          </LogoContainer>
-        }
-        <div>
-
-        </div>
-        <RightButtons show={'hidedesktop'} />
-        <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
-          {navigationData?.Pillars?.length &&
-            <ul className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
-              {navigationData?.Pillars.map((navItem: PillarsProps) => (
-                <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-                  <Pillar className='flex gap-2' data-twe-nav-link-ref>
-                    <FAIcon
-                      icon={navItem.FAIcon.Icon}
-                      width={Number(navItem.FAIcon.Width)}
-                      height={Number(navItem.FAIcon.Height)}
-                    />
-                    <span>
-                      {navItem.Title}
-                    </span>
-                  </Pillar>
-                </li>
-              ))
-              }
-            </ul>
+    <>
+      <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
+        <div className="flex w-full flex-wrap items-center justify-between px-3">
+          {/* Logo  */}
+          {navigationData?.Logo?.Image?.data &&
+            <LogoContainer as='a' href='#' className='flex items-center'>
+              <>
+                {navigationData?.Logo?.Image?.data?.attributes &&
+                  <NextImage
+                    src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
+                    className=''
+                    alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
+                    width={Number(navigationData.Logo.Width)}
+                    height={Number(navigationData.Logo.Height)}
+                  />
+                }
+              </>
+            </LogoContainer>
           }
-        </CollapsibleMenu>
-        <RightButtons show={'hidemobile'} />
-      </div>
-    </NavigationContainer>
+          <div>
+
+          </div>
+          <RightButtons show={'hidedesktop'} />
+          <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
+            {navigationData?.Pillars?.length &&
+              <ul className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
+                {navigationData?.Pillars.map((navItem: PillarsProps) => (
+                  <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+                    <Pillar className='flex gap-2' data-twe-nav-link-ref>
+                      <FAIcon
+                        icon={navItem.FAIcon.Icon}
+                        width={Number(navItem.FAIcon.Width)}
+                        height={Number(navItem.FAIcon.Height)}
+                      />
+                      <span>
+                        {navItem.Title}
+                      </span>
+                    </Pillar>
+                  </li>
+                ))
+                }
+              </ul>
+            }
+          </CollapsibleMenu>
+          <RightButtons show={'hidemobile'} />
+        </div>
+      </NavigationContainer>
+      <LoginModal data={undefined} />
+    </>
   )
 }
 
