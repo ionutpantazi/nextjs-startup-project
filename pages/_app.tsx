@@ -5,7 +5,6 @@ const { library } = require('@fortawesome/fontawesome-svg-core');
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { SessionProvider } from "next-auth/react"
 
 import '../styles/global.css'
 
@@ -17,11 +16,9 @@ library.add(far)
 const MyApp = ({ Component, pageProps: { session, ...pageProps }, }: AppProps) => {
   const apolloClient = useApollo(pageProps.initializeApolloState);
   return (
-    <SessionProvider session={session}>
-      <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </SessionProvider>
+    <ApolloProvider client={apolloClient}>
+      <Component {...pageProps} />
+    </ApolloProvider>
   )
 }
 
