@@ -1,4 +1,5 @@
 import { SessionOptions } from "iron-session";
+import { AUTH_SECRET } from 'lib/constants'
 
 export interface SessionData {
   username: string;
@@ -11,8 +12,8 @@ export const defaultSession: SessionData = {
 };
 
 export const sessionOptions: SessionOptions = {
-  password: "complex_password_at_least_32_characters_long",
-  cookieName: "iron-examples-pages-router-api-route-swr",
+  password: AUTH_SECRET,
+  cookieName: "nextjs-livegroup-prototype",
   cookieOptions: {
     // secure only works in `https` environments
     // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`

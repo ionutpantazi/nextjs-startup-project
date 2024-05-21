@@ -13,6 +13,7 @@ import {
   LISTS,
   VIDEO,
   NAVIGATION,
+  CONTACT,
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -29,6 +30,7 @@ export const PAGES_QUERY = gql`
   ${LISTS}
   ${VIDEO}
   ${NAVIGATION}
+  ${CONTACT}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -440,6 +442,12 @@ export const PAGES_QUERY = gql`
                     }
                   }
                 }
+              }
+            }
+            ... on ComponentSectionsSection5 {
+              id
+              Contact {
+                ...Contact
               }
             }
           }

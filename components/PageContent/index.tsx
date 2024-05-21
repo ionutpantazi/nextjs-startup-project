@@ -15,6 +15,7 @@ import ComponentSectionsSection1, { Section1Props } from 'components/StrapiCompo
 import ComponentSectionsSection2, { Section2Props } from 'components/StrapiComponents/ComponentSectionsSection2'
 import ComponentSectionsSection3, { Section3Props } from 'components/StrapiComponents/ComponentSectionsSection3'
 import ComponentSectionsSection4, { Section4Props } from 'components/StrapiComponents/ComponentSectionsSection4'
+import ComponentSectionsSection5, { Section5Props } from 'components/StrapiComponents/ComponentSectionsSection5'
 
 export const components = {
   ComponentIntrosLanding: dynamic(() => import('components/StrapiComponents/ComponentIntrosLanding')),
@@ -30,6 +31,7 @@ export const components = {
   ComponentSectionsSection2: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection2')),
   ComponentSectionsSection3: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection3')),
   ComponentSectionsSection4: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection4')),
+  ComponentSectionsSection5: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection5')),
 };
 
 export type PageContentComponent = IntrosLandingProps
@@ -45,6 +47,7 @@ export type PageContentComponent = IntrosLandingProps
   & Section2Props
   & Section3Props
   & Section4Props
+  & Section5Props
 
 export interface PageContentProps {
   data?: [
@@ -109,6 +112,9 @@ const PageContent = ({
               }
               {component.__typename == 'ComponentSectionsSection4' &&
                 <ComponentSectionsSection4 data={component} />
+              }
+              {component.__typename == 'ComponentSectionsSection5' &&
+                <ComponentSectionsSection5 data={component} />
               }
             </div>
           ))

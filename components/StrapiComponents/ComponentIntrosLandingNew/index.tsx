@@ -199,6 +199,14 @@ const EventDetailsSubTitle = styled.div`
   font-weight: 300;
   line-height: 16px;
   color: ${props => props.theme.components?.Header?.EventDetailsSubTitle};
+
+  .login: {
+    text-decoration: underline!important;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `
 
 const EventDetailsContainer = styled.div`
@@ -343,6 +351,13 @@ const DefaultThemeToggle = styled.span <{ isdefaulttheme?: any }>`
   `}
 `
 
+const EmptyAvatar = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: ${props => props.theme.colors.brand};
+`
+
 const ComponentIntrosLandingNew = ({
   data,
   senddatatolayout,
@@ -396,25 +411,41 @@ const ComponentIntrosLandingNew = ({
                 <EventDetailsItemContainer>
                   <EventDetailsItem className='flex flex-col gap-4'>
                     <div className='flex flex-row gap-4'>
-                      <EventDetailsIcon className='row-span-3'>
-                        <NextImage
-                          src={'/images/avatar.png'}
-                          className=''
-                          alt={""}
-                          width={40}
-                          height={40}
-                        />
-                      </EventDetailsIcon>
-                      <EventDetailsContainer className='flex flex-col gap-2'>
-                        {session.isLoggedIn
-                          ? <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                            Hi {session.username}, welcome back to [your event name]
-                          </EventDetailsSubTitle>
-                          : <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                            unauth
-                          </EventDetailsSubTitle>
-                        }
-                      </EventDetailsContainer>
+                      {session.isLoggedIn
+                        ?
+                        <>
+                          <EventDetailsIcon className='row-span-3'>
+                            <NextImage
+                              src={'/images/avatar.png'}
+                              className=''
+                              alt={""}
+                              width={40}
+                              height={40}
+                            />
+                          </EventDetailsIcon>
+                          <EventDetailsContainer className='flex flex-col gap-2'>
+                            <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                              Hi {session.username}, welcome back to {data.Title}
+                            </EventDetailsSubTitle>
+                          </EventDetailsContainer>
+                        </>
+                        :
+                        <>
+                          <EventDetailsIcon className='row-span-3'>
+                            <EmptyAvatar />
+                          </EventDetailsIcon>
+                          <EventDetailsContainer className='flex flex-col gap-2'>
+                            <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                              <button className="login underline"
+                                data-twe-toggle="modal"
+                                data-twe-target="#loginModal"
+                              >Login
+                              </button> to view your personalised content
+                            </EventDetailsSubTitle>
+                          </EventDetailsContainer>
+                        </>
+                      }
+
                     </div>
                     <Toggle className='flex justify-between cursor-pointer w-fit'>
                       <input

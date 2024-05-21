@@ -405,3 +405,11 @@ export const VIDEO = gql`
     }
   }
 `
+
+export const CONTACT = gql`
+  fragment Contact on ComponentSectionsContact {
+    id
+    Title
+    Sub_Title
+  }
+`

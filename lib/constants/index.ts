@@ -15,3 +15,9 @@ export const FOOTER_NAVIGATION_ID_OR_SLUG = process.env.NEXT_PUBLIC_FOOTER_NAVIG
   : "2"
 
 export const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+
+export const AUTH_SECRET = process.env.NEXT_PUBLIC_AUTH_SECRET
+  ? process.env.AUTH_SECRET
+    ? process.env.AUTH_SECRET
+    : "complex_password_at_least_32_characters_long"
+  : "complex_password_at_least_32_characters_long"
