@@ -39,6 +39,7 @@ const HeaderWrap = styled.header`
 
 const LayoutContainer = styled.div`
   background-color: ${theme.colors.black};
+  font-family: ReadexProRegular;
 `
 
 
