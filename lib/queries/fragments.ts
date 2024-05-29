@@ -154,6 +154,15 @@ export const SPEAKERS = gql`
         }
       }
     }
+    Companies {
+      data {
+        id
+        attributes {
+          Name
+          Slug
+        }
+      }
+    }
   }
 `
 

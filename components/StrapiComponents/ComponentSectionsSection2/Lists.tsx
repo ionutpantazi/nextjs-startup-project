@@ -74,7 +74,7 @@ const Itemposition = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 32px;
+  height: 35px;
 `
 
 const ReadMore = styled.div`
@@ -169,8 +169,8 @@ const Lists = ({
                       src={IMAGE_DOMAIN + speaker.attributes?.Image?.data?.attributes?.url}
                       className=''
                       alt={speaker.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                      width={60}
-                      height={60}
+                      width={120}
+                      height={120}
                     />
                   </div>
                   <div className='flex flex-col gap-2 max-w-60'>
@@ -178,7 +178,12 @@ const Lists = ({
                       {speaker.attributes.Name}
                     </ItemTitle>
                     <Itemposition className=''>
-                      {speaker.attributes.Position}
+                      <p>
+                        {speaker.attributes.Position}
+                      </p>
+                      <p>
+                        {speaker.attributes.Companies?.data[0].attributes.Name}
+                      </p>
                     </Itemposition>
                     <div className='flex flex-row gap-1'>
                       <ImageIcon className=''>
@@ -207,8 +212,8 @@ const Lists = ({
                       src={IMAGE_DOMAIN + workshop.attributes?.Image?.data?.attributes?.url}
                       className=''
                       alt={workshop.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                      width={60}
-                      height={60}
+                      width={120}
+                      height={120}
                     />
                   </div>
                   <div className='flex flex-col gap-2 max-w-60'>

@@ -26,6 +26,19 @@ export type Speaker = {
         Workshop
       ]
     }
+    Companies?: {
+      data: [
+        Company
+      ]
+    }
+  }
+}
+
+export type Company = {
+  id: string,
+  attributes: {
+    Name: string
+    Slug: string
   }
 }
 

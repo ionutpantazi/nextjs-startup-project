@@ -363,8 +363,8 @@ const CommentContent = (props: any) => {
           src={IMAGE_DOMAIN + comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
           className=''
           alt={comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-          width={30}
-          height={30}
+          width={90}
+          height={90}
         />
         <AuthorDetails className=''>
           {comment.attributes?.Author?.data?.attributes?.Name} | {moment(comment.attributes.createdAt).fromNow()}
@@ -390,8 +390,8 @@ export const OtherDiscussion = (props: any) => {
           src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
           className=''
           alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-          width={30}
-          height={30}
+          width={90}
+          height={90}
         />
         <AuthorDetails className=''>
           {discussion.attributes?.Author?.data?.attributes?.Name} | {moment(discussion.attributes.createdAt).fromNow()}
@@ -468,8 +468,8 @@ const Discussion = ({
                           src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
                           className=''
                           alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                          width={30}
-                          height={30}
+                          width={90}
+                          height={90}
                         />
                       }
                     </>
