@@ -62,6 +62,17 @@ const CommenterImage = styled(NextImage)`
   width: 30px;
   height: 30px;
   z-index: 2;
+  position: relative;
+  img {
+    object-fit: cover;
+  }
+`
+
+const SpeakerImage = styled.div`
+  position: relative;
+  img {
+    object-fit: cover;
+  }
 `
 
 const ActionButtons = (props: any) => {
@@ -89,8 +100,8 @@ const ActionButtons = (props: any) => {
             src={IMAGE_DOMAIN + participant.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
             className=''
             alt={participant.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-            width={30}
-            height={30}
+            width={40}
+            height={40}
           />
         ))
         }
@@ -105,13 +116,15 @@ const OtherDiscussion = (props: any) => {
   return (
     <OtherDiscussionInnerBox className={`${props.className}`}>
       <CommentAuthor className='flex flex-row items-center gap-4'>
-        <StyledNextImage
-          src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
-          className=''
-          alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-          width={30}
-          height={30}
-        />
+        <SpeakerImage>
+          <StyledNextImage
+            src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
+            className=''
+            alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
+            width={40}
+            height={40}
+          />
+        </SpeakerImage>
         <AuthorDetails className=''>
           {discussion.attributes?.Author?.data?.attributes?.Name} / Event Name | {moment(discussion.attributes.createdAt).format('ddd')} {moment(discussion.attributes.createdAt, moment.HTML5_FMT.TIME_MS).format('h:mma')}
         </AuthorDetails>

@@ -59,6 +59,15 @@ const RoundedImage = styled(NextImage)`
   height: 60px;
 `
 
+const SpeakerImage = styled.div`
+  position: relative;
+  width: 60px;
+  height: 60px;
+  img {
+    object-fit: cover;
+  }
+`
+
 const ItemTitle = styled.div`
   font-size: 14px;
   font-weight: 600;
@@ -164,15 +173,15 @@ const Lists = ({
             <div className='sm:grid sm:grid-rows-3 flex flex-col grid-flow-col gap-10 gap-x-10'>
               {list.Speakers?.data.map((speaker: Speaker, index: number) => (
                 <div key={index} className='flex flex-row gap-6'>
-                  <div className='flex'>
+                  <SpeakerImage>
                     <RoundedImage
                       src={IMAGE_DOMAIN + speaker.attributes?.Image?.data?.attributes?.url}
                       className=''
                       alt={speaker.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                      width={120}
-                      height={120}
+                      width={100}
+                      height={100}
                     />
-                  </div>
+                  </SpeakerImage>
                   <div className='flex flex-col gap-2 max-w-60'>
                     <ItemTitle className=''>
                       {speaker.attributes.Name}
@@ -207,15 +216,15 @@ const Lists = ({
               }
               {list.Workshops?.data.map((workshop: Workshop, index: number) => (
                 <div key={index} className='flex flex-row gap-6'>
-                  <div className='flex'>
+                  <SpeakerImage>
                     <RoundedImage
                       src={IMAGE_DOMAIN + workshop.attributes?.Image?.data?.attributes?.url}
                       className=''
                       alt={workshop.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                      width={120}
-                      height={120}
+                      width={100}
+                      height={100}
                     />
-                  </div>
+                  </SpeakerImage>
                   <div className='flex flex-col gap-2 max-w-60'>
                     <ItemTitle className=''>
                       {workshop.attributes.Title}

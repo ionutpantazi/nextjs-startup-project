@@ -223,6 +223,13 @@ const CommentBox = styled.div`
 export const CommentAuthor = styled.div`
 `
 
+const SpeakerImage = styled.div`
+  position: relative;
+  img {
+    object-fit: cover;
+  }
+`
+
 const CommentText = styled.div`
   padding: 6px 0px 0px 50px;
   color: ${props => props.theme.components?.Discussion?.CommentTextColor};
@@ -359,13 +366,15 @@ const CommentContent = (props: any) => {
   return (
     <CommentInnerBox className={`${props.className} ${props.expand ? "!visible hidden" : ""}`} {...props.expand && { 'id': 'expand-discussion', 'data-twe-collapse-item': true }}>
       <CommentAuthor className='flex flex-row items-center gap-4'>
-        <StyledNextImage
-          src={IMAGE_DOMAIN + comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
-          className=''
-          alt={comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-          width={90}
-          height={90}
-        />
+        <SpeakerImage>
+          <StyledNextImage
+            src={IMAGE_DOMAIN + comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
+            className=''
+            alt={comment.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
+            width={40}
+            height={40}
+          />
+        </SpeakerImage>
         <AuthorDetails className=''>
           {comment.attributes?.Author?.data?.attributes?.Name} | {moment(comment.attributes.createdAt).fromNow()}
         </AuthorDetails>
@@ -386,13 +395,15 @@ export const OtherDiscussion = (props: any) => {
   return (
     <OtherDiscussionInnerBox className={`${props.className}`}>
       <CommentAuthor className='flex flex-row items-center gap-4'>
-        <StyledNextImage
-          src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
-          className=''
-          alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-          width={90}
-          height={90}
-        />
+        <SpeakerImage>
+          <StyledNextImage
+            src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
+            className=''
+            alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
+            width={40}
+            height={40}
+          />
+        </SpeakerImage>
         <AuthorDetails className=''>
           {discussion.attributes?.Author?.data?.attributes?.Name} | {moment(discussion.attributes.createdAt).fromNow()}
         </AuthorDetails>
@@ -464,13 +475,15 @@ const Discussion = ({
                   <Author className='flex flex-row items-center gap-4'>
                     <>
                       {discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url &&
-                        <StyledNextImage
-                          src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
-                          className=''
-                          alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                          width={90}
-                          height={90}
-                        />
+                        <SpeakerImage>
+                          <StyledNextImage
+                            src={IMAGE_DOMAIN + discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.url}
+                            className=''
+                            alt={discussion.attributes?.Author?.data?.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
+                            width={40}
+                            height={40}
+                          />
+                        </SpeakerImage>
                       }
                     </>
                     <AuthorDetails className=''>
@@ -492,13 +505,15 @@ const Discussion = ({
           <Divider />
           <StyledInputContainer className='flex flex-row gap-6'>
             <UserAvatar className='row-span-3'>
-              <NextImage
-                src={'/images/avatar.png'}
-                className=''
-                alt={""}
-                width={30}
-                height={30}
-              />
+              <SpeakerImage>
+                <NextImage
+                  src={'/images/avatar.png'}
+                  className=''
+                  alt={""}
+                  width={30}
+                  height={30}
+                />
+              </SpeakerImage>
             </UserAvatar>
             <input placeholder='Share your thoughts...' />
           </StyledInputContainer>
