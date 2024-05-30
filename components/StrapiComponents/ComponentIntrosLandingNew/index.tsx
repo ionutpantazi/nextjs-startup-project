@@ -17,6 +17,7 @@ import {
 } from 'components/Bootstrap/Common'
 import ButtonNew, { ButtonNewProps } from 'components/StrapiComponents/ButtonNew'
 import useSession from "lib/use-session";
+import ReadMore from '@/components/Bootstrap/ReadMore'
 
 export type Event_Details_Item = {
   __typename: string
@@ -318,6 +319,18 @@ const EventContentContainer = styled.div`
 `
 
 const EventContent = styled.div`
+  strong {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+  p {
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+    color: ${props => props.theme.colors.grey1};
+  }
 `
 
 const Toggle = styled.label`
@@ -574,20 +587,17 @@ const ComponentIntrosLandingNew = ({
                 }
               </IWantToContainer>
               <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
-                <EventContent
-                  className=''
-                  dangerouslySetInnerHTML={{
-                    __html: data.Content
-                  }}
-                >
+                
+                <EventContent className=''>
+                  <ReadMore content={data.Content} chars={200} />
                 </EventContent>
-                {data.Button &&
+                {/* {data.Button &&
                   <ButtonNew data={data.Button}>
                     <ReadMoreContainer>
                       {data.Button.Text}
                     </ReadMoreContainer>
                   </ButtonNew>
-                }
+                } */}
               </EventContentContainer>
             </EventSectionContainer>
           </IntroLandingContainer>

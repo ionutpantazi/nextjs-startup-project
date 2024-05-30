@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 export interface ReadMoreProps {
-  description: string
-  DESC_WORDS: number
+  content?: string
+  chars?: number
 }
 
-const HeadingDescription = (description: { description: string }) => {
+const Content = (content: { content: string }) => {
   return (
     <Description
       dangerouslySetInnerHTML={{
-        __html: description.description,
+        __html: content.content,
       }}
     />
   )
 }
 
-const DescriptionContainer = styled.p`
+const ContentContainer = styled.div`
 `
 
 export const Description = styled.div`
@@ -33,29 +33,29 @@ const More = styled.span`
 `
 
 const ReadMore = ({
-  description,
-  DESC_WORDS = 10
+  content = "",
+  chars = 10
 }: ReadMoreProps) => {
 
   const [fullDesc, setFullDesc] = useState<boolean | null>(null)
-  const isShortDesc = description?.length <= DESC_WORDS
+  const isShortDesc = content?.length <= chars
 
   const togggleDescription = () => {
     setFullDesc(!fullDesc)
   }
 
   return (
-    <DescriptionContainer className=''>
+    <ContentContainer className=''>
       {isShortDesc || fullDesc
-        ? <HeadingDescription description={`${description} `} />
-        : <HeadingDescription description={`${description.slice(0, DESC_WORDS)}... `} />
+        ? <Content content={`${content} `} />
+        : <Content content={`${content.slice(0, chars)}... `} />
       }
       {!isShortDesc && (
         <More onClick={togggleDescription}>
           {fullDesc ? 'Read less' : 'Read more'}
         </More>
       )}
-    </DescriptionContainer>
+    </ContentContainer>
   )
 }
 
