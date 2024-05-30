@@ -159,11 +159,11 @@ const AgendaDayNumber = styled.div`
   line-height: 44px;
 `
 
-const SocialsContainer = styled.div`
+export const SocialsContainer = styled.div`
   padding-top: 10px;
 `
 
-const Social = styled.div`
+export const Social = styled.div`
   span {
     font-size: 16px;
     font-weight: 600;

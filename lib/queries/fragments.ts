@@ -420,5 +420,59 @@ export const CONTACT = gql`
     id
     Title
     Sub_Title
+    Social {
+      id
+      Title
+      Icon {
+        data {
+          attributes {
+            ...CoreUploadFileFields
+          }
+        }
+      }
+      FAIcon {
+        id
+        Width
+        Icon
+        Height
+        Color
+      }
+    }
+    Details {
+      id
+      Title
+      Icon {
+        data {
+          attributes {
+            ...CoreUploadFileFields
+          }
+        }
+      }
+      FAIcon {
+        id
+        Width
+        Icon
+        Height
+        Color
+      }
+    }
+    Interests {
+      id
+      Title
+      Icon {
+        data {
+          attributes {
+            ...CoreUploadFileFields
+          }
+        }
+      }
+      FAIcon {
+        id
+        Width
+        Icon
+        Height
+        Color
+      }
+    }
   }
 `

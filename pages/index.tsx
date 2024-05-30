@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const { data: { homepage: { data: { attributes } } } } = await apolloClient.query({
       query: HOMEPAGE_QUERY
     })
-    // console.log(attributes)
+    console.log(navigationData)
     return {
       props: {
         data: attributes,
