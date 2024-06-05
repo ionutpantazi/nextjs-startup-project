@@ -112,7 +112,7 @@ const IntroLandingContainer = styled.div`
   }
 `
 
-const EventTitle = styled.div`
+export const EventTitle = styled.div`
   font-size: 57px;
   font-weight: 400;
   line-height: 64px;
@@ -125,7 +125,7 @@ const EventTitle = styled.div`
   }
 `
 
-const EventIntroduction = styled.div`
+export const EventIntroduction = styled.div`
   font-size: 16px;
   font-weight: 300;
   line-height: 24px;

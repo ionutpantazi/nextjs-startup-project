@@ -13,6 +13,7 @@ import {
 var moment = require('moment');
 import FAIcon from 'components/Bootstrap/FAIcon'
 import { AgendaItems } from '../ComponentSectionsSection2/Agenda'
+import ReadMore from '@/components/Bootstrap/ReadMore'
 
 export type IconsProps = {
   id: string
@@ -58,7 +59,7 @@ const Icon = styled.div`
   color: ${props => props.theme.colors.brand};
 `
 
-const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled.div`
   font-size: 16px;
   font-weight: 300;
   line-height: 24px;
@@ -66,17 +67,17 @@ const DescriptionContainer = styled.div`
   color: ${props => props.theme.components?.TextAndIcons?.DescriptionContainerColor};
 `
 
-const ReadMore = styled.div`
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 16px;
-  padding-top: 10px;
-  color: ${props => props.theme.colors.brand};
-  &:hover {
-    cursor: pointer;
-    color: ${props => props.theme.colors.brandlight};
-  }
-`
+// const ReadMore = styled.div`
+//   font-size: 11px;
+//   font-weight: 500;
+//   line-height: 16px;
+//   padding-top: 10px;
+//   color: ${props => props.theme.colors.brand};
+//   &:hover {
+//     cursor: pointer;
+//     color: ${props => props.theme.colors.brandlight};
+//   }
+// `
 
 const IconsTitle = styled.div`
   font-size: 14px;
@@ -84,11 +85,11 @@ const IconsTitle = styled.div`
   line-height: 20px;
 `
 
-const IconsContainer = styled.div`
+export const IconsContainer = styled.div`
   padding-top: 10px;
 `
 
-const IconButton = styled.div <{ active?: any }>`
+export const IconButton = styled.div <{ active?: any }>`
   padding: 18px 26px;
 
   ${({ active }) => css`
@@ -200,7 +201,7 @@ const TextAndIcons = ({
     <TextAndIconsContainer className='flex sm:flex-row flex-col gap-4'>
       <FirstColumn className='flex flex-col sm:w-1/2 w-auto'>
         <TitleContainer className='flex flex-row items-center gap-4'>
-          {
+          {data.Icon?.data &&
             <Icon className='flex items-center'>
               {data?.Icon?.data?.attributes?.url &&
                 <NextImage
@@ -224,86 +225,82 @@ const TextAndIcons = ({
             {data.Title}
           </SectionTitle>
         </TitleContainer>
-        <DescriptionContainer
-          className=''
-          dangerouslySetInnerHTML={{
-            __html: data.Introduction
-          }}
-        />
-        <ReadMore className='w-fit'>
-          Read more
-        </ReadMore>
+        <DescriptionContainer className=''>
+          <ReadMore content={data.Introduction} chars={100} />
+        </DescriptionContainer>
       </FirstColumn>
-      <SecondColumn className='sm:w-1/2 w-auto'>
-        {data.Icons.Type == 'Filters' &&
-          <>
-            <IconsTitle>
-              {data.Icons.Title}
-            </IconsTitle>
-            <IconsContainer className='flex flex-row flex-wrap gap-4'>
-              {data.Icons.Icons.map((icon: IconsProps, index: number) => (
-                <IconButton as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
-                  {icon?.FAIcon?.Icon &&
-                    <FAIcon
-                      icon={icon?.FAIcon?.Icon}
-                      width={Number(icon.FAIcon.Width)}
-                      height={Number(icon.FAIcon?.Width)}
-                    />
-                  }
-                  <span>
-                    {icon.Title}
-                  </span>
-                </IconButton>
+      {data.Icons &&
+        <SecondColumn className='sm:w-1/2 w-auto'>
+          {data.Icons.Type == 'Filters' &&
+            <>
+              <IconsTitle>
+                {data.Icons.Title}
+              </IconsTitle>
+              <IconsContainer className='flex flex-row flex-wrap gap-4'>
+                {data.Icons.Icons.map((icon: IconsProps, index: number) => (
+                  <IconButton as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
+                    {icon?.FAIcon?.Icon &&
+                      <FAIcon
+                        icon={icon?.FAIcon?.Icon}
+                        width={Number(icon.FAIcon.Width)}
+                        height={Number(icon.FAIcon?.Width)}
+                      />
+                    }
+                    <span>
+                      {icon.Title}
+                    </span>
+                  </IconButton>
+                ))
+                }
+              </IconsContainer>
+            </>
+          }
+          {data.Icons.Type == 'Agenda' && generateAgendaDatesArray(agendaItems).length &&
+            <DatesContainer className='flex flex-row flex-wrap gap-2'>
+              {generateAgendaDatesArray(agendaItems).map((agendaDate: any, index: number) => (
+                <DateContainer key={index} className='flex flex-col gap-2 justify-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
+                  onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
+                >
+                  <AgendaDay className=''>
+                    {moment(agendaDate).format('ddd')}
+                  </AgendaDay>
+                  <AgendaDayNumber className='agendaDayNumber'>
+                    {moment(agendaDate).format('Do')}
+                  </AgendaDayNumber>
+                  <AgendaDay className=''>
+                    {moment(agendaDate).format('MMMM')}
+                  </AgendaDay>
+                </DateContainer>
               ))
               }
-            </IconsContainer>
-          </>
-        }
-        {data.Icons.Type == 'Agenda' && generateAgendaDatesArray(agendaItems).length &&
-          <DatesContainer className='flex flex-row flex-wrap gap-2'>
-            {generateAgendaDatesArray(agendaItems).map((agendaDate: any, index: number) => (
-              <DateContainer key={index} className='flex flex-col gap-2 justify-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
-                onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
-              >
-                <AgendaDay className=''>
-                  {moment(agendaDate).format('ddd')}
-                </AgendaDay>
-                <AgendaDayNumber className='agendaDayNumber'>
-                  {moment(agendaDate).format('Do')}
-                </AgendaDayNumber>
-                <AgendaDay className=''>
-                  {moment(agendaDate).format('MMMM')}
-                </AgendaDay>
-              </DateContainer>
-            ))
-            }
-          </DatesContainer>
-        }
-        {data.Icons.Type == 'Social' &&
-          <>
-            <IconsTitle>
-              {data.Icons.Title}
-            </IconsTitle>
-            <SocialsContainer className='flex flex-wrap gap-4'>
-              {data.Icons.Icons.map((icon: IconsProps) => (
-                <Social as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4'>
-                  {icon?.FAIcon?.Icon &&
-                    <FAIcon
-                      icon={icon?.FAIcon?.Icon}
-                      width={Number(icon.FAIcon.Width)}
-                      height={Number(icon.FAIcon?.Width)}
-                    />
-                  }
-                  <span>
-                    {icon.Title}
-                  </span>
-                </Social>
-              ))
-              }
-            </SocialsContainer>
-          </>
-        }
-      </SecondColumn>
+            </DatesContainer>
+          }
+          {data.Icons.Type == 'Social' &&
+            <>
+              <IconsTitle>
+                {data.Icons.Title}
+              </IconsTitle>
+              <SocialsContainer className='flex flex-wrap gap-4'>
+                {data.Icons.Icons.map((icon: IconsProps) => (
+                  <Social as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4'>
+                    {icon?.FAIcon?.Icon &&
+                      <FAIcon
+                        icon={icon?.FAIcon?.Icon}
+                        width={Number(icon.FAIcon.Width)}
+                        height={Number(icon.FAIcon?.Width)}
+                      />
+                    }
+                    <span>
+                      {icon.Title}
+                    </span>
+                  </Social>
+                ))
+                }
+              </SocialsContainer>
+            </>
+          }
+        </SecondColumn>
+      }
     </TextAndIconsContainer>
   )
 }

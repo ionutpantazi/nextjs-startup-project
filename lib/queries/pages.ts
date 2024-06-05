@@ -14,6 +14,7 @@ import {
   VIDEO,
   NAVIGATION,
   CONTACT,
+  ICON
 } from 'lib/queries/fragments'
 
 export const PAGES_QUERY = gql`
@@ -31,6 +32,7 @@ export const PAGES_QUERY = gql`
   ${VIDEO}
   ${NAVIGATION}
   ${CONTACT}
+  ${ICON}
   query PagesQuery($filters: PageFiltersInput) {
     pages(filters: $filters) {
       data {
@@ -448,6 +450,57 @@ export const PAGES_QUERY = gql`
               id
               Contact {
                 ...Contact
+              }
+            }
+            ... on ComponentIntrosHeaderImage {
+              id
+              Bottom_Margin
+              Background_Image {
+                data {
+                  attributes {
+                    ...CoreUploadFileFields
+                  }
+                }
+              }
+            }
+            ... on ComponentIntrosHeader1 {
+              id
+              Title
+              Sub_Title
+              FAIcon {
+                id
+                Width
+                Icon
+                Height
+                Color
+              }
+              Icons {
+                id
+                Title
+                Icon {
+                  data {
+                    attributes {
+                      ...CoreUploadFileFields
+                    }
+                  }
+                }
+                FAIcon {
+                  id
+                  Width
+                  Icon
+                  Height
+                  Color
+                }
+              }
+            }
+            ... on ComponentIncludesRegistration {
+              id
+              Title
+              Sub_Title
+              Bio_Placeholder
+              Disclaimer
+              Interests {
+                ...Icon
               }
             }
           }

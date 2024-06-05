@@ -29,6 +29,7 @@ const More = styled.span`
   color: ${props => props.theme.colors.brand};
   &:hover {
     cursor: pointer;
+    color: ${props => props.theme.colors.brandlight};
   }
 `
 

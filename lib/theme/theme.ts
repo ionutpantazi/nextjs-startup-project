@@ -60,6 +60,7 @@ export interface Theme {
     small: string
     medium: string
     large: string
+    xlarge: string
     components: {
       xsmall: string
       small: string
@@ -126,6 +127,7 @@ export const theme: Theme = {
     "medium": "12px",
     "small": "8px",
     "large": "24px",
+    "xlarge": "34px",
     "components": {
       "xsmall": "2px",
       "medium": "12px",

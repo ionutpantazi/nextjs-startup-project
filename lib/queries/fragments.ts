@@ -415,64 +415,41 @@ export const VIDEO = gql`
   }
 `
 
+export const ICON = gql`
+  fragment Icon on ComponentIncludesIcon {
+    id
+    Title
+    Icon {
+      data {
+        attributes {
+          ...CoreUploadFileFields
+        }
+      }
+    }
+    FAIcon {
+      id
+      Width
+      Icon
+      Height
+      Color
+    }
+  }
+`
+
 export const CONTACT = gql`
+  ${ICON}
   fragment Contact on ComponentSectionsContact {
     id
     Title
     Sub_Title
     Social {
-      id
-      Title
-      Icon {
-        data {
-          attributes {
-            ...CoreUploadFileFields
-          }
-        }
-      }
-      FAIcon {
-        id
-        Width
-        Icon
-        Height
-        Color
-      }
+      ...Icon
     }
     Details {
-      id
-      Title
-      Icon {
-        data {
-          attributes {
-            ...CoreUploadFileFields
-          }
-        }
-      }
-      FAIcon {
-        id
-        Width
-        Icon
-        Height
-        Color
-      }
+      ...Icon
     }
     Interests {
-      id
-      Title
-      Icon {
-        data {
-          attributes {
-            ...CoreUploadFileFields
-          }
-        }
-      }
-      FAIcon {
-        id
-        Width
-        Icon
-        Height
-        Color
-      }
+      ...Icon
     }
   }
 `

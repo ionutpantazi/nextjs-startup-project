@@ -16,6 +16,9 @@ import ComponentSectionsSection2, { Section2Props } from 'components/StrapiCompo
 import ComponentSectionsSection3, { Section3Props } from 'components/StrapiComponents/ComponentSectionsSection3'
 import ComponentSectionsSection4, { Section4Props } from 'components/StrapiComponents/ComponentSectionsSection4'
 import ComponentSectionsSection5, { Section5Props } from 'components/StrapiComponents/ComponentSectionsSection5'
+import ComponentIntrosHeader1, { Header1Props } from 'components/StrapiComponents/ComponentIntrosHeader1'
+import ComponentIntrosHeaderImage, { HeaderImageProps } from 'components/StrapiComponents/ComponentIntrosHeaderImage'
+import ComponentIncludesRegistration, { RegistrationProps } from 'components/StrapiComponents/ComponentIncludesRegistration'
 
 export const components = {
   ComponentIntrosLanding: dynamic(() => import('components/StrapiComponents/ComponentIntrosLanding')),
@@ -32,6 +35,9 @@ export const components = {
   ComponentSectionsSection3: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection3')),
   ComponentSectionsSection4: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection4')),
   ComponentSectionsSection5: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection5')),
+  ComponentIntrosHeader1: dynamic(() => import('components/StrapiComponents/ComponentIntrosHeader1')),
+  ComponentIntrosHeaderImage: dynamic(() => import('components/StrapiComponents/ComponentIntrosHeaderImage')),
+  ComponentIncludesRegistration: dynamic(() => import('components/StrapiComponents/ComponentIncludesRegistration')),
 };
 
 export type PageContentComponent = IntrosLandingProps
@@ -48,6 +54,9 @@ export type PageContentComponent = IntrosLandingProps
   & Section3Props
   & Section4Props
   & Section5Props
+  & Header1Props
+  & HeaderImageProps
+  & RegistrationProps
 
 export interface PageContentProps {
   data?: [
@@ -115,6 +124,15 @@ const PageContent = ({
               }
               {component.__typename == 'ComponentSectionsSection5' &&
                 <ComponentSectionsSection5 data={component} />
+              }
+              {component.__typename == 'ComponentIntrosHeader1' &&
+                <ComponentIntrosHeader1 data={component} />
+              }
+              {component.__typename == 'ComponentIntrosHeaderImage' &&
+                <ComponentIntrosHeaderImage data={component} />
+              }
+              {component.__typename == 'ComponentIncludesRegistration' &&
+                <ComponentIncludesRegistration data={component} />
               }
             </div>
           ))
