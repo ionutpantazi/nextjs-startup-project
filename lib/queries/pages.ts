@@ -368,6 +368,11 @@ export const PAGES_QUERY = gql`
                   }
                 }
               }
+              Spacer {
+                Desktop
+                Mobile
+                Position
+              }
             }
             ... on ComponentSectionsSection2 {
               id
