@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
@@ -15,6 +15,10 @@ import {
 } from 'components/Bootstrap/Common'
 var moment = require('moment');
 import { Speaker } from '../ComponentSectionsSpeakersCarousel'
+import { DatesContainer, DateContainer, AgendaDay, AgendaDayNumber } from 'components/StrapiComponents/ComponentSectionsSection1/TextAndIcons'
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export type Tagsprops = {
   id: string
@@ -52,6 +56,9 @@ export type AgendaProps = {
 
 export interface AgendaDataProps {
   data: AgendaProps
+  agendaItems: any
+  selectedAgendaData: any
+  handleAgendaDateChange?: (data: string) => void;
 }
 
 const AgendaContainer = styled.div`
@@ -105,6 +112,13 @@ const AgendaDateRoom = styled.div`
     font-weight: 600;
     line-height: 20px;
   }
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    span {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+  }
 `
 
 const DetailsBox = styled.div`
@@ -114,6 +128,11 @@ const AgendaItemTitle = styled.div`
   font-size: 22px;
   font-weight: 600;
   line-height: 28px;
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+  }
 `
 
 const AgendaItemSubTitle = styled.div`
@@ -125,6 +144,11 @@ const AgendaItemSubTitle = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
+  }
 `
 
 const AgendaTag = styled.div`
@@ -187,6 +211,11 @@ const Button1 = styled.div`
       color: ${props => props.theme.colors.lightgrey};
     }
   }
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+  }
 `
 
 const Button2 = styled.div`
@@ -202,6 +231,23 @@ const Button2 = styled.div`
   &:hover {
     background-color: ${props => props.theme.colors.brandlight};
   }
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+`
+
+const StyledDateContainer = styled(DateContainer)`
+  padding: 10px;
+  width: auto;
+  height: auto;
+  div {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: ${props => props.theme.colors.white}!important;
+  }
 `
 
 export function removeMinutes(momentTime: string) {
@@ -209,18 +255,53 @@ export function removeMinutes(momentTime: string) {
 }
 
 const Agenda = ({
-  data
+  data,
+  agendaItems,
+  selectedAgendaData,
+  handleAgendaDateChange,
 }: AgendaDataProps) => {
+
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
 
   return (
     <AgendaContainer className=''>
       <AgendaTitle className='mb-4'>
         {data.Title}
       </AgendaTitle>
+      {isMobile &&
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={'auto'}
+          className='w-full my-4'
+        >
+          <DatesContainer className=''>
+            {agendaItems.map((agendaDate: any, index: number) => (
+              <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
+                <StyledDateContainer key={index} className='flex flex-row gap-2 items-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
+                  onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
+                >
+                  <AgendaDay className=''>
+                    {moment(agendaDate).format('ddd')}
+                  </AgendaDay>
+                  <AgendaDayNumber className='agendaDayNumber'>
+                    {moment(agendaDate).format('Do')}
+                  </AgendaDayNumber>
+                  <AgendaDay className=''>
+                    {moment(agendaDate).format('MMMM')}
+                  </AgendaDay>
+                </StyledDateContainer>
+              </SwiperSlide>
+            ))
+            }
+          </DatesContainer>
+        </Swiper>
+      }
       <AgendaInnerContainer className='flex flex-col gap-4'>
-        {data.Items.data.map((agenda: AgendaItems, index:number) => (
-          <AgendaItem className='flex flex-row flex-wrap justify-around gap-4 test' key={index}>
-            <DateBox className='flex flex-col gap-2 justify-center'>
+        {data.Items.data.map((agenda: AgendaItems, index: number) => (
+          <AgendaItem className='md:flex grid grid-cols-2 flex-row flex-wrap content-start justify-around gap-4' key={index}>
+            <DateBox className='md:flex hidden flex-col gap-2 justify-center'>
               <AgendaDateFrom className=''>
                 {removeMinutes(moment(agenda.attributes.Start_Time, moment.HTML5_FMT.TIME_MS).format('h:mma'))}
               </AgendaDateFrom>
@@ -228,7 +309,17 @@ const Agenda = ({
                 {`till ${removeMinutes(moment(agenda.attributes.End_Time, moment.HTML5_FMT.TIME_MS).format('h:mma'))}`}
               </AgendaDateTo>
             </DateBox>
-            <DateAndRoomBox className='flex flex-col gap-2 justify-center md:w-2/12 w-full'>
+            <DateAndRoomBox className='flex flex-col gap-2 md:justify-center justify-start md:w-2/12 w-full'>
+              <AgendaDateRoom className='flex md:hidden flex-row items-center'>
+                <FAIcon
+                  icon={'fa-calendar-days'}
+                  width={16}
+                  height={16}
+                />
+                <span>
+                  {`${removeMinutes(moment(agenda.attributes.Start_Time, moment.HTML5_FMT.TIME_MS).format('h:mma'))} - ${removeMinutes(moment(agenda.attributes.End_Time, moment.HTML5_FMT.TIME_MS).format('h:mma'))}`}
+                </span>
+              </AgendaDateRoom>
               <AgendaDateRoom className='flex flex-row items-center'>
                 <FAIcon
                   icon={'fa-calendar-days'}
@@ -258,7 +349,7 @@ const Agenda = ({
                 {agenda.attributes.Sub_Title}
               </AgendaItemSubTitle>
               <div className='flex flex-row gap-1'>
-                {agenda.attributes.Tags.data.map((tag: Tagsprops, index:number) => (
+                {agenda.attributes.Tags.data.map((tag: Tagsprops, index: number) => (
                   <AgendaTag key={index} className=''>
                     {tag.attributes.Name}
                   </AgendaTag>
@@ -266,7 +357,7 @@ const Agenda = ({
                 }
               </div>
             </DetailsBox>
-            <ParticipantsBox className='flex flex-col gap-3 justify-center md:w-fit w-full'>
+            <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
               <Participants className='flex flex-row'>
                 <ImageIcon className='flex justify-center items-center'>
                   <FAIcon
@@ -275,7 +366,7 @@ const Agenda = ({
                     height={20}
                   />
                 </ImageIcon>
-                {agenda.attributes.Participants.data.map((participant: Speaker, index:number) => (
+                {agenda.attributes.Participants.data.map((participant: Speaker, index: number) => (
                   <StyledNextImage
                     key={index}
                     src={IMAGE_DOMAIN + participant.attributes?.Image?.data?.attributes?.url}
@@ -291,8 +382,18 @@ const Agenda = ({
                 {`Join ${agenda.attributes.Participants.data[0].attributes.Name} + others`}
               </ParticipantsText>
             </ParticipantsBox>
+            <Button1 as='a' href='#' className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit'>
+              <FAIcon
+                icon={'fa-heart'}
+                width={20}
+                height={20}
+              />
+              <span>
+                Add to agenda
+              </span>
+            </Button1>
             <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
-              <Button1 as='a' href='#' className='flex flex-row gap-4 items-center w-fit'>
+              <Button1 as='a' href='#' className='md:flex hidden flex-row gap-4 items-center w-fit'>
                 <FAIcon
                   icon={'fa-heart'}
                   width={20}

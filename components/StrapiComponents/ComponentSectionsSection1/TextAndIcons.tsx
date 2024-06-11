@@ -14,6 +14,7 @@ var moment = require('moment');
 import FAIcon from 'components/Bootstrap/FAIcon'
 import { AgendaItems } from '../ComponentSectionsSection2/Agenda'
 import ReadMore from '@/components/Bootstrap/ReadMore'
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export type IconsProps = {
   id: string
@@ -115,12 +116,21 @@ export const IconButton = styled.div <{ active?: any }>`
       color: ${props => props.theme.colors.brandlight};
     }
   }
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    padding: 10px 20px;
+    span {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+  }
 `
 
-const DatesContainer = styled.div`
+export const DatesContainer = styled.div`
 `
 
-const DateContainer = styled.div <{ active?: any }>`
+export const DateContainer = styled.div <{ active?: any }>`
   border-radius: ${props => props.theme.borderRadius.components.small};
   background-color: ${props => props.theme.colors.darkestgrey};
   padding: 20px;
@@ -148,13 +158,13 @@ const DateContainer = styled.div <{ active?: any }>`
   }
 `
 
-const AgendaDay = styled.div`
+export const AgendaDay = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
 `
 
-const AgendaDayNumber = styled.div`
+export const AgendaDayNumber = styled.div`
   font-size: 36px;
   font-weight: 400;
   line-height: 44px;
@@ -237,26 +247,34 @@ const TextAndIcons = ({
                 {data.Icons.Title}
               </IconsTitle>
               <IconsContainer className='flex flex-row flex-wrap gap-4'>
-                {data.Icons.Icons.map((icon: IconsProps, index: number) => (
-                  <IconButton as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
-                    {icon?.FAIcon?.Icon &&
-                      <FAIcon
-                        icon={icon?.FAIcon?.Icon}
-                        width={Number(icon.FAIcon.Width)}
-                        height={Number(icon.FAIcon?.Width)}
-                      />
-                    }
-                    <span>
-                      {icon.Title}
-                    </span>
-                  </IconButton>
-                ))
-                }
+                <Swiper
+                  spaceBetween={10}
+                  slidesPerView={'auto'}
+                  className='w-full mt-4'
+                >
+                  {data.Icons.Icons.map((icon: IconsProps, index: number) => (
+                    <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
+                      <IconButton as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
+                        {icon?.FAIcon?.Icon &&
+                          <FAIcon
+                            icon={icon?.FAIcon?.Icon}
+                            width={Number(icon.FAIcon.Width)}
+                            height={Number(icon.FAIcon?.Width)}
+                          />
+                        }
+                        <span>
+                          {icon.Title}
+                        </span>
+                      </IconButton>
+                    </SwiperSlide>
+                  ))
+                  }
+                </Swiper>
               </IconsContainer>
             </>
           }
           {data.Icons.Type == 'Agenda' && generateAgendaDatesArray(agendaItems).length &&
-            <DatesContainer className='flex flex-row flex-wrap gap-2'>
+            <DatesContainer className='md:flex hidden flex-row flex-wrap gap-2'>
               {generateAgendaDatesArray(agendaItems).map((agendaDate: any, index: number) => (
                 <DateContainer key={index} className='flex flex-col gap-2 justify-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
                   onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
@@ -280,23 +298,31 @@ const TextAndIcons = ({
               <IconsTitle>
                 {data.Icons.Title}
               </IconsTitle>
-              <SocialsContainer className='flex flex-wrap gap-4'>
-                {data.Icons.Icons.map((icon: IconsProps) => (
-                  <Social as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4'>
-                    {icon?.FAIcon?.Icon &&
-                      <FAIcon
-                        icon={icon?.FAIcon?.Icon}
-                        width={Number(icon.FAIcon.Width)}
-                        height={Number(icon.FAIcon?.Width)}
-                      />
-                    }
-                    <span>
-                      {icon.Title}
-                    </span>
-                  </Social>
-                ))
-                }
-              </SocialsContainer>
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={'auto'}
+                className='w-full mt-4'
+              >
+                <SocialsContainer className='flex flex-wrap gap-4'>
+                  {data.Icons.Icons.map((icon: IconsProps, index: number) => (
+                    <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
+                      <Social as='a' href='#' key={icon.id} className='flex flex-row items-center gap-4'>
+                        {icon?.FAIcon?.Icon &&
+                          <FAIcon
+                            icon={icon?.FAIcon?.Icon}
+                            width={Number(icon.FAIcon.Width)}
+                            height={Number(icon.FAIcon?.Width)}
+                          />
+                        }
+                        <span>
+                          {icon.Title}
+                        </span>
+                      </Social>
+                    </SwiperSlide>
+                  ))
+                  }
+                </SocialsContainer>
+              </Swiper>
             </>
           }
         </SecondColumn>

@@ -70,6 +70,14 @@ const ComponentSectionsSection2 = ({
     setAgendaData(propData)
   };
 
+  const generateAgendaDatesArray = (agendaItems: [AgendaItems]) => {
+    const uniqueDatesSet = new Set();
+    if (!agendaItems) return []
+    agendaItems.forEach((item: AgendaItems) => {
+      uniqueDatesSet.add(item.attributes.Date);
+    })
+    return Array.from(uniqueDatesSet)
+  }
 
   return (
     <OuterContainer className=''>
@@ -84,7 +92,7 @@ const ComponentSectionsSection2 = ({
               <Lists data={data.Lists} />
             }
             {data.Agenda &&
-              <Agenda data={agendaData} />
+              <Agenda data={agendaData} agendaItems={generateAgendaDatesArray(data.Agenda?.Items.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
             }
             {data.Video &&
               <ComponentSectionsVideo data={data.Video} />

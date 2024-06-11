@@ -18,6 +18,9 @@ import {
 import ButtonNew, { ButtonNewProps } from 'components/StrapiComponents/ButtonNew'
 import useSession from "lib/use-session";
 import ReadMore from '@/components/Bootstrap/ReadMore'
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export type Event_Details_Item = {
   __typename: string
@@ -108,7 +111,7 @@ const IntroLandingContainer = styled.div`
   box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 20px 10px;
+    padding: 30px 20px;
   }
 `
 
@@ -277,6 +280,7 @@ const IWantToItem = styled.div`
   width: 184px;
   height: 184px;
   border-radius: 6px;
+  overflow: hidden;
   
   svg {
     z-index: 3;
@@ -379,7 +383,9 @@ const ComponentIntrosLandingNew = ({
 }: IntrosLandingProps) => {
 
   const { session, isLoading } = useSession();
-
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
   const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
 
   const handleDefaultThemeChange = () => {
@@ -390,6 +396,91 @@ const ComponentIntrosLandingNew = ({
         senddatatolayout({ useDefaultTheme: 'false' })
       }
     }
+  }
+
+  const EventDetailsComponent = () => {
+    return <>
+      {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
+        <EventDetailsItemContainer key={evendDetail.id}>
+          <EventDetailsItem className='flex flex-row gap-4'>
+            <EventDetailsIcon className='row-span-3'>
+              <>
+                {evendDetail?.Icon?.data?.attributes?.url &&
+                  <NextImage
+                    src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
+                    className=''
+                    alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
+                    width={isMobile ? 20 : 40}
+                    height={isMobile ? 20 : 40}
+                  />
+                }
+                {evendDetail?.FAIcon &&
+                  <FAIcon
+                    icon={evendDetail.FAIcon.Icon}
+                    width={isMobile ? 20 : Number(evendDetail.FAIcon.Width)}
+                    height={isMobile ? 20 : Number(evendDetail.FAIcon.Height)}
+                  />
+                }
+              </>
+            </EventDetailsIcon>
+            <EventDetailsContainer className='flex flex-col gap-2'>
+              <EventDetailsTitle className='col-span-2'>
+                {evendDetail.Title}
+              </EventDetailsTitle>
+              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                {evendDetail.Sub_Title}
+              </EventDetailsSubTitle>
+              {evendDetail.Button &&
+                <ButtonNew data={evendDetail.Button}>
+                  <EventDetailsButtonContainer>
+                    {evendDetail.Button.Text}
+                  </EventDetailsButtonContainer>
+                </ButtonNew>
+              }
+            </EventDetailsContainer>
+          </EventDetailsItem>
+        </EventDetailsItemContainer>
+      ))
+      }
+    </>
+  }
+
+  const IWantToItemComponent = (props: any) => {
+    return <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={props.item.id}>
+      {props.item?.Background_Image?.data?.attributes?.url &&
+        <>
+          <RadialContainer />
+          <StyledNextImage
+            src={IMAGE_DOMAIN + props.item?.Background_Image?.data?.attributes?.url}
+            className=''
+            alt={props.item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        </>
+      }
+      {props.item.FAIcon &&
+        <FAIcon
+          icon={props.item.FAIcon.Icon}
+          width={Number(props.item.FAIcon.Width)}
+          height={Number(props.item.FAIcon.Height)}
+        />
+      }
+      <IWantToItemIcon>
+        {props.item.Icon.data?.attributes?.url &&
+          <NextImage
+            src={IMAGE_DOMAIN + props.item.Icon.data?.attributes?.url}
+            className=''
+            alt={props.item.Icon.data?.attributes?.alternativeText ?? ""}
+            width={26}
+            height={26}
+          />
+        }
+      </IWantToItemIcon>
+      <IWantToItemTitle className='text-center'>
+        {props.item.Title}
+      </IWantToItemTitle>
+    </IWantToItem>
   }
 
   return (
@@ -410,130 +501,124 @@ const ComponentIntrosLandingNew = ({
           }
         </ImageContainer>
       }
-      <Container className=''>
-        <InnerContainer className=''>
-          <IntroLandingContainer>
+      {isMobile
+        ?
+        <Container className=''>
+          <InnerContainer className=''>
             <EventTitle as='h1' className=''>
               {data.Title}
             </EventTitle>
             <EventIntroduction as='p' className=''>
               {data.Introduction}
             </EventIntroduction>
-            <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
-              <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
-                <EventDetailsItemContainer>
-                  <EventDetailsItem className='flex flex-col gap-4'>
-                    <div className='flex flex-row gap-4'>
-                      {session.isLoggedIn
-                        ?
-                        <>
-                          <EventDetailsIcon className='row-span-3'>
-                            <NextImage
-                              src={'/images/avatar.png'}
-                              className=''
-                              alt={""}
-                              width={40}
-                              height={40}
-                            />
-                          </EventDetailsIcon>
-                          <EventDetailsContainer className='flex flex-col gap-2'>
-                            <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                              Hi {session.username}, welcome back to {data.Title}
-                            </EventDetailsSubTitle>
-                          </EventDetailsContainer>
-                        </>
-                        :
-                        <>
-                          <EventDetailsIcon className='row-span-3'>
-                            <EmptyAvatar />
-                          </EventDetailsIcon>
-                          <EventDetailsContainer className='flex flex-col gap-2'>
-                            <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                              <button className="login underline"
-                                data-twe-toggle="modal"
-                                data-twe-target="#loginModal"
-                              >Login
-                              </button> to view your personalised content
-                            </EventDetailsSubTitle>
-                          </EventDetailsContainer>
-                        </>
-                      }
-
-                    </div>
-                    <Toggle className='flex justify-between cursor-pointer w-fit'>
-                      <input
-                        type='checkbox'
-                        className='sr-only'
-                        checked={isdefaulttheme == 'true' ? true : false}
-                        onChange={handleDefaultThemeChange}
-                      />
-                      <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
-                        <FAIcon
-                          icon={themedata.FAIcon.Icon}
-                          width={Number(themedata.FAIcon.Width)}
-                          height={Number(themedata.FAIcon.Height)}
-                        />
-                        <span>
-                          {themedata.Name}
-                        </span>
-                      </CustomThemeToggle>
-                      <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
-                        <span>
-                          Default View
-                        </span>
-                        <FAIcon
-                          icon={'fa-solid fa-circle-xmark'}
-                          width={20}
-                          height={20}
-                        />
-                      </DefaultThemeToggle>
-                    </Toggle>
-                  </EventDetailsItem>
-
-                </EventDetailsItemContainer>
-                {data.Event_Details.Event_Details.map((evendDetail: Event_Details_Item) => (
-                  <EventDetailsItemContainer key={evendDetail.id}>
-                    <EventDetailsItem className='flex flex-row gap-4'>
-                      <EventDetailsIcon className='row-span-3'>
-                        <>
-                          {evendDetail?.Icon?.data?.attributes?.url &&
-                            <NextImage
-                              src={IMAGE_DOMAIN + evendDetail.Icon.data.attributes.url}
-                              className=''
-                              alt={evendDetail.Icon.data.attributes.alternativeText ?? ""}
-                              width={40}
-                              height={40}
-                            />
-                          }
-                          {evendDetail?.FAIcon &&
-                            <FAIcon
-                              icon={evendDetail.FAIcon.Icon}
-                              width={Number(evendDetail.FAIcon.Width)}
-                              height={Number(evendDetail.FAIcon.Height)}
-                            />
-                          }
-                        </>
-                      </EventDetailsIcon>
-                      <EventDetailsContainer className='flex flex-col gap-2'>
-                        <EventDetailsTitle className='col-span-2'>
-                          {evendDetail.Title}
-                        </EventDetailsTitle>
-                        <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                          {evendDetail.Sub_Title}
-                        </EventDetailsSubTitle>
-                        {evendDetail.Button &&
-                          <ButtonNew data={evendDetail.Button}>
-                            <EventDetailsButtonContainer>
-                              {evendDetail.Button.Text}
-                            </EventDetailsButtonContainer>
-                          </ButtonNew>
-                        }
-                      </EventDetailsContainer>
-                    </EventDetailsItem>
-                  </EventDetailsItemContainer>
+            <IntroLandingContainer className='mt-6'>
+              <div className='grid grid-cols-2 gap-2'>
+                <EventDetailsComponent />
+              </div>
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={'auto'}
+                className='w-full mt-4'
+              >
+                {data.I_Want_To.Items.map((item: I_Want_To_Item, index: number) => (
+                  <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
+                    <IWantToItemComponent item={item} />
+                  </SwiperSlide>
                 ))
                 }
-                {/* <EventDetailsLastContainer>
+              </Swiper>
+              <EventContentContainer className='flex flex-col gap-2 w-auto mt-4'>
+                <EventContent className=''>
+                  <ReadMore content={data.Content} chars={200} />
+                </EventContent>
+              </EventContentContainer>
+            </IntroLandingContainer>
+          </InnerContainer>
+        </Container>
+        :
+        <Container className=''>
+          <InnerContainer className=''>
+            <IntroLandingContainer>
+              <EventTitle as='h1' className=''>
+                {data.Title}
+              </EventTitle>
+              <EventIntroduction as='p' className=''>
+                {data.Introduction}
+              </EventIntroduction>
+              <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
+                <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
+                  <EventDetailsItemContainer>
+                    <EventDetailsItem className='flex flex-col gap-4'>
+                      <div className='flex flex-row gap-4'>
+                        {session.isLoggedIn
+                          ?
+                          <>
+                            <EventDetailsIcon className='row-span-3'>
+                              <NextImage
+                                src={'/images/avatar.png'}
+                                className=''
+                                alt={""}
+                                width={40}
+                                height={40}
+                              />
+                            </EventDetailsIcon>
+                            <EventDetailsContainer className='flex flex-col gap-2'>
+                              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                                Hi {session.username}, welcome back to {data.Title}
+                              </EventDetailsSubTitle>
+                            </EventDetailsContainer>
+                          </>
+                          :
+                          <>
+                            <EventDetailsIcon className='row-span-3'>
+                              <EmptyAvatar />
+                            </EventDetailsIcon>
+                            <EventDetailsContainer className='flex flex-col gap-2'>
+                              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                                <button className="login underline"
+                                  data-twe-toggle="modal"
+                                  data-twe-target="#loginModal"
+                                >Login
+                                </button> to view your personalised content
+                              </EventDetailsSubTitle>
+                            </EventDetailsContainer>
+                          </>
+                        }
+
+                      </div>
+                      <Toggle className='flex justify-between cursor-pointer w-fit'>
+                        <input
+                          type='checkbox'
+                          className='sr-only'
+                          checked={isdefaulttheme == 'true' ? true : false}
+                          onChange={handleDefaultThemeChange}
+                        />
+                        <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                          <FAIcon
+                            icon={themedata.FAIcon.Icon}
+                            width={Number(themedata.FAIcon.Width)}
+                            height={Number(themedata.FAIcon.Height)}
+                          />
+                          <span>
+                            {themedata.Name}
+                          </span>
+                        </CustomThemeToggle>
+                        <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                          <span>
+                            Default View
+                          </span>
+                          <FAIcon
+                            icon={'fa-solid fa-circle-xmark'}
+                            width={20}
+                            height={20}
+                          />
+                        </DefaultThemeToggle>
+                      </Toggle>
+                    </EventDetailsItem>
+
+                  </EventDetailsItemContainer>
+                  <EventDetailsComponent />
+                  {/* <EventDetailsLastContainer>
                   <ButtonNew data={data.Event_Details.Button}>
                     <EventButtonContainer className='flex items-center justify-center sm:row-span-1'>
                       {data.Event_Details.Button.Text}
@@ -543,68 +628,32 @@ const ComponentIntrosLandingNew = ({
                     {data.Event_Details.Button.Sub_Title}
                   </EventDetailsLastContainerText>
                 </EventDetailsLastContainer> */}
-              </EventDetails>
-            </EventContainer>
-            <EventSectionContainer className='flex flex-col sm:flex-row gap-6'>
-              <IWantToContainer className='flex justify-stretch flex-col sm:flex-row gap-4 sm:w-1/2 w-auto'>
-                {data.I_Want_To.Items.map((item: I_Want_To_Item) => (
-                  <IWantToItem as='a' href='#' className='flex flex-col justify-center items-center relative' key={item.id}>
-                    {item?.Background_Image?.data?.attributes?.url &&
-                      <>
-                        <RadialContainer />
-                        <StyledNextImage
-                          src={IMAGE_DOMAIN + item?.Background_Image?.data?.attributes?.url}
-                          className=''
-                          alt={item?.Background_Image?.data?.attributes?.alternativeText ?? ""}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                        />
-                      </>
-                    }
-                    {item.FAIcon &&
-                      <FAIcon
-                        icon={item.FAIcon.Icon}
-                        width={Number(item.FAIcon.Width)}
-                        height={Number(item.FAIcon.Height)}
-                      />
-                    }
-                    <IWantToItemIcon>
-                      {item.Icon.data?.attributes?.url &&
-                        <NextImage
-                          src={IMAGE_DOMAIN + item.Icon.data?.attributes?.url}
-                          className=''
-                          alt={item.Icon.data?.attributes?.alternativeText ?? ""}
-                          width={26}
-                          height={26}
-                        />
-                      }
-                    </IWantToItemIcon>
-                    <IWantToItemTitle className='text-center'>
-                      {item.Title}
-                    </IWantToItemTitle>
-                  </IWantToItem>
-                ))
-                }
-              </IWantToContainer>
-              <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
-                
-                <EventContent className=''>
-                  <ReadMore content={data.Content} chars={200} />
-                </EventContent>
-                {/* {data.Button &&
+                </EventDetails>
+              </EventContainer>
+              <EventSectionContainer className='flex flex-col sm:flex-row gap-6'>
+                <IWantToContainer className='flex justify-stretch flex-col sm:flex-row gap-4 sm:w-1/2 w-auto'>
+                  {data.I_Want_To.Items.map((item: I_Want_To_Item, index: number) => (
+                    <IWantToItemComponent item={item} key={index} />
+                  ))
+                  }
+                </IWantToContainer>
+                <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
+                  <EventContent className=''>
+                    <ReadMore content={data.Content} chars={200} />
+                  </EventContent>
+                  {/* {data.Button &&
                   <ButtonNew data={data.Button}>
                     <ReadMoreContainer>
                       {data.Button.Text}
                     </ReadMoreContainer>
                   </ButtonNew>
                 } */}
-              </EventContentContainer>
-            </EventSectionContainer>
-          </IntroLandingContainer>
-        </InnerContainer>
-      </Container>
-
-
+                </EventContentContainer>
+              </EventSectionContainer>
+            </IntroLandingContainer>
+          </InnerContainer>
+        </Container>
+      }
     </OuterContainer >
   )
 }

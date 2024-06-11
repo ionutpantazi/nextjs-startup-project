@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { SessionData, defaultSession } from "./session";
 import useSWRMutation from "swr/mutation";
+import { hasCookie, getCookie, deleteCookie, setCookie } from 'cookies-next';
 
 const sessionApiRoute = "/api/auth/session";
 
@@ -25,6 +26,7 @@ function doLogin(url: string, { arg }: { arg: string }) {
 }
 
 function doLogout(url: string) {
+  deleteCookie('lg-jwt')
   return fetchJson<SessionData>(url, {
     method: "DELETE",
   });

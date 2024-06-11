@@ -45,6 +45,12 @@ const CarouselTitle = styled.div`
   font-size: 22px;
   font-weight: 600;
   line-height: 28px;
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
 `
 
 const CarouselShowAll = styled.div`
@@ -56,6 +62,12 @@ const CarouselShowAll = styled.div`
   &:hover {
     cursor: pointer;
     color: ${props => props.theme.components?.CardsCarousel?.CarouselShowAllHoverColor};
+  }
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
   }
 `
 
@@ -208,7 +220,7 @@ const CardsCarousel = ({
         </div>
         <CardsContainer className=''>
           <Swiper
-            spaceBetween={isMobile ? '10%' : 40}
+            spaceBetween={isMobile ? '10px' : 40}
             slidesPerView={'auto'}
             pagination={{
               el: `.swiper-custom-pagination-${data.id}`,

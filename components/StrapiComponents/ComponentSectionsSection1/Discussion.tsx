@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
@@ -11,6 +11,8 @@ import FAIcon from 'components/Bootstrap/FAIcon'
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 var moment = require('moment');
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
 
 export type CategoryItem = {
   Title: string,
@@ -197,6 +199,12 @@ const StyledInputContainer = styled.div`
     &:focus {
       outline: none;
     }
+  }
+
+  input {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
   }
 `
 
@@ -426,6 +434,9 @@ const Discussion = ({
   const [otherDiscussions, setOtherDiscussions] = useState<any>(data.OtherDiscussions.data);
   const [activeFilter, setActiveFilter] = useState("all");
   const [discussionCategories, setDiscussionCategories] = useState([]);
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
 
   useEffect(() => {
     setDiscussionCategories(extractDiscussionCategories(data.OtherDiscussions.data));
@@ -492,6 +503,11 @@ const Discussion = ({
                   </Author>
                   <CardContainer>
                     {discussion.attributes.Content}
+                    {isMobile &&
+                    <div className='-mb-8'>
+                      <ActionButtons impressions={activeDiscussion.attributes.Impressions} comments={activeDiscussion.attributes.Comments.data.length} />
+                      </div>
+                    }
                   </CardContainer>
                 </SwiperSlide>
               ))
@@ -500,7 +516,9 @@ const Discussion = ({
             <CustomPagination className=''>
               <div className="flex justify-center gap-2 swiper-custom-pagination-discussion" />
             </CustomPagination>
-            <ActionButtons impressions={activeDiscussion.attributes.Impressions} comments={activeDiscussion.attributes.Comments.data.length} />
+            {!isMobile &&
+              <ActionButtons impressions={activeDiscussion.attributes.Impressions} comments={activeDiscussion.attributes.Comments.data.length} />
+            }
           </FeaturedDiscussionCarousel>
           <Divider />
           <StyledInputContainer className='flex flex-row gap-6'>
@@ -517,7 +535,7 @@ const Discussion = ({
             </UserAvatar>
             <input placeholder='Share your thoughts...' />
           </StyledInputContainer>
-          <DiscussionFilter className='flex flex-row gap-2 items-center'>
+          <DiscussionFilter className='md:flex hidden flex-row gap-2 items-center'>
             <span>Most Recent</span>
             <FAIcon
               icon={'fa-angle-down'}
@@ -525,7 +543,7 @@ const Discussion = ({
               height={10}
             />
           </DiscussionFilter>
-          <CommentBox className=''>
+          <CommentBox className='md:block hidden'>
             {activeDiscussion.attributes?.Comments?.data.map((comment: CommentsProps, index: number) => (
               <div key={index}>
                 {index == 0
@@ -536,11 +554,11 @@ const Discussion = ({
             ))
             }
           </CommentBox>
-          <LoadMore as='a' className='w-fit' data-twe-collapse-init href="#expand-discussion">
+          <LoadMore as='a' className='w-fit md:block hidden' data-twe-collapse-init href="#expand-discussion">
             Load more comments
           </LoadMore>
         </FirstColumn>
-        <SecondColumn className='flex flex-col md:w-2/5 w-auto'>
+        <SecondColumn className='md:flex hidden flex-col md:w-2/5 w-auto'>
           <FiltersContainer className='flex flex-row gap-2'>
             {discussionCategories.map((category: CategoryItem, index: number) => (
               <Category className='' data-value={category.Slug} onClick={e => setActiveCategory(e)} active={activeFilter == category.Slug ? 'true' : 'false'} key={index}>

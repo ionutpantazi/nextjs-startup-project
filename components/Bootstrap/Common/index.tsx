@@ -12,6 +12,9 @@ export const RadialContainer = styled.div`
 export const OuterContainer = styled.div`
   color: ${props => props.theme.components?.Common?.OuterContainerColor};
   margin-bottom: 40px;
+  @media screen and (max-width: ${props => props.theme.screens.sm}) {
+    margin-bottom: 20px;
+  }
 `
 
 export const Container = styled.div`
@@ -57,7 +60,7 @@ export const ComponentContainer = styled.div`
   box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 20px 10px;
+    padding: 30px 20px;
   }
 
   position: relative;

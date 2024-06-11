@@ -1,12 +1,14 @@
 import axios from 'axios'
-const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// const getStrapiData = async (endpoint: string) => {
-//     const { data } = await axios.get( NEXT_PUBLIC_STRAPI_URL + endpoint );
-//     if(data?.data?.attributes){
-//         let attributes = data.data.attributes;
-//         return attributes;
-//     }
-// };
+const get = async (endpoint: string) => {
+    const { data } = await axios.get(NEXT_PUBLIC_API_URL + endpoint);
+    return data
+};
 
-// export { getStrapiData };
+const post = async (endpoint: string, postData: any, headers: any) => {
+    const { data } = await axios.post(NEXT_PUBLIC_API_URL + endpoint, postData, headers);
+    return { data: data }
+};
+
+export { get, post };
