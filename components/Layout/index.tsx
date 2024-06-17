@@ -11,6 +11,7 @@ import Box from 'components/Bootstrap/Box'
 import styled from 'styled-components'
 import { theme } from 'lib/theme'
 import { ThemeProvider } from "styled-components";
+import { SettingsProps } from 'lib/queries/settings'
 
 const Navbar = dynamic(() => import('components/Navbar'))
 const Footer = dynamic(() => import('components/Footer'))
@@ -31,6 +32,7 @@ type LayoutProps = {
     metaViewport?: string
   }
   navigationData?: NavigationData
+  settings?: SettingsProps
 }
 
 const HeaderWrap = styled.header`
@@ -51,6 +53,7 @@ const Layout = ({
   seoMeta,
   navigationData,
   themedata,
+  settings,
 }: LayoutProps) => {
 
   const defaultThemeData = {
@@ -100,7 +103,7 @@ const Layout = ({
           }
         </Head>
         <HeaderWrap>
-          {navigationData && <Navbar navigationData={navigationData.data.attributes.Header_Navigation} />}
+          {navigationData && <Navbar navigationData={navigationData.data.attributes.Header_Navigation} questions={settings?.Registration_Questions} />}
         </HeaderWrap>
         <PageContentComponents className='mb-auto'>
           {React.Children.map(children, child =>

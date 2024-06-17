@@ -6,7 +6,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
-import { fetchSettings, SettingsProps } from 'lib/queries/settings'
+import { getEventData } from 'lib/queries/event'
 
 const Layout = dnmc(() => import('components/Layout'));
 const PageContent = dnmc(() => import('components/PageContent'));
@@ -15,14 +15,12 @@ export interface Props {
   data: any
   error?: ErrorPageTemplateProps
   navigationData: NavigationData
-  settings: SettingsProps
 }
 
 export default function Page({
   data,
   error,
   navigationData,
-  settings,
 }: Props) {
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
@@ -33,7 +31,6 @@ export default function Page({
       navigationData={navigationData}
       customTheme={data.Theme?.data?.attributes?.Data}
       themedata={data.Theme?.data?.attributes}
-      settings={settings}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <PageContent data={data.Page_Content} />
@@ -47,38 +44,16 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
   req,
 }) => {
   try {
-    let scheme = req.headers['x-forwarded-proto'];
-    let host = `${scheme}://${req.headers.host}`
-    const apolloClient = initializeApollo();
-    // const navigationData = await fetchNavigation();
-    const settings = await fetchSettings();
-    const slug = typeof query.pages === 'string' ? query.pages : null;
-    const { data: { pages: { data } } } = await apolloClient.query({
-      query: PAGES_QUERY,
-      variables: {
-        "filters": {
-          "Slug": {
-            "eq": slug
-          }
-        }
-      },
-    })
-    if (!data.length) {
-      return {
-        props: {
-          error: {
-            statusCode: 404
-          }
-        }
-      }
-    } else {
-      let attributes = data[0].attributes;
-      return {
-        props: {
-          data: attributes,
-          navigationData: attributes.Navigation,
-          settings: settings,
-        }
+    const navigationData = await fetchNavigation();
+    const slug = typeof query.slug === 'object' ? query.slug : [];
+    let segment0 = slug[0];
+    let segment1 = slug[1];
+    let data = getEventData(segment0)
+    console.log(data)
+    return {
+      props: {
+        data: [],
+        navigationData: navigationData,
       }
     }
   } catch (error) {

@@ -1,14 +1,23 @@
 import axios from 'axios'
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const get = async (endpoint: string) => {
-    const { data } = await axios.get(NEXT_PUBLIC_API_URL + endpoint);
+const get = async (endpoint: string, headers: any) => {
+  try {
+    const { data } = await axios.get(endpoint, headers);
     return data
+  } catch (error: any) {
+    // console.log(error)
+    return { data: {}, err: error.response.data ?? 'axios post err' }
+  }
 };
 
 const post = async (endpoint: string, postData: any, headers: any) => {
-    const { data } = await axios.post(NEXT_PUBLIC_API_URL + endpoint, postData, headers);
+  try {
+    const { data } = await axios.post(endpoint, postData, headers);
     return { data: data }
+  } catch (error: any) {
+    // console.log(error)
+    return { data: {}, err: error.response.data ?? 'axios post err' }
+  }
 };
 
 export { get, post };

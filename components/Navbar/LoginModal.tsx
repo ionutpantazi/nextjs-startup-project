@@ -7,6 +7,8 @@ import Validation, { ValidationMethods } from '../Bootstrap/Validation'
 import useSession from "lib/use-session";
 import { LoginForm } from './LoginForm'
 import { SignupForm } from './SignupForm'
+import SignupQuestions from './SignupQuestions'
+import { Registration_Questions } from 'lib/queries/settings'
 
 export type LoginModal = {
   id: string,
@@ -14,6 +16,7 @@ export type LoginModal = {
 
 export interface LoginModalDataProps {
   data?: LoginModal
+  questions?: [Registration_Questions]
 }
 
 const ModalContainer = styled.div`
@@ -84,10 +87,13 @@ const StyledText = styled.div`
 `
 
 const LoginModal = ({
-  data
+  data,
+  questions,
 }: LoginModalDataProps) => {
-  
+
+  const { session, isLoading } = useSession();
   const [isLogin, setIsLogin] = useState(true);
+  const [showQuestions, setShowQuestions] = useState(0);
 
   useEffect(() => {
     const init = async () => {
@@ -100,6 +106,19 @@ const LoginModal = ({
     init();
   }, []);
 
+  useEffect(() => {
+    if(!session.isLoggedIn){
+      setShowQuestions(0)
+      setIsLogin(true)
+    }
+  }, [session]);
+
+  const handleChildData = (userId: any) => {
+    if (userId) {
+      setShowQuestions(userId)
+    }
+  }
+
   return (
     <>
       <ModalContainer className='fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none'
@@ -111,7 +130,7 @@ const LoginModal = ({
         <div className='pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]'
           data-twe-modal-dialog-ref
         >
-          <ModalBody key='login' className={`pointer-events-auto ${!isLogin ? 'hidden' : 'visible'}`}>
+          <ModalBody key='login' className={`pointer-events-auto ${showQuestions ? 'hidden' : !isLogin ? 'hidden' : 'visible'}`}>
             <ModalTitle className=''>
               Login
             </ModalTitle>
@@ -122,15 +141,23 @@ const LoginModal = ({
               </StyledText>
             </ModalContent>
           </ModalBody>
-          <ModalBody key='signup' className={`pointer-events-auto ${isLogin ? 'hidden' : 'visible'}`}>
+          <ModalBody key='signup' className={`pointer-events-auto ${showQuestions ? 'hidden' : isLogin ? 'hidden' : 'visible'}`}>
             <ModalTitle className=''>
               Signup
             </ModalTitle>
             <ModalContent className='flex flex-col gap-4 items-center'>
-              <SignupForm />
+              <SignupForm showQuestions={handleChildData} />
               <StyledText className=''>
                 Already have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Login</button>
               </StyledText>
+            </ModalContent>
+          </ModalBody>
+          <ModalBody key='questions' className={`pointer-events-auto ${showQuestions ? 'visible' : 'hidden'}`}>
+            <ModalTitle className=''>
+              Questions
+            </ModalTitle>
+            <ModalContent className='flex flex-col gap-4 items-center'>
+              <SignupQuestions questions={questions} userId={showQuestions} />
             </ModalContent>
           </ModalBody>
         </div>

@@ -33,7 +33,8 @@ const Button = styled.button`
   }
 `
 
-export function SignupForm() {
+export function SignupForm(props: any) {
+  
   const { login } = useSession();
   const signupEmailValidationRef = useRef<ValidationMethods>(null);
   const signupPasswordValidationRef = useRef<ValidationMethods>(null);
@@ -50,6 +51,10 @@ export function SignupForm() {
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
   const [isValid, setIsValid] = useState<any>({});
+
+  const handleShowQuestions = (userId: number) => {
+    props.showQuestions(userId)
+  }
 
   useEffect(() => {
     const init = async () => {
@@ -73,6 +78,7 @@ export function SignupForm() {
         .then((res: any) => {
           if (res.data.user) {
             let username = res.data.user.username
+            let userId = res.data.user.id
             login(username, {
               optimisticData: {
                 isLoggedIn: true,
@@ -84,7 +90,8 @@ export function SignupForm() {
             setConfirmPasswordValue('')
             setIsValid({})
             setIsCreatePasswordVisible(false)
-            document.getElementById('loginModal')?.click()
+            handleShowQuestions(userId)
+            // document.getElementById('loginModal')?.click()
           } else {
             alert('error creating user')
           }

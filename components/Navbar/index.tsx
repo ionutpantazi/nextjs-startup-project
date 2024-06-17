@@ -7,10 +7,12 @@ import styled, { css } from 'styled-components'
 import LoginModal from './LoginModal'
 import useSession from "lib/use-session";
 import { defaultSession } from "lib/session";
+import { Registration_Questions } from 'lib/queries/settings'
 
 export interface NavbarProps {
   isOpen?: boolean
   navigationData: HeaderNavigationProps
+  questions?: [Registration_Questions]
 }
 
 const NavigationContainer = styled.nav`
@@ -141,6 +143,7 @@ const CollapsibleMenu = styled.div`
 const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   navigationData,
+  questions,
 }) => {
 
   const { session, isLoading, logout } = useSession();
@@ -266,7 +269,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <RightButtons show={'hidemobile'} />
         </div>
       </NavigationContainer>
-      <LoginModal data={undefined} />
+      <LoginModal data={undefined} questions={questions} />
     </>
   )
 }

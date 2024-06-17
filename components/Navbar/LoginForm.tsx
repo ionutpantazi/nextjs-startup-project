@@ -22,7 +22,7 @@ const PasswordInput = styled.div`
   }
 `
 
-const Button = styled.button`
+export const Button = styled.button`
   height: 40px;
   border-radius: ${props => props.theme.borderRadius.small};
   background: ${props => props.theme.colors.brand};
@@ -58,14 +58,33 @@ export function LoginForm() {
 
   useEffect(() => {
     if (isValid.login) {
+      const path = window.location.pathname
+      const isPwa = path.includes('pwa')
       let postData = {
         email: emailValue,
-        password: passwordValue
+        password: passwordValue,
+        eventID: '1757',
+        isPwa: isPwa,
       }
       axios
         .post(`/api/auth/login`, postData)
         .then((res: any) => {
-          if (res.data.user) {
+          if (res.data?.access_token) {
+            // handle pwa login
+            let username = emailValue
+            login(username, {
+              optimisticData: {
+                isLoggedIn: true,
+                username,
+              },
+            });
+            setEmailValue('')
+            setPasswordValue('')
+            setIsValid({})
+            setIsPasswordVisible(false)
+            document.getElementById('loginModal')?.click()
+          } else if (res.data.user) {
+            // handle strapi login
             let username = res.data.user.username
             login(username, {
               optimisticData: {
@@ -79,7 +98,7 @@ export function LoginForm() {
             setIsPasswordVisible(false)
             document.getElementById('loginModal')?.click()
           } else {
-            alert('invalid user/pass')
+            alert(res.err ?? 'invalid user/pass')
           }
         })
         .catch((err: any) => {
