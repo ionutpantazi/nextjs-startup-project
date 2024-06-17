@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (data?.access_token) {
       let { access_token, expires_in } = data
       setCookie('lg-jwt', access_token, { req, res, maxAge: expires_in })
+      setCookie('user', { email: email }, { req, res, maxAge: expires_in })
       res.status(200).json({ access_token, expires_in })
     }
     else {
@@ -23,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         password: password,
       })
       .then(response => {
+        setCookie('user', JSON.stringify({ email: email }), { req, res, maxAge: 3600 })
         res.status(200).json(response.data)
       })
       .catch(error => {

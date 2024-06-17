@@ -36,6 +36,25 @@ export const SETTINGS_QUERY = gql`
   }
 `
 
+export const GET_USER = gql`
+  query UsersPermissionsUsers($filters: UsersPermissionsUserFiltersInput) {
+    usersPermissionsUsers(filters: $filters) {
+      data {
+        id
+        attributes {
+          Homepage {
+            data {
+              attributes {
+                Slug
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 export const MUTATION_USER = gql`
   mutation UpdateUsersPermissionsUser($updateUsersPermissionsUserId: ID!, $data: UsersPermissionsUserInput!) {
     updateUsersPermissionsUser(id: $updateUsersPermissionsUserId, data: $data) {
@@ -94,5 +113,23 @@ export const updateUser = async (userid: string, homepageId: number) => {
 
   if (data?.id) {
     return true
+  }
+}
+
+export const fetchUserData = async (email: string) => {
+  const apolloClient = initializeApollo();
+  const { data: { usersPermissionsUsers: { data } } } = await apolloClient.query({
+    query: GET_USER,
+    variables: {
+      "filters": {
+        "email": {
+          "eq": email
+        }
+      }
+    }
+  })
+
+  if (data?.length) {
+    return data[0]
   }
 }
