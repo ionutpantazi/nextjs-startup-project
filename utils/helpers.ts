@@ -88,3 +88,57 @@ export function getCookie(name: string) {
 export function eraseCookie(name: string) {
   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+export function pushUnique<T>(arr: T[], value: T): T[] {
+  // Check if the value already exists in the array
+  if (!arr.includes(value)) {
+      // If the value is not in the array, push it
+      arr.push(value);
+  }
+  return arr;
+}
+
+export function pushWithLimit<T>(arr: T[], value: T, limit: number): T[] {
+  // Count the occurrences of the value in the array
+  const count = arr.filter(item => item === value).length;
+
+  // If the count is less than the limit, push the value
+  if (count < limit) {
+      arr.push(value);
+  }
+
+  return arr;
+}
+
+export type JsonObject = { [key: string]: any[] };
+
+export function pushUniqueToJson(obj: JsonObject, key: string, value: any): JsonObject {
+  // Set the value for the key, ensuring it is unique
+  obj[key] = value;
+  return obj;
+}
+
+export function pushWithLimitToJson(obj: JsonObject, key: string, value: any, limit: number): JsonObject {
+  // Ensure the key exists in the object with an array
+  if (!obj[key]) {
+      obj[key] = [];
+  }
+
+  // Count the occurrences of the key
+  const count = obj[key].length;
+
+  // If the count is less than the limit, push the value
+  if (count < limit) {
+      obj[key].push(value);
+  }
+
+  return obj;
+}
+
+export function allValuesSame(obj: JsonObject): boolean {
+  const values = Object.values(obj);
+  if (values.length === 0) return true; // Consider an empty object as having all values the same
+
+  const firstValue = values[0];
+  return values.every(value => value === firstValue);
+}
