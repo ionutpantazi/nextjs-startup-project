@@ -1,14 +1,22 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { credentialsGrant } from './lib/authClient'
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  // return NextResponse.redirect(new URL('/home', request.url))
+export async function middleware(request: NextRequest) {
+  const response = NextResponse.next()
+  let lgJwtCookie = request.cookies.get('lg-jwt')
+  if(!lgJwtCookie){
+    let { access_token, expires_in } = await credentialsGrant()
+    if (access_token) {
+      response.cookies.set('lg-jwt', access_token, { maxAge: expires_in })
+      response.headers.set("lg-jwt-res", access_token)
+    }
+  }
+  return response
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/pwa/:path*',
   ],
 }

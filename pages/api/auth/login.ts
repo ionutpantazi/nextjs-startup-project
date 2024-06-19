@@ -5,30 +5,17 @@ import { passwordGrant } from 'lib/authClient'
 import { hasCookie, getCookie, setCookie } from 'cookies-next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { email, password, eventID, isPwa } = req.body;
-  if (isPwa) {
-    let { data, err } = await passwordGrant(email, password, eventID)
-    if (data?.access_token) {
-      let { access_token, expires_in } = data
-      setCookie('lg-jwt', access_token, { req, res, maxAge: expires_in })
-      setCookie('user', { email: email }, { req, res, maxAge: expires_in })
-      res.status(200).json({ access_token, expires_in })
-    }
-    else {
-      res.status(500).json(err?.error)
-    }
-  } else {
-    axios
-      .post(`${NEXT_PUBLIC_STRAPI_URL}/api/auth/local`, {
-        identifier: email,
-        password: password,
-      })
-      .then(response => {
-        setCookie('user', JSON.stringify({ email: email }), { req, res, maxAge: 3600 })
-        res.status(200).json(response.data)
-      })
-      .catch(error => {
-        res.status(200).json(error)
-      });
-  }
+  const { email, password } = req.body;
+  axios
+    .post(`${NEXT_PUBLIC_STRAPI_URL}/api/auth/local`, {
+      identifier: email,
+      password: password,
+    })
+    .then(response => {
+      setCookie('user', JSON.stringify({ email: email }), { req, res, maxAge: 3600 })
+      res.status(200).json(response.data)
+    })
+    .catch(error => {
+      res.status(200).json(error)
+    });
 }

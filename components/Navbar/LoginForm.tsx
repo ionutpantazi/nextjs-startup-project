@@ -60,51 +60,67 @@ export function LoginForm() {
     if (isValid.login) {
       const path = window.location.pathname
       const isPwa = path.includes('pwa')
-      let postData = {
-        email: emailValue,
-        password: passwordValue,
-        eventID: '1757',
-        isPwa: isPwa,
+      if (isPwa) {
+        // handle pwa login
+        let postData = {
+          email: emailValue,
+          password: passwordValue,
+          eventID: '1757',
+          isPwa: isPwa,
+        }
+        axios
+          .post(`/api/auth/pwa/login`, postData)
+          .then((res: any) => {
+            if (res.data?.access_token) {
+              let username = emailValue
+              login(username, {
+                optimisticData: {
+                  isLoggedIn: true,
+                  username,
+                },
+              });
+              setEmailValue('')
+              setPasswordValue('')
+              setIsValid({})
+              setIsPasswordVisible(false)
+              document.getElementById('loginModal')?.click()
+            }
+          })
+          .catch((err: any) => {
+            console.log(err)
+            alert(err.response.data)
+          })
+      } else {
+        // handle strapi login
+        let postData = {
+          email: emailValue,
+          password: passwordValue,
+        }
+        axios
+          .post(`/api/auth/login`, postData)
+          .then((res: any) => {
+            if (res.data.user) {
+              let username = res.data.user.username
+              login(username, {
+                optimisticData: {
+                  isLoggedIn: true,
+                  username,
+                },
+              });
+              setEmailValue('')
+              setPasswordValue('')
+              setIsValid({})
+              setIsPasswordVisible(false)
+              document.getElementById('loginModal')?.click()
+            } else {
+              alert(res.err ?? 'invalid user/pass')
+            }
+          })
+          .catch((err: any) => {
+            console.log(err)
+            alert(err.response.data)
+          })
       }
-      axios
-        .post(`/api/auth/login`, postData)
-        .then((res: any) => {
-          if (res.data?.access_token) {
-            // handle pwa login
-            let username = emailValue
-            login(username, {
-              optimisticData: {
-                isLoggedIn: true,
-                username,
-              },
-            });
-            setEmailValue('')
-            setPasswordValue('')
-            setIsValid({})
-            setIsPasswordVisible(false)
-            document.getElementById('loginModal')?.click()
-          } else if (res.data.user) {
-            // handle strapi login
-            let username = res.data.user.username
-            login(username, {
-              optimisticData: {
-                isLoggedIn: true,
-                username,
-              },
-            });
-            setEmailValue('')
-            setPasswordValue('')
-            setIsValid({})
-            setIsPasswordVisible(false)
-            document.getElementById('loginModal')?.click()
-          } else {
-            alert(res.err ?? 'invalid user/pass')
-          }
-        })
-        .catch((err: any) => {
-          console.log(err)
-          alert(err.response.data)
-        })
     }
   }, [isValid.login, retry]);
 

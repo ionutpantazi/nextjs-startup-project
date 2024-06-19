@@ -1,5 +1,5 @@
 import { NavigationItem } from 'lib/queries/nav-data'
-
+import { hasCookie, getCookie, deleteCookie, setCookie } from 'cookies-next';
 
 export function generateMenuList(items: NavigationItem[]): NavigationItem[] {
   // parse strapi navigation list and generate a nested list of children and parents
@@ -64,39 +64,39 @@ export function get_youtube_thumbnail(url: string, quality: string) {
   return 'https://img.youtube.com/vi/1111/low.jpg'
 }
 
-export function setCookie(name: string, value: string, seconds: number) {
-  var expires = "";
-  if (seconds) {
-    var date = new Date();
-    date.setTime(date.getTime() + (seconds * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  window.document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
+// export function setCookie(name: string, value: string, seconds: number) {
+//   var expires = "";
+//   if (seconds) {
+//     var date = new Date();
+//     date.setTime(date.getTime() + (seconds * 60 * 1000));
+//     expires = "; expires=" + date.toUTCString();
+//   }
+//   window.document.cookie = name + "=" + (value || "") + expires + "; path=/";
+// }
 
-export function getCookie(name: string) {
-  var nameEQ = name + "=";
-  var ca = window.document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
+// export function getCookie(name: string) {
+//   var nameEQ = name + "=";
+//   var ca = window.document.cookie.split(';');
+//   for (var i = 0; i < ca.length; i++) {
+//     var c = ca[i];
+//     while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+//     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+//   }
+//   return null;
+// }
 
-export function eraseCookie(name: string) {
-  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
+// export function eraseCookie(name: string) {
+//   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+// }
 
-export function pushUnique<T>(arr: T[], value: T): T[] {
-  // Check if the value already exists in the array
-  if (!arr.includes(value)) {
-      // If the value is not in the array, push it
-      arr.push(value);
-  }
-  return arr;
-}
+// export function pushUnique<T>(arr: T[], value: T): T[] {
+//   // Check if the value already exists in the array
+//   if (!arr.includes(value)) {
+//       // If the value is not in the array, push it
+//       arr.push(value);
+//   }
+//   return arr;
+// }
 
 export function pushWithLimit<T>(arr: T[], value: T, limit: number): T[] {
   // Count the occurrences of the value in the array
@@ -104,7 +104,7 @@ export function pushWithLimit<T>(arr: T[], value: T, limit: number): T[] {
 
   // If the count is less than the limit, push the value
   if (count < limit) {
-      arr.push(value);
+    arr.push(value);
   }
 
   return arr;
@@ -121,7 +121,7 @@ export function pushUniqueToJson(obj: JsonObject, key: string, value: any): Json
 export function pushWithLimitToJson(obj: JsonObject, key: string, value: any, limit: number): JsonObject {
   // Ensure the key exists in the object with an array
   if (!obj[key]) {
-      obj[key] = [];
+    obj[key] = [];
   }
 
   // Count the occurrences of the key
@@ -129,7 +129,7 @@ export function pushWithLimitToJson(obj: JsonObject, key: string, value: any, li
 
   // If the count is less than the limit, push the value
   if (count < limit) {
-      obj[key].push(value);
+    obj[key].push(value);
   }
 
   return obj;
@@ -141,4 +141,17 @@ export function allValuesSame(obj: JsonObject): boolean {
 
   const firstValue = values[0];
   return values.every(value => value === firstValue);
+}
+
+export const getJwt = (req: any, res: any) => {
+  let cookieJwt = getCookie('lg-jwt', { req, res })
+  if (cookieJwt) {
+    return cookieJwt
+  } else {
+    let headers = req.headers
+    let lgJwtRes = headers['lg-jwt-res']
+    if (lgJwtRes) {
+      return lgJwtRes
+    }
+  }
 }

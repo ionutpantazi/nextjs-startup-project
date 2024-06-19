@@ -7,6 +7,7 @@ import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
 import { getEventData } from 'lib/queries/event'
+import { getJwt } from 'utils/helpers'
 
 const Layout = dnmc(() => import('components/Layout'));
 const PageContent = dnmc(() => import('components/PageContent'));
@@ -27,10 +28,10 @@ export default function Page({
   }
   return (
     <Layout
-      title={data?.Title}
+      title={data?.title}
       navigationData={navigationData}
-      customTheme={data.Theme?.data?.attributes?.Data}
-      themedata={data.Theme?.data?.attributes}
+    // customTheme={data.Theme?.data?.attributes?.Data}
+    // themedata={data.Theme?.data?.attributes}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <PageContent data={data.Page_Content} />
@@ -44,16 +45,26 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
   req,
 }) => {
   try {
+    const jwt = getJwt(req, res)
     const navigationData = await fetchNavigation();
     const slug = typeof query.slug === 'object' ? query.slug : [];
     let segment0 = slug[0];
     let segment1 = slug[1];
-    let data = getEventData(segment0)
-    console.log(data)
-    return {
-      props: {
-        data: [],
-        navigationData: navigationData,
+    let data = await getEventData(segment0, jwt)
+    if (!data.eventId) {
+      return {
+        props: {
+          error: {
+            statusCode: 404
+          }
+        }
+      }
+    } else {
+      return {
+        props: {
+          data: data,
+          navigationData: navigationData,
+        }
       }
     }
   } catch (error) {
