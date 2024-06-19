@@ -51,6 +51,8 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     let segment0 = slug[0];
     let segment1 = slug[1];
     let data = await getEventData(segment0, jwt)
+    console.log(segment0, segment1)
+    console.log(data)
     if (!data.eventId) {
       return {
         props: {
