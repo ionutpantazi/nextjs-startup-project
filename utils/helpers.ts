@@ -155,3 +155,20 @@ export const getJwt = (req: any, res: any) => {
     }
   }
 }
+
+export function getSecondSegment(url: string): string | null {
+  try {
+    const parsedUrl = new URL(url);
+    const segments = parsedUrl.pathname.split('/').filter(segment => segment.length > 0);
+
+    // Return the second segment if it exists
+    if (segments.length >= 2) {
+      return segments[1];
+    } else {
+      return null; // No second segment found
+    }
+  } catch (error) {
+    console.error("Invalid URL:", error);
+    return null; // Return null if the URL is invalid
+  }
+}

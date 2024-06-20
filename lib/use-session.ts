@@ -28,6 +28,7 @@ function doLogin(url: string, { arg }: { arg: string }) {
 function doLogout(url: string) {
   deleteCookie('lg-jwt')
   deleteCookie('user')
+  window.location.reload()
   return fetchJson<SessionData>(url, {
     method: "DELETE",
   });

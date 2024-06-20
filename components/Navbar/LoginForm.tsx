@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components'
 import Validation, { ValidationMethods } from '../Bootstrap/Validation'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import axios from 'axios'
+import { getSecondSegment } from 'utils/helpers'
 
 const EmailInput = styled.div`
   height: 40px;
@@ -65,7 +66,7 @@ export function LoginForm() {
         let postData = {
           email: emailValue,
           password: passwordValue,
-          eventID: '1757',
+          eventID: getSecondSegment(window.location.toString()),
           isPwa: isPwa,
         }
         axios
@@ -84,6 +85,7 @@ export function LoginForm() {
               setIsValid({})
               setIsPasswordVisible(false)
               document.getElementById('loginModal')?.click()
+              window.location.reload()
             }
           })
           .catch((err: any) => {
