@@ -19,6 +19,9 @@ import { DatesContainer, DateContainer, AgendaDay, AgendaDayNumber } from 'compo
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { sortAgendaItemsByStartDate } from './pwa'
+
+
 
 export interface AgendaDataProps {
   data: any
@@ -220,6 +223,8 @@ export function removeMinutes(momentTime: string) {
   return momentTime.replace(/(:00)/g, '');
 }
 
+
+
 const Agenda = ({
   data,
   agendaItems,
@@ -230,22 +235,23 @@ const Agenda = ({
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
-console.log(data)
+  const sortData = sortAgendaItemsByStartDate(data)
+
   return (
     <AgendaContainer className=''>
       <AgendaTitle className='mb-4'>
-        {data.Title}
+        title missing
       </AgendaTitle>
       {isMobile &&
         <Swiper
           spaceBetween={10}
-          slidesPerView={'auto'}
+          slidesPerView={2}
           className='w-full my-4'
         >
           <DatesContainer className=''>
             {agendaItems.map((agendaDate: any, index: number) => (
               <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
-                <StyledDateContainer key={index} className='flex flex-row gap-2 items-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
+                <StyledDateContainer key={index} className='flex flex-row gap-2 items-center' style={{ 'width': 'fit-content' }} active={selectedAgendaData == agendaDate ? 'true' : 'false'}
                   onClick={() => { if (handleAgendaDateChange) handleAgendaDateChange(agendaDate) }}
                 >
                   <AgendaDay className=''>
@@ -265,14 +271,14 @@ console.log(data)
         </Swiper>
       }
       <AgendaInnerContainer className='flex flex-col gap-4'>
-        {data.map((agenda: any, index: number) => (
+        {sortData.map((agenda: any, index: number) => (
           <AgendaItem className='md:flex grid grid-cols-2 flex-row flex-wrap content-start justify-around gap-4' key={index}>
             <DateBox className='md:flex hidden flex-col gap-2 justify-center'>
               <AgendaDateFrom className=''>
-                {removeMinutes(moment(agenda.start, moment.HTML5_FMT.TIME_MS).format('h:mma'))}
+                {removeMinutes(moment(agenda.start).format('h:mma'))}
               </AgendaDateFrom>
               <AgendaDateTo className=''>
-                {`till ${removeMinutes(moment(agenda.end, moment.HTML5_FMT.TIME_MS).format('h:mma'))}`}
+                {`till ${removeMinutes(moment(agenda.end).format('h:mma'))}`}
               </AgendaDateTo>
             </DateBox>
             <DateAndRoomBox className='flex flex-col gap-2 md:justify-center justify-start md:w-2/12 w-full'>
@@ -283,7 +289,7 @@ console.log(data)
                   height={16}
                 />
                 <span>
-                  {`${removeMinutes(moment(agenda.start, moment.HTML5_FMT.TIME_MS).format('h:mma'))} - ${removeMinutes(moment(agenda.end, moment.HTML5_FMT.TIME_MS).format('h:mma'))}`}
+                  {`${removeMinutes(moment(agenda.start).format('h:mma'))} - ${removeMinutes(moment(agenda.end).format('h:mma'))}`}
                 </span>
               </AgendaDateRoom>
               <AgendaDateRoom className='flex flex-row items-center'>
@@ -292,37 +298,45 @@ console.log(data)
                   width={16}
                   height={16}
                 />
-                {/* <span>
-                  {`${moment(agenda.attributes.Date).format('ddd')}, ${moment(agenda.attributes.Date).format('Do')} ${moment(agenda.attributes.Date).format('MMMM')}`}
-                </span> */}
+                <span>
+                  {`${moment(agenda.start).format('ddd')}, ${moment(agenda.start).format('Do')} ${moment(agenda.start).format('MMMM')}`}
+                </span>
               </AgendaDateRoom>
-              <AgendaDateRoom className='flex flex-row items-center'>
-                <FAIcon
-                  icon={'fa-house'}
-                  width={16}
-                  height={16}
-                />
-                {/* <span>
-                  {agenda.attributes.Room}
-                </span> */}
-              </AgendaDateRoom>
+              {agenda.room &&
+                <AgendaDateRoom className='flex flex-row items-center'>
+                  <FAIcon
+                    icon={'fa-house'}
+                    width={16}
+                    height={16}
+                  />
+                  <span>
+                    {agenda.room}
+                  </span>
+                </AgendaDateRoom>
+              }
             </DateAndRoomBox>
-            {/* <DetailsBox className='flex flex-col gap-2 justify-center md:w-4/12 w-full'>
-              <AgendaItemTitle className=''>
-                {agenda.attributes.Title}
-              </AgendaItemTitle>
-              <AgendaItemSubTitle className=''>
-                {agenda.attributes.Sub_Title}
-              </AgendaItemSubTitle>
-              <div className='flex flex-row gap-1'>
+            <DetailsBox className='flex flex-col gap-2 justify-center md:w-4/12 w-full'>
+              {agenda.title &&
+                <AgendaItemTitle className=''>
+                  {agenda.title}
+                </AgendaItemTitle>
+              }
+              {agenda.shortDesc &&
+                <AgendaItemSubTitle className=''
+                  dangerouslySetInnerHTML={{
+                    __html: agenda.shortDesc,
+                  }}
+                />
+              }
+              {/* <div className='flex flex-row gap-1'>
                 {agenda.attributes.Tags.data.map((tag: Tagsprops, index: number) => (
                   <AgendaTag key={index} className=''>
                     {tag.attributes.Name}
                   </AgendaTag>
                 ))
                 }
-              </div>
-            </DetailsBox> */}
+              </div> */}
+            </DetailsBox>
             <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
               <Participants className='flex flex-row'>
                 <ImageIcon className='flex justify-center items-center'>
@@ -332,7 +346,7 @@ console.log(data)
                     height={20}
                   />
                 </ImageIcon>
-                {agenda.attributes?.Participants?.data?.map((participant: Speaker, index: number) => (
+                {/* {agenda.attributes?.Participants?.data?.map((participant: Speaker, index: number) => (
                   <StyledNextImage
                     key={index}
                     src={IMAGE_DOMAIN + participant.attributes?.Image?.data?.attributes?.url}
@@ -342,7 +356,7 @@ console.log(data)
                     height={30}
                   />
                 ))
-                }
+                } */}
               </Participants>
               {/* <ParticipantsText className=''>
                 {`Join ${agenda.attributes.Participants.data[0].attributes.Name} + others`}
