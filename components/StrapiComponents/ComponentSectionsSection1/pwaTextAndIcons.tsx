@@ -94,7 +94,7 @@ export const IconButton = styled.div <{ active?: any }>`
   padding: 18px 26px;
 
   ${({ active }) => css`
-    ${props => active == 'true' ? 'border-color: ' + props.theme.colors.brand + ';border-radius: ' + props.theme.borderRadius.components.small + ';border-style: solid; border-width: 2px;' : 'border:2px solid rgba(0,0,0,0);'};
+    ${props => active == 'true' ? 'border-color: ' + props.theme.colors.brand + ';border-radius: ' + props.theme.borderRadius?.components?.small + ';border-style: solid; border-width: 2px;' : 'border:2px solid rgba(0,0,0,0);'};
   `}
   
   span {
@@ -108,7 +108,7 @@ export const IconButton = styled.div <{ active?: any }>`
   }
 
   &:hover {
-    border-radius: ${props => props.theme.borderRadius.components.small};
+    border-radius: ${props => props.theme.borderRadius?.components?.small};
     border-style: solid;
     border-width: 2px;
     border-color: ${props => props.theme.colors.brandlight};
@@ -131,7 +131,7 @@ export const DatesContainer = styled.div`
 `
 
 export const DateContainer = styled.div <{ active?: any }>`
-  border-radius: ${props => props.theme.borderRadius.components.small};
+  border-radius: ${props => props.theme.borderRadius?.components?.small};
   background-color: ${props => props.theme.colors.darkestgrey};
   padding: 20px;
   text-align: center;
@@ -148,7 +148,7 @@ export const DateContainer = styled.div <{ active?: any }>`
 
   &:hover {
     cursor: pointer;
-    border-radius: ${props => props.theme.borderRadius.components.small};
+    border-radius: ${props => props.theme.borderRadius?.components?.small};
     border-style: solid;
     border-width: 2px;
     border-color: ${props => props.theme.colors.brandlight};
