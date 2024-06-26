@@ -15,9 +15,7 @@ import {
 } from 'components/Bootstrap/Common'
 import TextAndIcons, { TextAndIconsProps } from '../ComponentSectionsSection1/pwaTextAndIcons'
 import Agenda from './pwaAgenda'
-import CardsCarousel, { CardsCarouselProps } from '../ComponentSectionsSection1/CardsCarousel'
-import Lists, { ListsProps } from './Lists'
-import ComponentSectionsVideo, { VideoProps } from 'components/StrapiComponents/ComponentSectionsVideo'
+import CardsCarousel from '../ComponentSectionsSection1/pwaCardsCarousel'
 
 export type AgendaItem = {
   agendaItemId: number;
@@ -35,9 +33,8 @@ export type AgendaItem = {
 };
 
 export interface ComponentSectionsSection2Props {
-  data: any
-  senddatatolayout?: any,
-  isdefaulttheme?: any,
+  agenda: any
+  delegates: any,
 }
 
 export function removeTime(momentTime: string) {
@@ -66,21 +63,22 @@ export function sortAgendaItemsByStartDate(agendaItems: AgendaItem[]): AgendaIte
 }
 
 const ComponentSectionsSection2 = ({
-  data
+  agenda,
+  delegates,
 }: ComponentSectionsSection2Props) => {
 
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
-  var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(data.data));
+  var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
   useEffect(() => {
-    if (data.data) {
-      handleAgendaDateChange(removeTime(data.data[0].start))
+    if (agenda.data) {
+      handleAgendaDateChange(removeTime(agenda.data[0].start))
     }
   }, []);
 
   const handleAgendaDateChange = (date: string) => {
     setSelectedAgendaDate(date);
-    let filteredAgenda = data.data.filter((agenda: any) => {
+    let filteredAgenda = agenda.data.filter((agenda: any) => {
       let agendaDate = removeTime(agenda.start)
       if (agendaDate == date) return agenda;
     });
@@ -92,9 +90,12 @@ const ComponentSectionsSection2 = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            <TextAndIcons agendaItems={sortAgendaItemsByStartDate(data.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
-            {data.data &&
-              <Agenda data={agendaData} agendaItems={generateAgendaDatesArray(data.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
+            <TextAndIcons agendaItems={sortAgendaItemsByStartDate(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
+            {delegates.data &&
+              <CardsCarousel data={delegates} />
+            }
+            {agenda.data &&
+              <Agenda data={agendaData} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
             }
           </ComponentContainer>
         </InnerContainer>

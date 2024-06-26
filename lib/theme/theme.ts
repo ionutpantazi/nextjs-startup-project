@@ -15,29 +15,29 @@ export interface Theme {
     brand?: string
     brandlight?: string
     branddark?: string
-    navbg?: string
-    font: string
-    font1: string
-    font2: string
-    font3: string
-    font4: string
-    font5: string
-    font6: string
-    font7: string
-    font8: string
-    font9: string
-    backgrounds?: {
-      layout: string
-      radial_header_image: string
-      section_bg: string
-      header_bg: string
-      event_details: string
-      theme_toggle_off: string
-      carousel1: string
-    }
-    headings: {
-      h1: string
-    }
+    // navbg?: string
+    // font: string
+    // font1: string
+    // font2: string
+    // font3: string
+    // font4: string
+    // font5: string
+    // font6: string
+    // font7: string
+    // font8: string
+    // font9: string
+    // backgrounds?: {
+    //   layout: string
+    //   radial_header_image: string
+    //   section_bg: string
+    //   header_bg: string
+    //   event_details: string
+    //   theme_toggle_off: string
+    //   carousel1: string
+    // }
+    // headings: {
+    //   h1: string
+    // }
   },
   screens: {
     sm: string,
@@ -82,29 +82,29 @@ export const theme: Theme = {
     black: '#000000',
     brand: '#B97ECF',
     brandlight: '#ddb7eb',
-    navbg: 'white',
-    "font": "white",
-    "font1": "#D9D9D9",
-    "font2": "white",
-    "font3": "#B97ECF",
-    "font4": "#ddb7eb",
-    "font5": "#242424",
-    "font6": "#white",
-    "font7": "#B97ECF",
-    "font8": "#D9D9D9",
-    "font9": "#D9D9D9",
-    "backgrounds": {
-      "layout": "black",
-      "radial_header_image": "unset",
-      "section_bg": "#1E1E1E",
-      "header_bg": "#1E1E1E",
-      "event_details": "#121212",
-      "theme_toggle_off": "#242424",
-      "carousel1": "#121212"
-    },
-    "headings": {
-      "h1": "white"
-    }
+    // navbg: 'white',
+    // "font": "white",
+    // "font1": "#D9D9D9",
+    // "font2": "white",
+    // "font3": "#B97ECF",
+    // "font4": "#ddb7eb",
+    // "font5": "#242424",
+    // "font6": "#white",
+    // "font7": "#B97ECF",
+    // "font8": "#D9D9D9",
+    // "font9": "#D9D9D9",
+    // "backgrounds": {
+    //   "layout": "black",
+    //   "radial_header_image": "unset",
+    //   "section_bg": "#1E1E1E",
+    //   "header_bg": "#1E1E1E",
+    //   "event_details": "#121212",
+    //   "theme_toggle_off": "#242424",
+    //   "carousel1": "#121212"
+    // },
+    // "headings": {
+    //   "h1": "white"
+    // }
   },
   screens: {
     sm: '640px',
