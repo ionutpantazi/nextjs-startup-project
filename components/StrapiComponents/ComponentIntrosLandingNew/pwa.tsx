@@ -339,8 +339,16 @@ const ComponentIntrosLandingNew = ({
   const { session, isLoading } = useSession();
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
-  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+  const [isMobile, setIsMobile] = useState(false);
   const backgroundImage = data.homeBanner?.path ? data.homeBanner.path : null;
+
+  useEffect(() => {
+    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [])
 
   const handleDefaultThemeChange = () => {
     if (senddatatolayout instanceof Function) {
@@ -542,14 +550,15 @@ const ComponentIntrosLandingNew = ({
                         }
 
                       </div>
-                      <Toggle className='flex justify-between cursor-pointer w-fit'>
-                        <input
-                          type='checkbox'
-                          className='sr-only'
-                          checked={isdefaulttheme == 'true' ? true : false}
-                          onChange={handleDefaultThemeChange}
-                        />
-                        {/* {themedata &&
+                      {session.isLoggedIn &&
+                        <Toggle className='flex justify-between cursor-pointer w-fit'>
+                          <input
+                            type='checkbox'
+                            className='sr-only'
+                            checked={isdefaulttheme == 'true' ? true : false}
+                            onChange={handleDefaultThemeChange}
+                          />
+                          {/* {themedata &&
                           <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
                             <FAIcon
                               icon={themedata.FAIcon.Icon}
@@ -561,17 +570,18 @@ const ComponentIntrosLandingNew = ({
                             </span>
                           </CustomThemeToggle>
                         } */}
-                        <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
-                          <span>
-                            Default View
-                          </span>
-                          <FAIcon
-                            icon={'fa-solid fa-circle-xmark'}
-                            width={20}
-                            height={20}
-                          />
-                        </DefaultThemeToggle>
-                      </Toggle>
+                          <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                            <span>
+                              Default View
+                            </span>
+                            <FAIcon
+                              icon={'fa-solid fa-circle-xmark'}
+                              width={20}
+                              height={20}
+                            />
+                          </DefaultThemeToggle>
+                        </Toggle>
+                      }
                     </EventDetailsItem>
 
                   </EventDetailsItemContainer>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { ThemeContext } from 'components/Layout';
@@ -79,6 +79,7 @@ export type CardProps = {
 }
 
 export type CardsCarouselProps = {
+  title: string
   data: [Attendee]
 }
 
@@ -237,7 +238,15 @@ const CardsCarousel = ({
 
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
-  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [])
 
   const applyCardStyle = (width: number | undefined, card: Attendee) => {
     let isLarge = false;
@@ -257,7 +266,7 @@ const CardsCarousel = ({
       <CardsCarouselContainer className=''>
         <div className='flex flex-row justify-between mb-4 items-center'>
           <CarouselTitle>
-            {'delegates title missing'}
+            {data?.title}
           </CarouselTitle>
           <CarouselShowAll>
             Show all

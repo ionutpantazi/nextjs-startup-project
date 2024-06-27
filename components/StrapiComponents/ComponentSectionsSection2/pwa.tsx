@@ -35,6 +35,7 @@ export type AgendaItem = {
 export interface ComponentSectionsSection2Props {
   agenda: any
   delegates: any,
+  speakers: any,
 }
 
 export function removeTime(momentTime: string) {
@@ -65,10 +66,14 @@ export function sortAgendaItemsByStartDate(agendaItems: AgendaItem[]): AgendaIte
 const ComponentSectionsSection2 = ({
   agenda,
   delegates,
+  speakers,
 }: ComponentSectionsSection2Props) => {
 
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
+
+  delegates.title = 'delegates title missing'
+  speakers.title = 'speakers title missing'
 
   useEffect(() => {
     if (agenda.data) {
@@ -91,8 +96,11 @@ const ComponentSectionsSection2 = ({
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
             <TextAndIcons agendaItems={sortAgendaItemsByStartDate(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
-            {delegates.data &&
+            {delegates?.data?.length > 0 &&
               <CardsCarousel data={delegates} />
+            }
+            {speakers?.data?.length > 0 &&
+              <CardsCarousel data={speakers} />
             }
             {agenda.data &&
               <Agenda data={agendaData} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
@@ -234,8 +234,16 @@ const Agenda = ({
 
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
-  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+  const [isMobile, setIsMobile] = useState(false);
   const sortData = sortAgendaItemsByStartDate(data)
+
+  useEffect(() => {
+    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [])
 
   return (
     <AgendaContainer className=''>

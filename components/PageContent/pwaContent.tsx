@@ -26,7 +26,7 @@ const PwaContent = ({
   isdefaulttheme,
   themedata,
 }: PwaContentProps) => {
-
+console.log(data)
   return (
     <>
       {data &&
@@ -37,7 +37,7 @@ const PwaContent = ({
                 <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
               }
               {api == 'agenda' &&
-                <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} />
+                <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} speakers={data['speakers']} />
               }
             </div>
           ))}
