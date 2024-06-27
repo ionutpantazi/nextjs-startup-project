@@ -17,6 +17,7 @@ export interface Props {
   data: any
   error?: ErrorPageTemplateProps
   navigationData: NavigationData
+  logo?: any
 }
 
 function uppercaseFirstLetterOfKeys<T extends Record<string, any>>(obj: T): T {
@@ -41,6 +42,7 @@ export default function Page({
   data,
   error,
   navigationData,
+  logo,
 }: Props) {
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
@@ -76,6 +78,7 @@ export default function Page({
       navigationData={navigationData}
       customTheme={themeData}
       themedata={null}
+      logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <PwaContent data={data} />
@@ -95,6 +98,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     let segment0 = slug[0];
     let segment1 = slug[1];
     let data = await getPageData(segment0, jwt)
+    let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {
         props: {
@@ -108,6 +112,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
         props: {
           data: data,
           navigationData: data.resource?.navigation ?? navigationData,
+          logo: logo,
         }
       }
     }

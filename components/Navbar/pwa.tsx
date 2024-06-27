@@ -12,7 +12,7 @@ import { Registration_Questions } from 'lib/queries/settings'
 export interface NavbarProps {
   isOpen?: boolean
   navigationData: any
-  questions?: [Registration_Questions]
+  logo?: any
 }
 
 const NavigationContainer = styled.nav`
@@ -143,7 +143,7 @@ const CollapsibleMenu = styled.div`
 const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   navigationData,
-  questions,
+  logo,
 }) => {
 
   const { session, isLoading, logout } = useSession();
@@ -226,16 +226,16 @@ const Navbar: React.FC<NavbarProps> = ({
       <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
         <div className="flex w-full flex-wrap items-center justify-between px-3">
           {/* Logo  */}
-          {navigationData?.Logo?.Image?.data &&
-            <LogoContainer as='a' href='#' className='flex items-center'>
+          {logo?.path &&
+            <LogoContainer as='a' href={logo.link ?? ''} className='flex items-center'>
               <>
-                {navigationData?.Logo?.Image?.data?.attributes &&
+                {logo.path &&
                   <NextImage
-                    src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
+                    src={logo.path}
                     className=''
-                    alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
-                    width={Number(navigationData.Logo.Width)}
-                    height={Number(navigationData.Logo.Height)}
+                    alt={logo.alt ?? ""}
+                    width={80}
+                    height={80}
                   />
                 }
               </>
@@ -269,7 +269,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <RightButtons show={'hidemobile'} />
         </div>
       </NavigationContainer>
-      <LoginModal data={undefined} questions={questions} />
+      <LoginModal data={undefined} />
     </>
   )
 }

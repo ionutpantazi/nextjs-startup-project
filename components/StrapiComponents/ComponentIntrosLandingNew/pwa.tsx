@@ -340,7 +340,7 @@ const ComponentIntrosLandingNew = ({
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
-  const backgroundImage = data.Background_Image?.data?.attributes ? IMAGE_DOMAIN + data.Background_Image.data.attributes.url : null;
+  const backgroundImage = data.homeBanner?.path ? data.homeBanner.path : null;
 
   const handleDefaultThemeChange = () => {
     if (senddatatolayout instanceof Function) {
@@ -460,18 +460,18 @@ const ComponentIntrosLandingNew = ({
         <Container className=''>
           <InnerContainer className=''>
             <EventTitle as='h1' className=''>
-              {data.Title}
+              {data.title}
             </EventTitle>
             <EventIntroduction as='p' className=''>
-              {data.Introduction}
+              {data.subtitle}
             </EventIntroduction>
             <IntroLandingContainer className='mt-6'>
-              {data.Event_Details?.Event_Details &&
+              {/* {data.Event_Details?.Event_Details &&
                 <div className='grid grid-cols-2 gap-2'>
                   <EventDetailsComponent />
                 </div>
-              }
-              <Swiper
+              } */}
+              {/* <Swiper
                 spaceBetween={10}
                 slidesPerView={'auto'}
                 className='w-full mt-4'
@@ -482,10 +482,10 @@ const ComponentIntrosLandingNew = ({
                   </SwiperSlide>
                 ))
                 }
-              </Swiper>
+              </Swiper> */}
               <EventContentContainer className='flex flex-col gap-2 w-auto mt-4'>
                 <EventContent className=''>
-                  <ReadMore content={data.Content} chars={200} />
+                  <ReadMore content={data.longDesc} chars={200} />
                 </EventContent>
               </EventContentContainer>
             </IntroLandingContainer>
@@ -499,7 +499,7 @@ const ComponentIntrosLandingNew = ({
                 {data.title}
               </EventTitle>
               <EventIntroduction as='p' className=''>
-                {data.Introduction}
+                {data.subtitle}
               </EventIntroduction>
               <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
                 <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
@@ -599,7 +599,7 @@ const ComponentIntrosLandingNew = ({
                 </IWantToContainer>
                 <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
                   <EventContent className=''>
-                    <ReadMore content={data.Content} chars={200} />
+                    <ReadMore content={data.longDesc} chars={200} />
                   </EventContent>
                   {/* {data.Button &&
                   <ButtonNew data={data.Button}>

@@ -15,7 +15,7 @@ import {
 } from 'components/Bootstrap/Common'
 var moment = require('moment');
 import { Speaker } from '../ComponentSectionsSpeakersCarousel'
-import { DatesContainer, DateContainer, AgendaDay, AgendaDayNumber } from 'components/StrapiComponents/ComponentSectionsSection1/TextAndIcons'
+import { DatesContainer, DateContainer, AgendaDay, AgendaDayNumber } from 'components/StrapiComponents/ComponentSectionsSection1/pwaTextAndIcons'
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
 import { Swiper, SwiperSlide } from 'swiper/react';

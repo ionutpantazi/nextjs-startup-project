@@ -62,25 +62,27 @@ const LogoContainer = styled.div`
 
 export interface FooterProps {
   navigationData: any
+  logo: any
 }
 
 const Footer: React.FC<FooterProps> = ({
   navigationData,
+  logo,
 }) => {
 
   return (
     <FooterContainer className='flex flex-col sm:flex-row gap-y-8'>
       <LeftColumn className='sm:w-1/2 w-auto grid gap-y-4 content-between'>
-        {navigationData?.Logo?.Image?.data &&
-          <LogoContainer as='a' href='#' className='flex items-center'>
+        {logo?.path &&
+          <LogoContainer as='a' href={logo.link ?? ''} className='flex items-center'>
             <>
-              {navigationData?.Logo?.Image?.data?.attributes &&
+              {logo.path &&
                 <NextImage
-                  src={IMAGE_DOMAIN + navigationData.Logo.Image.data.attributes.url}
+                  src={logo.path}
                   className=''
-                  alt={navigationData.Logo.Image.data.attributes.alternativeText ?? ""}
-                  width={Number(navigationData.Logo.Width)}
-                  height={Number(navigationData.Logo.Height)}
+                  alt={logo.alt ?? ""}
+                  width={80}
+                  height={80}
                 />
               }
             </>
