@@ -51,8 +51,10 @@ type Attendee = {
   title: string;
   firstName: string;
   lastName: string;
+  profilePic: string | null;
   company: string;
   delegateType: DelegateType;
+  discussionCount: number | null;
   forceDelegateType: boolean;
   attendanceStatus: string;
   dateCreated: string;
@@ -282,22 +284,22 @@ const CardsCarousel = ({
             }}
             modules={[Pagination]}
           >
-            {data.data.map((card: Attendee) => (
-              <SwiperSlide key={card.attendeeId} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
+            {data.data.map((card: Attendee, index: number) => (
+              <SwiperSlide key={index} style={{ 'width': `${applyCardStyle(width, card)?.width}` }}>
                 <CardContainer>
                   <ImageContainer className='relative' hidebackground={'false'}>
-                    {/* {card.Image?.data?.attributes?.url &&
+                    {card.profilePic &&
                       <>
                         <RadialContainer />
                         <NextImage
-                          src={IMAGE_DOMAIN + card.Image.data?.attributes?.url}
+                          src={card.profilePic}
                           className=''
-                          alt={card.Image.data?.attributes?.alternativeText ?? ''}
+                          alt={card.profilePic ?? ''}
                           fill
                           style={{ objectFit: 'cover' }}
                         />
                       </>
-                    } */}
+                    }
                   </ImageContainer>
                   {/* {!card.Link &&
                     <ImageIcon className=''>
@@ -314,7 +316,7 @@ const CardsCarousel = ({
                   <CardSubTitle>
                     {card.company}
                   </CardSubTitle>
-                  {/* {card.Impressions &&
+                  {card.discussionCount &&
                     <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
                       <div className='flex flex-row items-center'>
                         <FAIcon
@@ -323,7 +325,7 @@ const CardsCarousel = ({
                           height={16}
                         />
                         <span>
-                          {card.Impressions}
+                          {card.discussionCount}
                         </span>
                       </div>
                       <FAIcon
@@ -336,13 +338,13 @@ const CardsCarousel = ({
                         width={16}
                         height={16}
                       />
-                      {card.Link &&
+                      {/* {card.Link &&
                         <CarouselMoreDetails>
                           More Details
                         </CarouselMoreDetails>
-                      }
+                      } */}
                     </ButtonsContainer>
-                  } */}
+                  }
                 </CardContainer>
               </SwiperSlide>
             ))

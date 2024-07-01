@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import ComponentSectionsSection2 from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
+import ComponentSectionsFaQs from 'components/StrapiComponents/ComponentSectionsFaQs/pwa'
 
 export const components = {
   ComponentIntrosLandingNew: dynamic(() => import('components/StrapiComponents/ComponentIntrosLandingNew/pwa')),
   ComponentSectionsSection2: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection2/pwa')),
+  ComponentSectionsFaQs: dynamic(() => import('components/StrapiComponents/ComponentSectionsFaQs/pwa')),
 };
 
 export interface PwaContentProps {
@@ -38,6 +40,9 @@ console.log(data)
               }
               {api == 'agenda' &&
                 <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} speakers={data['speakers']} />
+              }
+              {api == 'event' && data.event?.faqs?.length &&
+                <ComponentSectionsFaQs faqs={data['event']['faqs']} />
               }
             </div>
           ))}
