@@ -119,28 +119,70 @@ export type NavigationItem = {
   children?: NavigationItem[];
 }
 
-export const fetchNavigation = async () => {
-  const apolloClient = initializeApollo();
-  var [
-    {
-      data: { navs: { data } }
-    }
-  ] = await Promise.all([
-    apolloClient.query({
-      query: NAVIGATION_QUERY,
-      variables: {
-        "filters": {
-          "id": {
-            "eq": 1
+export const fetchNavigation = async (isPwa?: boolean) => {
+  if (!isPwa) {
+    const apolloClient = initializeApollo();
+    var [
+      {
+        data: { navs: { data } }
+      }
+    ] = await Promise.all([
+      apolloClient.query({
+        query: NAVIGATION_QUERY,
+        variables: {
+          "filters": {
+            "id": {
+              "eq": 1
+            }
           }
         }
-      }
-    })
-  ])
+      })
+    ])
 
-  if (data.length) {
+    if (data.length) {
+      return {
+        data: data[0]
+      }
+    }
+  } else {
     return {
-      data: data[0]
+      header: [
+        {
+          id: 1,
+          title: 'Networking',
+          icon: 'fa-people-group',
+        },
+        {
+          id: 2,
+          title: 'Activities',
+          icon: 'fa-screwdriver-wrench',
+        },
+        {
+          id: 3,
+          title: 'Social',
+          icon: 'fa-heart',
+        },
+      ],
+      footer: [
+        {
+          id: 1,
+          title: 'Menu',
+          items: [
+            {
+              id: 1,
+              title: 'Networking',
+            },
+            {
+              id: 2,
+              title: 'Activities',
+            },
+            {
+              id: 3,
+              title: 'Social',
+            },
+          ]
+        },
+      ]
     }
   }
 }

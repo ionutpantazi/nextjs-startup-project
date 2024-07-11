@@ -13,13 +13,21 @@ library.add(fas)
 library.add(fab)
 library.add(far)
 
-const MyApp = ({ Component, pageProps: { session, ...pageProps }, }: AppProps) => {
-  const apolloClient = useApollo(pageProps.initializeApolloState);
-  return (
-    <ApolloProvider client={apolloClient}>
+const MyApp = ({ Component, pageProps: { session, ...pageProps }, router }: AppProps) => {
+  let isPwa = router?.route == '/pwa/[...slug]';
+  if (isPwa) {
+    return (
       <Component {...pageProps} />
-    </ApolloProvider>
-  )
+    )
+  } else {
+    const apolloClient = useApollo(pageProps.initializeApolloState);
+    return (
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    )
+  }
+
 }
 
 export default MyApp

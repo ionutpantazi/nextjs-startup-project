@@ -28,6 +28,7 @@ export interface AgendaDataProps {
   agendaItems: any
   selectedAgendaData: any
   handleAgendaDateChange?: (data: string) => void;
+  title?: string
 }
 
 const AgendaContainer = styled.div`
@@ -230,6 +231,7 @@ const Agenda = ({
   agendaItems,
   selectedAgendaData,
   handleAgendaDateChange,
+  title,
 }: AgendaDataProps) => {
 
   const theme = useContext(ThemeContext);
@@ -248,7 +250,7 @@ const Agenda = ({
   return (
     <AgendaContainer className=''>
       <AgendaTitle className='mb-4'>
-        title missing
+        {title}
       </AgendaTitle>
       {isMobile &&
         <Swiper

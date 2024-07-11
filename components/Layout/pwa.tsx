@@ -96,7 +96,6 @@ const Layout = ({
           <title>{title}</title>
         </Head>
         <HeaderWrap>
-          {navigationData?.data && <Navbar2 navigationData={navigationData.data.attributes.Header_Navigation} questions={settings?.Registration_Questions} />}
           {navigationData?.header && <Navbar navigationData={navigationData.header} logo={logo} />}
         </HeaderWrap>
         <PageContentComponents className='mb-auto'>
@@ -105,7 +104,6 @@ const Layout = ({
           )}
         </PageContentComponents>
         <FooterWrap>
-          {navigationData?.data && <Footer2 navigationData={navigationData.data.attributes.Footer_Navigation} />}
           {navigationData?.footer && <Footer navigationData={navigationData.footer} logo={logo} />}
         </FooterWrap>
       </LayoutContainer>

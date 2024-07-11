@@ -86,7 +86,8 @@ export type CardsCarouselProps = {
 }
 
 export interface CardsCarouselDataProps {
-  data: CardsCarouselProps
+  data: CardsCarouselProps;
+  title?: string;
 }
 
 const CardsCarouselContainer = styled.div`
@@ -235,7 +236,8 @@ const EmptyComponent = styled.div`
 `
 
 const CardsCarousel = ({
-  data
+  data,
+  title,
 }: CardsCarouselDataProps) => {
 
   const theme = useContext(ThemeContext);
@@ -268,7 +270,7 @@ const CardsCarousel = ({
       <CardsCarouselContainer className=''>
         <div className='flex flex-row justify-between mb-4 items-center'>
           <CarouselTitle>
-            {data?.title}
+            {title}
           </CarouselTitle>
           <CarouselShowAll>
             Show all

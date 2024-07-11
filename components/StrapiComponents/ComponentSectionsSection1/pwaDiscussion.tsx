@@ -50,6 +50,7 @@ export interface DiscussionProps {
 
 export interface DiscussionDataProps {
   data: DiscussionProps
+  title?: string
 }
 
 const DiscussionContainer = styled.div`
@@ -418,7 +419,8 @@ const CommentContent = (props: any) => {
 // }
 
 const Discussion = ({
-  data
+  data,
+  title,
 }: DiscussionDataProps) => {
 
   const [activeDiscussion, setActiveDiscussion] = useState<any>(data.data[0]);
@@ -427,7 +429,15 @@ const Discussion = ({
   // const [discussionCategories, setDiscussionCategories] = useState([]);
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
-  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [])
 
   // useEffect(() => {
   //   setDiscussionCategories(extractDiscussionCategories(data.OtherDiscussions.data));
@@ -452,7 +462,7 @@ const Discussion = ({
   return (
     <DiscussionContainer className=''>
       <DiscussionTitle className='mb-4'>
-        section title missing
+        {title ?? 'section title missing'}
       </DiscussionTitle>
       <DiscussionInnerContainer className='flex md:flex-row flex-col gap-10'>
         <FirstColumn className='flex flex-col md:w-3/5 w-auto'>

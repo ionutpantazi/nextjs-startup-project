@@ -27,6 +27,9 @@ export default function Page({
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
   }
+  if (!data) {
+    return <></>
+  }
   return (
     <Layout
       title={data?.Title}
@@ -49,10 +52,13 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
   try {
     let scheme = req.headers['x-forwarded-proto'];
     let host = `${scheme}://${req.headers.host}`
+    const slug = typeof query.pages === 'string' ? query.pages : null;
+    if (slug == 'favicon.ico') {
+      return { props: {} }
+    }
     const apolloClient = initializeApollo();
     // const navigationData = await fetchNavigation();
     const settings = await fetchSettings();
-    const slug = typeof query.pages === 'string' ? query.pages : null;
     const { data: { pages: { data } } } = await apolloClient.query({
       query: PAGES_QUERY,
       variables: {

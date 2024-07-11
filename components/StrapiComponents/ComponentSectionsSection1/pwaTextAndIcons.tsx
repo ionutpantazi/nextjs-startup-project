@@ -42,6 +42,10 @@ export interface TextAndIconsDataProps {
   agendaItems?: any
   handleAgendaDateChange?: (data: string) => void;
   selectedAgendaData?: string;
+  icon?: any;
+  title?: any;
+  intro?: any;
+  type?: any;
 }
 
 const TextAndIconsContainer = styled.div`
@@ -197,22 +201,37 @@ const TextAndIcons = ({
   agendaItems,
   handleAgendaDateChange,
   selectedAgendaData,
+  icon,
+  title,
+  intro,
+  type,
 }: TextAndIconsDataProps) => {
 
   return (
     <TextAndIconsContainer className='flex sm:flex-row flex-col gap-4'>
       <FirstColumn className='flex flex-col sm:w-1/2 w-auto'>
         <TitleContainer className='flex flex-row items-center gap-4'>
+          {icon &&
+            <Icon className='flex items-center'>
+              <FAIcon
+                icon={icon}
+                width={36}
+                height={36}
+              />
+            </Icon>
+          }
           <SectionTitle>
-            (icon)title missing
+            {title}
           </SectionTitle>
         </TitleContainer>
-        <DescriptionContainer className=''>
-          intro missing
-        </DescriptionContainer>
+        {intro &&
+          <DescriptionContainer className=''>
+            <ReadMore content={intro} chars={100} />
+          </DescriptionContainer>
+        }
       </FirstColumn>
       <SecondColumn className='sm:w-1/2 w-auto'>
-        {generateAgendaDatesArray(agendaItems).length &&
+        {type == 'agenda' &&
           <DatesContainer className='md:flex hidden flex-row flex-wrap gap-2'>
             {generateAgendaDatesArray(agendaItems).map((agendaDate: any, index: number) => (
               <DateContainer key={index} className='flex flex-col gap-2 justify-center' active={selectedAgendaData == agendaDate ? 'true' : 'false'}
