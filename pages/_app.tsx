@@ -15,12 +15,12 @@ library.add(far)
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps }, router }: AppProps) => {
   let isPwa = router?.route == '/pwa/[...slug]';
+  const apolloClient = useApollo(pageProps.initializeApolloState);
   if (isPwa) {
     return (
       <Component {...pageProps} />
     )
   } else {
-    const apolloClient = useApollo(pageProps.initializeApolloState);
     return (
       <ApolloProvider client={apolloClient}>
         <Component {...pageProps} />

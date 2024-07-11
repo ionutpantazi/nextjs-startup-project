@@ -120,7 +120,7 @@ const ComponentIncludesRegistration = ({
                 <StyledInput placeholder='Input field one' />
                 <StyledInput placeholder='Input field two' />
                 <BioPlaceholder>
-                  I'm interested in...
+                  I&apos;m interested in...
                 </BioPlaceholder>
                 <StyledInput placeholder='' />
                 <Checkbox
