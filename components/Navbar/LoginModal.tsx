@@ -132,23 +132,23 @@ const LoginModal = ({
         >
           <ModalBody key='login' className={`pointer-events-auto ${showQuestions ? 'hidden' : !isLogin ? 'hidden' : 'visible'}`}>
             <ModalTitle className=''>
-              Login
+              Log in
             </ModalTitle>
             <ModalContent className='flex flex-col gap-4 items-center'>
               <LoginForm />
               <StyledText className=''>
-                Don&apos;t have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Signup</button>
+                Don&apos;t have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Sign up</button>
               </StyledText>
             </ModalContent>
           </ModalBody>
           <ModalBody key='signup' className={`pointer-events-auto ${showQuestions ? 'hidden' : isLogin ? 'hidden' : 'visible'}`}>
             <ModalTitle className=''>
-              Signup
+              Sign up
             </ModalTitle>
             <ModalContent className='flex flex-col gap-4 items-center'>
               <SignupForm showQuestions={handleChildData} />
               <StyledText className=''>
-                Already have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Login</button>
+                Already have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Log in</button>
               </StyledText>
             </ModalContent>
           </ModalBody>

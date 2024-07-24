@@ -7,6 +7,7 @@ import { hasCookie, getCookie, setCookie } from 'cookies-next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { email, password, eventID } = req.body;
   let { data, err } = await passwordGrant(email, password, eventID)
+  console.log(data)
   if (data?.access_token) {
     let { access_token, expires_in } = data
     setCookie('lg-jwt', access_token, { req, res, maxAge: expires_in })

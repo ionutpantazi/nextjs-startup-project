@@ -32,10 +32,12 @@ export default function Page({
 
   let themeData = null
 
-  if (data?.resource?.theme) {
-    themeData = data?.resource?.theme
+  if (data?.event?.themeData?.data) {
+    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
+      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
+    }
   }
-
+  
   return (
     <Layout
       title={data?.event?.title}

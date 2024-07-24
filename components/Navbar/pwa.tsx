@@ -189,7 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({
               width={20}
               height={20}
             />
-            <span>Login</span>
+            <span>Log in</span>
           </RegisterBtn>
         }
 

@@ -223,7 +223,7 @@ export function SignupForm(props: any) {
         <Validation input={confirmPasswordValue} match={createPasswordValue} type='password' message='password does not match' ref={signupPasswordConfirmValidationRef} sendvalidation={handleValidationData} />
       </PasswordInput>
       <Button className='w-full' onClick={submitSignup}>
-        Signup
+        Sign up
       </Button>
     </>
   );

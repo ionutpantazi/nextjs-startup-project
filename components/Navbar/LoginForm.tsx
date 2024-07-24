@@ -9,10 +9,18 @@ import { getSecondSegment } from 'utils/helpers'
 
 const EmailInput = styled.div`
   height: 40px;
+
+  input {
+    color: ${props => props.theme.colors.black};
+  }
 `
 
 const PasswordInput = styled.div`
   height: 40px;
+
+  input {
+    color: ${props => props.theme.colors.black};
+  }
 
   svg {
     color: ${props => props.theme.colors.brand};
@@ -205,7 +213,7 @@ export function LoginForm() {
         </label>
       </PasswordInput>
       <Button className='w-full' onClick={submitLogin}>
-        Login
+        Log in
       </Button>
     </>
   );

@@ -542,7 +542,7 @@ const ComponentIntrosLandingNew = ({
                                 <button className="login underline"
                                   data-twe-toggle="modal"
                                   data-twe-target="#loginModal"
-                                >Login
+                                >Log in
                                 </button> to view your personalised content
                               </EventDetailsSubTitle>
                             </EventDetailsContainer>
