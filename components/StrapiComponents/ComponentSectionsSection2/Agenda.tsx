@@ -403,7 +403,7 @@ const Agenda = ({
                   Add to agenda
                 </span>
               </Button1>
-              <Button2 as='a' href='#' className='w-fit'>
+              <Button2 as='a' href='' className='w-fit'>
                 <span>
                   View more details
                 </span>

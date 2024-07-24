@@ -152,6 +152,11 @@ export function LoginForm() {
     }
   }
 
+  const submitLoginOnEnter = (e: any) => {
+    e.preventDefault()
+    console.log(e.key)
+  }
+
   return (
     <>
       <EmailInput className='relative mb-3 w-full'
@@ -166,6 +171,7 @@ export function LoginForm() {
           value={emailValue}
           ref={emailInput}
           onChange={(e) => setEmailValue(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' ? submitLogin(e) : ''}
         />
         <label
           htmlFor='emailinput'
@@ -186,6 +192,7 @@ export function LoginForm() {
           value={passwordValue}
           ref={passwordInput}
           onChange={(e) => setPasswordValue(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' ? submitLogin(e) : ''}
         />
         <div className="absolute inset-y-0 right-0 flex items-center px-2" onClick={handleShowPassword}>
           {
@@ -232,7 +239,7 @@ function LogoutButton() {
           });
         }}
       >
-        Logout
+        Log out
       </a>
     </p>
   );

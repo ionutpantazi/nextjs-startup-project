@@ -7,7 +7,7 @@ import { getDelegatesData } from './delegates';
 import { getSpeakersData } from './speakers';
 import { getDiscussionsData } from './discussions'
 
-const getPageData = async (slug: string, jwt: string) => {
+const getPageData = async (slug: any, jwt: string) => {
   let eventData = await getEventData(slug, jwt)
   let resourceData = await getResourceData(slug, jwt)
   let agendaData = await getAgendaData(slug, jwt)

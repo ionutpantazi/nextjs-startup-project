@@ -178,7 +178,7 @@ const Navbar: React.FC<NavbarProps> = ({
               width={20}
               height={20}
             />
-            <span>Logout</span>
+            <span>Log out</span>
           </RegisterBtn>
           : <RegisterBtn className='flex items-center justify-center gap-x-1'
             data-twe-toggle="modal"

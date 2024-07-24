@@ -30,7 +30,7 @@ const NavigationContainer = styled.nav`
 
 const LogoContainer = styled.div`
   position: absolute;
-  top: 1px;
+  // top: 1px;
 
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     display: none;
@@ -178,7 +178,7 @@ const Navbar: React.FC<NavbarProps> = ({
               width={20}
               height={20}
             />
-            <span>Logout</span>
+            <span>Log out</span>
           </RegisterBtn>
           : <RegisterBtn className='flex items-center justify-center gap-x-1'
             data-twe-toggle="modal"

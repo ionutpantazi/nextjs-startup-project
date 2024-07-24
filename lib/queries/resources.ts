@@ -1,7 +1,7 @@
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { get } from 'lib/httpClient'
 
-const getResourceData = async (slug: string, jwt: string) => {
+const getResourceData = async (slug: any, jwt: string) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${jwt}`,

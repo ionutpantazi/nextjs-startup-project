@@ -20,7 +20,7 @@ import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { sortAgendaItemsByStartDate } from './pwa'
-
+import { useRouter } from 'next/router'
 
 
 export interface AgendaDataProps {
@@ -237,7 +237,8 @@ const Agenda = ({
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState(false);
-  const sortData = sortAgendaItemsByStartDate(data)
+  const sortData = sortAgendaItemsByStartDate(data);
+  const router = useRouter();
 
   useEffect(() => {
     if (width && width < Number(theme.screens['md'].replace('px', ''))) {
@@ -246,6 +247,16 @@ const Agenda = ({
       setIsMobile(false)
     }
   }, [])
+
+  const generateAgendaPageLink = () => {
+    const path = router.asPath;
+    if (path.includes('agenda')){
+      return '#'
+    } else {
+      return `${path}/agenda`
+    }
+    
+  }
 
   return (
     <AgendaContainer className=''>
@@ -393,7 +404,7 @@ const Agenda = ({
                   Add to agenda
                 </span>
               </Button1>
-              <Button2 as='a' href='#' className='w-fit'>
+              <Button2 as='a' href={generateAgendaPageLink()} className='w-fit'>
                 <span>
                   View more details
                 </span>

@@ -53,11 +53,11 @@ const NavigationChildrenTitle = styled.div`
   line-height: 16px;
 `
 const LogoContainer = styled.div`
-  margin-top: -50px;
+  // margin-top: -50px;
 
-  @media screen and (max-width: ${theme.screens.sm}) {
-    margin-top: -20px;
-  }
+  // @media screen and (max-width: ${theme.screens.sm}) {
+  //   margin-top: -20px;
+  // }
 `
 
 export interface FooterProps {
