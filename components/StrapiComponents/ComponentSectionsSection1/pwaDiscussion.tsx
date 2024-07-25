@@ -522,7 +522,7 @@ const Discussion = ({
             <CustomPagination className=''>
               <div className="flex justify-center gap-2 swiper-custom-pagination-discussion" />
             </CustomPagination>
-            {!isMobile &&
+            {!isMobile && activeDiscussion.responses &&
               <ActionButtons impressions={0} comments={activeDiscussion.responses.length} />
             }
           </FeaturedDiscussionCarousel>

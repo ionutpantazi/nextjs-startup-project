@@ -12,7 +12,7 @@ export const components = {
 const PwaContentContainer = styled.div`
 `
 
-const Exhibitors = ({
+const Exhibitor = ({
   data,
   senddatatolayout,
   isdefaulttheme,
@@ -23,7 +23,7 @@ const Exhibitors = ({
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} hideContentContainer={true} />
+        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
         {data &&
           <ComponentSectionsExhibitorCarousel data={data.exhibitors} />
         }
@@ -32,4 +32,4 @@ const Exhibitors = ({
   )
 }
 
-export default Exhibitors
+export default Exhibitor

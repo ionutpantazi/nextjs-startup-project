@@ -23,7 +23,7 @@ const Contact = ({
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
+        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} hideContentContainer={true} />
         {data &&
           <ComponentSectionsContact data={data.event} contactData={data.resource.contact} />
         }
