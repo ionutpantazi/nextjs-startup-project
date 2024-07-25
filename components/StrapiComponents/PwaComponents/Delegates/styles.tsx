@@ -249,19 +249,3 @@ export const DropdownAndSearch = styled.div`
     flex-direction: column;
   }
 `
-
-export const CardsGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  max-width: 100%;
-  gap: 20px;
-`
-
-export const GridItem = styled.div`
-  display: flex;
-  width: 240px;
-  transition: height .2s ease-in-out;
-  user-select: none;
-  cursor: pointer;
-`

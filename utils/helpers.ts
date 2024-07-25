@@ -65,39 +65,39 @@ export function get_youtube_thumbnail(url: string, quality: string) {
   return 'https://img.youtube.com/vi/1111/low.jpg'
 }
 
-// export function setCookie(name: string, value: string, seconds: number) {
-//   var expires = "";
-//   if (seconds) {
-//     var date = new Date();
-//     date.setTime(date.getTime() + (seconds * 60 * 1000));
-//     expires = "; expires=" + date.toUTCString();
-//   }
-//   window.document.cookie = name + "=" + (value || "") + expires + "; path=/";
-// }
+export function setFECookie(name: string, value: string, seconds: number) {
+  var expires = "";
+  if (seconds) {
+    var date = new Date();
+    date.setTime(date.getTime() + (seconds * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  window.document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
 
-// export function getCookie(name: string) {
-//   var nameEQ = name + "=";
-//   var ca = window.document.cookie.split(';');
-//   for (var i = 0; i < ca.length; i++) {
-//     var c = ca[i];
-//     while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-//     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-//   }
-//   return null;
-// }
+export function getFECookie(name: string) {
+  var nameEQ = name + "=";
+  var ca = window.document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
 
-// export function eraseCookie(name: string) {
-//   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-// }
+export function eraseFECookie(name: string) {
+  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
-// export function pushUnique<T>(arr: T[], value: T): T[] {
-//   // Check if the value already exists in the array
-//   if (!arr.includes(value)) {
-//       // If the value is not in the array, push it
-//       arr.push(value);
-//   }
-//   return arr;
-// }
+export function pushUnique<T>(arr: T[], value: T): T[] {
+  // Check if the value already exists in the array
+  if (!arr.includes(value)) {
+    // If the value is not in the array, push it
+    arr.push(value);
+  }
+  return arr;
+}
 
 export function pushWithLimit<T>(arr: T[], value: T, limit: number): T[] {
   // Count the occurrences of the value in the array
@@ -179,4 +179,62 @@ export function redirectToEventRoot() {
   const slug = router.query.slug;
   const href = `/pwa/${slug}`;
   return href;
+}
+
+export function saveThemeSlugToCookies(req: any, res: any, themeSlug?: string) {
+  if (req && res) {
+    // back end call
+    let cookieThemeSlug = getCookie('lg-theme', { req, res })
+    if (cookieThemeSlug != themeSlug) {
+      setCookie('lg-theme', themeSlug, { req, res, maxAge: 3600 })
+    }
+  } else {
+    // front end call
+    if (themeSlug) {
+      var expires = "";
+      var date = new Date();
+      date.setTime(date.getTime() + (10 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+      window.document.cookie = 'lg-theme' + "=" + themeSlug + expires + "; path=/";
+    } else {
+      document.cookie = 'lg-theme' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+  }
+}
+
+export function getThemeSlugFromCookies(req: any, res: any, themeSlug?: string) {
+  if (req && res) {
+    // back end call
+    let cookieThemeSlug = getCookie('lg-theme', { req, res })
+    return cookieThemeSlug
+  }
+}
+
+export function generateThemeData(data: any) {
+  let themeData, themeMeta = null
+
+  if (data?.event?.themeData?.data) {
+    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
+      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data));
+      themeMeta = {
+        title: data?.event?.themeData?.title,
+        slug: data?.event?.themeData?.slug,
+        faIcon: data?.event?.themeData?.faIcon,
+      }
+    }
+  }
+
+  return { themeData, themeMeta }
+}
+
+export function convertTempData(data: any) {
+  data.homeBanner = {
+    alt: 'hive',
+    path: '/images/lg-banner.png',
+  }
+  data.logo = {
+    alt: 'hive',
+    path: '/images/logo-live-group-vermilion.svg',
+  }
+  return data
 }

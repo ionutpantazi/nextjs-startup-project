@@ -1,5 +1,5 @@
 
-import React, { useState, ReactNode } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import {
@@ -15,8 +15,7 @@ import { SettingsProps } from 'lib/queries/settings'
 
 const Navbar = dynamic(() => import('components/Navbar/pwa'))
 const Footer = dynamic(() => import('components/Footer/pwa'))
-const Navbar2 = dynamic(() => import('components/Navbar'))
-const Footer2 = dynamic(() => import('components/Footer'))
+import { getFECookie } from 'utils/helpers'
 export const ThemeContext = React.createContext(theme);
 
 type LayoutProps = {
@@ -36,6 +35,7 @@ type LayoutProps = {
   navigationData?: any
   settings?: SettingsProps
   logo?: any
+  themeMeta?: any
 }
 
 const HeaderWrap = styled.header`
@@ -56,6 +56,7 @@ const Layout = ({
   seoMeta,
   navigationData,
   themedata,
+  themeMeta,
   settings,
   logo,
 }: LayoutProps) => {
@@ -81,6 +82,14 @@ const Layout = ({
     }
   };
 
+  useEffect(() => {
+    let themeSlug = getFECookie('lg-theme');
+    if (themeSlug == 'default') {
+      setIsDefaultTheme('true')
+      setThemeData(theme);
+    }
+  }, []);
+
   const PageContentComponents = styled.div`
     background-color: ${themeData.components?.Layout?.PageContentComponentsBackground};
   `
@@ -100,7 +109,7 @@ const Layout = ({
         </HeaderWrap>
         <PageContentComponents className='mb-auto'>
           {React.Children.map(children, child =>
-            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp })
+            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp, themeMeta: themeMeta })
           )}
         </PageContentComponents>
         <FooterWrap>

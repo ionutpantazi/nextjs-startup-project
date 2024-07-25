@@ -2,12 +2,9 @@ import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
 import { nextApolloPageError } from 'lib/serverHelpers';
-import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
-import { sanitiseURLParam } from '@/utils/helpers';
 import { getAgendaPageData } from 'lib/queries/agenda-page'
-import { getJwt } from 'utils/helpers'
-import { theme } from '@/lib/theme';
+import { getJwt, generateThemeData } from 'utils/helpers'
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
 const Agenda = dnmc(() => import('@/components/Pages/Agenda'));
@@ -28,15 +25,8 @@ export default function Page({
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
   }
-  // console.log(data)
 
-  let themeData = null
-
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
-    }
-  }
+  const { themeData, themeMeta } = generateThemeData(data)
 
   return (
     <Layout
@@ -44,6 +34,7 @@ export default function Page({
       navigationData={navigationData}
       customTheme={themeData}
       themedata={null}
+      themeMeta={themeMeta}
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >

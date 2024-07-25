@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
-import Dropdown from './dropdown'
+import Dropdown from '../Common/dropdown'
+import { RadialContainer } from '@/components/Bootstrap/Common'
+import { generateSpeakerCardGridLayout } from './utils'
 import {
   OuterContainer,
   Container,
   InnerContainer,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
+import Card1 from 'components/StrapiComponents/PwaComponents/Cards/Card1'
 import {
   Title,
   SubTitle,
@@ -17,23 +20,22 @@ import {
   SearchButton,
   SortCategories,
   SortCategoriesTitle,
-  SpeakersContainer,
-  SpeakerImage,
-  RoundedImage,
-  ItemTitle,
-  Itemposition,
+  CardsGrid,
+  DropdownAndSearch,
+  GridItem,
 } from './styles'
 
-export interface SpeakersProps {
-  data: any
-  senddatatolayout?: any,
-  isdefaulttheme?: any,
-}
-
 const Speakers = ({
-  data
-}: SpeakersProps) => {
-console.log(data)
+  data,
+  title,
+  subtitle,
+  type,
+}: any) => {
+
+  const [expandedIndices, setExpandedIndices] = useState(
+    Array(data.data.length).fill(false)
+  );
+
   const dropdownValues = [
     { label: 'Select Category', slug: '' },
     { label: 'Business', slug: 'business' },
@@ -41,62 +43,64 @@ console.log(data)
     { label: 'Sales', slug: 'sales' },
     { label: 'Wellbeing', slug: 'wellbeing' },
   ]
+
+  const toggleExpand = (index: any, e: any) => {
+    e.preventDefault()
+    const newExpandedIndices = [...expandedIndices];
+    newExpandedIndices[index] = !newExpandedIndices[index];
+    setExpandedIndices(newExpandedIndices);
+    let target = document.querySelector(`#card_grid_${index}`)
+    target?.classList.add('animate-blur')
+
+    setTimeout(function() {
+      target?.classList.remove('animate-blur')
+    }, 500);
+  };
+
+  const divStyle = (isExpanded: any) => ({
+    width: isExpanded ? '570px' : '260px',
+    transition: 'width 0.4s ease',
+  });
+
+
   return (
     <OuterContainer className=''>
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            <Title>
-              Speakers
-            </Title>
+            {/* <Title>
+              {title}
+            </Title> */}
             <SubTitle>
-              Meet our thought leaders
+              {subtitle}
             </SubTitle>
-            <SearchContainer>
-              <SearchInput as='input' />
-              <SearchButton>
-                <FAIcon
-                  icon={'fa-magnifying-glass'}
-                  width={16}
-                  height={16}
-                />
-              </SearchButton>
-            </SearchContainer>
             <SortCategories>
               <SortCategoriesTitle>
                 Choose a category:
               </SortCategoriesTitle>
-              <Dropdown values={dropdownValues} />
+              <DropdownAndSearch>
+                <Dropdown values={dropdownValues} />
+                <SearchContainer>
+                  <SearchInput as='input' />
+                  <SearchButton>
+                    <FAIcon
+                      icon={'fa-magnifying-glass'}
+                      width={16}
+                      height={16}
+                    />
+                  </SearchButton>
+                </SearchContainer>
+              </DropdownAndSearch>
             </SortCategories>
-            {data?.speakers?.data?.length &&
-              <div className='grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10 gap-x-10'>
-                {data.speakers.data.map((speaker: any, index: number) => (
-                  <div key={index} className='flex flex-row gap-6 items-center'>
-                    <SpeakerImage>
-                      <RoundedImage
-                        src={speaker.profilePic}
-                        className=''
-                        alt={""}
-                        width={100}
-                        height={100}
-                      />
-                    </SpeakerImage>
-                    <div className='flex flex-col gap-2 max-w-60'>
-                      <ItemTitle className=''>
-                        {speaker.firstName + ' ' + speaker.surname}
-                      </ItemTitle>
-                      <Itemposition className=''>
-                        <p>
-                          {speaker.position}
-                        </p>
-                        <p>
-                          {speaker.company}
-                        </p>
-                      </Itemposition>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {data.data.length &&
+              <CardsGrid>
+                {data.data.map((speaker: any, index: number) => (
+                  <GridItem key={index} id={`card_grid_${index}`} style={divStyle(expandedIndices[index])} onClick={(e) => toggleExpand(index, e)}>
+                    <Card1 data={speaker} isExpanded={expandedIndices[index]} />
+                  </GridItem>
+                ))
+                }
+              </CardsGrid>
             }
           </ComponentContainer>
         </InnerContainer>

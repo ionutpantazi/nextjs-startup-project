@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
+          <link rel='icon' type='image/png' sizes='32x32' href='/images/lg-favicon-32x32.png' />
           <script type='text/javascript' dangerouslySetInnerHTML={{
             __html: `
               window.onUsersnapLoad = function(api) {

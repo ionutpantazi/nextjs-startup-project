@@ -27,6 +27,7 @@ export type FAQs = {
 export interface ComponentSectionsFaQsProps {
   faqs: [FAQs]
   title?: string
+  open?: boolean
 }
 
 const StyledInnerContainer = styled(InnerContainer) <{ hasinfobox?: any }>`
@@ -150,7 +151,8 @@ const InfoBoxSubTitle = styled.div`
 
 const ComponentSectionsFaQs = ({
   faqs,
-  title = 'FAQs title missing',
+  title,
+  open,
 }: ComponentSectionsFaQsProps) => {
 
   const [faqsData, setFaqsData] = useState<any>(faqs);
@@ -171,9 +173,11 @@ const ComponentSectionsFaQs = ({
   return (
     <Container className=''>
       <StyledInnerContainer className='flex flex-col gap-4' hasinfobox={'false'}>
-        <Title>
-          {title}
-        </Title>
+        {title &&
+          <Title>
+            {title}
+          </Title>
+        }
         <FiltersContainer className='flex flex-row gap-2'>
           {/* {faqCategories.map((category: CategoryItem, index) => (
             <Category className='' data-value={category.Slug} onClick={e => setActiveCategory(e)} active={activeFilter == category.Slug ? 'true' : 'false'} key={index}>
@@ -189,15 +193,19 @@ const ComponentSectionsFaQs = ({
                 key={index}
                 className='group'
                 data-twe-collapse-init
-                data-twe-target={`#faq_collapse_${index}_${activeFilter}`}
-                aria-expanded="false"
+                data-twe-target={open ? '#faq_collapse' : `#faq_collapse_${index}_${activeFilter}`}
+                aria-expanded={open ? 'true' : 'false'}
                 aria-controls={`faq_collapse_${index}_${activeFilter}`}
                 id={`faq_item_${index}_${activeFilter}`}
                 data-twe-collapse-collapsed
               >
                 <div className='flex flex-row gap-6'>
-                  <PlusIcon />
-                  <MinusIcon />
+                  {!open &&
+                    <>
+                      <PlusIcon />
+                      <MinusIcon />
+                    </>
+                  }
                   <FaqQuestion>
                     {faq.title}
                   </FaqQuestion>
@@ -205,7 +213,7 @@ const ComponentSectionsFaQs = ({
 
                 <FaqAnswer
                   id={`faq_collapse_${index}_${activeFilter}`}
-                  className="!visible hidden"
+                  className={`${open ? '' : '!visible hidden'}`}
                   data-twe-collapse-item
                   aria-labelledby={`faq_item_${index}_${activeFilter}`}
                   data-twe-parent="#accordionExample"

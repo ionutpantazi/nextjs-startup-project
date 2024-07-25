@@ -1,13 +1,9 @@
 import React, { useState, useEffect, Children } from 'react'
-import dynamic from 'next/dynamic'
+import dnmc from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
-import ComponentSectionsFaQs from 'components/StrapiComponents/ComponentSectionsFaQs/pwa'
 
-export const components = {
-  ComponentIntrosLandingNew: dynamic(() => import('components/StrapiComponents/ComponentIntrosLandingNew/pwa')),
-  ComponentSectionsFaQs: dynamic(() => import('components/StrapiComponents/ComponentSectionsFaQs/pwa')),
-};
+const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
+const ComponentSectionsFaQs = dnmc(() => import('components/StrapiComponents/ComponentSectionsFaQs/pwa'));
 
 const PwaContentContainer = styled.div`
 `
@@ -17,15 +13,16 @@ const Faqs = ({
   senddatatolayout,
   isdefaulttheme,
   themedata,
+  themeMeta,
   navigationData,
 }: any) => {
-  console.log(data)
+
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
+        <Header title={'FAQs'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data.event?.faqs?.length &&
-          <ComponentSectionsFaQs faqs={data['event']['faqs']} title={'FAQs'} />
+          <ComponentSectionsFaQs faqs={data['event']['faqs']} open={true} />
         }
       </PwaContentContainer>
     </>

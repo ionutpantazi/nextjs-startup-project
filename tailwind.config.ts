@@ -1,14 +1,20 @@
 import type { Config } from 'tailwindcss'
 const colors = require('tailwindcss/colors')
+// Remove renamed colours to avoid warnings
+delete colors.lightBlue
+delete colors.warmGray
+delete colors.trueGray
+delete colors.coolGray
+delete colors.blueGray
 
 const customColors = {
   "white": "#fff",
-  "grey": "#1E1E1E",
-  "lightgrey": "#A7A7A7",
+  "grey": "#1e1e1e",
+  "lightgrey": "#a7a7a7",
   "darkgrey": "#242424",
   "darkestgrey": "#121212",
-  "black": "#000000",
-  "defaultbrand": "#B97ECF",
+  "black": "#000",
+  "defaultbrand": "#b97ecf",
   "defaultbrandlight": "#ddb7eb"
 }
 
@@ -29,11 +35,22 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: {
+        blur: {
+          '1%': { filter: "blur(1px)" },
+          '50%': { filter: "blur(2px)" },
+          '0%': { filter: "blur(1px)" },
+        }
+      },
+      animation: {
+        blur: 'blur 0.4s linear',
+      }
     },
     colors: {
       ...colors,
       ...customColors,
-      brandColor: '#B97ECF',
+      // Should these use the customColors values?
+      brandColor: '#b97ecf',
       brandColorLight: '#ddb7eb',
     }
   },

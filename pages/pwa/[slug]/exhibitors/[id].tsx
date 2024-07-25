@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
@@ -7,10 +8,11 @@ import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageT
 import { sanitiseURLParam } from '@/utils/helpers';
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
-import { getExhibitorsPageData } from '@/lib/queries/exhibitors-page';
+import { getExhibitorPageData } from '@/lib/queries/exhibitor-page';
+
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
-const Exhibitors = dnmc(() => import('@/components/Pages/Exhibitors'));
+const Exhibitor = dnmc(() => import('@/components/Pages/Exhibitors/details'));
 
 export interface Props {
   data: any
@@ -25,6 +27,7 @@ export default function Page({
   navigationData,
   logo,
 }: Props) {
+
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
   }
@@ -47,7 +50,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Exhibitors data={data} />
+      <Exhibitor data={data} />
     </Layout>
   )
 }
@@ -63,7 +66,8 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
     // TODO: this needs to be an API call to fetch ONLY contact data
-    let data = await getExhibitorsPageData(slug, jwt);
+
+    let data = await getExhibitorPageData(slug, jwt);
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

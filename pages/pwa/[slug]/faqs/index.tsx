@@ -6,8 +6,7 @@ import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
 import { getFaqsPageData } from 'lib/queries/faqs-page'
-import { getJwt } from 'utils/helpers'
-import { theme } from '@/lib/theme';
+import { getJwt, generateThemeData } from 'utils/helpers'
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
 const FAQs = dnmc(() => import('@/components/Pages/FAQs'));
@@ -28,15 +27,8 @@ export default function Page({
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
   }
-  // console.log(data)
 
-  let themeData = null
-
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
-    }
-  }
+  const { themeData, themeMeta } = generateThemeData(data)
 
   return (
     <Layout
@@ -45,6 +37,7 @@ export default function Page({
       customTheme={themeData}
       themedata={null}
       logo={logo}
+      themeMeta={themeMeta}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <FAQs data={data} />
@@ -59,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
 }) => {
   try {
     const jwt = getJwt(req, res)
-    
+
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
     let data = await getFaqsPageData(slug, jwt)

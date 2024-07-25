@@ -31,14 +31,14 @@ export interface IntrosLandingProps {
 }
 
 const ImageContainer = styled.div`
-  height: ${props => props.theme.components?.Header?.ImageContainerHeight};
+  height: 40vh;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    height: ${props => props.theme.components?.Header?.ImageContainerMobileHeight};
+    height: 20vh;
   }
-  margin-top: 40px;
+  margin-top: 56px;
   @media screen and (min-width: ${props => props.theme.screens.md}) {
-    margin-top: -80px;
+    margin-top: 0px;
   }
 `
 
@@ -48,11 +48,11 @@ const StyledRadialContainer = styled(RadialContainer)`
 
 const HeaderImage = styled(NextImage)`
   position: relative;
-  width: 100vw;
-  height: ${props => props.theme.components?.Header?.HeaderImageHeight};
+  max-width: 100%;
+  height: 40vh;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    height: ${props => props.theme.components?.Header?.HeaderImageMobileHeight};
+    height: 20vh;
   }
 `
 
@@ -458,8 +458,7 @@ const ComponentIntrosLandingNew = ({
                 src={backgroundImage}
                 className=''
                 alt=''
-                height={1200}
-                width={800}
+                fill={true}
               />
             </>
           }

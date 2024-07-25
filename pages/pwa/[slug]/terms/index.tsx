@@ -5,12 +5,12 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
+import { getTermsPageData } from 'lib/queries/terms-page'
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
-import { getExhibitorsPageData } from '@/lib/queries/exhibitors-page';
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
-const Exhibitors = dnmc(() => import('@/components/Pages/Exhibitors'));
+const Terms = dnmc(() => import('@/components/Pages/Terms'), { ssr: false });
 
 export interface Props {
   data: any
@@ -47,7 +47,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Exhibitors data={data} />
+      <Terms data={data} />
     </Layout>
   )
 }
@@ -59,11 +59,10 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
 }) => {
   try {
     const jwt = getJwt(req, res)
-    
+
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    // TODO: this needs to be an API call to fetch ONLY contact data
-    let data = await getExhibitorsPageData(slug, jwt);
+    let data = await getTermsPageData(slug, jwt)
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {
