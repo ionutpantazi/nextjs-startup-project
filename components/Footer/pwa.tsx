@@ -6,6 +6,7 @@ import { FooterNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import Link from 'next/link'
 import Text from 'components/Bootstrap/Text'
 import NextImage from 'next/image'
+import { redirectToEventRoot } from 'utils/helpers'
 
 const FooterContainer = styled.footer`
   background-color: ${props => props.theme.components?.Footer?.FooterContainerBackground};
@@ -74,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({
     <FooterContainer className='flex flex-col sm:flex-row gap-y-8'>
       <LeftColumn className='sm:w-1/2 w-auto grid gap-y-4 content-between'>
         {logo?.path &&
-          <LogoContainer as='a' href={logo.link ?? ''} className='flex items-center'>
+          <LogoContainer as='a' href={redirectToEventRoot()} className='flex items-center'>
             <>
               {logo.path &&
                 <NextImage

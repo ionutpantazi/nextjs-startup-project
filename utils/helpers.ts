@@ -1,5 +1,6 @@
 import { NavigationItem } from 'lib/queries/nav-data'
 import { hasCookie, getCookie, deleteCookie, setCookie } from 'cookies-next';
+import { useRouter } from 'next/router'
 
 export function generateMenuList(items: NavigationItem[]): NavigationItem[] {
   // parse strapi navigation list and generate a nested list of children and parents
@@ -171,4 +172,11 @@ export function getSecondSegment(url: string): string | null {
     console.error("Invalid URL:", error);
     return null; // Return null if the URL is invalid
   }
+}
+
+export function redirectToEventRoot() {
+  const router = useRouter();
+  const slug = router.query.slug;
+  const href = `/pwa/${slug}`;
+  return href;
 }

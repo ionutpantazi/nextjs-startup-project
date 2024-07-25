@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
 import LoginModal from './LoginModal'
 import useSession from "lib/use-session";
 import { defaultSession } from "lib/session";
-import { Registration_Questions } from 'lib/queries/settings'
+import { redirectToEventRoot } from 'utils/helpers'
 
 export interface NavbarProps {
   isOpen?: boolean
@@ -227,7 +227,7 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="flex w-full flex-wrap items-center justify-between px-3">
           {/* Logo  */}
           {logo?.path &&
-            <LogoContainer as='a' href={logo.link ?? ''} className='flex items-center'>
+            <LogoContainer as='a' href={redirectToEventRoot()} className='flex items-center'>
               <>
                 {logo.path &&
                   <NextImage
