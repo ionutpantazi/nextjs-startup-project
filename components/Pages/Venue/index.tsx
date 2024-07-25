@@ -51,7 +51,7 @@ const Venue = ({
                 <Title>
                   Agenda
                 </Title>
-                <p>View this event's agenda here</p>
+                <p>View this event&apos;s agenda here</p>
                 <br/>
 
                 <Title>
