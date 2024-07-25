@@ -5,7 +5,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
-import { getSpeakersPageData } from 'lib/queries/speakers-page'
+import { getDelegatesPageData } from 'lib/queries/delegates-page'
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 
@@ -47,7 +47,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Speakers data={data} speakers={data.speakers} />
+      <Speakers data={data} speakers={data.delegates} />
     </Layout>
   )
 }
@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    let data = await getSpeakersPageData(slug, jwt)
+    let data = await getDelegatesPageData(slug, jwt)
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

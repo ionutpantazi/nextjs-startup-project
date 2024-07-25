@@ -33,7 +33,7 @@ export interface SpeakersProps {
 const Speakers = ({
   data
 }: SpeakersProps) => {
-
+console.log(data)
   const dropdownValues = [
     { label: 'Select Category', slug: '' },
     { label: 'Business', slug: 'business' },
