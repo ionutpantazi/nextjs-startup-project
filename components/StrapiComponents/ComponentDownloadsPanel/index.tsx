@@ -8,7 +8,7 @@ import useSession from "lib/use-session";
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { Download, DownloadCategory, DownloadPageType, DownloadType } from '@/components/Pages/Downloads'
-import Dropdown from '../PwaComponents/Common/Dropdown'
+import Dropdown from 'components/StrapiComponents/PwaComponents/Common/dropdown'
 import FAIcon from '@/components/Bootstrap/FAIcon'
 
 export interface ComponentDownloadsPanelProps {
