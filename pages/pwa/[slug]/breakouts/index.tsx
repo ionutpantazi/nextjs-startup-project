@@ -2,15 +2,12 @@ import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
 import { nextApolloPageError } from 'lib/serverHelpers';
-import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
-import { sanitiseURLParam } from '@/utils/helpers';
-import { getJwt } from 'utils/helpers'
-import { theme } from '@/lib/theme';
-import Sustainability from '@/components/Pages/ContentOnly';
-import { getSustainabilityPageData } from '@/lib/queries/sustainability-page';
+import { getBreakoutsPageData } from 'lib/queries/breakouts-page'
+import { getJwt, generateThemeData } from 'utils/helpers'
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
+const Breakouts = dnmc(() => import('@/components/Pages/Breakouts'));
 
 export interface Props {
   data: any
@@ -28,15 +25,8 @@ export default function Page({
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
   }
-  // console.log(data)
 
-  let themeData = null
-
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
-    }
-  }
+  const { themeData, themeMeta } = generateThemeData(data)
 
   return (
     <Layout
@@ -44,10 +34,11 @@ export default function Page({
       navigationData={navigationData}
       customTheme={themeData}
       themedata={null}
+      themeMeta={themeMeta}
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Sustainability data={data} />
+      <Breakouts data={data} agenda={data.agenda} />
     </Layout>
   )
 }
@@ -62,8 +53,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    // TODO: this needs to be an API call to fetch ONLY contact data
-    let data = await getSustainabilityPageData(slug, jwt);
+    let data = await getBreakoutsPageData(slug, jwt)
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

@@ -5,6 +5,7 @@ import {
   OuterContainer,
   Container,
   InnerContainer,
+  ComponentContainer,
 } from 'components/Bootstrap/Common'
 import useSession from "lib/use-session";
 import ReadMore from '@/components/Bootstrap/ReadMore'
@@ -39,6 +40,9 @@ import {
   CustomThemeToggle,
   DefaultThemeToggle,
   EmptyAvatar,
+  LeftHeading,
+  LeftEventTitle,
+  LeftEventIntroduction
 } from './styles'
 
 
@@ -105,99 +109,109 @@ const Header = ({
             ?
             <Container className=''>
               <InnerContainer className=''>
-                {title &&
-                  <EventTitle as='h1' className=''>
-                    {title}
-                  </EventTitle>
-                }
-                {subtitle &&
-                  <EventIntroduction as='p' className=''>
-                    {subtitle}
-                  </EventIntroduction>
+                {hideBody && title &&
+                  <LeftHeading>
+                    <LeftEventTitle as='h1' className=''>
+                      {title}
+                    </LeftEventTitle>
+                  </LeftHeading>
                 }
                 {!hideBody &&
-                  <IntroLandingContainer className='mt-6'>
-                    <EventContentContainer className='flex flex-col gap-2 w-auto mt-4'>
-                      <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
-                        <EventDetailsItemContainer>
-                          <EventDetailsItem className='flex flex-col gap-4'>
-                            <div className='flex flex-row gap-4'>
-                              {session.isLoggedIn
-                                ?
-                                <>
-                                  <EventDetailsIcon className='row-span-3'>
-                                    <NextImage
-                                      src={'/images/default-avatar.png'}
-                                      className=''
-                                      alt={""}
-                                      width={40}
-                                      height={40}
-                                    />
-                                  </EventDetailsIcon>
-                                  <EventDetailsContainer className='flex flex-col gap-2'>
-                                    <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                      Hi {session.username}, welcome back to {eventTitle}
-                                    </EventDetailsSubTitle>
-                                  </EventDetailsContainer>
-                                </>
-                                :
-                                <>
-                                  <EventDetailsIcon className='row-span-3'>
-                                    <EmptyAvatar />
-                                  </EventDetailsIcon>
-                                  <EventDetailsContainer className='flex flex-col gap-2'>
-                                    <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                      <button className="login underline"
-                                        data-twe-toggle="modal"
-                                        data-twe-target="#loginModal"
-                                      >Log in
-                                      </button> to view your personalised content
-                                    </EventDetailsSubTitle>
-                                  </EventDetailsContainer>
-                                </>
-                              }
+                  <>
+                    {title &&
+                      <EventTitle as='h1' className=''>
+                        {title}
+                      </EventTitle>
+                    }
+                    {subtitle &&
+                      <EventIntroduction as='p' className=''>
+                        {subtitle}
+                      </EventIntroduction>
+                    }
 
-                            </div>
-                            {session.isLoggedIn &&
-                              <Toggle className='flex justify-between cursor-pointer w-fit'>
-                                <input
-                                  type='checkbox'
-                                  className='sr-only'
-                                  checked={isdefaulttheme == 'true' ? true : false}
-                                  onChange={handleDefaultThemeChange}
-                                />
-                                {themeMeta &&
-                                  <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                    <IntroLandingContainer className='mt-6'>
+                      <EventContentContainer className='flex flex-col gap-2 w-auto mt-4'>
+                        <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
+                          <EventDetailsItemContainer>
+                            <EventDetailsItem className='flex flex-col gap-4'>
+                              <div className='flex flex-row gap-4'>
+                                {session.isLoggedIn
+                                  ?
+                                  <>
+                                    <EventDetailsIcon className='row-span-3'>
+                                      <NextImage
+                                        src={'/images/default-avatar.png'}
+                                        className=''
+                                        alt={""}
+                                        width={40}
+                                        height={40}
+                                      />
+                                    </EventDetailsIcon>
+                                    <EventDetailsContainer className='flex flex-col gap-2'>
+                                      <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                                        Hi {session.username}, welcome back to {eventTitle}
+                                      </EventDetailsSubTitle>
+                                    </EventDetailsContainer>
+                                  </>
+                                  :
+                                  <>
+                                    <EventDetailsIcon className='row-span-3'>
+                                      <EmptyAvatar />
+                                    </EventDetailsIcon>
+                                    <EventDetailsContainer className='flex flex-col gap-2'>
+                                      <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                                        <button className="login underline"
+                                          data-twe-toggle="modal"
+                                          data-twe-target="#loginModal"
+                                        >Log in
+                                        </button> to view your personalised content
+                                      </EventDetailsSubTitle>
+                                    </EventDetailsContainer>
+                                  </>
+                                }
+
+                              </div>
+                              {session.isLoggedIn &&
+                                <Toggle className='flex justify-between cursor-pointer w-fit'>
+                                  <input
+                                    type='checkbox'
+                                    className='sr-only'
+                                    checked={isdefaulttheme == 'true' ? true : false}
+                                    onChange={handleDefaultThemeChange}
+                                  />
+                                  {themeMeta &&
+                                    <CustomThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                                      <FAIcon
+                                        icon={themeMeta.faIcon}
+                                        width={20}
+                                        height={20}
+                                      />
+                                      <span>
+                                        {themeMeta.title}
+                                      </span>
+                                    </CustomThemeToggle>
+                                  }
+                                  <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
+                                    <span>
+                                      Default View
+                                    </span>
                                     <FAIcon
-                                      icon={themeMeta.faIcon}
+                                      icon={'fa-solid fa-circle-xmark'}
                                       width={20}
                                       height={20}
                                     />
-                                    <span>
-                                      {themeMeta.title}
-                                    </span>
-                                  </CustomThemeToggle>
-                                }
-                                <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
-                                  <span>
-                                    Default View
-                                  </span>
-                                  <FAIcon
-                                    icon={'fa-solid fa-circle-xmark'}
-                                    width={20}
-                                    height={20}
-                                  />
-                                </DefaultThemeToggle>
-                              </Toggle>
-                            }
-                          </EventDetailsItem>
-                        </EventDetailsItemContainer>
-                      </EventDetails>
-                      <EventContent className=''>
-                        <ReadMore content={description} chars={200} />
-                      </EventContent>
-                    </EventContentContainer>
-                  </IntroLandingContainer>
+                                  </DefaultThemeToggle>
+                                </Toggle>
+                              }
+                            </EventDetailsItem>
+                          </EventDetailsItemContainer>
+                        </EventDetails>
+                        <EventContent className=''>
+                          <ReadMore content={description} chars={200} />
+                        </EventContent>
+                      </EventContentContainer>
+                    </IntroLandingContainer>
+                  </>
                 }
               </InnerContainer>
             </Container>
@@ -205,15 +219,19 @@ const Header = ({
             <Container className=''>
               <InnerContainer className=''>
                 <IntroLandingContainer>
-                  {title &&
-                    <EventTitle as='h1' className=''>
-                      {title}
-                    </EventTitle>
-                  }
-                  {subtitle &&
-                    <EventIntroduction as='p' className=''>
-                      {subtitle}
-                    </EventIntroduction>
+                  {hideBody &&
+                    <LeftHeading>
+                      {title &&
+                        <LeftEventTitle as='h1' className=''>
+                          {title}
+                        </LeftEventTitle>
+                      }
+                      {subtitle &&
+                        <LeftEventIntroduction as='p' className=''>
+                          {subtitle}
+                        </LeftEventIntroduction>
+                      }
+                    </LeftHeading>
                   }
                   {!hideBody &&
                     <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>

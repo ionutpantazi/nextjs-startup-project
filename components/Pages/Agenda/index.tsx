@@ -49,7 +49,7 @@ const AgendaPage = ({
   return (
     <>
       <PwaContentContainer>
-      <Header title={'Agenda'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header title={'Agenda'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer className=''>
           <Container className=''>
             <InnerContainer className=''>

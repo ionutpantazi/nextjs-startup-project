@@ -2,13 +2,10 @@ import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
 import { nextApolloPageError } from 'lib/serverHelpers';
-import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
-import { sanitiseURLParam } from '@/utils/helpers';
 import { getJwt } from 'utils/helpers'
-import { theme } from '@/lib/theme';
-import Sustainability from '@/components/Pages/ContentOnly';
-import { getSustainabilityPageData } from '@/lib/queries/sustainability-page';
+import { getDownloadsPageData } from '@/lib/queries/downloads-page';
+import Downloads from '@/components/Pages/Downloads';
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
 
@@ -47,7 +44,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Sustainability data={data} />
+      <Downloads data={data} />
     </Layout>
   )
 }
@@ -62,8 +59,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    // TODO: this needs to be an API call to fetch ONLY contact data
-    let data = await getSustainabilityPageData(slug, jwt);
+    let data = await getDownloadsPageData(slug, jwt);
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

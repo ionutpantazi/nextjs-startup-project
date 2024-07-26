@@ -1,35 +1,35 @@
 import React, { useState, useEffect, Children } from 'react'
 import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import ComponentStreamPanel from '@/components/StrapiComponents/ComponentStreamPanel'
+import Header from '@/components/StrapiComponents/PwaComponents/Header'
 
 export const components = {
-  ComponentIntrosLandingNew: dynamic(() => import('components/StrapiComponents/ComponentIntrosLandingNew/pwa')),
   ComponentStreamPanel: dynamic(() => import('@/components/StrapiComponents/ComponentStreamPanel/index')),
 };
 
 const PwaContentContainer = styled.div`
 `
 
-const Exhibitors = ({
+const Stream = ({
   data,
   senddatatolayout,
   isdefaulttheme,
   themedata,
+  themeMeta,
   navigationData,
 }: any) => {
   console.log(data)
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} hideContentContainer={true} />
+        <Header title={'Live Stream'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data &&
-          <ComponentStreamPanel data={data.exhibitors} />
+          <ComponentStreamPanel data={data.stream} />
         }
       </PwaContentContainer>
     </>
   )
 }
 
-export default Exhibitors
+export default Stream

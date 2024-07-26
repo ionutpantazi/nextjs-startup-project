@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
-import Dropdown from '../Common/dropdown'
+import SortAndSearch from '../Common/SortAndSearch'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { generateSpeakerCardGridLayout } from './utils'
 import {
@@ -15,13 +15,7 @@ import Card1 from 'components/StrapiComponents/PwaComponents/Cards/Card1'
 import {
   Title,
   SubTitle,
-  SearchContainer,
-  SearchInput,
-  SearchButton,
-  SortCategories,
-  SortCategoriesTitle,
   CardsGrid,
-  DropdownAndSearch,
   GridItem,
 } from './styles'
 
@@ -74,24 +68,7 @@ const Speakers = ({
             <SubTitle>
               {subtitle}
             </SubTitle>
-            <SortCategories>
-              <SortCategoriesTitle>
-                Choose a category:
-              </SortCategoriesTitle>
-              <DropdownAndSearch>
-                <Dropdown values={dropdownValues} />
-                <SearchContainer>
-                  <SearchInput as='input' />
-                  <SearchButton>
-                    <FAIcon
-                      icon={'fa-magnifying-glass'}
-                      width={16}
-                      height={16}
-                    />
-                  </SearchButton>
-                </SearchContainer>
-              </DropdownAndSearch>
-            </SortCategories>
+            <SortAndSearch title='Choose a category:' dropdownValues={dropdownValues} />
             {data.data.length &&
               <CardsGrid>
                 {data.data.map((speaker: any, index: number) => (

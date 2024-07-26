@@ -9,8 +9,8 @@ import { getPageData } from 'lib/queries/page-data'
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
-const PwaContent = dnmc(() => import('components/PageContent/pwaContent'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
+const DynamicContent = dnmc(() => import('components/StrapiComponents/PwaComponents/Homepage'));
 
 export interface Props {
   data: any
@@ -47,7 +47,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <PwaContent data={data} />
+      <DynamicContent data={data} />
     </Layout>
   )
 }

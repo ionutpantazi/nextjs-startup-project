@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
-import Dropdown from '../Common/dropdown'
+import Dropdown from '../Common/Dropdown'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { generateSpeakerCardGridLayout } from './utils'
 import {

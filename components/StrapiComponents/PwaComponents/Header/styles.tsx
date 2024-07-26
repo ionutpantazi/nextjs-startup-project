@@ -45,13 +45,13 @@ export const IntroLandingContainer = styled.div`
 export const EventTitle = styled.div`
   font-size: 57px;
   font-weight: 400;
-  line-height: 64px;
+  line-height: 100px;
   text-align: center;
   color: ${props => props.theme.components?.Header?.EventTitleColor};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 36px;
-    line-height: 44px;
+    line-height: 60px;
   }
 `
 
@@ -296,4 +296,24 @@ export const EmptyAvatar = styled.div`
   height: 40px;
   border-radius: 50px;
   background-color: ${props => props.theme.colors.brand};
+`
+
+export const LeftHeading = styled.div`
+  padding: 0px 40px;
+  text-align: left !important;
+
+  @media screen and (max-width: ${props => props.theme.screens.lg}) {
+    padding: 0px 0px;
+  }
+
+  position: relative;
+  overflow: hidden;
+`
+
+export const LeftEventTitle = styled(EventTitle)`
+  text-align: left;
+`
+
+export const LeftEventIntroduction = styled(EventIntroduction)`
+  text-align: left;
 `

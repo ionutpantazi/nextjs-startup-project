@@ -34,6 +34,7 @@ export interface ComponentSectionsSection5Props {
 
 export const FirstColumn = styled.div`
   padding: 40px 0px;
+  gap: 3rem;
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     padding: 0px 10px 20px 10px;
@@ -240,7 +241,7 @@ const ComponentSectionsSection5 = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex lg:flex-row flex-col'>
-            <FirstColumn className='flex flex-col lg:w-1/2 w-auto justify-between'>
+            <FirstColumn className='flex flex-col lg:w-1/2 w-auto'>
               <div>
                 {data.title &&
                   <SectionTitle>
@@ -291,7 +292,7 @@ const ComponentSectionsSection5 = ({
                   </Detail>
                 }
               </DetailsBox>
-              <SocialsContainer className='flex flex-wrap gap-x-14 gap-y-6'>
+              {/* <SocialsContainer className='flex flex-wrap gap-x-14 gap-y-6'>
                 {contactData.email &&
                   <StyledSocial as='a' href='#' className='flex flex-row items-center gap-4 w-fit'>
                     <FAIcon
@@ -328,7 +329,7 @@ const ComponentSectionsSection5 = ({
                     </span>
                   </StyledSocial>
                 }
-              </SocialsContainer>
+              </SocialsContainer> */}
             </FirstColumn>
             <SecondColumn className='flex flex-col lg:w-1/2 w-auto'>
               <InterestsTitle>

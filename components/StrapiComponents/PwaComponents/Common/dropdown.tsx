@@ -6,7 +6,7 @@ import { theme } from 'lib/theme'
 const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
-  width: 30%;
+  width: 260px;
 
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     width: 100%;

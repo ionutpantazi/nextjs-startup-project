@@ -1,6 +1,6 @@
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { Title } from '@/components/Bootstrap/Common';
-import { ComponentStream, DownloadType } from '@/components/StrapiComponents/ComponentStreamPanel';
+import { DownloadType } from '@/components/Pages/Downloads';
 import { url } from 'inspector';
 import { get } from 'lib/httpClient'
 import { title } from 'process';
@@ -20,6 +20,13 @@ const getStreamData = async (slug: string, jwt: string) => {
       {
         id: '1',
         title: 'Stream 1',
+        url: 'https://cdn3.wowza.com/1/cjYrNHdGZ0dvM0RQ/OUIzeEFH/hls/live/playlist.m3u8',
+        placeholder: `<iframe width="100%" height="100%" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen src="https://www.youtube-nocookie.com/embed/RFpRLaRaxbA?controls=0&loop=1&autoplay=1&muted=1"></iframe>`,
+        slido: {
+          code: '0agccbpx',
+          username: 'RW Dev LG',
+          userEmail: 'developer@livegroup.co.uk'
+        },
         categories: [
           {
             title: 'Previous sessions',
@@ -68,12 +75,26 @@ const getStreamData = async (slug: string, jwt: string) => {
       {
         id: '2',
         title: 'Stream 2',
-        categories: []
+        url: null,
+        placeholder: `<a href="https://registration.livegroup.co.uk/hivedemo/agenda/?VID=908&amp;EVID=5639">Click here to see full agenda</a><a href="https://registration.livegroup.co.uk/hub"><img alt="" src="https://dmsprod.azureedge.net/dms/Uploads/Event_1676/Downloads/Watch-live-content-images-1.png"></a>`,
+        categories: [],
+        slido: {
+          code: '0agccbpx',
+          username: 'RW Dev LG',
+          userEmail: 'developer@livegroup.co.uk'
+        }
       },
       {
         id: '3',
         title: 'Stream 3',
-        categories: []
+        url: null,
+        placeholder: `<a href="https://registration.livegroup.co.uk/hivedemo/agenda/?VID=908&amp;EVID=5639">Click here to see full agenda</a><a href="https://registration.livegroup.co.uk/hub"><img alt="" src="https://dmsprod.azureedge.net/dms/Uploads/Event_1676/Downloads/Watch-live-content-images-1.png"></a>`,
+        categories: [],
+        slido: {
+          code: '0agccbpx',
+          username: 'RW Dev LG',
+          userEmail: 'developer@livegroup.co.uk'
+        }
       }
     ]
   }

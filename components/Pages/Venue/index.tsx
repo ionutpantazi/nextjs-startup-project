@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import { ComponentContainer, Container, InnerContainer, OuterContainer, SectionTitle, Title } from '@/components/Bootstrap/Common';
 import { SectionSubTitle } from '@/components/StrapiComponents/ComponentSectionsSection5';
+import Header from '@/components/StrapiComponents/PwaComponents/Header';
 
 export const components = {
   ComponentIntrosLandingNew: dynamic(() => import('components/StrapiComponents/ComponentIntrosLandingNew/pwa')),
@@ -17,20 +18,18 @@ const Venue = ({
   senddatatolayout,
   isdefaulttheme,
   themedata,
+  themeMeta,
   navigationData,
 }: any) => {
   console.log(data)
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} hideContentContainer={true} />
+      <Header title={'Venue'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer>
           <Container>
             <InnerContainer>
 
-              <SectionTitle>
-                Venue
-              </SectionTitle>
               <br/>
               <ComponentContainer>
                 <SectionSubTitle>
@@ -58,6 +57,8 @@ const Venue = ({
                   Location
                 </Title>
                 <p>Use the Google map below to view the location of this venue.</p>
+                <br></br>
+                <iframe allowFullScreen height="450" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4977.81979439299!2d-0.29688820234139657!3d51.404710249290304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760b953839b6b1%3A0xac7be27f8bfc4de4!2sLive%20Group%20-%20Global%20Event%20Management%20Company!5e0!3m2!1sen!2suk!4v1677060897599!5m2!1sen!2suk" width="1150"></iframe>
                 <br/>
 
                 <Title>

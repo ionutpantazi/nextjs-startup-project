@@ -3,48 +3,35 @@ import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import NextImage from 'next/image'
 import { useRouter } from 'next/router'
+import useSession from "lib/use-session";
 
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { RadialContainer } from '@/components/Bootstrap/Common'
-
-export type Stream = {
-  id: string,
-  title: string,
-  categories?: DownloadCategory[]
-}
-
-export type DownloadCategory = {
-  id: string,
-  title: string,
-  downloads: Download[]
-}
-
-export type ComponentStream = {
-  id: string,
-  title: string;
-  streams: Stream[]
-}
+import { Download, DownloadCategory, DownloadType } from '@/components/Pages/Downloads'
 
 export interface ComponentStreamPanelProps {
   data: ComponentStream
 }
 
-export type Download = {
+export type ComponentStream = {
   id: string,
   title: string,
-  subtitle?: string,
-  type: DownloadType,
-  image: string,
-  url?: string
+  streams: Stream[]
 }
 
-export enum DownloadType {
-  Document,
-  Image,
-  Media,
-  Presentation,
-  EmailAttachment,
-  Link
+export type Stream = {
+  id: string,
+  title: string,
+  url?: string,
+  placeholder?: string,
+  slido?: Slido,
+  categories?: DownloadCategory[]
+}
+
+export type Slido = {
+  code: string,
+  username: string,
+  userEmail: string
 }
 
 const Container = styled.div`
@@ -77,9 +64,14 @@ const Title = styled.div`
 
 const StreamContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   max-width: 1280px;
   margin: 0 auto;
+`
+
+const StreamInnerContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const StreamToggleContainer = styled.div`
@@ -94,41 +86,21 @@ const StreamToggle = styled.div`
   min-width: 140px;
   height: 56px;
   border-radius: 6px;
-  margin: 0 auto;
   border: 1px solid ${props => props.theme.colors.brandlight};
 `
 
 const Stream = styled.div`
+  display: flex;
   margin: 0 auto;
   height: 600px;
   overflow: hidden;
 `
 
-const StreamDetails = styled.div`
-  z-index: 2;
+const StreamChat = styled.div`
+  height: 600px;
 `
 
 const StyledNextImage = styled(NextImage)`
-`
-
-const StreamTitle = styled.div`
-  z-index: 2;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-`
-
-const StreamSubtitle = styled.div`
-  z-index: 2;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 29px;
-`
-
-const StreamIcon = styled.div`
-  z-index: 2;
-  padding: 10px 10px 20px 10px;
-  height: 100%;
 `
 
 const DownloadContainer = styled.div`
@@ -170,6 +142,8 @@ const ComponentStreamPanel = ({
 }: ComponentStreamPanelProps) => {
   
   const router = useRouter()
+  
+  const { session, isLoading } = useSession();
 
   const { width } = useWindowSize();
 
@@ -206,6 +180,38 @@ const ComponentStreamPanel = ({
       };
     }
   }
+
+  const applyStreamContainerStyle = () => {
+    if(width && width < Number(theme.screens['xl'].replace('px', '')))
+    {
+      return {
+        flex: '0 0 100%',
+      };
+    } else {
+      return {
+        flex: '0 0 75%',
+      };
+    }
+  }
+
+  const applyPlaceholderStyle = () => {
+    return {
+      flex: `0 0 100%;`
+    };
+  }
+
+  const applyStreamChatStyle = () => {
+    if(width && width < Number(theme.screens['xl'].replace('px', '')))
+    {
+      return {
+        flex: '0 0 100%',
+      };
+    } else {
+      return {
+        flex: '0 0 25%',
+      };
+    }
+  }
   
   return (
     <>
@@ -224,9 +230,21 @@ const ComponentStreamPanel = ({
                 )
               })}
             </StreamToggleContainer>
-            <Stream>
-              
-            </Stream>
+            {(selectedStream.placeholder || selectedStream.slido) &&
+              <StreamInnerContainer>
+                {selectedStream.placeholder &&
+                <Stream style={applyStreamContainerStyle()}>
+                  { selectedStream.placeholder && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.placeholder }} /> }
+                </Stream>
+                }
+                {selectedStream.slido &&
+                  <StreamChat style={applyStreamChatStyle()}>
+                    {/* <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.slido?.code}${session.isLoggedIn ? `/?user_name=${session.username}` : ""}${session.isLoggedIn ? `&user_email=${session.username}` : ""}`}></iframe> */}
+                    <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.slido?.code}/?user_name=RW%20Dev%20LG&user_email=developer@livegroup.co.uk`}></iframe>
+                  </StreamChat>
+                }
+              </StreamInnerContainer>
+            }
           </StreamContainer>
         </InnerContainer>
       </Container>

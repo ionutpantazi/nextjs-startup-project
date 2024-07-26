@@ -1,16 +1,16 @@
 import { getEventData } from './event';
 import { getResourceData } from './resources';
-import { getStreamData } from './stream';
+import { getDownloadsData } from './downloads';
 
-const getStreamPageData = async (slug: any, jwt: string) => {
+const getDownloadsPageData = async (slug: any, jwt: string) => {
   let eventData = await getEventData(slug, jwt)
-  let streamData = await getStreamData(slug, jwt)
+  let downloadsData = await getDownloadsData(slug, jwt)
   let resourceData = await getResourceData(slug, jwt)
   return {
     event: eventData,
     resource: resourceData,
-    stream: streamData,
+    downloads: downloadsData,
   }
 };
 
-export { getStreamPageData }
+export { getDownloadsPageData }

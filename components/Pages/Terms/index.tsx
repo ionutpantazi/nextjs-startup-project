@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Children } from 'react'
-import dynamic from 'next/dynamic'
+import dnmc from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import { ComponentContainer, Container, InnerContainer, OuterContainer, SectionTitle, Title } from '@/components/Bootstrap/Common';
 import Head from 'next/head'
 import Link from 'next/link';
+
+const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
 
 const PwaContentContainer = styled.div`
 `
@@ -14,19 +15,17 @@ const Terms = ({
   senddatatolayout,
   isdefaulttheme,
   themedata,
+  themeMeta,
   navigationData,
 }: any) => {
 
   return (
     <>
       <PwaContentContainer>
-        <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} hideContentContainer={true} />
+      <Header title={'Terms'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer>
           <Container>
             <InnerContainer>
-              <SectionTitle>
-                Terms of Website Use
-              </SectionTitle>
               <br />
               <ComponentContainer style={{ backgroundColor: 'white' }}>
 
@@ -58,19 +57,6 @@ const Terms = ({
 
                     .a4padding {
                       padding: 20px;
-        }
-
-                    h1 {
-                      background: url(/images/title-bkg.gif) repeat-x 0 12px;
-                    font-size: 2.1em;
-                    color: #5c3896;
-                    font-weight: normal;
-                    line-height: 25px;
-                    height: 41px;
-                    margin: 1em auto .75em;
-                    padding: 5px 0 0 5px;
-                    float: left;
-                    width: 100%;
         }
 
                     h2.v2 {

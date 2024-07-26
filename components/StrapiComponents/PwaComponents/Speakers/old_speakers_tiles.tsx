@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { IMAGE_DOMAIN } from 'lib/constants'
-import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
-import Dropdown from '../Common/dropdown'
+import SortAndSearch from '../Common/SortAndSearch'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { generateSpeakerCardGridLayout } from './utils'
 import {
@@ -84,24 +82,7 @@ const Speakers = ({
             <SubTitle>
               {subtitle}
             </SubTitle>
-            <SortCategories>
-              <SortCategoriesTitle>
-                Choose a category:
-              </SortCategoriesTitle>
-              <DropdownAndSearch>
-                <Dropdown values={dropdownValues} />
-                <SearchContainer>
-                  <SearchInput as='input' />
-                  <SearchButton>
-                    <FAIcon
-                      icon={'fa-magnifying-glass'}
-                      width={16}
-                      height={16}
-                    />
-                  </SearchButton>
-                </SearchContainer>
-              </DropdownAndSearch>
-            </SortCategories>
+            <SortAndSearch title='Choose a category:' dropdownValues={dropdownValues} />
             {data.data.length &&
               <div className='grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10 gap-x-10'>
                 {data.data.map((speaker: any, index: number) => (
