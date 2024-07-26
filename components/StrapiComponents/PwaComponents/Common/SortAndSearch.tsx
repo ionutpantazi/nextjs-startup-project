@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import { theme } from 'lib/theme'
-import Dropdown from './Dropdown'
+import Dropdown from './Select'
 
 export const DropdownAndSearch = styled.div`
   display: flex;
