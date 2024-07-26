@@ -2,15 +2,12 @@ import { GetServerSideProps } from 'next';
 import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
 import { nextApolloPageError } from 'lib/serverHelpers';
-import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
-import { sanitiseURLParam } from '@/utils/helpers';
 import { getJwt } from 'utils/helpers'
-import { theme } from '@/lib/theme';
-import { getContactPageData } from '@/lib/queries/contact-page';
+import Stream from '@/components/Pages/Stream';
+import { getStreamPageData } from '@/lib/queries/stream-page';
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
-const Contact = dnmc(() => import('@/components/Pages/Contact'));
 
 export interface Props {
   data: any
@@ -47,7 +44,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Contact data={data} />
+      <Stream data={data} />
     </Layout>
   )
 }
@@ -62,7 +59,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    let data = await getContactPageData(slug, jwt);
+    let data = await getStreamPageData(slug, jwt);
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

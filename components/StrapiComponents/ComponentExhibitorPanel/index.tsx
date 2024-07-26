@@ -47,7 +47,7 @@ export interface ComponentExhibitorPanelProps {
 }
 
 const Container = styled.div`
-  max-width: 1230px;
+  max-width: 1440px;
   margin: 0 auto 40px auto;
   padding: ${theme.margins.homepage_large};
   color: ${theme.colors.white};
@@ -77,7 +77,7 @@ const Title = styled.div`
 const ExhibitorContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
 `
 

@@ -62,7 +62,6 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
-    // TODO: this needs to be an API call to fetch ONLY contact data
     let data = await getExhibitorsPageData(slug, jwt);
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
