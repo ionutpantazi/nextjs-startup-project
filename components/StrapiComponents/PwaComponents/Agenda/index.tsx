@@ -22,15 +22,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { sortAgendaItemsByStartDate } from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
 import { useRouter } from 'next/router'
 
-
-export interface AgendaDataProps {
-  data: any
-  agendaItems: any
-  selectedAgendaData: any
-  handleAgendaDateChange?: (data: string) => void;
-  title?: string
-}
-
 const AgendaContainer = styled.div`
 `
 
@@ -232,7 +223,8 @@ const Agenda = ({
   selectedAgendaData,
   handleAgendaDateChange,
   title,
-}: AgendaDataProps) => {
+  isHomepage,
+}: any) => {
 
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
@@ -360,13 +352,17 @@ const Agenda = ({
             </DetailsBox>
             <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
               <Participants className='flex flex-row'>
-                {/* <ImageIcon className='flex justify-center items-center'>
-                  <FAIcon
-                    icon={'fa-leaf'}
-                    width={20}
-                    height={20}
-                  />
-                </ImageIcon> */}
+                {isHomepage &&
+                  <>
+                    <ImageIcon className='flex justify-center items-center'>
+                      <FAIcon
+                        icon={'fa-leaf'}
+                        width={20}
+                        height={20}
+                      />
+                    </ImageIcon>
+                  </>
+                }
                 {/* {agenda.attributes?.Participants?.data?.map((participant: Speaker, index: number) => (
                   <StyledNextImage
                     key={index}
@@ -404,17 +400,19 @@ const Agenda = ({
                   Add to agenda
                 </span>
               </Button1>
-              {/* <Button2 as='a' href={generateAgendaPageLink()} className='w-fit'>
-                <span>
-                  View more details
-                </span>
-              </Button2> */}
+              {isHomepage &&
+                <Button2 as='a' href={generateAgendaPageLink()} className='w-fit'>
+                  <span>
+                    View more details
+                  </span>
+                </Button2>
+              }
             </ButtonsBox>
           </AgendaItem>
         ))
         }
       </AgendaInnerContainer>
-    </AgendaContainer>
+    </AgendaContainer >
   )
 }
 

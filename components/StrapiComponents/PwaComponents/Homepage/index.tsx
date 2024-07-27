@@ -2,14 +2,14 @@ import React from 'react'
 import dnmc from 'next/dynamic'
 import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import ComponentSectionsSection2 from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
-import ComponentSectionsFaQs from 'components/StrapiComponents/ComponentSectionsFaQs/pwa'
 import ComponentSectionsSection1 from 'components/StrapiComponents/ComponentSectionsSection1/pwa'
-import PwaSection from 'components/StrapiComponents/PwaSection'
-import ComponentSectionsSection5 from 'components/StrapiComponents/ComponentSectionsSection5/pwa'
 
 const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
 const TextAndIcons = dnmc(() => import('components/StrapiComponents/PwaComponents/TextAndIcons'));
 const Agenda = dnmc(() => import('components/StrapiComponents/PwaComponents/Agenda'));
+const PwaSection = dnmc(() => import('components/StrapiComponents/PwaSection'));
+const FAQs = dnmc(() => import('components/StrapiComponents/PwaComponents/FAQs'));
+const Contact = dnmc(() => import('components/StrapiComponents/PwaComponents/Contact'));
 
 const DynamicContent = ({
   data,
@@ -37,10 +37,10 @@ const DynamicContent = ({
                     <PwaSection data={api.section} agenda={data['agenda']} delegates={data['delegates']} discussions={data['discussions']} speakers={data['speakers']} />
                   }
                   {api.section.type == 'faqs' && data.event?.faqs?.length &&
-                    <ComponentSectionsFaQs faqs={data['event']['faqs']} title={api.section.title} />
+                    <FAQs faqs={data['event']['faqs']} title={api.section.title} />
                   }
                   {api.section.type == 'contact' && data.resource.contact &&
-                    <ComponentSectionsSection5 data={api.section} contactData={data.resource.contact} />
+                    <Contact data={api.section} contactData={data.resource.contact} />
                   }
                 </>
               }
@@ -61,7 +61,7 @@ const DynamicContent = ({
                 <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} speakers={data['speakers']} />
               }
               {api == 'event' && data.event?.faqs?.length &&
-                <ComponentSectionsFaQs faqs={data['event']['faqs']} />
+                <FAQs faqs={data['event']['faqs']} />
               }
             </div>
           ))}

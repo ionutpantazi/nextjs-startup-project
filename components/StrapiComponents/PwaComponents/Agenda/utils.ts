@@ -16,3 +16,11 @@ export const generateAgendaDatesArray = (agendaItems: any) => {
   })
   return uniqueDatesArray
 }
+
+export function sortAgendaItemsByStartDate(agendaItems: any): any {
+  return agendaItems.sort((a: any, b: any) => {
+    const dateA = new Date(a.start).getTime();
+    const dateB = new Date(b.start).getTime();
+    return dateA - dateB;
+  });
+}

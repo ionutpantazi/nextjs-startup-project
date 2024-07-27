@@ -1,39 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
-import { ThemeContext } from 'components/Layout';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { IMAGE_DOMAIN } from 'lib/constants'
-import NextImage from 'next/image'
-import {
-  StrapiFile,
-  FAIconProps,
-} from 'interfaces'
+import dnmc from 'next/dynamic'
 import {
   OuterContainer,
   Container,
   InnerContainer,
-  RadialContainer,
-  SectionTitle,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
-import FAIcon from 'components/Bootstrap/FAIcon'
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Autoplay, Pagination } from 'swiper/modules';
-import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import Discussion, { DiscussionProps } from 'components/StrapiComponents/ComponentSectionsSection1/pwaDiscussion'
-import TextAndIcons, { TextAndIconsProps } from '../ComponentSectionsSection1/pwaTextAndIcons'
-import { removeTime, generateAgendaDatesArray, sortAgendaItemsByStartDate } from '../ComponentSectionsSection2/pwa';
-import CardsCarousel from '../ComponentSectionsSection1/pwaCardsCarousel'
-import Agenda from '../ComponentSectionsSection2/pwaAgenda';
 
-export interface ComponentSectionsSection1Props {
-  discussions: DiscussionProps;
-  data: any;
-  agenda: any;
-  delegates: any;
-  speakers: any;
-}
+import { removeTime, generateAgendaDatesArray, sortAgendaItemsByStartDate } from 'components/StrapiComponents/PwaComponents/Agenda/utils';
+
+const TextAndIcons = dnmc(() => import('components/StrapiComponents/PwaComponents/TextAndIcons'));
+const Agenda = dnmc(() => import('components/StrapiComponents/PwaComponents/Agenda'));
+const Discussions = dnmc(() => import('components/StrapiComponents/PwaComponents/Discussions'));
+const CardsCarousel = dnmc(() => import('components/StrapiComponents/PwaComponents/CardsCarousel'));
 
 const ComponentSectionsSection1 = ({
   data,
@@ -41,7 +20,8 @@ const ComponentSectionsSection1 = ({
   delegates,
   speakers,
   discussions,
-}: ComponentSectionsSection1Props) => {
+}: any) => {
+  
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
@@ -78,10 +58,10 @@ const ComponentSectionsSection1 = ({
                   <CardsCarousel data={delegates} title={component.title} />
                 }
                 {component.type == 'discussions' && discussions.data.length &&
-                  <Discussion data={discussions} title={component.title} />
+                  <Discussions data={discussions} title={component.title} />
                 }
                 {component.type == 'agenda' && agenda?.data?.length > 0 &&
-                  <Agenda data={agendaData} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} title={component.title} />
+                  <Agenda data={agendaData} isHomepage={true} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} title={component.title} />
                 }
               </div>
             ))
