@@ -74,14 +74,16 @@ const Header = ({
     }
   }, [])
 
-  const handleDefaultThemeChange = () => {
+  function handleDefaultThemeChange() {
     if (senddatatolayout instanceof Function) {
       if (isdefaulttheme == 'false' || isdefaulttheme == false) {
         senddatatolayout({ useDefaultTheme: 'true' })
         setFECookie('lg-theme', 'default', 60)
       } else {
         senddatatolayout({ useDefaultTheme: 'false' })
-        setFECookie('lg-theme', themeMeta.slug, 60)
+        if (themeMeta?.slug) {
+          setFECookie('lg-theme', themeMeta.slug, 60)
+        }
       }
     }
   }
