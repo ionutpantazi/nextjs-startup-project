@@ -19,7 +19,7 @@ const Delegates = ({
   const imageStyle = (isExpanded: any) => ({
     width: isExpanded ? '160px' : '200px',
     height: isExpanded ? '180px' : '300px',
-    transition: 'all 0.6s ease',
+    // transition: 'all 0.6s ease',
   });
 
   const titleAndSubtitleStyle = (isExpanded: any) => ({

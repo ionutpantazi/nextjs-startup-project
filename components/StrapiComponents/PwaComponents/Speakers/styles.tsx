@@ -255,12 +255,13 @@ export const CardsGrid = styled.div`
   flex-wrap: wrap;
   justify-content: left;
   max-width: 100%;
-  gap: 20px;
+  gap: 0px;
+  row-gap: 40px;
 `
 
 export const GridItem = styled.div`
   display: flex;
-  width: 240px;
+  width: 100px;
   transition: height .2s ease-in-out;
   user-select: none;
   cursor: pointer;

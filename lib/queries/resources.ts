@@ -8,7 +8,7 @@ const getResourceData = async (slug: any, jwt: string) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
-  const { data } = await get(`${NEXT_PUBLIC_API_URL}/resource/page-details`, config);
+  const { data } = await get(`${NEXT_PUBLIC_API_URL}/resource/${slug}/page-details`, config);
   return data
 };
 

@@ -43,17 +43,18 @@ const Speakers = ({
     const newExpandedIndices = [...expandedIndices];
     newExpandedIndices[index] = !newExpandedIndices[index];
     setExpandedIndices(newExpandedIndices);
-    let target = document.querySelector(`#card_grid_${index}`)
-    target?.classList.add('animate-blur')
+    // let target = document.querySelector(`#card_grid_${index}`)
+    // target?.classList.add('animate-blur')
 
-    setTimeout(function() {
-      target?.classList.remove('animate-blur')
-    }, 500);
+    // setTimeout(function() {
+    //   target?.classList.remove('animate-blur')
+    // }, 500);
   };
 
   const divStyle = (isExpanded: any) => ({
-    width: isExpanded ? '570px' : '260px',
-    transition: 'width 0.4s ease',
+    width: isExpanded ? '556px' : '264px',
+    marginRight: isExpanded ? '-30px' : '0px',
+    // transition: 'width 0.4s ease',
   });
 
 

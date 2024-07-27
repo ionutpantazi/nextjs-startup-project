@@ -3,7 +3,7 @@ import NextImage from 'next/image'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 
 export const ImageContainer = styled.div`
-  height: 40vh;
+  height: 24vw;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 20vh;
@@ -21,7 +21,7 @@ export const StyledRadialContainer = styled(RadialContainer)`
 export const HeaderImage = styled(NextImage)`
   position: relative;
   max-width: 100%;
-  height: 40vh;
+  height: 30vw;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 20vh;
@@ -47,7 +47,7 @@ export const EventTitle = styled.div`
   font-weight: 400;
   line-height: 100px;
   text-align: center;
-  color: ${props => props.theme.components?.Header?.EventTitleColor};
+  color: ${props => props.theme.colors.white};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 36px;

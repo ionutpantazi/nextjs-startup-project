@@ -1,6 +1,5 @@
 import React from 'react'
 import dnmc from 'next/dynamic'
-import ComponentIntrosLandingNew from 'components/StrapiComponents/ComponentIntrosLandingNew/pwa'
 import ComponentSectionsSection2 from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
 import ComponentSectionsSection1 from 'components/StrapiComponents/ComponentSectionsSection1/pwa'
 
@@ -16,9 +15,10 @@ const DynamicContent = ({
   senddatatolayout,
   isdefaulttheme,
   themedata,
+  themeMeta,
   navigationData,
 }: any) => {
-
+console.log(data)
   if (!data) return <></>
 
   return (
@@ -30,7 +30,7 @@ const DynamicContent = ({
             <div key={index}>
               {api.heading
                 ?
-                <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
                 :
                 <>
                   {api.section.type == 'section' &&
@@ -52,7 +52,7 @@ const DynamicContent = ({
           {Object.keys(data).map((api, apiData) => (
             <div key={api}>
               {api == 'event' &&
-                <ComponentIntrosLandingNew data={data['event']} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
               }
               {api == 'discussions' &&
                 <ComponentSectionsSection1 discussions={data['discussions']} />
