@@ -1,13 +1,9 @@
 import React, { useState, useEffect, Children } from 'react'
-import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import { ComponentContainer, Container, InnerContainer, OuterContainer, SectionTitle, Title } from '@/components/Bootstrap/Common';
-import ComponentSectionsSection1 from '@/components/StrapiComponents/ComponentSectionsSection1/pwa';
-import Header from '@/components/StrapiComponents/PwaComponents/Header';
-
-export const components = {
-  ComponentSectionsSection1: dynamic(() => import('components/StrapiComponents/ComponentSectionsSection1/pwa')),
-};
+import ForumComponent from '@/components/StrapiComponents/PwaComponents/Forum';
+import Header from '@/components/StrapiComponents/PwaComponents/Header'
+import useSession from "lib/use-session";
+import LoginPrompt from '@/components/StrapiComponents/PwaComponents/LoginPrompt';
 
 const PwaContentContainer = styled.div`
 `
@@ -20,20 +16,19 @@ const Forum = ({
   themeMeta,
   navigationData,
 }: any) => {
+  const { session } = useSession();
   console.log(data)
+  console.log("logged in", session.isLoggedIn)
   return (
     <>
       <PwaContentContainer>
       <Header title={'Forum'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
-        <OuterContainer>
-          <Container>
-            <InnerContainer>
-              <ComponentContainer>
-                <ComponentSectionsSection1 discussions={data.discussions} />
-              </ComponentContainer>
-            </InnerContainer>
-          </Container>
-        </OuterContainer>
+        {data.discussions && data.discussions.data.length > 0 && session.isLoggedIn &&
+          <ForumComponent data={data.discussions} />
+        }
+        {!session.isLoggedIn &&
+            <LoginPrompt title={'Get involved in the discussion'} message={'To view the forum'} />
+        }
       </PwaContentContainer>
     </>
   )

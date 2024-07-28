@@ -6,26 +6,30 @@ import {
 export const ActionButtons = (props: any) => {
   return (
     <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
-      <div className='flex flex-row items-center'>
-        <FAIcon
-          icon={'fa-heart'}
-          width={16}
-          height={16}
-        />
-        <span>
-          {props.impressions}
-        </span>
-      </div>
-      <div className='flex flex-row items-center'>
-        <FAIcon
-          icon={'fa-comment'}
-          width={16}
-          height={16}
-        />
-        <span>
-          {props.comments}
-        </span>
-      </div>
+      {!props.hideImpressions &&
+        <div className='flex flex-row items-center'>
+          <FAIcon
+            icon={'fa-heart'}
+            width={16}
+            height={16}
+          />
+          <span>
+            {props.impressions}
+          </span>
+        </div>
+      }
+      {!props.hideComments &&
+        <div className='flex flex-row items-center'>
+          <FAIcon
+            icon={'fa-comment'}
+            width={16}
+            height={16}
+          />
+          <span>
+            {props.comments}
+          </span>
+        </div>
+      }
       <FAIcon
         icon={'fa-share'}
         width={16}

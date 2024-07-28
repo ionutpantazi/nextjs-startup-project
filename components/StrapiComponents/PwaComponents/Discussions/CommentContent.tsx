@@ -1,4 +1,5 @@
 var moment = require('moment');
+import { ActionButtons } from './ActionButtons';
 import {
   StyledNextImage,
   AuthorDetails,
@@ -6,6 +7,7 @@ import {
   SpeakerImage,
   CommentText,
   CommentInnerBox,
+  CommentActionButtons,
 } from './styles'
 
 export const CommentContent = (props: any) => {
@@ -43,9 +45,9 @@ export const CommentContent = (props: any) => {
           __html: comment.text,
         }}
       />
-      {/* <CommentActionButtons>
-          <ActionButtons impressions={comment.attributes.Impressions} comments={0} />
-        </CommentActionButtons> */}
+      <CommentActionButtons>
+          <ActionButtons impressions={comment.impressions} hideComments={props.hideComments} />
+        </CommentActionButtons>
     </CommentInnerBox>
   )
 }

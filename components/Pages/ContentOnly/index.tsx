@@ -24,7 +24,7 @@ const Sustainability = ({
   return (
     <>
       <PwaContentContainer>
-      <Header title={'Sustainability'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header title={'Sustainability'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer>
           <Container>
             <InnerContainer>

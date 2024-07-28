@@ -8,8 +8,19 @@ const getDiscussionsData = async (slug: string, jwt: string) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
-  const { data } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/discussions?fields=discussion_id,type,category,title,text,author_name,responses,date_posted`, config);
+  const { data } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/discussions?fields=discussion_id,type,category,title,text,author_name,responses,date_posted,impressions,profile_pic`, config);
   return data
 };
 
-export { getDiscussionsData }
+const getDiscussionData = async (slug: string, pageSlug: string, jwt: string) => {
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${jwt}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
+  const { data } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/discussions/${pageSlug}?fields=discussion_id,type,category,title,text,author_name,responses,date_posted,impressions,profile_pic`, config);
+  return data
+};
+
+export { getDiscussionsData, getDiscussionData }

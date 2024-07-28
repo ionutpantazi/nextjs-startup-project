@@ -1,12 +1,7 @@
 import React, { useState, useEffect, Children } from 'react'
-import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import ComponentStreamPanel from '@/components/StrapiComponents/ComponentStreamPanel'
+import ComponentStreamPanel from '@/components/StrapiComponents/PwaComponents/Stream'
 import Header from '@/components/StrapiComponents/PwaComponents/Header'
-
-export const components = {
-  ComponentStreamPanel: dynamic(() => import('@/components/StrapiComponents/ComponentStreamPanel/index')),
-};
 
 const PwaContentContainer = styled.div`
 `

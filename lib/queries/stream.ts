@@ -1,6 +1,6 @@
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { Title } from '@/components/Bootstrap/Common';
-import { DownloadType } from '@/components/Pages/Downloads';
+import { DownloadType } from '@/components/Pages/ContentPages';
 import { url } from 'inspector';
 import { get } from 'lib/httpClient'
 import { title } from 'process';
