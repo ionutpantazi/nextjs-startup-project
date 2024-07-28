@@ -9,9 +9,11 @@ import {
 } from 'components/Bootstrap/Common'
 import useSession from "lib/use-session";
 import ReadMore from '@/components/Bootstrap/ReadMore'
+import { RadialContainer } from '@/components/Bootstrap/Common'
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
-import { setFECookie } from 'utils/helpers'
+import { setFECookie, generateMenuHref } from 'utils/helpers'
+import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   ImageContainer,
   StyledRadialContainer,
@@ -42,7 +44,10 @@ import {
   EmptyAvatar,
   LeftHeading,
   LeftEventTitle,
-  LeftEventIntroduction
+  LeftEventIntroduction,
+  IWantToItemIcon,
+  IWantToItemTitle,
+  IWantToContainer,
 } from './styles'
 
 
@@ -52,6 +57,8 @@ const Header = ({
   subtitle,
   description,
   headerImage,
+  eventDetails,
+  tilesData,
   senddatatolayout,
   isdefaulttheme,
   themedata,
@@ -86,6 +93,62 @@ const Header = ({
         }
       }
     }
+  }
+
+  const EventDetailsComponent = ({ eventDetails }: any) => {
+    return <>
+      {eventDetails?.map((evendDetail: any, index: any) => (
+        <EventDetailsItemContainer key={index}>
+          <EventDetailsItem className='flex flex-row gap-4'>
+            <EventDetailsIcon className='row-span-3'>
+              <>
+                {evendDetail?.icon &&
+                  <FAIcon
+                    icon={evendDetail.icon}
+                    width={isMobile ? 20 : 40}
+                    height={isMobile ? 20 : 40}
+                  />
+                }
+              </>
+            </EventDetailsIcon>
+            <EventDetailsContainer className='flex flex-col gap-2'>
+              <EventDetailsTitle className='col-span-2'>
+                {evendDetail.title}
+              </EventDetailsTitle>
+              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                {evendDetail.subtitle}
+              </EventDetailsSubTitle>
+            </EventDetailsContainer>
+          </EventDetailsItem>
+        </EventDetailsItemContainer>
+      ))
+      }
+    </>
+  }
+
+  const IWantToItemComponent = ({ item }: any) => {
+    return <IWantToItem as='a' href={generateMenuHref(item.slug)} className='flex flex-col justify-center items-center relative' key={item.id}>
+      {item.image &&
+        <>
+          <RadialContainer />
+          <StyledNextImage
+            src={item.image}
+            className=''
+            alt={""}
+            fill
+            style={{ objectFit: 'cover' }}
+          />
+        </>
+      }
+      <FAIcon
+        icon={item.icon}
+        width={20}
+        height={20}
+      />
+      <IWantToItemTitle className='text-center'>
+        {item.title}
+      </IWantToItemTitle>
+    </IWantToItem>
   }
 
   return (
@@ -132,6 +195,21 @@ const Header = ({
                     }
 
                     <IntroLandingContainer className='mt-6'>
+                      <div className='grid grid-cols-2 gap-2'>
+                        <EventDetailsComponent eventDetails={eventDetails} />
+                      </div>
+                      <Swiper
+                        spaceBetween={10}
+                        slidesPerView={'auto'}
+                        className='w-full mt-4'
+                      >
+                        {tilesData.map((item: any, index: number) => (
+                          <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
+                            <IWantToItemComponent item={item} key={index} />
+                          </SwiperSlide>
+                        ))
+                        }
+                      </Swiper>
                       <EventContentContainer className='flex flex-col gap-2 w-auto mt-4'>
                         <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>
                           <EventDetailsItemContainer>
@@ -322,12 +400,21 @@ const Header = ({
                               }
                             </EventDetailsItem>
                           </EventDetailsItemContainer>
+                          <EventDetailsComponent eventDetails={eventDetails} />
                         </EventDetails>
                       </EventContainer>
                     </>
                   }
                   {description &&
                     <EventSectionContainer className='flex flex-col sm:flex-row gap-6'>
+                      {tilesData &&
+                        <IWantToContainer className='flex justify-stretch flex-col sm:flex-row gap-4 sm:w-1/2 w-auto'>
+                          {tilesData.map((item: any, index: number) => (
+                            <IWantToItemComponent item={item} key={index} />
+                          ))
+                          }
+                        </IWantToContainer>
+                      }
                       <EventContentContainer className='flex flex-col gap-2 sm:w-1/2 w-auto'>
                         <EventContent className=''>
                           <ReadMore content={description} chars={200} />

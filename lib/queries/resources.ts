@@ -10,7 +10,7 @@ const getResourceData = async (slug: any, jwt: string) => {
     }
   }
   let { data } = await get(`${NEXT_PUBLIC_API_URL}/resource/${slug}/page-details`, config);
-  data = convertTempData(null, data)
+  data = convertTempData(null, data, null)
   return data
 };
 

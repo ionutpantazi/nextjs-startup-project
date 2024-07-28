@@ -6,7 +6,7 @@ import { FooterNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import Link from 'next/link'
 import Text from 'components/Bootstrap/Text'
 import NextImage from 'next/image'
-import { redirectToEventRoot } from 'utils/helpers'
+import { redirectToEventRoot, generateMenuHref } from 'utils/helpers'
 
 const FooterContainer = styled.footer`
   background-color: ${props => props.theme.components?.Footer?.FooterContainerBackground};
@@ -109,7 +109,7 @@ const Footer: React.FC<FooterProps> = ({
                           <NavigationChildrenTitle className="font-medium" key={navItemChild.id}>
                             <a
                               className="transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none"
-                              href={'#'}
+                              href={generateMenuHref(navItemChild.slug)}
                             >
                               {navItemChild.title}
                             </a>

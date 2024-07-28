@@ -223,11 +223,11 @@ export function generateThemeData(data: any) {
       }
     }
   }
-
+  console.log(themeData)
   return { themeData, themeMeta }
 }
 
-export function convertTempData(event: any, resource: any) {
+export function convertTempData(event: any, resource: any, delegates: any) {
   if (event) {
     event.homeBanner = {
       alt: 'hive',
@@ -237,6 +237,17 @@ export function convertTempData(event: any, resource: any) {
       alt: 'hive',
       path: '/images/logo-live-group-vermilion.svg',
     }
+    event.eventId = 1
+    event.eventDetails = [
+      { title: 'Live Group Office', subtitle: 'Unit 9, Princess Mews, Horace Rd, Kingston upon Thames KT1 2SZ', icon: 'fa-house' },
+      { title: 'Date', subtitle: '20th December 2024', icon: 'fa-calendar-days' },
+      { title: 'Time', subtitle: '10:00', icon: 'fa-clock' },
+    ]
+    event.tilesData = [
+      { title: 'Meet the speakers', image: '/images/tiles/tile1.jpg',  slug: 'speakers', icon: 'fa-people-group' },
+      { title: 'Meet the exhibitors', image: '/images/tiles/tile2.jpg', slug: 'exhibitors', icon: 'fa-screwdriver-wrench' },
+      { title: 'View resources & learning materials', image: '/images/tiles/tile3.jpg', slug: 'faqs', icon: 'fa-heart' },
+    ]
     return event
   }
   if (resource) {
@@ -245,103 +256,270 @@ export function convertTempData(event: any, resource: any) {
         {
           "id": "1",
           "title": "Home",
-          "icon": "fa-screwdriver-wrench",
-          "slug": '/',
+          "icon": "fa-house",
+          "slug": '',
           "featured": false,
         },
         {
           "id": "2",
           "title": "Evaluation",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-dna",
           "slug": 'evaluation',
           "featured": false,
         },
         {
           "id": "3",
           "title": "Agenda",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-calendar-days",
           "slug": 'agenda',
           "featured": true,
         },
         {
           "id": "4",
           "title": "Breakouts",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-mug-saucer",
           "slug": 'breakouts',
           "featured": true,
         },
         {
           "id": "5",
           "title": "Venue",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-city",
           "slug": 'venue',
-          "featured": false,
-        },
-        {
-          "id": "6",
-          "title": "Watch Live",
-          "icon": "fa-screwdriver-wrench",
-          "slug": '',
-          "featured": false,
-        },
-        {
-          "id": "7",
-          "title": "Content Library",
-          "icon": "fa-screwdriver-wrench",
-          "slug": '',
           "featured": false,
         },
         {
           "id": "8",
           "title": "Speakers",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-person-chalkboard",
           "slug": 'speakers',
           "featured": true,
         },
         {
           "id": "9",
           "title": "Sustainability",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-star",
           "slug": 'sustainability',
           "featured": false,
         },
         {
           "id": "10",
           "title": "Meet your peers",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-people-arrows",
           "slug": 'delegates',
           "featured": false,
         },
         {
           "id": "11",
           "title": "Exhibitors",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-city",
           "slug": 'exhibitors',
           "featured": true,
         },
         {
           "id": "12",
           "title": "Forum",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-comments",
           "slug": 'forum',
           "featured": false,
         },
         {
           "id": "13",
           "title": "FAQs",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-question",
           "slug": 'faqs',
           "featured": true,
         },
         {
           "id": "14",
           "title": "Get in touch",
-          "icon": "fa-screwdriver-wrench",
+          "icon": "fa-address-book",
           "slug": 'contact',
           "featured": true,
         },
+      ],
+      footer: [
+        {
+          "id": "1",
+          "title": "Menu",
+          "icon": null,
+          "slug": null,
+          "items": [
+            {
+              "id": "3",
+              "title": "Agenda",
+              "icon": "fa-calendar-days",
+              "slug": 'agenda',
+              "featured": true,
+            },
+            {
+              "id": "4",
+              "title": "Breakouts",
+              "icon": "fa-mug-saucer",
+              "slug": 'breakouts',
+              "featured": true,
+            },
+            {
+              "id": "8",
+              "title": "Speakers",
+              "icon": "fa-person-chalkboard",
+              "slug": 'speakers',
+              "featured": true,
+            },
+            {
+              "id": "11",
+              "title": "Exhibitors",
+              "icon": "fa-city",
+              "slug": 'exhibitors',
+              "featured": true,
+            },
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Learn",
+          "icon": null,
+          "url": null,
+          "items": [
+            {
+              "id": "13",
+              "title": "FAQs",
+              "icon": "fa-question",
+              "slug": 'faqs',
+              "featured": true,
+            },
+            {
+              "id": "14",
+              "title": "Get in touch",
+              "icon": "fa-address-book",
+              "slug": 'contact',
+              "featured": true,
+            },
+          ]
+        },
+        {
+          "id": "3",
+          "title": "Legal",
+          "icon": null,
+          "url": null,
+          "items": [
+            {
+              "id": "1",
+              "title": "Privacy Policy",
+              "icon": "fa-address-book",
+              "slug": 'terms#privacypolicy',
+              "featured": true,
+            },
+            {
+              "id": "2",
+              "title": "Terms of Website Use",
+              "icon": "fa-address-book",
+              "slug": 'terms#terms',
+              "featured": true,
+            },
+            {
+              "id": "3",
+              "title": "Cookies Policy",
+              "icon": "fa-address-book",
+              "slug": 'terms#cookiepolicy',
+              "featured": true,
+            },
+          ]
+        }
       ]
     }
     return resource
   }
+  if (delegates) {
+    delegates.data = [
+      {
+        "attendeeId": 1,
+        "title": "Miss",
+        "firstName": "Claire",
+        "lastName": "Beverly",
+        "profilePic": "/images/delegates/delegate1.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 2,
+        "title": "Miss",
+        "firstName": "Nadia",
+        "lastName": "Daniels",
+        "profilePic": "/images/delegates/delegate2.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 3,
+        "title": "Miss",
+        "firstName": "Sacha",
+        "lastName": "Daniels",
+        "profilePic": "/images/delegates/delegate3.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 4,
+        "title": "Miss",
+        "firstName": "Rebecca",
+        "lastName": "Dujour",
+        "profilePic": "/images/delegates/delegate4.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 5,
+        "title": "Mr",
+        "firstName": "Andy",
+        "lastName": "Freeman",
+        "profilePic": "/images/delegates/delegate5.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 6,
+        "title": "Mr",
+        "firstName": "Chris",
+        "lastName": "Jeffreys",
+        "profilePic": "/images/delegates/delegate6.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 10,
+        "title": "Mr",
+        "firstName": "Test",
+        "lastName": "Test",
+        "profilePic": null,
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 7,
+        "title": "Miss",
+        "firstName": "Sarah",
+        "lastName": "Johnes",
+        "profilePic": "/images/delegates/delegate7.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 8,
+        "title": "Mr",
+        "firstName": "Rakib",
+        "lastName": "Ramen",
+        "profilePic": "/images/delegates/delegate8.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+      {
+        "attendeeId": 9,
+        "title": "Miss",
+        "firstName": "Caz",
+        "lastName": "Smith",
+        "profilePic": "/images/delegates/delegate9.png",
+        "linkedin": "https://www.linkedin.com/",
+      },
+    ]
+    return delegates
+  }
+}
+
+export function generateMenuHref(segment: any) {
+  const router = useRouter();
+  const slug = router.query.slug;
+  const href = `/pwa/${slug}/${segment}`;
+  return href;
 }

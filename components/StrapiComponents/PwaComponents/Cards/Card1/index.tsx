@@ -76,7 +76,7 @@ const Delegates = ({
             </div>
           </div>
         </div>
-        <div style={titleAndSubtitleStyle(isExpanded)}>
+        <div style={titleAndSubtitleStyle(isExpanded)} className='pb-4'>
           <CardTitle>
             {`${data.firstName} ${data.surname}`}
           </CardTitle>

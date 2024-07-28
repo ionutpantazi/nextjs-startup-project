@@ -54,7 +54,7 @@ const AgendaPage = ({
           <Container className=''>
             <InnerContainer className=''>
               <ComponentContainer className='flex flex-col'>
-                <TextAndIcons icon={'fa-people-group'} title={'Agenda'} intro={data.introduction} type={'agenda'} agendaItems={sortAgendaItemsByStartDate(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
+                <TextAndIcons icon={'fa-calendar-days'} title={'Activities'} intro={data.introduction} type={'agenda'} agendaItems={sortAgendaItemsByStartDate(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
                 <Agenda data={agendaData} isHomepage={false} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} title={'Your curated agenda'} />
               </ComponentContainer>
             </InnerContainer>

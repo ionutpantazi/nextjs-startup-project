@@ -8,7 +8,7 @@ const TextAndIcons = dnmc(() => import('components/StrapiComponents/PwaComponent
 const Agenda = dnmc(() => import('components/StrapiComponents/PwaComponents/Agenda'));
 const PwaSection = dnmc(() => import('components/StrapiComponents/PwaSection'));
 const FAQs = dnmc(() => import('components/StrapiComponents/PwaComponents/FAQs'));
-const Contact = dnmc(() => import('components/StrapiComponents/PwaComponents/Contact'));
+const Contact = dnmc(() => import('components/StrapiComponents/PwaComponents/Contact'), { ssr: false }); // ssr issue -> needs fixing
 
 const DynamicContent = ({
   data,
@@ -30,7 +30,7 @@ console.log(data)
             <div key={index}>
               {api.heading
                 ?
-                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} eventDetails={data.event.eventDetails} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
                 :
                 <>
                   {api.section.type == 'section' &&
@@ -52,7 +52,7 @@ console.log(data)
           {Object.keys(data).map((api, apiData) => (
             <div key={api}>
               {api == 'event' &&
-                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} eventDetails={data.event.eventDetails} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
               }
               {api == 'discussions' &&
                 <ComponentSectionsSection1 discussions={data['discussions']} />

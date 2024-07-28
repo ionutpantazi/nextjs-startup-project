@@ -13,7 +13,7 @@ export const SubTitle = styled.div`
   font-size: 25px;
   font-weight: 300;
   line-height: 22px;
-  color: ${props => props.theme.colors.brandlight};
+  color: ${props => props.theme.colors.white};
   padding-top: 20px;
 `
 
@@ -247,5 +247,21 @@ export const DropdownAndSearch = styled.div`
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     margin: 10px 0 30px;
     flex-direction: column;
+  }
+`
+
+export const NotLoggedInMessage = styled.div`
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  .link {
+    text-decoration: underline;
+    color: ${props => props.theme.colors.brand};
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 `

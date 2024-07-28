@@ -6,11 +6,13 @@ export const ImageContainer = styled.div`
   height: 24vw;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    height: 20vh;
+    height: 16vh;
   }
   margin-top: 56px;
+  margin-bottom: 0px;
   @media screen and (min-width: ${props => props.theme.screens.md}) {
     margin-top: 0px;
+    margin-bottom: -100px;
   }
 `
 
@@ -197,18 +199,24 @@ export const IWantToItem = styled.div`
   border-radius: 6px;
   overflow: hidden;
   
+  img {
+    filter: brightness(50%);
+  }
+  
   svg {
     z-index: 3;
     color: ${props => props.theme.colors.brand};
   }
 
   &:hover {
-    filter: brightness(200%);
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
+    img {
+      filter: brightness(100%);
+      -webkit-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      transition: all 1s ease;
+    }
   }
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
@@ -316,4 +324,8 @@ export const LeftEventTitle = styled(EventTitle)`
 
 export const LeftEventIntroduction = styled(EventIntroduction)`
   text-align: left;
+`
+
+export const IWantToContainer = styled.div`
+  
 `

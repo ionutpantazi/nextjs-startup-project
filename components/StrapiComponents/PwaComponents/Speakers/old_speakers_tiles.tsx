@@ -105,7 +105,7 @@ const Speakers = ({
                           <>
                             <RadialContainer />
                             <StyledNextImage
-                              src={'/images/default-avatar.jpg'}
+                              src={'/images/default-avatar.png'}
                               className=''
                               alt={""}
                               fill

@@ -1,15 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
-import { IMAGE_DOMAIN } from 'lib/constants'
-import { HeaderNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import styled, { css } from 'styled-components'
 import LoginModal from './LoginModal'
 import useSession from "lib/use-session";
 import { defaultSession } from "lib/session";
-import { redirectToEventRoot } from 'utils/helpers'
-import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import { ThemeContext } from 'components/Layout';
+import { redirectToEventRoot, generateMenuHref } from 'utils/helpers'
+import MenuDropdown from '@/components/StrapiComponents/PwaComponents/Common/MenuDropdown'
 
 export interface NavbarProps {
   isOpen?: boolean
@@ -103,12 +100,14 @@ const MenuBtn = styled.div`
 `
 
 const MenuBtnMobile = styled(MenuBtn)`
+  width: 120px;
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     display: none;
   }
 `
 
 const MenuBtnDesktop = styled(MenuBtn)`
+  width: 120px;
   @media screen and (min-width: ${props => props.theme.screens.md}) {
     display: none;
   }
@@ -163,10 +162,8 @@ const Navbar: React.FC<NavbarProps> = ({
   logo,
 }) => {
 
-  const theme = useContext(ThemeContext);
-  const { width } = useWindowSize();
   const { session, isLoading, logout } = useSession();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -181,35 +178,57 @@ const Navbar: React.FC<NavbarProps> = ({
     init();
   }, []);
 
-  useEffect(() => {
-    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
-      setIsMobile(true)
-    } else {
-      setIsMobile(false)
+  const MenuItems = ({ navigationData, type }: any) => {
+    if (type == 'all') {
+      return (
+        <>
+          {navigationData?.map((navItem: any, index: any) => (
+            <MenuItem navItem={navItem} key={index} />
+          ))
+          }
+        </>
+      )
     }
-  }, [])
+    if (type == 'featured') {
+      return (
+        <>
+          {navigationData?.map((navItem: any, index: any) => {
+            if (navItem.featured) {
+              return <MenuItem navItem={navItem} key={index} />
+            }
+          })
+          }
+        </>
+      )
+    }
+    if (type == 'more') {
+      return (
+        <>
+          {navigationData?.map((navItem: any, index: any) => {
+            if (!navItem.featured) {
+              return <MenuItem navItem={navItem} key={index} />
+            }
+          })
+          }
+        </>
+      )
+    }
+  }
 
-  const MoreItems = (navigationData: any) => {
+  const MenuItem = ({ navItem, index }: any) => {
     return (
-      <>
-        {navigationData?.map((navItem: any) => (
-          <>
-            <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-              <Pillar className='flex gap-2' data-twe-nav-link-ref>
-                <FAIcon
-                  icon={navItem.icon}
-                  width={20}
-                  height={20}
-                />
-                <span>
-                  {navItem.title}
-                </span>
-              </Pillar>
-            </li>
-          </>
-        ))
-        }
-      </>
+      <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+        <Pillar as='a' href={generateMenuHref(navItem.slug)} className='flex gap-2' data-twe-nav-link-ref>
+          <FAIcon
+            icon={navItem.icon}
+            width={20}
+            height={20}
+          />
+          <span>
+            {navItem.title}
+          </span>
+        </Pillar>
+      </li>
     )
   }
 
@@ -232,7 +251,7 @@ const Navbar: React.FC<NavbarProps> = ({
             />
             <span>Log out</span>
           </RegisterBtn>
-          : <RegisterBtn className='flex items-center justify-center gap-x-1'
+          : <RegisterBtn className='flex items-center justify-center gap-x-1' id="login_button"
             data-twe-toggle="modal"
             data-twe-target="#loginModal"
           >
@@ -261,16 +280,37 @@ const Navbar: React.FC<NavbarProps> = ({
           />
           <span>Menu</span>
         </MenuBtnDesktop>
-        <MenuBtnMobile className='flex items-center justify-center gap-x-1'>
-          <FAIcon
-            icon={'fa-bars'}
-            width={20}
-            height={20}
-          />
-          <span>More</span>
+        <MenuBtnMobile
+          className='flex items-center justify-center gap-x-1'
+          onClick={(e) => { e.preventDefault(); setIsDropdownVisible(!isDropdownVisible) }}
+        >
+          {isDropdownVisible
+            ?
+            <>
+              <FAIcon
+                icon={'fa-xmark'}
+                width={20}
+                height={20}
+              />
+              <span>Less</span>
+            </>
+            :
+            <>
+              <FAIcon
+                icon={'fa-bars'}
+                width={20}
+                height={20}
+              />
+              <span>More</span>
+            </>
+          }
         </MenuBtnMobile>
       </RightButtonsContainer>
     )
+  }
+
+  const togggleDropdown = (active: any) => {
+    setIsDropdownVisible(active)
   }
 
   return (
@@ -299,50 +339,25 @@ const Navbar: React.FC<NavbarProps> = ({
           <RightButtons show={'hidedesktop'} />
           <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
             {navigationData.length &&
-              <MenuList className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
-                {navigationData?.map((navItem: any) => (
-                  <>
-                    {isMobile
-                      ?
-                      <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-                        <Pillar className='flex gap-2' data-twe-nav-link-ref>
-                          <FAIcon
-                            icon={navItem.icon}
-                            width={20}
-                            height={20}
-                          />
-                          <span>
-                            {navItem.title}
-                          </span>
-                        </Pillar>
-                      </li>
-                      :
-                      <>
-                        {navItem.featured &&
-                          <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-                            <Pillar className='flex gap-2' data-twe-nav-link-ref>
-                              <FAIcon
-                                icon={navItem.icon}
-                                width={20}
-                                height={20}
-                              />
-                              <span>
-                                {navItem.title}
-                              </span>
-                            </Pillar>
-                          </li>
-                        }
-                      </>
-                    }
-                  </>
-                ))
-                }
-              </MenuList>
+              <>
+                <MenuList className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row max-md:!hidden" data-twe-navbar-nav-ref>
+                  <MenuItems navigationData={navigationData} type='featured' />
+                </MenuList>
+                <MenuList className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row md:!hidden" data-twe-navbar-nav-ref>
+                  <MenuItems navigationData={navigationData} type='all' />
+                </MenuList>
+              </>
             }
           </CollapsibleMenu>
+
           <RightButtons show={'hidemobile'} />
         </div>
       </NavigationContainer>
+      <MenuDropdown isDropdownVisible={isDropdownVisible} togggleDropdown={togggleDropdown}>
+        <MenuList className="!p-0 flex flex-col items-start" data-twe-navbar-nav-ref>
+          <MenuItems navigationData={navigationData} type='more' />
+        </MenuList>
+      </MenuDropdown>
       <LoginModal data={undefined} />
     </>
   )

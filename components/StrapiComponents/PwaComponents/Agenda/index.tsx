@@ -102,7 +102,7 @@ const AgendaItemSubTitle = styled.div`
   line-height: 20px;
   color: ${props => props.theme.colors.lightgrey};
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   @media screen and (max-width: ${props => props.theme.screens.md}) {
@@ -294,7 +294,7 @@ const Agenda = ({
                 {`till ${removeMinutes(moment(agenda.end).format('h:mma'))}`}
               </AgendaDateTo>
             </DateBox>
-            <DateAndRoomBox className='flex flex-col gap-2 md:justify-center justify-start md:w-2/12 w-full'>
+            <DateAndRoomBox className='flex flex-col gap-2 md:justify-center justify-start md:w-fit w-full'>
               <AgendaDateRoom className='flex md:hidden flex-row items-center'>
                 <FAIcon
                   icon={'fa-calendar-days'}
@@ -328,7 +328,7 @@ const Agenda = ({
                 </AgendaDateRoom>
               }
             </DateAndRoomBox>
-            <DetailsBox className='flex flex-col gap-2 justify-center md:w-4/12 w-full'>
+            <DetailsBox className='flex flex-col gap-2 justify-center md:w-6/12 w-full'>
               {agenda.title &&
                 <AgendaItemTitle className=''>
                   {agenda.title}
@@ -350,7 +350,7 @@ const Agenda = ({
                 }
               </div> */}
             </DetailsBox>
-            <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
+            {/* <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
               <Participants className='flex flex-row'>
                 {isHomepage &&
                   <>
@@ -363,43 +363,19 @@ const Agenda = ({
                     </ImageIcon>
                   </>
                 }
-                {/* {agenda.attributes?.Participants?.data?.map((participant: Speaker, index: number) => (
-                  <StyledNextImage
-                    key={index}
-                    src={IMAGE_DOMAIN + participant.attributes?.Image?.data?.attributes?.url}
-                    className=''
-                    alt={participant.attributes?.Image?.data?.attributes?.alternativeText ?? ""}
-                    width={30}
-                    height={30}
-                  />
-                ))
-                } */}
               </Participants>
-              {/* <ParticipantsText className=''>
-                {`Join ${agenda.attributes.Participants.data[0].attributes.Name} + others`}
-              </ParticipantsText> */}
-            </ParticipantsBox>
-            <Button1 as='a' href='#' className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit'>
-              <FAIcon
-                icon={'fa-heart'}
-                width={20}
-                height={20}
-              />
+            </ParticipantsBox> */}
+            <Button2 as='a' href={generateAgendaPageLink()} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit'>
               <span>
                 Add to agenda
               </span>
-            </Button1>
+            </Button2>
             <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
-              <Button1 as='a' href='#' className='md:flex hidden flex-row gap-4 items-center w-fit'>
-                <FAIcon
-                  icon={'fa-heart'}
-                  width={20}
-                  height={20}
-                />
+              <Button2 as='a' href={generateAgendaPageLink()} className='md:flex hidden flex-row gap-4 items-center w-fit'>
                 <span>
                   Add to agenda
                 </span>
-              </Button1>
+              </Button2>
               {isHomepage &&
                 <Button2 as='a' href={generateAgendaPageLink()} className='w-fit'>
                   <span>

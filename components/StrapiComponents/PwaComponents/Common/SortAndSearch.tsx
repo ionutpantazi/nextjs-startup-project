@@ -81,9 +81,9 @@ export const SortCategories = styled.div`
 
 export const SortCategoriesTitle = styled.div`
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 300;
   line-height: 16px;
-  color: ${props => props.theme.colors.brand};
+  color: ${props => props.theme.colors.white};
 `
 
 const SortAndSearch = ({
