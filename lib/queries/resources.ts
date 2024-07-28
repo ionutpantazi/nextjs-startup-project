@@ -1,5 +1,6 @@
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 import { get } from 'lib/httpClient'
+import { convertTempData } from 'utils/helpers'
 
 const getResourceData = async (slug: any, jwt: string) => {
   const config = {
@@ -8,7 +9,8 @@ const getResourceData = async (slug: any, jwt: string) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
-  const { data } = await get(`${NEXT_PUBLIC_API_URL}/resource/${slug}/page-details`, config);
+  let { data } = await get(`${NEXT_PUBLIC_API_URL}/resource/${slug}/page-details`, config);
+  data = convertTempData(null, data)
   return data
 };
 

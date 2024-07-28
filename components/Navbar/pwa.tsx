@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { IMAGE_DOMAIN } from 'lib/constants'
 import { HeaderNavigationProps, PillarsProps } from 'lib/queries/nav-data'
 import NextImage from 'next/image'
@@ -8,6 +8,8 @@ import LoginModal from './LoginModal'
 import useSession from "lib/use-session";
 import { defaultSession } from "lib/session";
 import { redirectToEventRoot } from 'utils/helpers'
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
 
 export interface NavbarProps {
   isOpen?: boolean
@@ -18,9 +20,10 @@ export interface NavbarProps {
 const NavigationContainer = styled.nav`
   z-index: 99;
   background-color: ${props => props.theme.components?.Navbar?.NavigationContainerBackground};
-  @media screen and (min-width: ${props => props.theme.screens.md}) {
-    height: 80px;
-  }
+  // @media screen and (min-width: ${props => props.theme.screens.md}) {
+  //   height: 80px;
+  // }
+  height: auto;
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     position: fixed;
     top: 0px;
@@ -29,7 +32,7 @@ const NavigationContainer = styled.nav`
 `
 
 const LogoContainer = styled.div`
-  position: absolute;
+  // position: absolute;
   // top: 1px;
 
   @media screen and (max-width: ${props => props.theme.screens.md}) {
@@ -53,6 +56,7 @@ const RightButtonsContainer = styled.div <{ show?: any }>`
 `
 
 const RegisterBtn = styled.div`
+  width: 120px;
   border-radius: ${props => props.theme.components?.Navbar?.BtnRadius};
   background-color: ${props => props.theme.colors.grey1};
   padding: 10px 20px;
@@ -140,13 +144,29 @@ const CollapsibleMenu = styled.div`
   }
 `
 
+const MenuList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1500px;
+  padding: 0 100px;
+  row-gap: 10px;
+  column-gap: 20px;
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    padding: 0;
+    row-gap: 2px;
+  }
+`
+
 const Navbar: React.FC<NavbarProps> = ({
   isOpen,
   navigationData,
   logo,
 }) => {
 
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
   const { session, isLoading, logout } = useSession();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -160,6 +180,38 @@ const Navbar: React.FC<NavbarProps> = ({
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (width && width < Number(theme.screens['md'].replace('px', ''))) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [])
+
+  const MoreItems = (navigationData: any) => {
+    return (
+      <>
+        {navigationData?.map((navItem: any) => (
+          <>
+            <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+              <Pillar className='flex gap-2' data-twe-nav-link-ref>
+                <FAIcon
+                  icon={navItem.icon}
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  {navItem.title}
+                </span>
+              </Pillar>
+            </li>
+          </>
+        ))
+        }
+      </>
+    )
+  }
 
   const RightButtons = (props: any) => {
     return (
@@ -224,7 +276,7 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <NavigationContainer className='flex-no-wrap relative flex w-full items-center justify-between py-2 shadow-dark-mild lg:flex-wrap lg:justify-start lg:py-4'>
-        <div className="flex w-full flex-wrap items-center justify-between px-3">
+        <div className="flex w-full md:flex-nowrap flex-wrap items-center justify-between px-3">
           {/* Logo  */}
           {logo?.path &&
             <LogoContainer as='a' href={redirectToEventRoot()} className='flex items-center'>
@@ -247,23 +299,45 @@ const Navbar: React.FC<NavbarProps> = ({
           <RightButtons show={'hidedesktop'} />
           <CollapsibleMenu className='!visible mt-2 hidden flex-grow basis-[100%] items-center justify-center md:mt-0 md:!flex md:basis-auto' id="navbarSupportedContent1" data-twe-collapse-item>
             {navigationData.length &&
-              <ul className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
+              <MenuList className="list-style-none flex flex-col ps-0 md:mt-1 mt-4 md:flex-row" data-twe-navbar-nav-ref>
                 {navigationData?.map((navItem: any) => (
-                  <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-                    <Pillar className='flex gap-2' data-twe-nav-link-ref>
-                      <FAIcon
-                        icon={navItem.icon}
-                        width={20}
-                        height={20}
-                      />
-                      <span>
-                        {navItem.title}
-                      </span>
-                    </Pillar>
-                  </li>
+                  <>
+                    {isMobile
+                      ?
+                      <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+                        <Pillar className='flex gap-2' data-twe-nav-link-ref>
+                          <FAIcon
+                            icon={navItem.icon}
+                            width={20}
+                            height={20}
+                          />
+                          <span>
+                            {navItem.title}
+                          </span>
+                        </Pillar>
+                      </li>
+                      :
+                      <>
+                        {navItem.featured &&
+                          <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
+                            <Pillar className='flex gap-2' data-twe-nav-link-ref>
+                              <FAIcon
+                                icon={navItem.icon}
+                                width={20}
+                                height={20}
+                              />
+                              <span>
+                                {navItem.title}
+                              </span>
+                            </Pillar>
+                          </li>
+                        }
+                      </>
+                    }
+                  </>
                 ))
                 }
-              </ul>
+              </MenuList>
             }
           </CollapsibleMenu>
           <RightButtons show={'hidemobile'} />

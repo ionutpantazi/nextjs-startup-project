@@ -227,14 +227,121 @@ export function generateThemeData(data: any) {
   return { themeData, themeMeta }
 }
 
-export function convertTempData(data: any) {
-  data.homeBanner = {
-    alt: 'hive',
-    path: '/images/lg-banner.png',
+export function convertTempData(event: any, resource: any) {
+  if (event) {
+    event.homeBanner = {
+      alt: 'hive',
+      path: '/images/lg-banner.png',
+    }
+    event.logo = {
+      alt: 'hive',
+      path: '/images/logo-live-group-vermilion.svg',
+    }
+    return event
   }
-  data.logo = {
-    alt: 'hive',
-    path: '/images/logo-live-group-vermilion.svg',
+  if (resource) {
+    resource.navigation = {
+      header: [
+        {
+          "id": "1",
+          "title": "Home",
+          "icon": "fa-screwdriver-wrench",
+          "slug": '/',
+          "featured": false,
+        },
+        {
+          "id": "2",
+          "title": "Evaluation",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'evaluation',
+          "featured": false,
+        },
+        {
+          "id": "3",
+          "title": "Agenda",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'agenda',
+          "featured": true,
+        },
+        {
+          "id": "4",
+          "title": "Breakouts",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'breakouts',
+          "featured": true,
+        },
+        {
+          "id": "5",
+          "title": "Venue",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'venue',
+          "featured": false,
+        },
+        {
+          "id": "6",
+          "title": "Watch Live",
+          "icon": "fa-screwdriver-wrench",
+          "slug": '',
+          "featured": false,
+        },
+        {
+          "id": "7",
+          "title": "Content Library",
+          "icon": "fa-screwdriver-wrench",
+          "slug": '',
+          "featured": false,
+        },
+        {
+          "id": "8",
+          "title": "Speakers",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'speakers',
+          "featured": true,
+        },
+        {
+          "id": "9",
+          "title": "Sustainability",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'sustainability',
+          "featured": false,
+        },
+        {
+          "id": "10",
+          "title": "Meet your peers",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'delegates',
+          "featured": false,
+        },
+        {
+          "id": "11",
+          "title": "Exhibitors",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'exhibitors',
+          "featured": true,
+        },
+        {
+          "id": "12",
+          "title": "Forum",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'forum',
+          "featured": false,
+        },
+        {
+          "id": "13",
+          "title": "FAQs",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'faqs',
+          "featured": true,
+        },
+        {
+          "id": "14",
+          "title": "Get in touch",
+          "icon": "fa-screwdriver-wrench",
+          "slug": 'contact',
+          "featured": true,
+        },
+      ]
+    }
+    return resource
   }
-  return data
 }
