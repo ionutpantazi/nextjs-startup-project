@@ -40,12 +40,12 @@ export type Upload = {
 }
 
 export enum DownloadType {
-  Document,
-  Image,
-  Media,
-  Presentation,
-  EmailAttachment,
-  Link
+  Document = 1,
+  Image = 2,
+  Media = 3,
+  Presentation = 4,
+  EmailAttachment = 5,
+  Link = 6
 }
 
 const ContentPages = ({

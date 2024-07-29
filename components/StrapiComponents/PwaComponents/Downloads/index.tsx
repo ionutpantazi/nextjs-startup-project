@@ -67,6 +67,10 @@ const DownloadCard = styled.div`
   height: 308px;
   overflow: hidden;
   border-radius: 10px;
+  
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const DownloadDetails = styled.div`

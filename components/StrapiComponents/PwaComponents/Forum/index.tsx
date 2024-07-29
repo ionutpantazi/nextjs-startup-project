@@ -83,6 +83,7 @@ const Button = styled.div`
 
   &:hover {
     background-color: ${props => props.theme.colors.brandlight};
+    cursor: pointer;
   }
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     font-size: 11px;
@@ -123,10 +124,6 @@ const ForumItemContent = styled.div`
   padding: 16px;
 `
 
-const ForumItemResponses = styled.div`
-  padding: 16px;
-`
-
 export const DiscussionFilter = styled.div`
   border-top: 1px solid #1e1e1e;
   color: ${props => props.theme.colors.grey1}; 
@@ -143,18 +140,6 @@ export const CommentBox = styled.div`
   background: ${props => props.theme.colors.darkgrey};
   border-radius: ${props => props.theme.borderRadius.components?.small};
   padding: 10px;
-`
-
-const LoadMore = styled.div`
-  padding-top: 10px;
-  color: ${props => props.theme.colors.grey1}; 
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 16px;
-
-  &:hover {
-    color: ${props => props.theme.colors.lightgrey};
-  }
 `
 
 const Detail = styled.div`

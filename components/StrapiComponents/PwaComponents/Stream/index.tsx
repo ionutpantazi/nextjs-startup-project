@@ -79,6 +79,10 @@ const StreamToggle = styled.div`
   height: 56px;
   border-radius: 6px;
   border: 1px solid ${props => props.theme.colors.brandlight};
+  
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const Stream = styled.div`
@@ -110,6 +114,10 @@ const DownloadCard = styled.div`
   height: 308px;
   overflow: hidden;
   border-radius: 10px;
+  
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const DownloadDetails = styled.div`
@@ -219,17 +227,16 @@ const ContentTabStream = ({
                 )
               })}
             </StreamToggleContainer>
-            {(selectedStream.placeholder || selectedStream.streamLiveInteractiveCode) &&
+            {(selectedStream.header || selectedStream.streamLiveInteractiveCode) &&
               <StreamInnerContainer>
-                {selectedStream.placeholder &&
+                {selectedStream.header &&
                 <Stream style={applyStreamContainerStyle()}>
-                  { selectedStream.placeholder && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.placeholder }} /> }
+                  { selectedStream.header && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.header }} /> }
                 </Stream>
                 }
                 {selectedStream.streamLiveInteractiveCode &&
                   <StreamChat style={applyStreamChatStyle()}>
-                    {/* <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.slido?.code}${session.isLoggedIn ? `/?user_name=${session.username}` : ""}${session.isLoggedIn ? `&user_email=${session.username}` : ""}`}></iframe> */}
-                    <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.streamLiveInteractiveCode}/?user_name=RW%20Dev%20LG&user_email=developer@livegroup.co.uk`}></iframe>
+                    <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.streamLiveInteractiveCode}${session.isLoggedIn ? `/?user_name=${session.username}` : ""}${session.isLoggedIn ? `&user_email=${session.username}` : ""}`}></iframe>
                   </StreamChat>
                 }
               </StreamInnerContainer>
@@ -237,9 +244,8 @@ const ContentTabStream = ({
           </StreamContainer>
         </InnerContainer>
       </Container>
-      {selectedStream.categories && selectedStream.categories.map((category: DownloadCategory) => (
-        <>
-        <Container>
+      {selectedStream.categories && selectedStream.categories.map((category: DownloadCategory, i: number) => (
+        <Container key={i}>
           <InnerContainer className='flex flex-col gap-4'>
             <Title>
               {category.title}
@@ -272,7 +278,6 @@ const ContentTabStream = ({
             </DownloadContainer>
           </InnerContainer>
         </Container >
-        </>
       ))}
     </>
   )
