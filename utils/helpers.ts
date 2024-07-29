@@ -223,7 +223,6 @@ export function generateThemeData(data: any) {
       }
     }
   }
-  console.log(themeData)
   return { themeData, themeMeta }
 }
 
