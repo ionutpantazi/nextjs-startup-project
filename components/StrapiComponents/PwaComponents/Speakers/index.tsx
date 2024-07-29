@@ -14,6 +14,7 @@ import {
   CardsGrid,
   GridItem,
 } from './styles'
+import { reorderSpeakersFlex } from './utils'
 
 const Speakers = ({
   data,
@@ -34,22 +35,18 @@ const Speakers = ({
     { label: 'Wellbeing', slug: 'wellbeing' },
   ]
 
-  const toggleExpand = (index: any, e: any) => {
+  const toggleExpand = (isExpanded: any, index: any, e: any) => {
     e.preventDefault()
     const newExpandedIndices = [...expandedIndices];
     newExpandedIndices[index] = !newExpandedIndices[index];
     setExpandedIndices(newExpandedIndices);
-    // let target = document.querySelector(`#card_grid_${index}`)
-    // target?.classList.add('animate-blur')
-
-    // setTimeout(function() {
-    //   target?.classList.remove('animate-blur')
-    // }, 500);
+    reorderSpeakersFlex(isExpanded, index)
   };
 
-  const divStyle = (isExpanded: any) => ({
+  const divStyle = (isExpanded: any, index: any) => ({
     width: isExpanded ? '556px' : '264px',
     marginRight: isExpanded ? '-30px' : '0px',
+    order: index,
     // transition: 'width 0.4s ease',
   });
 
@@ -67,9 +64,9 @@ const Speakers = ({
             </SubTitle>
             <SortAndSearch title='Choose a category:' dropdownValues={dropdownValues} />
             {data.data.length &&
-              <CardsGrid>
+              <CardsGrid id='card_grid_container'>
                 {data.data.map((speaker: any, index: number) => (
-                  <GridItem key={index} id={`card_grid_${index}`} style={divStyle(expandedIndices[index])} onClick={(e) => toggleExpand(index, e)}>
+                  <GridItem key={index} id={`card_grid_${index}`} style={divStyle(expandedIndices[index], index)} onClick={(e) => toggleExpand(expandedIndices[index], index, e)}>
                     <Card1 data={speaker} isExpanded={expandedIndices[index]} />
                   </GridItem>
                 ))

@@ -153,7 +153,11 @@ const MenuList = styled.ul`
   column-gap: 20px;
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     padding: 0;
-    row-gap: 2px;
+    row-gap: 10px;
+  }
+  @media screen and (max-width: ${props => props.theme.screens.lg}) {
+    padding: 0 40px;
+    row-gap: 10px;
   }
 `
 

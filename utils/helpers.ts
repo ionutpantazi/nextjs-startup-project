@@ -243,7 +243,7 @@ export function convertTempData(event: any, resource: any, delegates: any) {
       { title: 'Time', subtitle: '10:00', icon: 'fa-clock' },
     ]
     event.tilesData = [
-      { title: 'Meet the speakers', image: '/images/tiles/tile1.jpg',  slug: 'speakers', icon: 'fa-people-group' },
+      { title: 'Meet the speakers', image: '/images/tiles/tile1.jpg', slug: 'speakers', icon: 'fa-people-group' },
       { title: 'Meet the exhibitors', image: '/images/tiles/tile2.jpg', slug: 'exhibitors', icon: 'fa-screwdriver-wrench' },
       { title: 'View resources & learning materials', image: '/images/tiles/tile3.jpg', slug: 'faqs', icon: 'fa-heart' },
     ]

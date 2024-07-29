@@ -66,7 +66,7 @@ const Header = ({
   hideContentContainer,
   hideBody,
 }: any) => {
-console.log(hideContentContainer)
+
   const { session, isLoading } = useSession();
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
