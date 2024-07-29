@@ -31,6 +31,7 @@ const NavigationContainer = styled.nav`
 const LogoContainer = styled.div`
   // position: absolute;
   // top: 1px;
+  width: 244px;
 
   @media screen and (max-width: ${props => props.theme.screens.md}) {
     display: none;
@@ -354,7 +355,7 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
       </NavigationContainer>
       <MenuDropdown isDropdownVisible={isDropdownVisible} togggleDropdown={togggleDropdown}>
-        <MenuList className="!p-0 flex flex-col items-start" data-twe-navbar-nav-ref>
+        <MenuList className="!p-0 !max-w-full w-full flex flex-row justify-center" data-twe-navbar-nav-ref>
           <MenuItems navigationData={navigationData} type='more' />
         </MenuList>
       </MenuDropdown>

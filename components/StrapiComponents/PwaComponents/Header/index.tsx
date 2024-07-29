@@ -66,7 +66,7 @@ const Header = ({
   hideContentContainer,
   hideBody,
 }: any) => {
-
+console.log(hideContentContainer)
   const { session, isLoading } = useSession();
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
@@ -154,7 +154,7 @@ const Header = ({
   return (
     <OuterContainer className=''>
       {backgroundImage &&
-        <ImageContainer className='relative'>
+        <ImageContainer className='relative' hidebody={hideBody ? 'true' : 'false'}>
           {backgroundImage &&
             <>
               <StyledRadialContainer />
@@ -194,7 +194,7 @@ const Header = ({
                       </EventIntroduction>
                     }
 
-                    <IntroLandingContainer className='mt-6'>
+                    <IntroLandingContainer className='mt-6' hidebody={hideBody ? 'true' : 'false'}>
                       <div className='grid grid-cols-2 gap-2'>
                         <EventDetailsComponent eventDetails={eventDetails} />
                       </div>

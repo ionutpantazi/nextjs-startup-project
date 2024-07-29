@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import NextImage from 'next/image'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div <{ hidebody?: any }>`
   height: 24vw;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
@@ -10,9 +10,26 @@ export const ImageContainer = styled.div`
   }
   margin-top: 56px;
   margin-bottom: 0px;
+  @media screen and (min-width: ${props => props.theme.screens.sm}) {
+    ${({ hidebody }) => css`
+      ${props => hidebody == 'true' ? 'margin-bottom: -120px;' : 'margin-bottom: -100px;'};
+    `}
+  }
   @media screen and (min-width: ${props => props.theme.screens.md}) {
     margin-top: 0px;
-    margin-bottom: -100px;
+    ${({ hidebody }) => css`
+      ${props => hidebody == 'true' ? 'margin-bottom: -160px;' : 'margin-bottom: -100px;'};
+    `}
+  }
+  @media screen and (min-width: ${props => props.theme.screens.lg}) {
+    ${({ hidebody }) => css`
+      ${props => hidebody == 'true' ? 'margin-bottom: -220px;' : 'margin-bottom: -100px;'};
+    `}
+  }
+    @media screen and (min-width: ${props => props.theme.screens.xl}) {
+    ${({ hidebody }) => css`
+      ${props => hidebody == 'true' ? 'margin-bottom: -300px;' : 'margin-bottom: -100px;'};
+    `}
   }
 `
 
@@ -30,9 +47,11 @@ export const HeaderImage = styled(NextImage)`
   }
 `
 
-export const IntroLandingContainer = styled.div`
+export const IntroLandingContainer = styled.div <{ hidebody?: any }>`
   border-radius: ${props => props.theme.components?.Common?.ComponentContainerBorder};
-  padding: 40px 20px;
+  ${({ hidebody }) => css`
+    ${props => hidebody == 'true' ? 'padding: 40px 20px;' : 'padding: 10px 20px;'};
+  `}
   background-color: ${props => props.theme.components?.Header?.IntroLandingContainerBackground};
 
   filter: -webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.15);
@@ -319,6 +338,9 @@ export const LeftHeading = styled.div`
 `
 
 export const LeftEventTitle = styled(EventTitle)`
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 60px;
   text-align: left;
 `
 

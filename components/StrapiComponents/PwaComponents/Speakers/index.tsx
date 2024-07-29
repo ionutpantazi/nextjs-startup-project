@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import { IMAGE_DOMAIN } from 'lib/constants'
-import NextImage from 'next/image'
-import FAIcon from 'components/Bootstrap/FAIcon'
 import SortAndSearch from '../Common/SortAndSearch'
-import { RadialContainer } from '@/components/Bootstrap/Common'
-import { generateSpeakerCardGridLayout } from './utils'
+import dnmc from 'next/dynamic'
 import {
   OuterContainer,
   Container,
   InnerContainer,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
-import Card1 from 'components/StrapiComponents/PwaComponents/Cards/Card1'
+const Card1 = dnmc(() => import('components/StrapiComponents/PwaComponents/Cards/Card1'), { ssr: false });
 import {
   Title,
   SubTitle,

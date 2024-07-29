@@ -1,7 +1,6 @@
 import React from 'react'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import NextImage from 'next/image'
-import { RadialContainer } from '@/components/Bootstrap/Common'
 import {
   CardContainer,
   ImageContainer,
