@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import NextImage from 'next/image'
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
 import {
   CardContainer,
   ImageContainer,
@@ -15,9 +17,13 @@ const Delegates = ({
   isExpanded,
 }: any) => {
 
-  const imageStyle = (isExpanded: any) => ({
-    width: isExpanded ? '160px' : '200px',
-    height: isExpanded ? '180px' : '300px',
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+
+  const imageStyle = (isExpanded: any, isMobile: any) => ({
+    width: isExpanded ? isMobile ? '140px' : '160px' : '200px',
+    height: isExpanded ? isMobile ? '160px' : '180px' : '300px',
     // transition: 'all 0.6s ease',
   });
 
@@ -32,8 +38,8 @@ const Delegates = ({
   return (
     <>
       <CardContainer>
-        <div className='flex flex-row'>
-          <ImageContainer style={imageStyle(isExpanded)} className='relative' hidebackground={data.profilePic ? 'true' : 'false'}>
+        <div className='flex flex-col md:flex-row'>
+          <ImageContainer style={imageStyle(isExpanded, isMobile)} className='relative' hidebackground={data.profilePic ? 'true' : 'false'}>
             {data.profilePic &&
               <>
                 <NextImage
@@ -46,7 +52,7 @@ const Delegates = ({
               </>
             }
           </ImageContainer>
-          <div style={detailsStyle(isExpanded)} className='flex flex-col gap-2 px-8'>
+          <div style={detailsStyle(isExpanded)} className='flex flex-col gap-2 md:px-8'>
             <CardTitle>
               {`${data.firstName} ${data.surname}`}
             </CardTitle>

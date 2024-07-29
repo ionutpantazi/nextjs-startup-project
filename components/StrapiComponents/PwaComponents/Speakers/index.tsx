@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import SortAndSearch from '../Common/SortAndSearch'
 import dnmc from 'next/dynamic'
 import {
@@ -8,6 +8,8 @@ import {
   ComponentContainer,
 } from 'components/Bootstrap/Common'
 const Card1 = dnmc(() => import('components/StrapiComponents/PwaComponents/Cards/Card1'), { ssr: false });
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
 import {
   Title,
   SubTitle,
@@ -22,6 +24,10 @@ const Speakers = ({
   subtitle,
   type,
 }: any) => {
+
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
+  const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
 
   const [expandedIndices, setExpandedIndices] = useState(
     Array(data.data.length).fill(false)
@@ -44,7 +50,7 @@ const Speakers = ({
   };
 
   const divStyle = (isExpanded: any, index: any) => ({
-    width: isExpanded ? '556px' : '264px',
+    width: isExpanded ? isMobile ? '100%' : '556px' : '264px',
     marginRight: isExpanded ? '-30px' : '0px',
     order: index,
     // transition: 'width 0.4s ease',

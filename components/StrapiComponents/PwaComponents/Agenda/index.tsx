@@ -255,7 +255,7 @@ const Agenda = ({
       <AgendaTitle className='mb-4'>
         {title}
       </AgendaTitle>
-      {isMobile &&
+      <div className='md:hidden block'>
         <Swiper
           spaceBetween={10}
           slidesPerView={2}
@@ -282,7 +282,7 @@ const Agenda = ({
             }
           </DatesContainer>
         </Swiper>
-      }
+      </div>
       <AgendaInnerContainer className='flex flex-col gap-4'>
         {sortData.map((agenda: any, index: number) => (
           <AgendaItem className='md:flex grid grid-cols-2 flex-row flex-wrap content-start justify-around gap-4' key={index}>

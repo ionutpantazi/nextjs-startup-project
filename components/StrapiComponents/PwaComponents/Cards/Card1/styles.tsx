@@ -13,7 +13,7 @@ export const ImageContainer = styled.div <{ hidebackground?: any }>`
     ${props => hidebackground == 'true' ? '' : 'background: ' + props.theme.colors.brand + ';'};
   `}
   border-radius: ${props => props.theme.borderRadius.components.small};
-  height: 300px;
+  // height: 300px;
   min-width: 160px;
   overflow: hidden;
 `

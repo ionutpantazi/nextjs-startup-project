@@ -72,7 +72,7 @@ export const IconButton = styled.div <{ active?: any }>`
 `
 
 export const DatesContainer = styled.div`
-  display: flex;
+  // display: flex;
   justify-content: flex-end;
 
   @media screen and (max-width: ${props => props.theme.screens.md}) {

@@ -18,7 +18,7 @@ export type FAIconProps = Props &
 const calcSize = (val?: string | number) =>
   typeof val === 'number' ? `${val}px` : val
 
-const FAIcon = styled(FontAwesomeIcon)<FAIconProps>`
+const Icon = styled(FontAwesomeIcon)<FAIconProps>`
   ${COMMON}
   ${({ width, height }) => css`
     &,
@@ -28,5 +28,11 @@ const FAIcon = styled(FontAwesomeIcon)<FAIconProps>`
     }
   `}
 `
+
+const FAIcon = ({icon, width, height, className}: any) => {
+  return (
+    <Icon icon={icon} width={width} height={height} className={className} />
+  )
+}
 
 export default FAIcon
