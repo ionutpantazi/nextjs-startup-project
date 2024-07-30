@@ -257,6 +257,11 @@ export const CardsGrid = styled.div`
   max-width: 100%;
   gap: 0px;
   row-gap: 40px;
+
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    width: fit-content;
+    max-width: fit-content;
+  }
 `
 
 export const GridItem = styled.div`

@@ -258,7 +258,7 @@ const Agenda = ({
       <div className='md:hidden block'>
         <Swiper
           spaceBetween={10}
-          slidesPerView={2}
+          slidesPerView={'auto'}
           className='w-full my-4'
         >
           <DatesContainer className=''>

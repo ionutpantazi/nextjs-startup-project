@@ -22,12 +22,12 @@ const Forum = ({
   return (
     <>
       <PwaContentContainer>
-      <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
-        {data.discussions && data.discussions.data.length > 0 && session.isLoggedIn &&
+        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        {data?.discussions && data?.discussions?.data?.length > 0 && session?.isLoggedIn &&
           <ForumComponent data={data.discussions} />
         }
         {!session.isLoggedIn &&
-            <LoginPrompt title={'Get involved in the discussion'} message={'To view the forum'} />
+          <LoginPrompt title={'Get involved in the discussion'} message={'To view the forum'} />
         }
       </PwaContentContainer>
     </>

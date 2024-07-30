@@ -94,15 +94,15 @@ const Delegates = ({
         {isExpanded
           ?
           <FAIcon
-            icon={'fa-circle-minus'}
-            width={40}
-            height={40}
+            icon={'fa-minus'}
+            width={25}
+            height={25}
           />
           :
           <FAIcon
-            icon={'fa-circle-plus'}
-            width={40}
-            height={40}
+            icon={'fa-plus'}
+            width={25}
+            height={25}
           />
         }
       </ExpandButton>

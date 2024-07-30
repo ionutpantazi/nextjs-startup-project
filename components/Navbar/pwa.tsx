@@ -148,7 +148,7 @@ const MenuList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   max-width: 1500px;
-  padding: 0 100px;
+  padding: 0 20px;
   row-gap: 10px;
   column-gap: 20px;
   @media screen and (max-width: ${props => props.theme.screens.md}) {
@@ -156,7 +156,7 @@ const MenuList = styled.ul`
     row-gap: 10px;
   }
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 0 40px;
+    padding: 0 20px;
     row-gap: 10px;
   }
 `
@@ -223,12 +223,14 @@ const Navbar: React.FC<NavbarProps> = ({
   const MenuItem = ({ navItem, index }: any) => {
     return (
       <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-        <Pillar as='a' href={generateMenuHref(navItem.slug)} className='flex gap-2' data-twe-nav-link-ref>
-          <FAIcon
-            icon={navItem.icon}
-            width={20}
-            height={20}
-          />
+        <Pillar as='a' href={generateMenuHref(navItem.url)} className='flex gap-2' data-twe-nav-link-ref>
+          {navItem.icon &&
+            <FAIcon
+              icon={navItem.icon}
+              width={20}
+              height={20}
+            />
+          }
           <span>
             {navItem.title}
           </span>

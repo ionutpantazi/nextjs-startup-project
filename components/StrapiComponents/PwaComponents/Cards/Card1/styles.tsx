@@ -44,19 +44,21 @@ export const ExpandButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors.brand};
   border-radius: 100px;
-  height: 39px;
-  width: 39px;
+  height: 40px;
+  width: 40px;
+  // padding: 10px;
+  // background-clip: content-box, padding-box;
   position: relative;
   top: 80px;
   left: -20px;
-  svg {
-    color: ${props => props.theme.colors.brand};
 
-    &:hover {
-      color: ${props => props.theme.colors.brandlight };
-    }
+  &:hover {
+    background-color: ${props => props.theme.colors.brandlight};
+  }
+  svg {
+    color: ${props => props.theme.colors.white};
   }
 `
 
