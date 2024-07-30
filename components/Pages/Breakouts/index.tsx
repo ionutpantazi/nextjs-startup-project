@@ -9,6 +9,10 @@ import {
   SectionTitle,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
 const Breakouts = dnmc(() => import('components/StrapiComponents/PwaComponents/Breakouts'));
@@ -29,11 +33,15 @@ const BreakoutsPage = ({
   return (
     <>
       <PwaContentContainer>
-        <Header title={'Breakouts'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer className=''>
           <Container className=''>
             <InnerContainer className=''>
               <ComponentContainer className='flex flex-col'>
+                <LeftEventTitle>
+                  Breakouts
+                </LeftEventTitle>
+                <Ruler />
                 <Breakouts data={data} subtitle={'Breakouts and campfires to facilitate networking'} />
               </ComponentContainer>
             </InnerContainer>

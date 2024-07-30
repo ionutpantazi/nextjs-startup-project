@@ -36,6 +36,10 @@ import {
   DropdownAndSearch,
   NotLoggedInMessage,
 } from './styles'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 const Badge = (props: any) => {
   return (
@@ -77,9 +81,10 @@ const Delegates = ({
           {!session.isLoggedIn
             ?
             <ComponentContainer className='flex flex-col'>
-              <SubTitle>
-                {subtitle}
-              </SubTitle>
+              <LeftEventTitle>
+                Delegates
+              </LeftEventTitle>
+              <Ruler />
               <NotLoggedInMessage>
                 <p>
                   To view the delegates list please <span className='link' onClick={login}>log in.</span>
@@ -94,9 +99,10 @@ const Delegates = ({
             </ComponentContainer>
             :
             <ComponentContainer className='flex flex-col'>
-              {/* <Title>
-              {title}
-            </Title> */}
+              <LeftEventTitle>
+                Delegates
+              </LeftEventTitle>
+              <Ruler />
               <SubTitle>
                 {subtitle}
               </SubTitle>

@@ -13,6 +13,10 @@ import {
   SectionTitle,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 import 'swiper/css';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
@@ -164,9 +168,10 @@ const ComponentExhibitorsPanel = ({
       <Container>
         <InnerContainer className='flex flex-col gap-4'>
           <ComponentContainer>
-            <Title>
+            <LeftEventTitle>
               {data.title}
-            </Title>
+            </LeftEventTitle>
+            <Ruler />
             <ExhibitorContainer className='w-full grid gap-4'>
               {exhibitors.map((exhibitor: ExhibitorItem) => (
                 <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.width)} onClick={() => navigateToExhibitor(exhibitor.id)}>

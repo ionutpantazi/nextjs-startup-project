@@ -23,7 +23,7 @@ const Contact = ({
   return (
     <>
       <PwaContentContainer>
-      <Header title={'Contact'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+      <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data &&
           <ComponentSectionsContact data={data.event} contactData={data.resource.contact} />
         }

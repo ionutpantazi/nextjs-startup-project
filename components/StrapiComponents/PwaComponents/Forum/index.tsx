@@ -21,6 +21,10 @@ import { CommentContent } from '../Discussions/CommentContent'
 import { ActionButtons } from '../Discussions/ActionButtons'
 import { AuthorDetails } from '../Discussions/styles'
 var moment = require('moment');
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 const ForumTitle = styled.div`
   font-size: 22px;
@@ -161,7 +165,7 @@ const ForumComponent = ({
       setIsMobile(false)
     }
   }, [])
-  
+
   const navigateToDiscussion = (id: string) => {
     const path = router.asPath;
     router.push(`${path}/${id}`);
@@ -171,6 +175,11 @@ const ForumComponent = ({
     <Container>
       <InnerContainer>
         <ComponentContainer className='flex flex-col gap-4'>
+          <LeftEventTitle>
+            Forum
+          </LeftEventTitle>
+          <Ruler />
+
           {data.data.map((discussion: any, index: number) => (
             <ForumItem key={index}>
               <ForumItemContent className='md:flex grid flex-row flex-wrap content-start justify-around gap-4'>
@@ -183,21 +192,21 @@ const ForumComponent = ({
                 />
                 <Detail className='flex flex-col gap-2 justify-center md:w-8/12 w-full'>
                   <AuthorDetails className=''>
-                      {discussion.authorName} | {moment(discussion.datePosted).fromNow()}
+                    {discussion.authorName} | {moment(discussion.datePosted).fromNow()}
                   </AuthorDetails>
                   <DetailsBox className='flex flex-col gap-2 justify-center w-full'>
-                      {discussion.title &&
-                        <ForumItemTitle className=''>
-                          {discussion.title}
-                        </ForumItemTitle>
-                      }
-                      {discussion.text &&
-                        <ForumItemSubTitle className=''
-                          dangerouslySetInnerHTML={{
-                            __html: discussion.text,
-                          }}
-                        />
-                      }
+                    {discussion.title &&
+                      <ForumItemTitle className=''>
+                        {discussion.title}
+                      </ForumItemTitle>
+                    }
+                    {discussion.text &&
+                      <ForumItemSubTitle className=''
+                        dangerouslySetInnerHTML={{
+                          __html: discussion.text,
+                        }}
+                      />
+                    }
                   </DetailsBox>
                   <ActionButtons impressions={discussion.impressions ?? 0} comments={discussion.responses?.length ?? 0} />
                 </Detail>

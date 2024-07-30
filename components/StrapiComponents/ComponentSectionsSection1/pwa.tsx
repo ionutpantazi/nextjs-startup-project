@@ -36,7 +36,7 @@ const ComponentSectionsSection1 = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            {discussions.data.length &&
+            {discussions?.data?.length &&
               <Discussion data={discussions} />
             }
           </ComponentContainer>

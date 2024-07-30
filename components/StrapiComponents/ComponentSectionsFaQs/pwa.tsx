@@ -12,12 +12,10 @@ import {
   ComponentContainer,
 } from 'components/Bootstrap/Common'
 import FAIcon from 'components/Bootstrap/FAIcon'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
 import {
-  StrapiFile
-} from 'interfaces'
-
-import 'swiper/css';
-import { useWindowSize } from '@/lib/hooks/useWindowSize';
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 export type FAQs = {
   title: string;
@@ -68,7 +66,7 @@ const FaqsContainer = styled.div <{ hasinfobox?: any }>`
 
 const FaqItem = styled.div`
   border-radius: ${props => props.theme.borderRadius.components?.small};
-  background-color: ${props => props.theme.components?.FAQs?.FaqItemBackground};
+  background-color: ${props => props.theme.colors.darkgrey};
   padding: 20px;
   &:hover {
     cursor: pointer;
@@ -173,65 +171,65 @@ const ComponentSectionsFaQs = ({
   return (
     <Container className=''>
       <StyledInnerContainer className='flex flex-col gap-4' hasinfobox={'false'}>
-        {title &&
-          <Title>
+        <ComponentContainer className='flex flex-col'>
+          <LeftEventTitle>
             {title}
-          </Title>
-        }
-        <FiltersContainer className='flex flex-row gap-2'>
-          {/* {faqCategories.map((category: CategoryItem, index) => (
+          </LeftEventTitle>
+          <Ruler />
+          <FiltersContainer className='flex flex-row gap-2'>
+            {/* {faqCategories.map((category: CategoryItem, index) => (
             <Category className='' data-value={category.Slug} onClick={e => setActiveCategory(e)} active={activeFilter == category.Slug ? 'true' : 'false'} key={index}>
               {category.Title}
             </Category>
           ))
           } */}
-        </FiltersContainer>
-        <div className='flex justify-between lg:flex-row flex-col gap-x-24 gap-y-6 '>
-          <FaqsContainer id='accordionExample' className='flex lg:w-4/5 w-full' key={`faq_accordion_${activeFilter}`} hasinfobox={'false'}>
-            {faqs.map((faq: FAQs, index: number) => (
-              <FaqItem
-                key={index}
-                className='group'
-                data-twe-collapse-init
-                data-twe-target={open ? '#faq_collapse' : `#faq_collapse_${index}_${activeFilter}`}
-                aria-expanded={open ? 'true' : 'false'}
-                aria-controls={`faq_collapse_${index}_${activeFilter}`}
-                id={`faq_item_${index}_${activeFilter}`}
-                data-twe-collapse-collapsed
-              >
-                <div className='flex flex-row gap-6'>
-                  {!open &&
-                    <>
-                      <PlusIcon />
-                      <MinusIcon />
-                    </>
-                  }
-                  <FaqQuestion>
-                    {faq.title}
-                  </FaqQuestion>
-                </div>
-
-                <FaqAnswer
-                  id={`faq_collapse_${index}_${activeFilter}`}
-                  className={`${open ? '' : '!visible hidden'}`}
-                  data-twe-collapse-item
-                  aria-labelledby={`faq_item_${index}_${activeFilter}`}
-                  data-twe-parent="#accordionExample"
+          </FiltersContainer>
+          <div className='flex justify-between lg:flex-row flex-col gap-x-24 gap-y-6 '>
+            <FaqsContainer id='accordionExample' className='flex lg:w-4/5 w-full' key={`faq_accordion_${activeFilter}`} hasinfobox={'false'}>
+              {faqs.map((faq: FAQs, index: number) => (
+                <FaqItem
+                  key={index}
+                  className='group'
+                  data-twe-collapse-init
+                  data-twe-target={open ? '#faq_collapse' : `#faq_collapse_${index}_${activeFilter}`}
+                  aria-expanded={open ? 'true' : 'false'}
+                  aria-controls={`faq_collapse_${index}_${activeFilter}`}
+                  id={`faq_item_${index}_${activeFilter}`}
+                  data-twe-collapse-collapsed
                 >
-                  <br />
-                  <br />
-                  <br />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: faq.longDesc,
-                    }}
-                  />
-                </FaqAnswer>
-              </FaqItem>
-            ))
-            }
-          </FaqsContainer>
-          {/* {data.Info_Box &&
+                  <div className='flex flex-row gap-6'>
+                    {!open &&
+                      <>
+                        <PlusIcon />
+                        <MinusIcon />
+                      </>
+                    }
+                    <FaqQuestion>
+                      {faq.title}
+                    </FaqQuestion>
+                  </div>
+
+                  <FaqAnswer
+                    id={`faq_collapse_${index}_${activeFilter}`}
+                    className={`${open ? '' : '!visible hidden'}`}
+                    data-twe-collapse-item
+                    aria-labelledby={`faq_item_${index}_${activeFilter}`}
+                    data-twe-parent="#accordionExample"
+                  >
+                    <br />
+                    <br />
+                    <br />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: faq.longDesc,
+                      }}
+                    />
+                  </FaqAnswer>
+                </FaqItem>
+              ))
+              }
+            </FaqsContainer>
+            {/* {data.Info_Box &&
             <InfoBoxContainer className='flex flex-col gap-6 items-center h-fit lg:w-60 w-full'>
               <div className=''>
                 <NextImage
@@ -251,7 +249,8 @@ const ComponentSectionsFaQs = ({
               <Button data={data.Info_Box.Button} />
             </InfoBoxContainer>
           } */}
-        </div>
+          </div>
+        </ComponentContainer>
       </StyledInnerContainer>
     </Container>
   )

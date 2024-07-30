@@ -16,6 +16,10 @@ import {
   CardsGrid,
   GridItem,
 } from './styles'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 import { reorderSpeakersFlex } from './utils'
 
 const Speakers = ({
@@ -62,9 +66,10 @@ const Speakers = ({
       <Container className=''>
         <InnerContainer className=''>
           <ComponentContainer className='flex flex-col'>
-            {/* <Title>
-              {title}
-            </Title> */}
+            <LeftEventTitle>
+              Speakers
+            </LeftEventTitle>
+            <Ruler />
             <SubTitle>
               {subtitle}
             </SubTitle>

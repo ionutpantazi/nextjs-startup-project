@@ -21,7 +21,7 @@ const Faqs = ({
   return (
     <>
       <PwaContentContainer>
-        <Header title={data.speakers?.data?.length ? 'Speakers' : 'Delegates'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data.speakers?.data?.length &&
           <Speakers data={data.speakers} title={'Speakers'} subtitle={'Meet our thought leaders'} type={'speaker'} />
         }

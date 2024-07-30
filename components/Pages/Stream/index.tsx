@@ -18,7 +18,7 @@ const Stream = ({
   return (
     <>
       <PwaContentContainer>
-        <Header title={'Live Stream'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data &&
           <ComponentStreamPanel data={data.stream} />
         }

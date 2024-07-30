@@ -8,6 +8,10 @@ import useSession from "lib/use-session";
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { Download, DownloadCategory, DownloadType } from '@/components/Pages/ContentPages'
+import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
+import {
+  LeftEventTitle,
+} from '@/components/StrapiComponents/PwaComponents/Header/styles'
 
 export interface ContentTabStreamProps {
   data: Stream[]
@@ -140,15 +144,15 @@ const DownloadIcon = styled.div`
 const ContentTabStream = ({
   data
 }: ContentTabStreamProps) => {
-  
+
   const router = useRouter()
-  
+
   const { session, isLoading } = useSession();
 
   const { width } = useWindowSize();
 
-  const [ selectedStream, setSelectedStream ] = useState<Stream>(data[0]);
-  
+  const [selectedStream, setSelectedStream] = useState<Stream>(data[0]);
+
   const isCurrentStream = (id: string) => {
     if (id === selectedStream.id) {
       return {
@@ -167,10 +171,9 @@ const ContentTabStream = ({
         break;
     }
   }
-  
+
   const applyDownloadCardStyle = () => {
-    if(width && width < Number(theme.screens['lg'].replace('px', '')))
-    {
+    if (width && width < Number(theme.screens['lg'].replace('px', ''))) {
       return {
         flex: '0 0 100%',
       };
@@ -182,8 +185,7 @@ const ContentTabStream = ({
   }
 
   const applyStreamContainerStyle = () => {
-    if(width && width < Number(theme.screens['xl'].replace('px', '')))
-    {
+    if (width && width < Number(theme.screens['xl'].replace('px', ''))) {
       return {
         flex: '0 0 100%',
       };
@@ -201,8 +203,7 @@ const ContentTabStream = ({
   }
 
   const applyStreamChatStyle = () => {
-    if(width && width < Number(theme.screens['xl'].replace('px', '')))
-    {
+    if (width && width < Number(theme.screens['xl'].replace('px', ''))) {
       return {
         flex: '0 0 100%',
       };
@@ -212,17 +213,21 @@ const ContentTabStream = ({
       };
     }
   }
-  
+
   return (
     <>
       <Container>
         <InnerContainer className='flex flex-col gap-4'>
+          <LeftEventTitle>
+            Live stream
+          </LeftEventTitle>
+          <Ruler />
           <StreamContainer className='w-full grid gap-4'>
             <StreamToggleContainer>
               {data.map(x => {
                 return (
                   <StreamToggle key={x.id} style={isCurrentStream(x.id)} onClick={() => setSelectedStream(x)}>
-                      {x.title}
+                    {x.title}
                   </StreamToggle>
                 )
               })}
@@ -230,9 +235,9 @@ const ContentTabStream = ({
             {(selectedStream.header || selectedStream.streamLiveInteractiveCode) &&
               <StreamInnerContainer>
                 {selectedStream.header &&
-                <Stream style={applyStreamContainerStyle()}>
-                  { selectedStream.header && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.header }} /> }
-                </Stream>
+                  <Stream style={applyStreamContainerStyle()}>
+                    {selectedStream.header && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.header }} />}
+                  </Stream>
                 }
                 {selectedStream.streamLiveInteractiveCode &&
                   <StreamChat style={applyStreamChatStyle()}>
@@ -262,7 +267,7 @@ const ContentTabStream = ({
                           className=''
                           alt={download.upload.alt ?? ""}
                           fill
-                          style={{objectFit:'cover'}}
+                          style={{ objectFit: 'cover' }}
                         />
                       </>
                     }

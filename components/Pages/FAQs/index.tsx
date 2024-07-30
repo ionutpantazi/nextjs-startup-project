@@ -20,9 +20,9 @@ const Faqs = ({
   return (
     <>
       <PwaContentContainer>
-        <Header title={'FAQs'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data.event?.faqs?.length &&
-          <ComponentSectionsFaQs faqs={data['event']['faqs']} open={true} />
+          <ComponentSectionsFaQs faqs={data['event']['faqs']} title={'FAQs'} open={true} />
         }
       </PwaContentContainer>
     </>
