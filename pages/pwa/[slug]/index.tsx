@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     const navigationData = await fetchNavigation(true);
     let data = await getPageData(segment0, jwt)
     let logo = data?.event.logo;
-    if (!data?.event?.eventId) {
+    if (!data?.event?.dateCreated) {
       return {
         props: {
           error: {

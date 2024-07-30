@@ -96,27 +96,33 @@ const Footer: React.FC<FooterProps> = ({
       <RightColumn className='sm:w-1/2 w-auto flex flex-row justify-between'>
         {navigationData.length &&
           <>
-            {navigationData.map((navItem: any) => (
-              <NavigationContainer className="w-1/3 flex" key={navItem.id}>
+            {navigationData.map((navItem: any, index: any) => (
+              <NavigationContainer className="w-1/3 flex" key={index}>
                 {navItem.title &&
                   <NavigationParentContainer className="flex flex-col sm:gap-y-4 gap-y-2">
                     <NavigationParentTitle className="font-semibold sm:mb-4 mb-2">
                       {navItem.title}
                     </NavigationParentTitle>
-                    {navItem.items?.length &&
+                    {navItem.items?.length
+                      ?
                       <>
-                        {navItem.items.map((navItemChild: any) => (
-                          <NavigationChildrenTitle className="font-medium" key={navItemChild.id}>
-                            <a
-                              className="transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none"
-                              href={generateMenuHref(navItemChild.slug)}
-                            >
-                              {navItemChild.title}
-                            </a>
-                          </NavigationChildrenTitle>
+                        {navItem.items.map((navItemChild: any, index: any) => (
+                          <div key={index}>
+                            {navItemChild &&
+                              <NavigationChildrenTitle className="font-medium" >
+                                <a
+                                  className="transition duration-200 hover:text-gray-500 hover:ease-in-out focus:text-gray-500 active:text-gray-500 motion-reduce:transition-none"
+                                  href={generateMenuHref(navItemChild.url)}
+                                >
+                                  {navItemChild.title}
+                                </a>
+                              </NavigationChildrenTitle>
+                            }
+                          </div>
                         ))
                         }
                       </>
+                      : <></>
                     }
                   </NavigationParentContainer>
                 }
