@@ -518,11 +518,15 @@ export function convertTempData(event: any, resource: any, delegates: any) {
 }
 
 export function generateMenuHref(segment: any) {
-  if(segment.startsWith('https://')){
+  const router = useRouter();
+  const slug = router.query.slug;
+  if (segment.startsWith('https://')) {
     return segment;
+  } if (segment.startsWith('contenttabs/')) {
+    let id = segment.match(/ctid=(.*$)/)[1];
+    const href = `/pwa/${slug}/pages/${id}`;
+    return href;
   } else {
-    const router = useRouter();
-    const slug = router.query.slug;
     const href = `/pwa/${slug}/${segment}`;
     return href;
   }
