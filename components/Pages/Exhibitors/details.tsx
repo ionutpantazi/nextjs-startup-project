@@ -1,12 +1,7 @@
 import React, { useState, useEffect, Children } from 'react'
-import dynamic from 'next/dynamic'
 import styled, { css } from 'styled-components'
 import ComponentExhibitorPanel from '@/components/StrapiComponents/ComponentExhibitorPanel'
 import Header from '@/components/StrapiComponents/PwaComponents/Header'
-
-export const components = {
-  ComponentExhibitorPanel: dynamic(() => import('@/components/StrapiComponents/ComponentExhibitorPanel/index')),
-};
 
 const PwaContentContainer = styled.div`
 `

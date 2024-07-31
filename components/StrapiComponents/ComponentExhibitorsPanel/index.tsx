@@ -24,8 +24,9 @@ import { ExhibitorItem, CardWidth } from '../ComponentExhibitorPanel'
 
 export type ComponentExhibitors = {
   id: string,
-  title: string;
-  exhibitors: {
+  title: string,
+  header: string,
+  items: {
     data: ExhibitorItem[]
   }
 }
@@ -73,6 +74,10 @@ const ExhibitorCard = styled.div`
   margin: 0 auto;
   height: 308px;
   overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const ExhibitorDetails = styled.div`
@@ -110,23 +115,29 @@ const ComponentExhibitorsPanel = ({
 
   const { width } = useWindowSize();
 
-  const [exhibitors, setExhibitors] = useState<any>(data.exhibitors.data);
+  const [exhibitors] = useState<any>(data.items);
 
-  const navigateToExhibitor = (id: string) => {
-    router.push(`/pwa/hivedemo/exhibitors/${id}`);
+  const navigateToItem = (url: string) => {
+    const exhibitorUrlRegex = /exhibitor\.aspx\?eid=(\d+)/i;
+    
+    const isExhibitor = url.match(exhibitorUrlRegex);
+    
+    if (isExhibitor) {
+      router.push(`${router.asPath}/${isExhibitor[1]}`);
+    }
   }
-
-  const applyExhibitorCardStyle = (cardWidth: CardWidth) => {
-
-    switch (cardWidth) {
-      case CardWidth.full:
+  
+  const applyExhibitorCardStyle = (columnSize: number) => {
+    switch (columnSize) {
+      case 12:
         return {
           flex: '0 0 100%',
           height: '600px',
           'border-radius': '10px'
         };
-      case CardWidth.half:
-        if (width && width < Number(theme.screens['lg'].replace('px', ''))) {
+      case 6:
+        if(width && width < Number(theme.screens['lg'].replace('px', '')))
+        {
           return {
             flex: '0 0 100%',
             height: '320px',
@@ -140,8 +151,9 @@ const ComponentExhibitorsPanel = ({
             'border-radius': '10px'
           };
         }
-      case CardWidth.quarter:
-        if (width && width > Number(theme.screens['sm'].replace('px', '')) && width < Number(theme.screens['lg'].replace('px', ''))) {
+      case 3:
+        if (width &&  width > Number(theme.screens['sm'].replace('px', '')) && width < Number(theme.screens['lg'].replace('px', '')))
+        {
           return {
             flex: '0 0 calc(50% - 8px)',
             height: '320px',
@@ -168,23 +180,19 @@ const ComponentExhibitorsPanel = ({
       <Container>
         <InnerContainer className='flex flex-col gap-4'>
           <ComponentContainer>
-            <LeftEventTitle>
-              {data.title}
-            </LeftEventTitle>
-            <Ruler />
             <ExhibitorContainer className='w-full grid gap-4'>
               {exhibitors.map((exhibitor: ExhibitorItem) => (
-                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.width)} onClick={() => navigateToExhibitor(exhibitor.id)}>
+                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.cardColumnSize)} onClick={() => navigateToItem(exhibitor.url)}>
                   <ExhibitorIcon className='row-span-1 grid content-end relative'>
-                    {exhibitor?.image?.data?.attributes?.url &&
+                    {exhibitor?.upload &&
                       <>
                         <RadialContainer />
                         <StyledNextImage
-                          src={IMAGE_DOMAIN + exhibitor.image.data.attributes.url}
+                          src={exhibitor.upload.path ?? ""}
                           className=''
-                          alt={exhibitor.image.data.attributes.alternativeText ?? ""}
+                          alt={exhibitor.upload.alt ?? ""}
                           fill
-                          style={{ objectFit: 'cover' }}
+                          style={{objectFit:'cover'}}
                         />
                       </>
                     }

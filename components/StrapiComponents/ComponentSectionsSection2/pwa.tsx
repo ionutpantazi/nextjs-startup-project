@@ -68,9 +68,7 @@ const ComponentSectionsSection2 = ({
   delegates,
   speakers,
 }: ComponentSectionsSection2Props) => {
- 
-  if(!agenda?.data)return <></>
-  
+
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
@@ -82,6 +80,8 @@ const ComponentSectionsSection2 = ({
       handleAgendaDateChange(removeTime(agenda.data[0].start))
     }
   }, []);
+
+  if(!agenda?.data)return <></>
 
   const handleAgendaDateChange = (date: string) => {
     setSelectedAgendaDate(date);

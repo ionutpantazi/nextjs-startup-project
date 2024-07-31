@@ -13,6 +13,7 @@ import {
 import 'swiper/css';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { SubTitle } from '../PwaComponents/Speakers/styles'
+import { Upload } from '@/components/Pages/ContentPages'
 
 export const enum CardWidth {
   full,
@@ -24,9 +25,11 @@ export type ExhibitorItem = {
   id: string,
   title: string,
   subtitle: string,
-  image: StrapiFile,
+  url: string,
+  cardColumnSize: number,
   target: string,
-  width: CardWidth,
+  order: number,
+  upload: Upload
 }
 
 export type ComponentExhibitor = {
@@ -85,6 +88,10 @@ const ExhibitorCard = styled.div`
   margin: 0 auto;
   height: 308px;
   overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const ExhibitorDetails = styled.div`
@@ -158,16 +165,15 @@ const ComponentExhibitorPanel = ({
     console.log("exhibitor", exhibitor)
   }, [exhibitor])
   
-  const applyExhibitorCardStyle = (cardWidth: CardWidth) => {
-
-    switch (cardWidth) {
-      case CardWidth.full:
+  const applyExhibitorCardStyle = (columnSize: number) => {
+    switch (columnSize) {
+      case 12:
         return {
           flex: '0 0 100%',
           height: '600px',
           'border-radius': '10px'
         };
-      case CardWidth.half:
+      case 6:
         if(width && width < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
@@ -183,7 +189,7 @@ const ComponentExhibitorPanel = ({
             'border-radius': '10px'
           };
         }
-      case CardWidth.quarter:
+      case 3:
         if (width &&  width > Number(theme.screens['sm'].replace('px', '')) && width < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
@@ -229,9 +235,6 @@ const ComponentExhibitorPanel = ({
   return (
     <Container>
       <InnerContainer className='flex flex-col gap-4'>
-        <SubTitle>
-          {data.title}
-        </SubTitle>
         <ExhibitorContainer className='w-full grid gap-4'>
           <ExhibitorHeader>
             {data.header}
@@ -250,16 +253,16 @@ const ComponentExhibitorPanel = ({
             </ExhibitorContact>
           </ExhibitorDescContactContainer>
 
-          {exhibitor.items.data.map((item: ExhibitorItem) => (
-            <ExhibitorCard key={item.id} style={applyExhibitorCardStyle(item.width)}>
+          {exhibitor.items && exhibitor.items.map((item: ExhibitorItem) => (
+            <ExhibitorCard key={item.id} style={applyExhibitorCardStyle(item.cardColumnSize)}>
               <ExhibitorIcon className='row-span-1 grid content-end relative'>
-                {item?.image?.data?.attributes?.url &&
+                {item?.upload &&
                   <>
                     <RadialContainer />
                     <StyledNextImage
-                      src={IMAGE_DOMAIN + item.image.data.attributes.url}
+                      src={item.upload.path ?? ""}
                       className=''
-                      alt={item.image.data.attributes.alternativeText ?? ""}
+                      alt={item.upload.alt ?? ""}
                       fill
                       style={{objectFit:'cover'}}
                     />
