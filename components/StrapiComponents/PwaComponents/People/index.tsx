@@ -105,8 +105,8 @@ const ContentTabPeople = ({
                 
                 <CardsGrid id='card_grid_container'>
                   {category.downloads.map((speaker: any, index: number) => (
-                    <GridItem key={index} id={`card_grid_${index}`} style={divStyle(expandedIndices[index], index, isMobile, cardMobileWidth)} onClick={(e) => toggleExpand(expandedIndices[index], index, e)}>
-                      <PeopleCard data={speaker} isExpanded={expandedIndices[index]} />
+                    <GridItem key={`${i}${index}`} id={`card_grid_${i}${index}`} style={divStyle(expandedIndices[Number(i.toString() + index.toString())], index, isMobile, cardMobileWidth)} onClick={(e) => toggleExpand(expandedIndices[Number(i.toString() + index.toString())], Number(i.toString() + index.toString()), e)}>
+                      <PeopleCard data={speaker} isExpanded={expandedIndices[Number(i.toString() + index.toString())]} />
                     </GridItem>
                   ))
                   }

@@ -62,9 +62,7 @@ const PeopleCard = ({
             <CardSubTitle>
               {data.subtitle}
             </CardSubTitle>
-            <CardSubTitle>
-              {data.shortDesc}
-            </CardSubTitle>
+            <CardSubTitle dangerouslySetInnerHTML={{__html: data.shortDesc}} />
             <div className='flex flex-row gap-2'>
               <Badge active={'true'}>
                 <span>
