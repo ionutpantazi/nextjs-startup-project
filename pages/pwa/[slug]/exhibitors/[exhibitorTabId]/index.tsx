@@ -8,6 +8,7 @@ import { sanitiseURLParam } from '@/utils/helpers';
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 import { getExhibitorsPageData } from '@/lib/queries/exhibitors-page';
+import { getExhibitorTabData } from '@/lib/queries/exhibitors';
 
 const Layout = dnmc(() => import('components/Layout/pwa'));
 const Exhibitors = dnmc(() => import('@/components/Pages/Exhibitors'));
@@ -17,6 +18,7 @@ export interface Props {
   error?: ErrorPageTemplateProps
   navigationData: NavigationData
   logo?: any
+  loginRequired?: boolean
 }
 
 export default function Page({
@@ -24,6 +26,7 @@ export default function Page({
   error,
   navigationData,
   logo,
+  loginRequired,
 }: Props) {
   if (error) {
     return <ErrorPageTemplate statusCode={error.statusCode} errorMessage={error.errorMessage} />
@@ -47,7 +50,7 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Exhibitors data={data} />
+      <Exhibitors data={data} loginRequired={loginRequired} />
     </Layout>
   )
 }
@@ -74,7 +77,15 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     const pageSlug = params.exhibitorTabId;
 
     const navigationData = await fetchNavigation(true);
-    let data = await getExhibitorsPageData(slug, pageSlug, jwt);
+    let data = await getExhibitorsPageData(slug, jwt);
+    let loginRequired = false;
+
+    try {
+      data.exhibitors = await getExhibitorTabData(slug as any, pageSlug as any, jwt)
+    } catch (err: any) {
+      if (err.status === 401) loginRequired = true;
+    }
+
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {
@@ -90,6 +101,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
           data: data,
           navigationData: data.resource?.navigation ?? navigationData,
           logo: logo,
+          loginRequired: loginRequired,
         }
       }
     }

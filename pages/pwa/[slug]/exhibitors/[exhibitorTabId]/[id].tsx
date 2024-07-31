@@ -8,7 +8,7 @@ import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageT
 import { sanitiseURLParam } from '@/utils/helpers';
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
-import { getExhibitorPageData } from '@/lib/queries/exhibitor-page';
+import { getExhibitorPageData } from '@/lib/queries/exhibitors-page';
 
 
 const Layout = dnmc(() => import('components/Layout/pwa'));

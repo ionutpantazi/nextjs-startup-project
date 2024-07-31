@@ -8,8 +8,13 @@ const getExhibitorTabData = async (slug: string, pageSlug: string, jwt: string) 
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
-  const { data } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/exhibitor-tab/${pageSlug}`, config);
-  return data
+  const { data, err } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/exhibitor-tab/${pageSlug}`, config);
+  
+  if (err && err.status === 401) {
+    throw err
+  } else {
+    return data
+  }
 };
 
 const getExhibitorData = async (slug: string, pageSlug: string, jwt: string) => {

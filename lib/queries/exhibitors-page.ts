@@ -1,16 +1,28 @@
 import { getEventData } from './event';
-import { getExhibitorTabData } from './exhibitors';
+import { getExhibitorTabData, getExhibitorData } from './exhibitors';
 import { getResourceData } from './resources';
 
-const getExhibitorsPageData = async (slug: any, pageSlug: any, jwt: string) => {
+const getExhibitorPageData = async (slug: any, pageSlug: any, jwt: string) => {
   let eventData = await getEventData(slug, jwt)
-  let exhibitorsData = await getExhibitorTabData(slug, pageSlug, jwt)
+  let exhibitorData = await getExhibitorData(slug, pageSlug, jwt)
   let resourceData = await getResourceData(slug, jwt)
+  
   return {
     event: eventData,
     resource: resourceData,
-    exhibitors: exhibitorsData,
+    exhibitor: exhibitorData,
   }
 };
 
-export { getExhibitorsPageData }
+const getExhibitorsPageData = async (slug: any, jwt: string) => {
+  let eventData = await getEventData(slug, jwt)
+  let resourceData = await getResourceData(slug, jwt)
+
+  return {
+    event: eventData,
+    resource: resourceData,
+    exhibitors: {},
+  }
+};
+
+export { getExhibitorsPageData, getExhibitorPageData }

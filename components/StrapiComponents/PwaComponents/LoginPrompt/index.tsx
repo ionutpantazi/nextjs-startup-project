@@ -1,4 +1,11 @@
 import { ComponentContainer, Container, InnerContainer, Title } from "@/components/Bootstrap/Common"
+import styled from "styled-components";
+
+const LoginButton = styled.span`
+    :hover {
+        cursor: pointer;
+    }
+`
 
 const LoginPrompt = ({
     title,
@@ -12,7 +19,7 @@ const LoginPrompt = ({
                 <ComponentContainer>
                     <Title>{title}</Title>
                     <br></br>
-                    <p>{message}, <span data-twe-toggle="modal" data-twe-target="#loginModal"><b>please log in / register.</b></span></p> 
+                    <p>{message}, <LoginButton data-twe-toggle="modal" data-twe-target="#loginModal"><b>please log in / register.</b></LoginButton></p> 
                 </ComponentContainer>
             </InnerContainer>
         </Container>

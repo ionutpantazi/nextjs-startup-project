@@ -10,7 +10,6 @@ import {
   Container,
   InnerContainer,
   RadialContainer,
-  SectionTitle,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
 import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
@@ -20,7 +19,9 @@ import {
 
 import 'swiper/css';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import { ExhibitorItem, CardWidth } from '../ComponentExhibitorPanel'
+import { ExhibitorItem, CardWidth } from '../Exhibitor'
+import { DropdownAndSearch, SearchButton, SearchContainer, SearchInput } from '../Common/SortAndSearch'
+import FAIcon from '@/components/Bootstrap/FAIcon'
 
 export type ComponentExhibitors = {
   id: string,
@@ -34,34 +35,6 @@ export type ComponentExhibitors = {
 export interface ComponentExhibitorsPanelProps {
   data: ComponentExhibitors
 }
-
-// const Container = styled.div`
-//   max-width: 1440px;
-//   margin: 0 auto 40px auto;
-//   padding: ${theme.margins.homepage_large};
-//   color: ${theme.colors.white};
-//   overflow: hidden;
-//   background-color: #1E1E1E;
-//   border-radius: 24px;
-
-//   @media screen and (max-width: ${theme.screens.sm}) {
-//     padding: ${theme.margins.homepage_small};
-//     margin: 0 auto 20px auto;
-//   }
-// `
-
-// const InnerContainer = styled.div`
-//   margin: 0 auto;
-//   padding: 20px 0;
-//   max-width: ${theme.pageWidth};
-// `
-
-const Title = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-  margin-bottom: 10px;
-`
 
 const ExhibitorContainer = styled.div`
   display: flex;
@@ -107,6 +80,15 @@ const ExhibitorIcon = styled.div`
   height: 100%;
 `
 
+export const SubTitle = styled.div`
+  width: 100%;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 22px;
+  color: ${props => props.theme.colors.white};
+  padding-top: 20px;
+`
+
 const ComponentExhibitorsPanel = ({
   data
 }: ComponentExhibitorsPanelProps) => {
@@ -116,14 +98,19 @@ const ComponentExhibitorsPanel = ({
   const { width } = useWindowSize();
 
   const [exhibitors] = useState<any>(data.items);
+  const [search, setSearch] = useState<string>("");
 
-  const navigateToItem = (url: string) => {
+  const navigateToItem = (url: string, target: string) => {
+    if (!url) return;
+    
     const exhibitorUrlRegex = /exhibitor\.aspx\?eid=(\d+)/i;
     
     const isExhibitor = url.match(exhibitorUrlRegex);
     
     if (isExhibitor) {
       router.push(`${router.asPath}/${isExhibitor[1]}`);
+    } else {
+      window.open(url, target);
     }
   }
   
@@ -180,9 +167,27 @@ const ComponentExhibitorsPanel = ({
       <Container>
         <InnerContainer className='flex flex-col gap-4'>
           <ComponentContainer>
+            <LeftEventTitle>
+              {data.title}
+            </LeftEventTitle>
+            <Ruler />
             <ExhibitorContainer className='w-full grid gap-4'>
+              <SubTitle dangerouslySetInnerHTML={{ __html: data.header }} />
+              
+              <DropdownAndSearch>
+                <SearchContainer style={{padding: "0px"}}>
+                  <SearchInput as='input' onChange={(x) => setSearch(x.target.value || "")}/>
+                  <SearchButton>
+                    <FAIcon
+                      icon={'fa-magnifying-glass'}
+                      width={16}
+                      height={16}
+                    />
+                  </SearchButton>
+                </SearchContainer>
+              </DropdownAndSearch>
               {exhibitors.map((exhibitor: ExhibitorItem) => (
-                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.cardColumnSize)} onClick={() => navigateToItem(exhibitor.url)}>
+                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.cardColumnSize)} onClick={() => navigateToItem(exhibitor.url, exhibitor.target)}>
                   <ExhibitorIcon className='row-span-1 grid content-end relative'>
                     {exhibitor?.upload &&
                       <>

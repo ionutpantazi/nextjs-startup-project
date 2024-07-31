@@ -223,7 +223,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const MenuItem = ({ navItem, index }: any) => {
     return (
       <li className="mb-4 md:mb-0 md:pe-10" key={navItem.id} data-twe-nav-item-ref>
-        <Pillar as='a' href={generateMenuHref(navItem.url)} className='flex gap-2' data-twe-nav-link-ref>
+        <Pillar as='a' href={generateMenuHref(navItem.url)} target={`${navItem.isTargetBlank ? "_blank" : "_self"}`} className='flex gap-2' data-twe-nav-link-ref>
           {navItem.icon &&
             <FAIcon
               icon={navItem.icon}

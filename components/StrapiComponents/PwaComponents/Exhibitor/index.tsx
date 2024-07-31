@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import { IMAGE_DOMAIN } from 'lib/constants'
-import { RadialContainer } from '@/components/Bootstrap/Common'
+import { ComponentContainer, Container, InnerContainer, OuterContainer, RadialContainer } from '@/components/Bootstrap/Common'
 import NextImage from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useRouter } from 'next/router'
@@ -12,8 +12,9 @@ import {
 
 import 'swiper/css';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import { SubTitle } from '../PwaComponents/Speakers/styles'
 import { Upload } from '@/components/Pages/ContentPages'
+import { LeftEventTitle } from '../Header/styles'
+import Ruler from '../Common/Ruler'
 
 export const enum CardWidth {
   full,
@@ -39,7 +40,7 @@ export type ComponentExhibitor = {
   header: string,
   description: string,
   contact: string,
-  videoUrl: string,
+  videoURL: string,
   items: {
     data: ExhibitorItem[]
   }
@@ -48,34 +49,6 @@ export type ComponentExhibitor = {
 export interface ComponentExhibitorPanelProps {
   data: ComponentExhibitor
 }
-
-const Container = styled.div`
-  max-width: 1440px;
-  margin: 0 auto 40px auto;
-  padding: ${theme.margins.homepage_large};
-  color: ${theme.colors.white};
-  overflow: hidden;
-  background-color: #1E1E1E;
-  border-radius: 24px;
-
-  @media screen and (max-width: ${theme.screens.sm}) {
-    padding: ${theme.margins.homepage_small};
-    margin: 0 auto 20px auto;
-  }
-`
-
-const InnerContainer = styled.div`
-  margin: 0 auto;
-  padding: 20px 0;
-  max-width: ${theme.pageWidth};
-`
-
-const Title = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-  margin-bottom: 10px;
-`
 
 const ExhibitorContainer = styled.div`
   display: flex;
@@ -150,6 +123,14 @@ const ExhibitorContactInner = styled.div`
   border-radius: 6px;
 `
 
+export const SubTitle = styled.div`
+  width: 100%;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 22px;
+  color: ${props => props.theme.colors.white};
+  padding-top: 20px;
+`
 
 const ComponentExhibitorPanel = ({
   data
@@ -161,9 +142,22 @@ const ComponentExhibitorPanel = ({
 
   const [exhibitor, setExhibitor] = useState<any>(data);
 
-  useEffect(() => {
-    console.log("exhibitor", exhibitor)
-  }, [exhibitor])
+  const navigateToItem = (url: string, target: string) => {
+    console.log("Test", url, target);
+    if (!url) return;
+
+    const exhibitorUrlRegex = /exhibitor\.aspx\?eid=(\d+)/i;
+    
+    const isExhibitor = url.match(exhibitorUrlRegex);
+    
+    if (isExhibitor) {
+      console.log("isExhibitor", isExhibitor);
+      router.push(`${router.asPath}/${isExhibitor[1]}`);
+    } else {
+      console.log("isExhibitor", isExhibitor);
+      window.open(url, target);
+    }
+  }
   
   const applyExhibitorCardStyle = (columnSize: number) => {
     switch (columnSize) {
@@ -233,56 +227,64 @@ const ComponentExhibitorPanel = ({
   }
 
   return (
-    <Container>
-      <InnerContainer className='flex flex-col gap-4'>
-        <ExhibitorContainer className='w-full grid gap-4'>
-          <ExhibitorHeader>
-            {data.header}
-          </ExhibitorHeader>
-          <ExhibitorVideo>
-            {data.videoUrl && <video src={data.videoUrl} autoPlay loop muted playsInline controls />}
-          </ExhibitorVideo>
-          <SubTitle>
-            {data.subtitle}
-          </SubTitle>
-          <ExhibitorDescContactContainer style={applyDescContactContainerStyle()}>
-            <ExhibitorDescription dangerouslySetInnerHTML={{__html: data.description}}>
-            </ExhibitorDescription>
-            <ExhibitorContact>
-              <ExhibitorContactInner style={applyContactInnerStyle()} dangerouslySetInnerHTML={{__html: data.contact}} />
-            </ExhibitorContact>
-          </ExhibitorDescContactContainer>
+    <OuterContainer className=''>
+      <Container>
+        <InnerContainer className='flex flex-col gap-4'>
+          <ComponentContainer>
+            <LeftEventTitle>
+              {data.title}
+            </LeftEventTitle>
+            <Ruler />
+            <ExhibitorContainer className='w-full grid gap-4'>
+              <ExhibitorHeader>
+                {data.header}
+              </ExhibitorHeader>
+              <ExhibitorVideo>
+                {data.videoURL && <video src={data.videoURL} autoPlay loop muted playsInline controls />}
+              </ExhibitorVideo>
+              <SubTitle>
+                {data.subtitle}
+              </SubTitle>
+              <ExhibitorDescContactContainer style={applyDescContactContainerStyle()}>
+                <ExhibitorDescription dangerouslySetInnerHTML={{__html: data.description}}>
+                </ExhibitorDescription>
+                <ExhibitorContact>
+                  <ExhibitorContactInner style={applyContactInnerStyle()} dangerouslySetInnerHTML={{__html: data.contact}} />
+                </ExhibitorContact>
+              </ExhibitorDescContactContainer>
 
-          {exhibitor.items && exhibitor.items.map((item: ExhibitorItem) => (
-            <ExhibitorCard key={item.id} style={applyExhibitorCardStyle(item.cardColumnSize)}>
-              <ExhibitorIcon className='row-span-1 grid content-end relative'>
-                {item?.upload &&
-                  <>
-                    <RadialContainer />
-                    <StyledNextImage
-                      src={item.upload.path ?? ""}
-                      className=''
-                      alt={item.upload.alt ?? ""}
-                      fill
-                      style={{objectFit:'cover'}}
-                    />
-                  </>
-                }
-                <ExhibitorDetails>
-                  <ExhibitorTitle>
-                    {item.title}
-                  </ExhibitorTitle>
-                  <ExhibitorSubtitle>
-                    {item.subtitle}
-                  </ExhibitorSubtitle>
-                </ExhibitorDetails>
-              </ExhibitorIcon>
-            </ExhibitorCard>
-          ))
-          }
-        </ExhibitorContainer>
-      </InnerContainer>
-    </Container >
+              {exhibitor.items && exhibitor.items.map((item: ExhibitorItem) => (
+                <ExhibitorCard key={item.id} style={applyExhibitorCardStyle(item.cardColumnSize)} onClick={() => navigateToItem(item.url, item.target)}>
+                  <ExhibitorIcon className='row-span-1 grid content-end relative'>
+                    {item?.upload &&
+                      <>
+                        <RadialContainer />
+                        <StyledNextImage
+                          src={item.upload.path ?? ""}
+                          className=''
+                          alt={item.upload.alt ?? ""}
+                          fill
+                          style={{objectFit:'cover'}}
+                        />
+                      </>
+                    }
+                    <ExhibitorDetails>
+                      <ExhibitorTitle>
+                        {item.title}
+                      </ExhibitorTitle>
+                      <ExhibitorSubtitle>
+                        {item.subtitle}
+                      </ExhibitorSubtitle>
+                    </ExhibitorDetails>
+                  </ExhibitorIcon>
+                </ExhibitorCard>
+              ))
+              }
+            </ExhibitorContainer>
+          </ComponentContainer>
+        </InnerContainer>
+      </Container >
+    </OuterContainer>
   )
 }
 

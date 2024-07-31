@@ -4,6 +4,7 @@ import Header from '@/components/StrapiComponents/PwaComponents/Header'
 import ContentTabDownloads from '@/components/StrapiComponents/PwaComponents/Downloads'
 import ContentTabContentOnly from '@/components/StrapiComponents/PwaComponents/ContentOnly'
 import ContentTabStream from '@/components/StrapiComponents/PwaComponents/Stream'
+import ContentTabPeople from '@/components/StrapiComponents/PwaComponents/People'
 
 const PwaContentContainer = styled.div`
 `
@@ -25,6 +26,7 @@ export type DownloadCategory = {
 export type Download = {
   id?: string,
   title?: string,
+  subtitle?: string,
   shortDesc?: string,
   type?: DownloadType,
   upload?: Upload,
@@ -70,7 +72,7 @@ const ContentPages = ({
         return <ContentTabDownloads data={data.content[0]} />
       case DownloadPageType.People:
         console.log("Loading people page...");
-        return <></>
+        return <ContentTabPeople data={data.content[0]} subtitle={'Meet our thought leaeders'} />
       case DownloadPageType.WallMontage:
         console.log("Loading wall montage page...");
         return <></>
@@ -87,8 +89,8 @@ const ContentPages = ({
       <PwaContentContainer>
         {data && data.content.length > 0 &&
           <>
-            <Header title={data.content[0].title} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
-            {/* for some reason 0 is not being passed through correctly which is why we do these checks */}
+            <Header headerImage={data.content[0].pageBanner && data.content[0].pageBanner ? data.content[0].pageBanner : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+            {/* 0 is not being passed through correctly which is why we do these checks */}
             {(data.content[0].type || data.content[0].type === 0) && 
               getComponent(data.content[0].type === 0 ? DownloadPageType.ContentOnly : data.content[0].type) 
             }

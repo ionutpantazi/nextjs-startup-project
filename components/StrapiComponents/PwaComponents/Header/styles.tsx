@@ -41,6 +41,7 @@ export const HeaderImage = styled(NextImage)`
   position: relative;
   max-width: 100%;
   height: 30vw;
+  object-fit: cover;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     height: 20vh;
