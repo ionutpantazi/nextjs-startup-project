@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import { ApolloProvider } from "@apollo/client"
 import { useApollo } from "lib/apolloClient"
 import type { AppProps } from "next/app"
@@ -14,6 +15,16 @@ library.add(fab)
 library.add(far)
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps }, router }: AppProps) => {
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loader = document.getElementById('globalLoader');
+      if (loader)
+        loader.remove();
+    }
+  }, []);
+
+
   let isPwa = router?.route == '/pwa/[...slug]';
   const apolloClient = useApollo(pageProps.initializeApolloState);
   if (isPwa) {
