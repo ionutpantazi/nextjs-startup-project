@@ -12,8 +12,9 @@ import styled from 'styled-components'
 import { theme } from 'lib/theme'
 import { ThemeProvider } from "styled-components";
 import { SettingsProps } from 'lib/queries/settings'
+import { ModalContext } from '../Common/Modal'
 
-const Navbar = dynamic(() => import('components/Navbar/pwa'))
+const Navbar = dynamic(() => import('components/StrapiComponents/PwaComponents/Navbar'))
 const Footer = dynamic(() => import('components/Footer/pwa'))
 import { getFECookie } from 'utils/helpers'
 export const ThemeContext = React.createContext(theme);
@@ -50,6 +51,9 @@ const Layout = ({
   // const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
   const [themeDataProp, setThemeDataProp] = useState(customTheme ? themedata : defaultThemeData);
 
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const [modalContent, setModalContent] = useState<React.ReactNode | null>(null)
+
   const handleChildData = (data: any) => {
     if (data?.useDefaultTheme == 'true') {
       setIsDefaultTheme('true')
@@ -78,23 +82,39 @@ const Layout = ({
     background-color:  ${themeData.components?.Layout?.FooterWrapBackground};
   `
 
+  const mainArea = React.useMemo(() =>
+    <PageContentComponents className='mb-auto'>
+      {React.Children.map(children, child =>
+        React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp, themeMeta: themeMeta })
+      )}
+    </PageContentComponents>
+    , [isDefaultTheme]
+  );
+
   return (
     <ThemeProvider theme={themeData}>
       <LayoutContainer className='flex flex-col h-screen'>
         <Head>
           <title>{title}</title>
         </Head>
-        <HeaderWrap>
-          {navigationData?.header && <Navbar navigationData={navigationData.header} logo={logo} />}
-        </HeaderWrap>
-        <PageContentComponents className='mb-auto'>
-          {React.Children.map(children, child =>
-            React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp, themeMeta: themeMeta })
-          )}
-        </PageContentComponents>
-        <FooterWrap>
-          {navigationData?.footer && <Footer navigationData={navigationData.footer} logo={logo} />}
-        </FooterWrap>
+        <ModalContext.Provider
+          value={{
+            modalIsOpen,
+            setModalIsOpen,
+            modalContent,
+            setModalContent,
+          }}
+        >
+          <HeaderWrap>
+            {navigationData?.header && <Navbar navigationData={navigationData.header} logo={logo} />}
+          </HeaderWrap>
+
+          {mainArea}
+
+          <FooterWrap>
+            {navigationData?.footer && <Footer navigationData={navigationData.footer} logo={logo} />}
+          </FooterWrap>
+        </ModalContext.Provider>
       </LayoutContainer>
     </ThemeProvider>
   )

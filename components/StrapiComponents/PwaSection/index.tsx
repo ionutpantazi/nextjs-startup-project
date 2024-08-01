@@ -21,7 +21,7 @@ const ComponentSectionsSection1 = ({
   speakers,
   discussions,
 }: any) => {
-  
+
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
