@@ -15,6 +15,7 @@
     <PackageJsonDependenciesFortawesomeFreeSolidSvgIcons Condition="$(PackageJsonDependenciesFortawesomeFreeSolidSvgIcons) == ''">^6.5.2</PackageJsonDependenciesFortawesomeFreeSolidSvgIcons>
     <PackageJsonDependenciesFortawesomeReactFontawesome Condition="$(PackageJsonDependenciesFortawesomeReactFontawesome) == ''">^0.2.0</PackageJsonDependenciesFortawesomeReactFontawesome>
     <PackageJsonDependenciesAxios Condition="$(PackageJsonDependenciesAxios) == ''">^1.6.8</PackageJsonDependenciesAxios>
+    <PackageJsonDependenciesCheerio Condition="$(PackageJsonDependenciesCheerio) == ''">^1.0.0-rc.12</PackageJsonDependenciesCheerio>
     <PackageJsonDependenciesCookiesNext Condition="$(PackageJsonDependenciesCookiesNext) == ''">^4.2.1</PackageJsonDependenciesCookiesNext>
     <PackageJsonDependenciesGraphql Condition="$(PackageJsonDependenciesGraphql) == ''">^16.8.1</PackageJsonDependenciesGraphql>
     <PackageJsonDependenciesIronSession Condition="$(PackageJsonDependenciesIronSession) == ''">^8.0.1</PackageJsonDependenciesIronSession>

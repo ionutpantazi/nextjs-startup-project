@@ -10,7 +10,7 @@ import { theme } from '@/lib/theme';
 import { getExhibitorsPageData } from '@/lib/queries/exhibitors-page';
 import { getExhibitorTabData } from '@/lib/queries/exhibitors';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Exhibitors = dnmc(() => import('@/components/Pages/Exhibitors'));
 
 export interface Props {

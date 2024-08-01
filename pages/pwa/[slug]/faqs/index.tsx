@@ -8,7 +8,7 @@ import { sanitiseURLParam } from '@/utils/helpers';
 import { getFaqsPageData } from 'lib/queries/faqs-page'
 import { getJwt, generateThemeData } from 'utils/helpers'
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const FAQs = dnmc(() => import('@/components/Pages/FAQs'));
 
 export interface Props {

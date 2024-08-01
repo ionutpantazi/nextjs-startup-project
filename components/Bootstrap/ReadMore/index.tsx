@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { parseContent } from 'utils/helpers'
 
 export interface ReadMoreProps {
   content?: string
@@ -10,7 +11,7 @@ const Content = (content: { content: string }) => {
   return (
     <Description
       dangerouslySetInnerHTML={{
-        __html: content.content,
+        __html: parseContent(content.content),
       }}
     />
   )

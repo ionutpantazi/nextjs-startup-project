@@ -3,7 +3,7 @@ import dnmc from 'next/dynamic'
 import styled, { css } from 'styled-components'
 
 const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
-const ComponentSectionsFaQs = dnmc(() => import('components/StrapiComponents/ComponentSectionsFaQs/pwa'));
+const ComponentSectionsFaQs = dnmc(() => import('components/StrapiComponents/PwaComponents/FAQs'));
 
 const PwaContentContainer = styled.div`
 `

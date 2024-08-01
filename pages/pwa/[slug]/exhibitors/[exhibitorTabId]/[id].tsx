@@ -11,7 +11,7 @@ import { theme } from '@/lib/theme';
 import { getExhibitorPageData } from '@/lib/queries/exhibitors-page';
 
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Exhibitor = dnmc(() => import('@/components/Pages/Exhibitors/details'));
 
 export interface Props {

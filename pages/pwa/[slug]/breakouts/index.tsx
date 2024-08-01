@@ -6,7 +6,7 @@ import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageT
 import { getBreakoutsPageData } from 'lib/queries/breakouts-page'
 import { getJwt, generateThemeData } from 'utils/helpers'
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Breakouts = dnmc(() => import('@/components/Pages/Breakouts'));
 
 export interface Props {

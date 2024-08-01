@@ -7,7 +7,7 @@ import { getJwt } from 'utils/helpers'
 import { getContentTabPageData } from '@/lib/queries/content-tabs-page';
 import ContentPages from '@/components/Pages/ContentPages';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 
 export interface Props {
   data: any

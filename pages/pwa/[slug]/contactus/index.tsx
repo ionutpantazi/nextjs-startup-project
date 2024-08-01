@@ -9,7 +9,7 @@ import { getJwt, generateThemeData } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 import { getContactPageData } from '@/lib/queries/contact-page';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Contact = dnmc(() => import('@/components/Pages/Contact'));
 
 export interface Props {

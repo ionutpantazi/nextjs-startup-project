@@ -9,7 +9,7 @@ import { getDelegatesPageData } from 'lib/queries/delegates-page'
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Speakers = dnmc(() => import('@/components/Pages/Speakers'));
 
 export interface Props {

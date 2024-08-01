@@ -10,7 +10,7 @@ import { theme } from '@/lib/theme';
 import { getVenuePageData } from '@/lib/queries/venue-page';
 import Venue from '@/components/Pages/Venue';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 
 export interface Props {
   data: any

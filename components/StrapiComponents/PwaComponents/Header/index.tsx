@@ -12,6 +12,7 @@ import ReadMore from '@/components/Bootstrap/ReadMore'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { setFECookie, generateMenuHref } from 'utils/helpers'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { parseContent } from 'utils/helpers'
 import {
   ImageContainer,
   StyledRadialContainer,
@@ -160,22 +161,26 @@ const Header = ({
             <InnerContainer className=''>
               {hideBody && title &&
                 <LeftHeading>
-                  <LeftEventTitle as='h1' className=''>
-                    {title}
-                  </LeftEventTitle>
+                  <LeftEventTitle as='h1' className='' dangerouslySetInnerHTML={{
+                    __html: parseContent(title),
+                  }}
+                  />
                 </LeftHeading>
               }
               {!hideBody &&
                 <>
                   {title &&
-                    <EventTitle as='h1' className=''>
-                      {title}
-                    </EventTitle>
+                    <EventTitle as='h1' className=''
+                      dangerouslySetInnerHTML={{
+                        __html: parseContent(title),
+                      }}
+                    />
                   }
                   {subtitle &&
-                    <EventIntroduction as='p' className=''>
-                      {subtitle}
-                    </EventIntroduction>
+                    <EventIntroduction as='p' className='' dangerouslySetInnerHTML={{
+                      __html: parseContent(subtitle),
+                    }}
+                    />
                   }
 
                   <IntroLandingContainer className='mt-6' hidebody={hideBody ? 'true' : 'false'}>
@@ -287,28 +292,36 @@ const Header = ({
                   {hideBody &&
                     <LeftHeading>
                       {title &&
-                        <LeftEventTitle as='h1' className=''>
-                          {title}
-                        </LeftEventTitle>
+                        <LeftEventTitle as='h1' className=''
+                          dangerouslySetInnerHTML={{
+                            __html: parseContent(title),
+                          }}
+                        />
                       }
                       {subtitle &&
-                        <LeftEventIntroduction as='p' className=''>
-                          {subtitle}
-                        </LeftEventIntroduction>
+                        <LeftEventIntroduction as='p' className=''
+                          dangerouslySetInnerHTML={{
+                            __html: parseContent(subtitle),
+                          }}
+                        />
                       }
                     </LeftHeading>
                   }
                   {!hideBody &&
                     <>
                       {title &&
-                        <EventTitle as='h1' className=''>
-                          {title}
-                        </EventTitle>
+                        <EventTitle as='h1' className=''
+                          dangerouslySetInnerHTML={{
+                            __html: parseContent(title),
+                          }}
+                        />
                       }
                       {subtitle &&
-                        <EventIntroduction as='p' className=''>
-                          {subtitle}
-                        </EventIntroduction>
+                        <EventIntroduction as='p' className=''
+                          dangerouslySetInnerHTML={{
+                            __html: parseContent(subtitle),
+                          }}
+                        />
                       }
                       <EventContainer className='row-span-2 sm:col-span-4 lg:col-span-2'>
                         <EventDetails className={`flex sm:flex-row flex-col justify-between gap-2`}>

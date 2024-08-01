@@ -6,7 +6,7 @@ import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageT
 import { getAgendaPageData } from 'lib/queries/agenda-page'
 import { getJwt, generateThemeData } from 'utils/helpers'
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Agenda = dnmc(() => import('@/components/Pages/Agenda'));
 
 export interface Props {

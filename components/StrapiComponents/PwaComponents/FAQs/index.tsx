@@ -4,6 +4,7 @@ import {
   Title,
 } from 'components/Bootstrap/Common'
 import FAIcon from 'components/Bootstrap/FAIcon'
+import { parseContent } from 'utils/helpers'
 import {
   StyledInnerContainer,
   Category,
@@ -92,9 +93,11 @@ const ComponentSectionsFaQs = ({
                       <MinusIcon />
                     </>
                   }
-                  <FaqQuestion>
-                    {faq.title}
-                  </FaqQuestion>
+                  <FaqQuestion
+                    dangerouslySetInnerHTML={{
+                      __html: parseContent(faq.title),
+                    }}
+                  />
                 </div>
 
                 <FaqAnswer
@@ -107,7 +110,7 @@ const ComponentSectionsFaQs = ({
                   <br />
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: faq.longDesc,
+                      __html: parseContent(faq.longDesc),
                     }}
                   />
                 </FaqAnswer>

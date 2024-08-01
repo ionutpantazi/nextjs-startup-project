@@ -1,6 +1,7 @@
 import { NavigationItem } from 'lib/queries/nav-data'
 import { hasCookie, getCookie, deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router'
+import cheerio from 'cheerio';
 
 export function generateMenuList(items: NavigationItem[]): NavigationItem[] {
   // parse strapi navigation list and generate a nested list of children and parents
@@ -529,4 +530,22 @@ export function generateMenuHref(segment: any) {
     const href = `/pwa/${slug}/${segment}`;
     return href;
   }
+}
+
+function removeStyleAttributes(html: string): string {
+  // Load the HTML string into cheerio
+  const $ = cheerio.load(html);
+
+  // Select all elements with a style attribute and remove the attribute
+  $('[style]').each((index, element) => {
+      $(element).removeAttr('style');
+  });
+
+  // Serialize the modified HTML back to a string
+  return $.html();
+}
+
+export function parseContent(content: any) {
+  let removeStyle = removeStyleAttributes(content)
+  return removeStyle
 }

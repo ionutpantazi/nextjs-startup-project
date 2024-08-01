@@ -11,7 +11,7 @@ import Forum from '@/components/Pages/Forum';
 import { getDiscussionPageData } from '@/lib/queries/discussion-page';
 import Discussion from '@/components/Pages/Forum/details';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 
 export interface Props {
   data: any

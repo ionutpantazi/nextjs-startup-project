@@ -9,7 +9,7 @@ import { getTermsPageData } from 'lib/queries/terms-page'
 import { getJwt } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 
-const Layout = dnmc(() => import('components/Layout/pwa'));
+const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Terms = dnmc(() => import('@/components/Pages/Terms'), { ssr: false });
 
 export interface Props {
