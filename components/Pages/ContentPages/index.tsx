@@ -56,13 +56,10 @@ const ContentPages = ({
   isdefaulttheme,
   themedata,
   themeMeta,
-  navigationData,
 }: any) => {
   console.log(data)
 
   const getComponent = (type: DownloadPageType) => {
-    console.log("Fetching component for type: ", type);
-    console.log("My data: ", data);
     switch(type) {
       case DownloadPageType.ContentOnly:
         console.log("Loading content only page...");
@@ -72,7 +69,7 @@ const ContentPages = ({
         return <ContentTabDownloads data={data.content[0]} />
       case DownloadPageType.People:
         console.log("Loading people page...");
-        return <ContentTabPeople data={data.content[0]} subtitle={'Meet our thought leaeders'} />
+        return <ContentTabPeople data={data.content[0]} subtitle={'Meet our thought leaders'} />
       case DownloadPageType.WallMontage:
         console.log("Loading wall montage page...");
         return <></>

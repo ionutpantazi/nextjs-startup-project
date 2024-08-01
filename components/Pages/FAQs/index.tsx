@@ -17,15 +17,15 @@ const Faqs = ({
   navigationData,
 }: any) => {
 
+  console.log("data", data)
+
   return (
-    <>
-      <PwaContentContainer>
-        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
-        {data.event?.faqs?.length &&
-          <ComponentSectionsFaQs faqs={data['event']['faqs']} title={'FAQs'} open={true} />
-        }
-      </PwaContentContainer>
-    </>
+    <PwaContentContainer>
+      <Header headerImage={data.faqs.pageBanner ? data.faqs.pageBanner : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+      {data.faqs?.faQs?.length &&
+        <ComponentSectionsFaQs faqs={data.faqs.faQs} title={'FAQs'} open={true} />
+      }
+    </PwaContentContainer>
   )
 }
 

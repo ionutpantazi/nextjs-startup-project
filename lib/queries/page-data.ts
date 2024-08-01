@@ -6,6 +6,7 @@ import { getAgendaData } from './agenda';
 import { getDelegatesData } from './delegates';
 import { getSpeakersData } from './speakers';
 import { getDiscussionsData } from './discussions'
+import { getFaqsData } from './faqs';
 
 const getPageData = async (slug: any, jwt: string) => {
   let eventData = await getEventData(slug, jwt)
@@ -14,6 +15,7 @@ const getPageData = async (slug: any, jwt: string) => {
   let delegatesData = await getDelegatesData(slug, jwt)
   let speakersData = await getSpeakersData(slug, jwt)
   let discussionsData = await getDiscussionsData(slug, jwt)
+  let faqData = await getFaqsData(slug, jwt)
   return {
     event: eventData,
     resource: resourceData,
@@ -21,6 +23,7 @@ const getPageData = async (slug: any, jwt: string) => {
     delegates: delegatesData,
     speakers: speakersData,
     discussions: discussionsData,
+    faqs: faqData,
   }
 };
 

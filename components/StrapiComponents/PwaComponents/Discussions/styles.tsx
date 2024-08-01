@@ -65,7 +65,7 @@ export const StyledNextImage = styled(NextImage)`
 
 export const AuthorDetails = styled.div`
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 16px;
   color: ${props => props.theme.colors.lightgrey};
 `

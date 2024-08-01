@@ -32,12 +32,29 @@ const ContentTabPeople = ({
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const isMobile = width && width < Number(theme.screens['sm'].replace('px', '')) ? true : false;
+  
+  const dropdownValues = data.categories.map((category: any) => {
+    return { label: category.title, slug: category.title }
+  })
 
+  const [categories, setCategories] = useState(data.categories);
+  const [selectedValue, setSelectedValue] = useState<{label: string, slug: string} | undefined>(undefined);
   const [cardMobileWidth, setCardMobileWidth] = useState(200);
   const [cardDesktopWidth, setCardDesktopWidth] = useState(200);
   const [expandedIndices, setExpandedIndices] = useState(
     Array(data.categories.length).fill(false)
   );
+  
+  useEffect(() => {
+    if (selectedValue && selectedValue.label) {
+      let filteredCategories = data.categories.filter((x: any) => x.title === selectedValue.label);
+      if (filteredCategories.length > 0) {
+        setCategories(filteredCategories);
+      }
+    } else {
+      setCategories(data.categories);
+    }
+  }, [selectedValue])
 
   useEffect(() => {
     if (width) {
@@ -47,14 +64,6 @@ const ContentTabPeople = ({
       // setCardDesktopWidth(width - 40)
     }
   }, [width]);
-
-  const dropdownValues = [
-    { label: 'Select Category', slug: '' },
-    { label: 'Business', slug: 'business' },
-    { label: 'Marketing', slug: 'marketing' },
-    { label: 'Sales', slug: 'sales' },
-    { label: 'Wellbeing', slug: 'wellbeing' },
-  ]
 
   const toggleExpand = (isExpanded: any, index: any, e: any) => {
     e.preventDefault()
@@ -83,7 +92,6 @@ const ContentTabPeople = ({
     // transition: 'width 0.4s ease',
   });
 
-
   return (
     <OuterContainer className=''>
       <Container className=''>
@@ -96,8 +104,8 @@ const ContentTabPeople = ({
             <SubTitle>
               {subtitle}
             </SubTitle>
-            <SortAndSearch title='Choose a category:' dropdownValues={dropdownValues} />
-            {data.categories && data.categories.map((category: any, i: number) => (
+            <SortAndSearch title='Choose a category:' dropDownPlaceholder={"Select Category"} dropdownValues={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
+            {categories && categories.map((category: any, i: number) => (
               <>
                 <SubTitle>
                   {category.title}

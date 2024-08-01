@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import useSession from "lib/use-session";
 
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import { RadialContainer } from '@/components/Bootstrap/Common'
+import { ComponentContainer, Container, InnerContainer, OuterContainer, RadialContainer } from '@/components/Bootstrap/Common'
 import { Download, DownloadCategory, DownloadType } from '@/components/Pages/ContentPages'
 import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
 import {
@@ -29,27 +29,6 @@ export type Stream = {
   linkedAgendaItem: string,
   categories?: DownloadCategory[]
 }
-
-const Container = styled.div`
-  max-width: 1440px;
-  margin: 0 auto 40px auto;
-  padding: ${theme.margins.homepage_large};
-  color: ${theme.colors.white};
-  overflow: hidden;
-  background-color: #1E1E1E;
-  border-radius: 24px;
-
-  @media screen and (max-width: ${theme.screens.sm}) {
-    padding: ${theme.margins.homepage_small};
-    margin: 0 auto 20px auto;
-  }
-`
-
-const InnerContainer = styled.div`
-  margin: 0 auto;
-  padding: 20px 0;
-  max-width: ${theme.pageWidth};
-`
 
 const Title = styled.div`
   font-size: 22px;
@@ -215,76 +194,82 @@ const ContentTabStream = ({
   }
 
   return (
-    <>
-      <Container>
-        <InnerContainer className='flex flex-col gap-4'>
-          <LeftEventTitle>
-            Live stream
-          </LeftEventTitle>
-          <Ruler />
-          <StreamContainer className='w-full grid gap-4'>
-            <StreamToggleContainer>
-              {data.map(x => {
-                return (
-                  <StreamToggle key={x.id} style={isCurrentStream(x.id)} onClick={() => setSelectedStream(x)}>
-                    {x.title}
-                  </StreamToggle>
-                )
-              })}
-            </StreamToggleContainer>
-            {(selectedStream.header || selectedStream.streamLiveInteractiveCode) &&
-              <StreamInnerContainer>
-                {selectedStream.header &&
-                  <Stream style={applyStreamContainerStyle()}>
-                    {selectedStream.header && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.header }} />}
-                  </Stream>
-                }
-                {selectedStream.streamLiveInteractiveCode &&
-                  <StreamChat style={applyStreamChatStyle()}>
-                    <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.streamLiveInteractiveCode}${session.isLoggedIn ? `/?user_name=${session.username}` : ""}${session.isLoggedIn ? `&user_email=${session.username}` : ""}`}></iframe>
-                  </StreamChat>
-                }
-              </StreamInnerContainer>
-            }
-          </StreamContainer>
+    <OuterContainer className=''>
+      <Container className=''>
+        <InnerContainer className=''>
+          <ComponentContainer className='flex flex-col'>
+            <LeftEventTitle>
+              {data[0].title}
+            </LeftEventTitle>
+            <Ruler />
+            <Container className=''>
+              <InnerContainer className=''>
+                <StreamContainer className='w-full grid gap-4'>
+                  <StreamToggleContainer>
+                    {data.map(x => {
+                      return (
+                        <StreamToggle key={x.id} style={isCurrentStream(x.id)} onClick={() => setSelectedStream(x)}>
+                          {x.title}
+                        </StreamToggle>
+                      )
+                    })}
+                  </StreamToggleContainer>
+                  {(selectedStream.header || selectedStream.streamLiveInteractiveCode) &&
+                    <StreamInnerContainer>
+                      {selectedStream.header &&
+                        <Stream style={applyStreamContainerStyle()}>
+                          {selectedStream.header && <div style={applyPlaceholderStyle()} dangerouslySetInnerHTML={{ __html: selectedStream.header }} />}
+                        </Stream>
+                      }
+                      {selectedStream.streamLiveInteractiveCode &&
+                        <StreamChat style={applyStreamChatStyle()}>
+                          <iframe id="li4holder" width="100%" height="600px" src={`https://app.sli.do/event/${selectedStream.streamLiveInteractiveCode}${session.isLoggedIn ? `/?user_name=${session.username}` : ""}${session.isLoggedIn ? `&user_email=${session.username}` : ""}`}></iframe>
+                        </StreamChat>
+                      }
+                    </StreamInnerContainer>
+                  }
+                </StreamContainer>
+              </InnerContainer>
+            </Container>
+            {selectedStream.categories && selectedStream.categories.map((category: DownloadCategory, i: number) => (
+              <Container key={i}>
+                <InnerContainer className='flex flex-col gap-4'>
+                  <Title>
+                    {category.title}
+                  </Title>
+                  <DownloadContainer>
+                    {category.downloads && category.downloads.map((download: Download) => (
+                      <DownloadCard key={download.id} style={applyDownloadCardStyle()} onClick={() => navigateToDownload(download)}>
+                        <DownloadIcon className='row-span-1 grid content-end relative'>
+                          {download?.upload &&
+                            <>
+                              <RadialContainer />
+                              <StyledNextImage
+                                src={download.upload.path ?? ""}
+                                className=''
+                                alt={download.upload.alt ?? ""}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                              />
+                            </>
+                          }
+                          <DownloadDetails>
+                            <DownloadTitle>
+                              {download.shortDesc}
+                            </DownloadTitle>
+                          </DownloadDetails>
+                        </DownloadIcon>
+                      </DownloadCard>
+                    ))
+                    }
+                  </DownloadContainer>
+                </InnerContainer>
+              </Container >
+            ))}
+          </ComponentContainer>
         </InnerContainer>
       </Container>
-      {selectedStream.categories && selectedStream.categories.map((category: DownloadCategory, i: number) => (
-        <Container key={i}>
-          <InnerContainer className='flex flex-col gap-4'>
-            <Title>
-              {category.title}
-            </Title>
-            <DownloadContainer>
-              {category.downloads && category.downloads.map((download: Download) => (
-                <DownloadCard key={download.id} style={applyDownloadCardStyle()} onClick={() => navigateToDownload(download)}>
-                  <DownloadIcon className='row-span-1 grid content-end relative'>
-                    {download?.upload &&
-                      <>
-                        <RadialContainer />
-                        <StyledNextImage
-                          src={download.upload.path ?? ""}
-                          className=''
-                          alt={download.upload.alt ?? ""}
-                          fill
-                          style={{ objectFit: 'cover' }}
-                        />
-                      </>
-                    }
-                    <DownloadDetails>
-                      <DownloadTitle>
-                        {download.shortDesc}
-                      </DownloadTitle>
-                    </DownloadDetails>
-                  </DownloadIcon>
-                </DownloadCard>
-              ))
-              }
-            </DownloadContainer>
-          </InnerContainer>
-        </Container >
-      ))}
-    </>
+    </OuterContainer>
   )
 }
 

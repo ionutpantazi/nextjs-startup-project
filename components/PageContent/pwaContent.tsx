@@ -53,8 +53,8 @@ const PwaContent = ({
                 {api.section.type == 'section' &&
                   <PwaSection data={api.section} agenda={data['agenda']} delegates={data['delegates']} discussions={data['discussions']} speakers={data['speakers']} />
                 }
-                {api.section.type == 'faqs' && data.event?.faqs?.length &&
-                  <ComponentSectionsFaQs faqs={data['event']['faqs']} title={api.section.title} />
+                {api.section.type == 'faqs' && data.faqs?.faQs?.length &&
+                  <ComponentSectionsFaQs faqs={data['faqs']['faQs']} title={api.section.title} />
                 }
                 {api.section.type == 'contact' && data.resource.contact &&
                   <ComponentSectionsSection5 data={api.section} contactData={data.resource.contact} />
@@ -77,8 +77,8 @@ const PwaContent = ({
               {api == 'agenda' &&
                 <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} speakers={data['speakers']} />
               }
-              {api == 'event' && data.event?.faqs?.length &&
-                <ComponentSectionsFaQs faqs={data['event']['faqs']} />
+              {api == 'faqs' && data.faqs?.faQs?.length &&
+                <ComponentSectionsFaQs faqs={data['faqs']['faQs']} />
               }
             </div>
           ))}

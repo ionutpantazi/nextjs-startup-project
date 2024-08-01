@@ -22,7 +22,7 @@ const Forum = ({
   return (
     <>
       <PwaContentContainer>
-        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.banner ? data.banner.upload : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data?.discussions && data?.discussions?.data?.length > 0 && session?.isLoggedIn &&
           <ForumComponent data={data.discussions} />
         }

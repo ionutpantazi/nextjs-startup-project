@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     const slug = query.slug;
     const navigationData = await fetchNavigation(true);
     let data = await getFaqsPageData(slug, jwt)
+    console.log(data);
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

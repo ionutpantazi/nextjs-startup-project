@@ -21,7 +21,7 @@ const Discussion = ({
   return (
     <>
       <PwaContentContainer>
-      <Header title={'Discussion'} headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.banner ? data.banner.upload : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data && session.isLoggedIn &&
           <DiscussionComponent data={data.discussion} />
         }

@@ -88,7 +88,10 @@ export const SortCategoriesTitle = styled.div`
 
 const SortAndSearch = ({
   title,
+  dropDownPlaceholder,
   dropdownValues,
+  selectedValue,
+  setSelectedValue,
 }: any) => {
 
   return (
@@ -97,7 +100,7 @@ const SortAndSearch = ({
         {title}
       </SortCategoriesTitle>
       <DropdownAndSearch>
-        <Dropdown values={dropdownValues} />
+        <Dropdown placeholder={dropDownPlaceholder} values={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
         <SearchContainer>
           <SearchInput as='input' />
           <SearchButton>

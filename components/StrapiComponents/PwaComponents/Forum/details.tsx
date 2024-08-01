@@ -6,6 +6,7 @@ import {
   Container,
   InnerContainer,
   ComponentContainer,
+  OuterContainer,
 } from 'components/Bootstrap/Common'
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
@@ -13,6 +14,8 @@ import { useRouter } from 'next/router'
 import { CommentContent } from '../Discussions/CommentContent'
 import { ActionButtons } from '../Discussions/ActionButtons'
 import { AuthorDetails, SpeakerImage, StyledInputContainer, UserAvatar } from '../Discussions/styles'
+import { LeftEventTitle } from '../Header/styles'
+import Ruler from '../Common/Ruler'
 var moment = require('moment');
 
 const ForumItem = styled.div`
@@ -105,7 +108,7 @@ const DiscussionComponent = ({
       setIsMobile(false)
     }
   }, [])
-  
+
   const navigateToDiscussion = (id: string) => {
     const path = router.asPath;
     router.push(`${path}/${id}`);
@@ -113,15 +116,20 @@ const DiscussionComponent = ({
 
   const applyInputContainerStyle = () => {
     return {
-        width: '100%',
-        'margin-bottom': '10px'
+      width: '100%',
+      'margin-bottom': '10px'
     };
   }
 
   return (
-    <Container>
-      <InnerContainer>
-        <ComponentContainer className='flex flex-col gap-4'>
+    <OuterContainer className=''>
+      <Container>
+        <InnerContainer className='flex flex-col gap-4'>
+          <ComponentContainer>
+            <LeftEventTitle>
+              {data.title ? data.title : 'Discussion'}
+            </LeftEventTitle>
+            <Ruler />
             <ForumItem>
               <ForumItemContent className='md:flex grid-cols-2 flex-row flex-wrap content-start justify-around gap-4'>
                 <StyledNextImage
@@ -132,68 +140,69 @@ const DiscussionComponent = ({
                   height={140}
                 />
                 <Detail className='flex flex-col gap-2 justify-center lg:w-9/12 w-full'>
-                    <AuthorDetails className=''>
-                        {data.authorName} | {moment(data.datePosted).fromNow()}
-                    </AuthorDetails>
-                    <DetailsBox className='flex flex-col gap-2 justify-center w-full'>
-                        {data.title &&
-                            <ForumItemTitle className=''>
-                            {data.title}
-                            </ForumItemTitle>
-                        }
-                        {data.text &&
-                            <ForumItemSubTitle className=''
-                            dangerouslySetInnerHTML={{
-                                __html: data.text,
-                            }}
-                            />
-                        }
-                    </DetailsBox>
-                    <ActionButtons impressions={data.impressions ?? 0} comments={data.responses?.length ?? 0} />
+                  <AuthorDetails className=''>
+                    {data.authorName} | {moment(data.datePosted).fromNow()}
+                  </AuthorDetails>
+                  <DetailsBox className='flex flex-col gap-2 justify-center w-full'>
+                    {/* {data.title &&
+                      <ForumItemTitle className=''>
+                        {data.title}
+                      </ForumItemTitle>
+                    } */}
+                    {data.text &&
+                      <ForumItemSubTitle className=''
+                        dangerouslySetInnerHTML={{
+                          __html: data.text,
+                        }}
+                      />
+                    }
+                  </DetailsBox>
+                  <ActionButtons impressions={data.impressions ?? 0} comments={data.responses?.length ?? 0} />
                 </Detail>
               </ForumItemContent>
             </ForumItem>
 
             <StyledInputContainer className='flex flex-row gap-6' style={applyInputContainerStyle()}>
-                <UserAvatar className='row-span-3'>
+              <UserAvatar className='row-span-3'>
                 <SpeakerImage>
-                    <NextImage
+                  <NextImage
                     src={'/images/avatar.png'}
                     className=''
                     alt={""}
                     width={30}
                     height={30}
-                    />
+                  />
                 </SpeakerImage>
-                </UserAvatar>
-                <input placeholder='Share your thoughts...' />
+              </UserAvatar>
+              <input placeholder='Share your thoughts...' />
             </StyledInputContainer>
-                        
+
             {data.responses?.length > 0 &&
-                <ForumItem>
-                    <ForumItemResponses>
-                        <DiscussionFilter className='md:flex hidden flex-row gap-2 items-center'>
-                            <span>Most Recent</span>
-                            <FAIcon
-                            icon={'fa-angle-down'}
-                            width={10}
-                            height={10}
-                            />
-                        </DiscussionFilter>
-                        <CommentBox className='md:block'>
-                            {data.responses?.map((comment: any, index: number) => (
-                                <div key={comment.id}>
-                                    <CommentContent className='' comment={comment} hideComments={true} expand={false} />
-                                </div>
-                            ))
-                            }
-                        </CommentBox>
-                    </ForumItemResponses>
-                </ForumItem>
+              <ForumItem>
+                <ForumItemResponses>
+                  <DiscussionFilter className='md:flex hidden flex-row gap-2 items-center'>
+                    <span>Most Recent</span>
+                    <FAIcon
+                      icon={'fa-angle-down'}
+                      width={10}
+                      height={10}
+                    />
+                  </DiscussionFilter>
+                  <CommentBox className='md:block'>
+                    {data.responses?.map((comment: any, index: number) => (
+                      <div key={comment.id}>
+                        <CommentContent className='' comment={comment} hideComments={true} expand={false} />
+                      </div>
+                    ))
+                    }
+                  </CommentBox>
+                </ForumItemResponses>
+              </ForumItem>
             }
-        </ComponentContainer>        
-      </InnerContainer>
-    </Container>
+          </ComponentContainer>
+        </InnerContainer>
+      </Container>
+    </OuterContainer>
   )
 }
 

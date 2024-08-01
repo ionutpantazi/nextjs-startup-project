@@ -54,11 +54,13 @@ const DropdownItem = styled.div`
 `
 
 const Dropdown = ({
-  values
+  values,
+  placeholder,
+  selectedValue,
+  setSelectedValue
 }: any) => {
 
   const [isDropDownVisible, setIsDropDownVisible] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(values[0])
 
   const togggleDropdown = () => {
     setIsDropDownVisible(!isDropDownVisible)
@@ -73,7 +75,7 @@ const Dropdown = ({
     <DropdownContainer className=''>
       <DropdownButton onClick={togggleDropdown}>
         <span>
-          {selectedValue.label}
+          {selectedValue ? selectedValue.label : placeholder}
         </span>
         <FAIcon
           icon={'fa-angle-down'}
@@ -82,6 +84,7 @@ const Dropdown = ({
         />
       </DropdownButton>
       <DropdownContent active={isDropDownVisible ? 'true' : 'false'}>
+        <DropdownItem onClick={(e) => { e.preventDefault(); selectValue(undefined) }}>{placeholder}</DropdownItem>
         {values.map((value: any, index: number) => (
           <DropdownItem key={index} onClick={(e) => { e.preventDefault(); selectValue(value) }}>
             {value.label}

@@ -217,8 +217,6 @@ const ComponentSectionsFaQs = ({
                     data-twe-parent="#accordionExample"
                   >
                     <br />
-                    <br />
-                    <br />
                     <div
                       dangerouslySetInnerHTML={{
                         __html: faq.longDesc,

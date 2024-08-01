@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { theme } from 'lib/theme'
 import NextImage from 'next/image'
-import { useRouter } from 'next/router'
-import useSession from "lib/use-session";
 
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
-import { RadialContainer } from '@/components/Bootstrap/Common'
+import { ComponentContainer, Container, InnerContainer, OuterContainer, RadialContainer } from '@/components/Bootstrap/Common'
 import { Download, DownloadCategory, DownloadPageType, DownloadType } from '@/components/Pages/ContentPages'
-import Dropdown from '@/components/StrapiComponents/PwaComponents/Common/Select'
-import FAIcon from '@/components/Bootstrap/FAIcon'
+import SortAndSearch from '../Common/SortAndSearch'
+import { LeftEventTitle } from '../Header/styles';
 
 export interface ContentTabDownloadsProps {
   data: Downloads
@@ -21,27 +19,6 @@ export type Downloads = {
   type: DownloadPageType,
   categories: DownloadCategory[]
 }
-
-const Container = styled.div`
-  max-width: 1440px;
-  margin: 0 auto 40px auto;
-  padding: ${theme.margins.homepage_large};
-  color: ${theme.colors.white};
-  overflow: hidden;
-  background-color: #1E1E1E;
-  border-radius: 24px;
-
-  @media screen and (max-width: ${theme.screens.sm}) {
-    padding: ${theme.margins.homepage_small};
-    margin: 0 auto 20px auto;
-  }
-`
-
-const InnerContainer = styled.div`
-  margin: 0 auto;
-  padding: 20px 0;
-  max-width: ${theme.pageWidth};
-`
 
 const Title = styled.div`
   font-size: 22px;
@@ -161,6 +138,24 @@ const ContentTabDownloads = ({
   const { width } = useWindowSize();
 
   const [ search, setSearch ] = useState('');
+  
+  const dropdownValues = data.categories.map((category: any) => {
+    return { label: category.title, slug: category.title }
+  })
+
+  const [categories, setCategories] = useState(data.categories);
+  const [selectedValue, setSelectedValue] = useState<{label: string, slug: string} | undefined>(undefined);
+  
+  useEffect(() => {
+    if (selectedValue && selectedValue.label) {
+      let filteredCategories = data.categories.filter((x: any) => x.title === selectedValue.label);
+      if (filteredCategories.length > 0) {
+        setCategories(filteredCategories);
+      }
+    } else {
+      setCategories(data.categories);
+    }
+  }, [selectedValue])
 
   const navigateToDownload = (download: Download) => {
     switch (download.type) {
@@ -185,65 +180,54 @@ const ContentTabDownloads = ({
     }
   }
 
-  const dropdownValues = [
-    { label: 'Select Category', slug: '' },
-    { label: 'Client Websites', slug: 'client_websites' },
-    { label: 'Event Footage', slug: 'event_footage' },
-    { label: 'The Highlights', slug: 'the_highlights' },
-    { label: 'Additional Resources', slug: 'additional_resources' },
-  ]
-  
   return (
-    <>
-    <DropdownAndSearch>
-      <Dropdown values={dropdownValues} />
-      <SearchContainer>
-        <SearchInput as='input' onChange={(x) => setSearch(x.target.value || "")}/>
-        <SearchButton>
-          <FAIcon
-            icon={'fa-magnifying-glass'}
-            width={16}
-            height={16}
-          />
-        </SearchButton>
-      </SearchContainer>
-    </DropdownAndSearch>
-      {data.categories && data.categories.map((category: DownloadCategory, i) => (
-        <Container key={i}>
-          <InnerContainer className='flex flex-col gap-4'>
-            <Title>
-              {category.title}
-            </Title>
-            <DownloadContainer>
-              {category.downloads && category.downloads.map((download: Download, i) => (
-                <DownloadCard key={i} style={applyDownloadCardStyle()} onClick={() => navigateToDownload(download)}>
-                  <DownloadIcon className='row-span-1 grid content-end relative'>
-                    {download?.upload &&
-                      <>
-                        <RadialContainer />
-                        <StyledNextImage
-                          src={download.upload.path ?? ""}
-                          className=''
-                          alt={download.upload.alt ?? ""}
-                          fill
-                          style={{objectFit:'cover'}}
-                        />
-                      </>
+    <OuterContainer className=''>
+      <Container className=''>
+        <InnerContainer className=''>
+          <ComponentContainer className='flex flex-col'>
+            <LeftEventTitle>
+              {data.title}
+            </LeftEventTitle>
+            <SortAndSearch title='Choose a category:' dropDownPlaceholder={"Select Category"} dropdownValues={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
+            {categories && categories.map((category: DownloadCategory, i) => (
+              <Container key={i}>
+                <InnerContainer className='flex flex-col gap-4'>
+                  <Title>
+                    {category.title}
+                  </Title>
+                  <DownloadContainer>
+                    {category.downloads && category.downloads.map((download: Download, i) => (
+                      <DownloadCard key={i} style={applyDownloadCardStyle()} onClick={() => navigateToDownload(download)}>
+                        <DownloadIcon className='row-span-1 grid content-end relative'>
+                          {download?.upload &&
+                            <>
+                              <RadialContainer />
+                              <StyledNextImage
+                                src={download.upload.path ?? ""}
+                                className=''
+                                alt={download.upload.alt ?? ""}
+                                fill
+                                style={{objectFit:'cover'}}
+                              />
+                            </>
+                          }
+                          <DownloadDetails>
+                            <DownloadTitle>
+                              {download.shortDesc}
+                            </DownloadTitle>
+                          </DownloadDetails>
+                        </DownloadIcon>
+                      </DownloadCard>
+                    ))
                     }
-                    <DownloadDetails>
-                      <DownloadTitle>
-                        {download.shortDesc}
-                      </DownloadTitle>
-                    </DownloadDetails>
-                  </DownloadIcon>
-                </DownloadCard>
-              ))
-              }
-            </DownloadContainer>
-          </InnerContainer>
-        </Container >
-      ))}
-    </>
+                  </DownloadContainer>
+                </InnerContainer>
+              </Container >
+            ))}
+          </ComponentContainer>
+        </InnerContainer>
+      </Container>
+    </OuterContainer>
   )
 }
 
