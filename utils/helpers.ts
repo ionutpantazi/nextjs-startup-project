@@ -523,7 +523,7 @@ export function generateMenuHref(segment: any) {
   if (segment?.startsWith('https://')) {
     return segment;
   } else if (segment?.startsWith('contenttabs/')) {
-    let id = segment.match(/ctid=(.*$)/)[1];
+    let id = segment.match(/\/(.*$)/)[1];
     const href = `/pwa/${slug}/pages/${id}`;
     return href;
   } else if (segment.startsWith('exhibitors/')) {

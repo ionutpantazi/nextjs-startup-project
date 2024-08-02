@@ -12,6 +12,7 @@ export default class MyDocument extends Document {
       <Html lang='en'>
         <Head>
           <link rel='icon' type='image/png' sizes='32x32' href='/images/lg-favicon-32x32.png' />
+          <link rel="stylesheet" href="https://use.typekit.net/xvx1cbc.css"></link>
           <script type='text/javascript' dangerouslySetInnerHTML={{
             __html: `
                 window.onUsersnapLoad = function(api) {

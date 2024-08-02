@@ -24,3 +24,7 @@ export function sortAgendaItemsByStartDate(agendaItems: any): any {
     return dateA - dateB;
   });
 }
+
+export function removeMinutes(momentTime: string) {
+  return momentTime.replace(/(:00)/g, '');
+}

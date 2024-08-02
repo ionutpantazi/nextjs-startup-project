@@ -25,7 +25,9 @@ const HeaderWrap = styled.header`
 
 const LayoutContainer = styled.div`
   background-color: ${theme.colors.black};
-  font-family: ReadexProRegular;
+  font-family: greycliff-cf, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 `
 
 

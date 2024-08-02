@@ -17,7 +17,7 @@ const FooterContainer = styled.footer`
   max-width: ${theme.pageWidth};
 
   color: ${theme.colors.white};
-  font-family: ReadexProRegular;
+  font-family: "greycliff-cf", sans-serif;
 
   @media screen and (max-width: ${theme.screens.sm}) {
     padding: 20px 20px;

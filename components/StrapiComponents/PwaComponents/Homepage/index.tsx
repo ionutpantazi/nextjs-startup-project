@@ -37,7 +37,7 @@ console.log(data)
                     <PwaSection data={api.section} agenda={data['agenda']} delegates={data['delegates']} discussions={data['discussions']} speakers={data['speakers']} />
                   }
                   {api.section.type == 'faqs' && data.faqs?.faQs?.length &&
-                    <FAQs faqs={data['faqs']['faQs']} title={api.section.title} />
+                    <FAQs faqs={data['faqs']['faQs']} title={api.section.title} isHomepage={true} />
                   }
                   {api.section.type == 'contact' && data.resource.contact &&
                     <Contact data={api.section} contactData={data.resource.contact} />
@@ -61,7 +61,7 @@ console.log(data)
                 <ComponentSectionsSection2 agenda={data['agenda']} delegates={data['delegates']} speakers={data['speakers']} />
               }
               {api == 'faqs' && data.faqs?.faQs?.length &&
-                <FAQs faqs={data['faqs']['faQs']} />
+                <FAQs faqs={data['faqs']['faQs']} isHomepage={true} />
               }
             </div>
           ))}
