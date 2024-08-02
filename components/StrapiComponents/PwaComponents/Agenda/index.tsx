@@ -5,11 +5,13 @@ import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useRouter } from 'next/router'
+import useSession from "lib/use-session";
 import {
   removeTime,
   removeMinutes,
   sortAgendaItemsByStartDate,
 } from './utils'
+import { post } from 'lib/httpClient'
 
 import {
   AgendaContainer,
@@ -48,11 +50,13 @@ const Agenda = ({
   isHomepage,
 }: any) => {
 
+  const { session, isLoading } = useSession();
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState(false);
   const sortData = sortAgendaItemsByStartDate(data);
   const router = useRouter();
+  const isUserLoggedIn = session.isLoggedIn
 
   useEffect(() => {
     if (width && width < Number(theme.screens['md'].replace('px', ''))) {
@@ -64,12 +68,23 @@ const Agenda = ({
 
   const generateAgendaPageLink = () => {
     const path = router.asPath;
-    if (path.includes('agenda')) {
-      return '#'
-    } else {
-      return `${path}/agenda`
-    }
+    return `${path}/agenda/`
+  }
 
+  async function addOrRemoveAgendaItem(e: any, agendaItemId: any, method: any) {
+    e.preventDefault()
+    let linkElement = e.target?.closest('a')
+    let agendaMethod = linkElement?.getAttribute('data-mode')
+    let response = await post('/api/agenda/agendaitems', { eventId: 'hivedemo', agendaItemId: agendaItemId, method: agendaMethod }, {})
+    if (response.data?.id) {
+      if(agendaMethod == 'add'){
+        linkElement.setAttribute('data-mode', 'remove')
+        linkElement.innerText = 'Remove from agenda'
+      } else {
+        linkElement.setAttribute('data-mode', 'add')
+        linkElement.innerText = 'Add to agenda'
+      }
+    }
   }
 
   return (
@@ -187,19 +202,33 @@ const Agenda = ({
                 }
               </Participants>
             </ParticipantsBox> */}
-            {!isHomepage &&
-              <Button2 as='a' href={generateAgendaPageLink()} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit'>
-                <span>
-                  Add to agenda
-                </span>
+            {!isHomepage && isUserLoggedIn &&
+              <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
+                {agenda.isAttending
+                  ?
+                  <>
+                    Remove from agenda
+                  </>
+                  :
+                  <>
+                    Add to agenda
+                  </>
+                }
               </Button2>
             }
             <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
-              {!isHomepage &&
-                <Button2 as='a' href={generateAgendaPageLink()} className='md:flex hidden flex-row gap-4 items-center w-fit'>
-                  <span>
-                    Add to agenda
-                  </span>
+              {!isHomepage && isUserLoggedIn &&
+                <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='md:flex hidden flex-row gap-4 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
+                  {agenda.isAttending
+                    ?
+                    <>
+                      Remove from agenda
+                    </>
+                    :
+                    <>
+                      Add to agenda
+                    </>
+                  }
                 </Button2>
               }
               {isHomepage &&

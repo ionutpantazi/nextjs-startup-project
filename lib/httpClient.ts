@@ -7,7 +7,7 @@ const get = async (endpoint: string, headers: any) => {
   } catch (error: any) {
     // Login required error always returns 401
     if (error.response?.status === 401) {
-      return { data: {}, err: {status: error.response?.status, message: 'User login required.'} }
+      return { data: {}, err: { status: error.response?.status, message: 'User login required.' } }
     } else {
       return { data: {}, err: error.response.data ?? 'axios post err' }
     }
@@ -19,7 +19,16 @@ const post = async (endpoint: string, postData: any, headers: any) => {
     const { data } = await axios.post(endpoint, postData, headers);
     return { data: data }
   } catch (error: any) {
-    return { data: {}, err: error?.response?.data ?? 'axios post err' }
+    let status = error.response.status
+    let statusText = error.response.statusText
+    let errorData = error.response.data
+    if (error?.response?.data) {
+      return {
+        data: {}, err: { status: status, statusText: statusText, errorData: errorData }
+      }
+    } else {
+      return { data: {}, err: { status: undefined, statusText: undefined, errorData: 'axios post error' } }
+    }
   }
 };
 

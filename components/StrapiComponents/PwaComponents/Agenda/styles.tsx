@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components'
 import NextImage from 'next/image'
-import { DateContainer } from 'components/StrapiComponents/ComponentSectionsSection1/pwaTextAndIcons'
-
 
 export const AgendaContainer = styled.div`
 `
@@ -177,6 +175,34 @@ export const Button2 = styled.div`
     font-size: 11px;
     font-weight: 500;
     line-height: 16px;
+  }
+`
+
+export const DateContainer = styled.div <{ active?: any }>`
+  border-radius: ${props => props.theme.borderRadius?.components?.small};
+  background-color: ${props => props.theme.colors.darkestgrey};
+  padding: 20px;
+  text-align: center;
+  width: 160px;
+  height: 160px;
+
+  ${({ active }) => css`
+    ${props => active == 'true' ? 'border-color: ' + props.theme.colors.brand + ';border-style: solid; border-width: 2px;' : 'border:2px solid rgba(0,0,0,0);'};
+  `}
+
+  .agendaDayNumber {
+    color: ${props => props.theme.colors.brand};
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-radius: ${props => props.theme.borderRadius?.components?.small};
+    border-style: solid;
+    border-width: 2px;
+    border-color: ${props => props.theme.colors.brandlight};
+    .agendaDayNumber {
+      color: ${props => props.theme.colors.brandlight};
+    }
   }
 `
 

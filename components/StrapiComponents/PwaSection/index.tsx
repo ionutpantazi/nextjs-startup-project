@@ -7,7 +7,13 @@ import {
   ComponentContainer,
 } from 'components/Bootstrap/Common'
 
-import { removeTime, generateAgendaDatesArray, sortAgendaItemsByStartDate } from 'components/StrapiComponents/PwaComponents/Agenda/utils';
+import {
+  removeTime,
+  removeMinutes,
+  sortAgendaItemsByStartDate,
+  generateAgendaDatesArray,
+  setAgendaPage,
+} from 'components/StrapiComponents/PwaComponents/Agenda/utils'
 
 const TextAndIcons = dnmc(() => import('components/StrapiComponents/PwaComponents/TextAndIcons'));
 const Agenda = dnmc(() => import('components/StrapiComponents/PwaComponents/Agenda'));
@@ -26,9 +32,7 @@ const ComponentSectionsSection1 = ({
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
   useEffect(() => {
-    if (agenda.data[0]) {
-      handleAgendaDateChange(removeTime(agenda.data[0].start))
-    }
+    setAgendaPage(agenda, handleAgendaDateChange)
   }, []);
 
   const handleAgendaDateChange = (date: string) => {

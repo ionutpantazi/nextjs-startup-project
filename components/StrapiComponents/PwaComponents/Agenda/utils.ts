@@ -1,4 +1,4 @@
-
+var moment = require('moment');
 
 export function removeTime(momentTime: string) {
   var index = momentTime.lastIndexOf('T')
@@ -27,4 +27,22 @@ export function sortAgendaItemsByStartDate(agendaItems: any): any {
 
 export function removeMinutes(momentTime: string) {
   return momentTime.replace(/(:00)/g, '');
+}
+
+export function setAgendaPage(agenda: any, handleAgendaDateChange: any) {
+  if (agenda.data[0]) {
+    let currentDate = moment().format('YYYY-MM-DD')
+
+    agenda.data.forEach((data: any) => {
+      // loop through agenda dates and find which date is matching current date
+      let agendaDate = removeTime(data.start);
+      if (agendaDate == currentDate) {
+        // set agenda page to current date
+        handleAgendaDateChange(agendaDate)
+      } else {
+        // set agenda page to first date
+        handleAgendaDateChange(removeTime(agenda.data[0].start))
+      }
+    })
+  }
 }

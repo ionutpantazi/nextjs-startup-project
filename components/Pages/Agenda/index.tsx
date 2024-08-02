@@ -1,7 +1,13 @@
 import React, { useState, useEffect, Children } from 'react'
 import dnmc from 'next/dynamic'
 import styled, { css } from 'styled-components'
-import { removeTime, generateAgendaDatesArray, sortAgendaItemsByStartDate } from '../../StrapiComponents/ComponentSectionsSection2/pwa';
+import {
+  removeTime,
+  removeMinutes,
+  sortAgendaItemsByStartDate,
+  generateAgendaDatesArray,
+  setAgendaPage,
+} from 'components/StrapiComponents/PwaComponents/Agenda/utils'
 import {
   OuterContainer,
   Container,
@@ -10,6 +16,7 @@ import {
   SectionTitle,
   ComponentContainer,
 } from 'components/Bootstrap/Common'
+
 import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
 import {
   LeftEventTitle,
@@ -36,9 +43,7 @@ const AgendaPage = ({
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
   useEffect(() => {
-    if (agenda.data[0]) {
-      handleAgendaDateChange(removeTime(agenda.data[0].start))
-    }
+    setAgendaPage(agenda, handleAgendaDateChange)
   }, []);
 
   const handleAgendaDateChange = (date: string) => {
