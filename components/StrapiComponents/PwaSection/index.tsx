@@ -26,7 +26,7 @@ const ComponentSectionsSection1 = ({
   var [agendaData, setAgendaData] = useState<any>(sortAgendaItemsByStartDate(agenda.data));
 
   useEffect(() => {
-    if (agenda.data) {
+    if (agenda.data[0]) {
       handleAgendaDateChange(removeTime(agenda.data[0].start))
     }
   }, []);

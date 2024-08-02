@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps<any> = async ({
     let data = await getPageData(segment0, jwt)
     console.log("page data", data)
     let logo = data?.event.logo;
-    if (!data?.event?.dateCreated) {
+    if (!data?.event?.startDate) {
       return {
         props: {
           error: {

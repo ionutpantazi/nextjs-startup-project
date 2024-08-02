@@ -30,7 +30,7 @@ console.log(data)
             <div key={index}>
               {api.heading
                 ?
-                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} eventDetails={data.event.eventDetails} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} startDate={data.event.startDate} venueData={data.event.venue} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
                 :
                 <>
                   {api.section.type == 'section' &&
@@ -52,7 +52,7 @@ console.log(data)
           {Object.keys(data).map((api, apiData) => (
             <div key={api}>
               {api == 'event' &&
-                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} eventDetails={data.event.eventDetails} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} venueData={data.event.venue} date={data.event.startDate} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
               }
               {api == 'discussions' &&
                 <ComponentSectionsSection1 discussions={data['discussions']} />

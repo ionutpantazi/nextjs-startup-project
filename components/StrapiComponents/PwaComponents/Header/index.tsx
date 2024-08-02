@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import {
@@ -10,7 +10,7 @@ import {
 import useSession from "lib/use-session";
 import ReadMore from '@/components/Bootstrap/ReadMore'
 import { RadialContainer } from '@/components/Bootstrap/Common'
-import { setFECookie, generateMenuHref } from 'utils/helpers'
+import { setFECookie, generateMenuHref, extractDate, extractTime } from 'utils/helpers'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { parseContent } from 'utils/helpers'
 import {
@@ -56,7 +56,8 @@ const Header = ({
   subtitle,
   description,
   headerImage,
-  eventDetails,
+  venueData,
+  startDate,
   tilesData,
   senddatatolayout,
   isdefaulttheme,
@@ -66,8 +67,14 @@ const Header = ({
   hideBody,
 }: any) => {
 
+  useEffect(() => {
+    console.log('Datatata', venueData)
+  }, [])
+
   const { session, isLoading } = useSession();
   const backgroundImage = headerImage?.path ? headerImage.path : null;
+  const [venue] = useState(venueData);
+  const [date] = useState(startDate);
 
   function handleDefaultThemeChange() {
     if (senddatatolayout instanceof Function) {
@@ -83,34 +90,64 @@ const Header = ({
     }
   }
 
-  const EventDetailsComponent = ({ eventDetails }: any) => {
-    return <>
-      {eventDetails?.map((evendDetail: any, index: any) => (
-        <EventDetailsItemContainer key={index}>
+  const EventDetailsComponent = () => {
+    return (
+      <>
+        <EventDetailsItemContainer>
           <EventDetailsItem className='flex flex-row gap-4'>
             <EventDetailsIcon className='row-span-3'>
-              <>
-                {evendDetail?.icon &&
-                  <FAIcon
-                    className='h-[20px] md:h-[40px] w-[20px] md:w-[40px]'
-                    icon={evendDetail.icon}
-                  />
-                }
-              </>
+              <FAIcon
+                className='h-[20px] md:h-[40px] w-[20px] md:w-[40px]'
+                icon={'fa-house'}
+              />
             </EventDetailsIcon>
             <EventDetailsContainer className='flex flex-col gap-2'>
               <EventDetailsTitle className='col-span-2'>
-                {evendDetail.title}
+                {venue.title}
               </EventDetailsTitle>
               <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                {evendDetail.subtitle}
+                {`${venue.address ? venue.address : ''}${venue.postcode ? `, ${venue.postcode}` : ''}`}
               </EventDetailsSubTitle>
             </EventDetailsContainer>
           </EventDetailsItem>
         </EventDetailsItemContainer>
-      ))
-      }
-    </>
+        <EventDetailsItemContainer>
+          <EventDetailsItem className='flex flex-row gap-4'>
+            <EventDetailsIcon className='row-span-3'>
+              <FAIcon
+                className='h-[20px] md:h-[40px] w-[20px] md:w-[40px]'
+                icon={'fa-calendar-days'}
+              />
+            </EventDetailsIcon>
+            <EventDetailsContainer className='flex flex-col gap-2'>
+              <EventDetailsTitle className='col-span-2'>
+                {'Date'}
+              </EventDetailsTitle>
+              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                {extractDate(date)}
+              </EventDetailsSubTitle>
+            </EventDetailsContainer>
+          </EventDetailsItem>
+        </EventDetailsItemContainer>
+        <EventDetailsItemContainer>
+          <EventDetailsItem className='flex flex-row gap-4'>
+            <EventDetailsIcon className='row-span-3'>
+              <FAIcon
+                className='h-[20px] md:h-[40px] w-[20px] md:w-[40px]'
+                icon={'fa-clock'}
+              />
+            </EventDetailsIcon>
+            <EventDetailsContainer className='flex flex-col gap-2'>
+              <EventDetailsTitle className='col-span-2'>
+                {'Time'}
+              </EventDetailsTitle>
+              <EventDetailsSubTitle className='row-span-2 col-span-2'>
+                {extractTime(date)}
+              </EventDetailsSubTitle>
+            </EventDetailsContainer>
+          </EventDetailsItem>
+        </EventDetailsItemContainer>
+    </>)
   }
 
   const IWantToItemComponent = ({ item }: any) => {
@@ -185,7 +222,7 @@ const Header = ({
 
                   <IntroLandingContainer className='mt-6' hidebody={hideBody ? 'true' : 'false'}>
                     <div className='grid grid-cols-2 gap-2'>
-                      <EventDetailsComponent eventDetails={eventDetails} />
+                      <EventDetailsComponent />
                     </div>
                     <Swiper
                       spaceBetween={10}
@@ -398,7 +435,7 @@ const Header = ({
                               }
                             </EventDetailsItem>
                           </EventDetailsItemContainer>
-                          <EventDetailsComponent eventDetails={eventDetails} />
+                          <EventDetailsComponent />
                         </EventDetails>
                       </EventContainer>
                     </>

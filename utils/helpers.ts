@@ -229,20 +229,20 @@ export function generateThemeData(data: any) {
 
 export function convertTempData(event: any, resource: any, delegates: any) {
   if (event) {
-    event.homeBanner = {
-      alt: 'hive',
-      path: '/images/lg-banner.png',
-    }
+    // event.homeBanner = {
+    //   alt: 'hive',
+    //   path: '/images/lg-banner.png',
+    // }
     event.logo = {
       alt: 'hive',
       path: '/images/logo-live-group-vermilion.svg',
     }
     event.eventId = 1
-    event.eventDetails = [
-      { title: 'Live Group Office', subtitle: 'Unit 9, Princess Mews, Horace Rd, Kingston upon Thames KT1 2SZ', icon: 'fa-house' },
-      { title: 'Date', subtitle: '20th December 2024', icon: 'fa-calendar-days' },
-      { title: 'Time', subtitle: '10:00', icon: 'fa-clock' },
-    ]
+    // event.eventDetails = [
+    //   { title: 'Live Group Office', subtitle: 'Unit 9, Princess Mews, Horace Rd, Kingston upon Thames KT1 2SZ', icon: 'fa-house' },
+    //   { title: 'Date', subtitle: '20th December 2024', icon: 'fa-calendar-days' },
+    //   { title: 'Time', subtitle: '10:00', icon: 'fa-clock' },
+    // ]
     event.tilesData = [
       { title: 'Meet the speakers', image: '/images/tiles/tile1.jpg', slug: 'speakers', icon: 'fa-people-group' },
       { title: 'Meet the exhibitors', image: '/images/tiles/tile2.jpg', slug: 'exhibitors', icon: 'fa-screwdriver-wrench' },
@@ -526,6 +526,10 @@ export function generateMenuHref(segment: any) {
     let id = segment.match(/ctid=(.*$)/)[1];
     const href = `/pwa/${slug}/pages/${id}`;
     return href;
+  } else if (segment.startsWith('exhibitors/')) {
+    let id = segment.match(/etid=(.*$)/)[1];
+    const href = `/pwa/${slug}/exhibitors/${id}`;
+    return href;
   } else {
     const href = `/pwa/${slug}/${segment}`;
     return href;
@@ -549,3 +553,35 @@ export function parseContent(content: any) {
   let removeStyle = removeStyleAttributes(content)
   return removeStyle
 }
+}
+
+export function getDateSuffix(date: number) {
+  if (date > 3 && date < 21) return 'th';
+  switch (date % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+};
+
+export function extractDate(datetimeString: string) {
+  const date = new Date(datetimeString);
+  const day = date.getDate();
+  const daySuffix = getDateSuffix(day);
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}${daySuffix} ${month} ${year}`;
+};
+
+export function extractTime(datetimeString: string) {
+  const date = new Date(datetimeString);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
