@@ -553,7 +553,6 @@ export function parseContent(content: any) {
   let removeStyle = removeStyleAttributes(content)
   return removeStyle
 }
-}
 
 export function getDateSuffix(date: number) {
   if (date > 3 && date < 21) return 'th';
