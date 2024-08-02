@@ -15,6 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ access_token, expires_in })
   }
   else {
-    res.status(500).json(err?.error)
+    res.status(500).json(err)
   }
 }
