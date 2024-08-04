@@ -13,7 +13,7 @@ const DropdownContent = styled.div <{ active?: any }>`
   `}
   position: absolute;
   height: 72px;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.components?.Navbar?.NavigationContainerBackground};
   width: 100%;
   // padding: 12px 16px;
   z-index: 99;

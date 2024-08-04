@@ -42,7 +42,7 @@ export const FaqsContainer = styled.div <{ hasinfobox?: any }>`
 
 export const FaqItem = styled.div`
   border-radius: ${props => props.theme.borderRadius.components?.small};
-  background-color: ${props => props.theme.colors.darkgrey};
+  background-color: ${props => props.theme.components?.FAQs?.FaqItemBackground};
   padding: 20px;
   &:hover {
     cursor: pointer;

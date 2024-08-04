@@ -12,7 +12,9 @@ import ReadMore from '@/components/Bootstrap/ReadMore'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 import { setFECookie, generateMenuHref, extractDate, extractTime } from 'utils/helpers'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { parseContent } from 'utils/helpers'
+import { parseContent, mobileCheck } from 'utils/helpers'
+import { useWindowSize } from '@/lib/hooks/useWindowSize';
+import { ThemeContext } from 'components/Layout';
 import {
   ImageContainer,
   StyledRadialContainer,
@@ -66,10 +68,33 @@ const Header = ({
   hideContentContainer,
   hideBody,
 }: any) => {
+
+  const theme = useContext(ThemeContext);
+  const { width } = useWindowSize();
   const { session, isLoading } = useSession();
   const backgroundImage = headerImage?.path ? headerImage.path : null;
   const [venue] = useState(venueData);
   const [date] = useState(startDate);
+
+  useEffect(() => {
+    // update header image marging top
+    const isMobile = width && width < Number(theme.screens['md'].replace('px', '')) ? true : false;
+    let imageContainer = document.getElementById('imageContainer') as any;
+    let header = document.querySelector('nav')
+    if (imageContainer && header && !mobileCheck()) {
+      if (!isMobile) {
+        let imageContainerStyle = imageContainer.currentStyle || window.getComputedStyle(imageContainer);
+        let marginTop = parseInt(imageContainerStyle.marginTop.replace('px', ''))
+        if (marginTop < 0 || (marginTop == 56)) {
+          let headerHeight = header?.offsetHeight
+          imageContainer.style.marginTop = `-${headerHeight}px`;
+        }
+      } else {
+        imageContainer.style.marginTop = `56px`;
+      }
+    }
+
+  }, [width]);
 
   function handleDefaultThemeChange() {
     if (senddatatolayout instanceof Function) {
@@ -142,7 +167,7 @@ const Header = ({
             </EventDetailsContainer>
           </EventDetailsItem>
         </EventDetailsItemContainer>
-    </>)
+      </>)
   }
 
   const IWantToItemComponent = ({ item }: any) => {
@@ -173,7 +198,7 @@ const Header = ({
   return (
     <OuterContainer className=''>
       {backgroundImage &&
-        <ImageContainer className='relative' hidebody={hideBody ? 'true' : 'false'}>
+        <ImageContainer id="imageContainer" className='relative' hidebody={hideBody ? 'true' : 'false'}>
           {backgroundImage &&
             <>
               <StyledRadialContainer />

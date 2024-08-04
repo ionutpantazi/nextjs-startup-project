@@ -82,7 +82,7 @@ export const DatesContainer = styled.div`
 
 export const DateContainer = styled.div <{ active?: any }>`
   border-radius: ${props => props.theme.borderRadius?.components?.small};
-  background-color: ${props => props.theme.colors.darkestgrey};
+  background-color: ${props => props.theme.components?.Agenda?.AgendaItemBackground};
   padding: 20px;
   text-align: center;
   width: 160px;

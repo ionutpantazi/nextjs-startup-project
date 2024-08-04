@@ -154,6 +154,9 @@ export const theme: Theme = {
       "ComponentContainerBorder": "24px",
       "ComponentContainerBackground": "#1E1E1E",
       "ComponentContainerCorner": "hide",
+      "ComponentTitle": "white",
+      "ComponentIntro": "white",
+      "HorizontalRuler": "white"
     },
     "Header": {
       "StyledRadialContainer": "false",
@@ -163,10 +166,14 @@ export const theme: Theme = {
       "EventDetailsSubTitle": "#D9D9D9",
       "IWantToItemTitleColor": "white",
       "ToggleOff": "#242424",
-      "ImageContainerHeight": "500px",
-      "ImageContainerMobileHeight": "200px",
+      // "ImageContainerHeight": "500px",
+      // "ImageContainerMobileHeight": "200px",
+      "ImageContainerHeight": "24vw",
+      "ImageContainerMobileHeight": "24vw",
       "HeaderImageHeight": "500px",
-      "HeaderImageMobileHeight": "200px"
+      "HeaderImageMobileHeight": "200px",
+      "ImageContainerMarginTop": "0px",
+      "ImageContainerMarginTopMobile": "56px"
     },
     "TextAndIcons": {
       "DescriptionContainerColor": "#D9D9D9",
@@ -228,6 +235,10 @@ export const theme: Theme = {
     },
     "Footer": {
       "FooterContainerBackground": "#1E1E1E"
+    },
+    "Agenda": {
+      "AgendaItemBackground": "#242424",
+      "AgendaItemDateBackground": "#1E1E1E"
     }
   }
 }

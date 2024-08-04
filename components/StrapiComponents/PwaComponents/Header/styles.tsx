@@ -3,12 +3,12 @@ import NextImage from 'next/image'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 
 export const ImageContainer = styled.div <{ hidebody?: any }>`
-  height: 24vw;
+  height: ${props => props.theme.components?.Header?.ImageContainerHeight};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
-    height: 16vh;
+    height: ${props => props.theme.components?.Header?.ImageContainerMobileHeight};
   }
-  margin-top: 56px;
+  margin-top: ${props => props.theme.components?.Header?.ImageContainerMarginTopMobile};
   margin-bottom: 0px;
   @media screen and (min-width: ${props => props.theme.screens.sm}) {
     ${({ hidebody }) => css`
@@ -16,7 +16,7 @@ export const ImageContainer = styled.div <{ hidebody?: any }>`
     `}
   }
   @media screen and (min-width: ${props => props.theme.screens.md}) {
-    margin-top: 0px;
+    margin-top: ${props => props.theme.components?.Header?.ImageContainerMarginTop};
     ${({ hidebody }) => css`
       ${props => hidebody == 'true' ? 'margin-bottom: -160px;' : 'margin-bottom: -100px;'};
     `}
@@ -69,7 +69,7 @@ export const EventTitle = styled.div`
   font-weight: 400;
   line-height: 100px;
   text-align: center;
-  color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.components?.Common?.ComponentTitle};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 36px;
@@ -83,6 +83,7 @@ export const EventIntroduction = styled.div`
   line-height: 24px;
   text-align: center;
   padding-top: 20px;
+  color: ${props => props.theme.components?.Common?.ComponentIntro};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     font-size: 14px;

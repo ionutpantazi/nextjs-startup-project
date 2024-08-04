@@ -15,13 +15,13 @@ export const AgendaInnerContainer = styled.div`
 
 export const AgendaItem = styled.div`
   padding: 16px;
-  background: ${props => props.theme.colors.darkgrey};
+  background: ${props => props.theme.components?.Agenda?.AgendaItemBackground};
   border-radius: ${props => props.theme.borderRadius?.components?.small};
 `
 
 export const DateBox = styled.div`
   border-radius: ${props => props.theme.borderRadius?.components?.small};
-  background-color: ${props => props.theme.colors.grey};
+  background-color: ${props => props.theme.components?.Agenda?.AgendaItemDateBackground};
   padding: 10px;
   text-align: center;
   width: 140px;

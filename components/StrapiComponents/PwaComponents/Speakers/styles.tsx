@@ -13,7 +13,7 @@ export const SubTitle = styled.div`
   font-size: 25px;
   font-weight: 300;
   line-height: 22px;
-  color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.components?.Common?.ComponentTitle};
   padding-top: 20px;
 `
 
