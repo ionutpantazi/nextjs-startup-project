@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import { ComponentContainer, Container, InnerContainer, OuterContainer, RadialContainer } from '@/components/Bootstrap/Common'
-import { DownloadCategory, DownloadPageType, DownloadType } from '@/components/Pages/ContentPages'
-import { Title } from '../Speakers/styles'
+import {  DownloadPageType, DownloadType } from '@/components/Pages/ContentPages'
+import Ruler from '../Common/Ruler'
+import { LeftEventTitle } from '../Header/styles'
 
 export interface ContentOnlyProps {
   data: ContentOnly
@@ -23,11 +24,15 @@ const ContentTabContentOnly = ({
     console.log(data)
     return (
       <>
-        <OuterContainer>
-          <Container>
-            <InnerContainer>
-              <br/>
-              <ComponentContainer>
+        <OuterContainer className=''>
+          <Container className=''>
+            <InnerContainer className=''>
+              <ComponentContainer className='flex flex-col'>
+                <br/>
+                <LeftEventTitle>
+                  {data.title}
+                </LeftEventTitle>
+                <Ruler />
                 {data.header &&
                   <div dangerouslySetInnerHTML={{__html: data.header}}/>
                 }

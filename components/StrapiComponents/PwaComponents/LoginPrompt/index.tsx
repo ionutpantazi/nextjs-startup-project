@@ -7,22 +7,27 @@ const LoginButton = styled.span`
     }
 `
 
+const handleClick = () => {
+    document.getElementById('login_button')?.click();
+}
+
 const LoginPrompt = ({
     title,
     message,
 }: any) =>
 {
     return (
-        
-        <Container>
-            <InnerContainer>
-                <ComponentContainer>
-                    <Title>{title}</Title>
-                    <br></br>
-                    <p>{message}, <LoginButton data-twe-toggle="modal" data-twe-target="#loginModal"><b>please log in / register.</b></LoginButton></p> 
-                </ComponentContainer>
-            </InnerContainer>
-        </Container>
+       <>
+            <Container>
+                <InnerContainer>
+                    <ComponentContainer>
+                        <Title>{title}</Title>
+                        <br></br>
+                        <p>{message}, <LoginButton onClick={handleClick}><b>please log in / register.</b></LoginButton></p> 
+                    </ComponentContainer>
+                </InnerContainer>
+            </Container>
+        </> 
     )
 }
 

@@ -13,6 +13,7 @@ import Ruler from '@/components/StrapiComponents/PwaComponents/Common/Ruler'
 import {
   LeftEventTitle,
 } from '@/components/StrapiComponents/PwaComponents/Header/styles'
+import LoginPrompt from '@/components/StrapiComponents/PwaComponents/LoginPrompt'
 
 const Header = dnmc(() => import('@/components/StrapiComponents/PwaComponents/Header'));
 const Breakouts = dnmc(() => import('components/StrapiComponents/PwaComponents/Breakouts'));
@@ -26,27 +27,46 @@ const BreakoutsPage = ({
   isdefaulttheme,
   themedata,
   themeMeta,
-  navigationData,
-  agenda,
 }: any) => {
+  
+  const [loginRequired, setLoginRequired] = useState(false);
+  
+  useEffect(() => {
+    if (data.breakouts.breakoutCategories.length > 0) {
+      for (let category of data.breakouts.breakoutCategories) {
+        if (category.breakouts.length > 0) {
+          return;
+        }
+      }
+      // all categories are empty which means a login is required
+      setLoginRequired(true);
+    }
+  }, [data.breakouts.breakoutCategories])
 
   return (
     <>
       <PwaContentContainer>
-        <Header headerImage={data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+        <Header headerImage={data.breakouts ? data.breakouts.pageBanner : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         <OuterContainer className=''>
           <Container className=''>
             <InnerContainer className=''>
               <ComponentContainer className='flex flex-col'>
                 <LeftEventTitle>
-                  Breakouts
+                  {data.breakouts.title}
                 </LeftEventTitle>
-                <Ruler />
-                <Breakouts data={data} subtitle={'Breakouts and campfires to facilitate networking'} />
+                {!loginRequired && 
+                <>
+                  <Ruler />
+                  <Breakouts data={data.breakouts} subtitle={data.breakouts.header} />
+                  </>
+                }
               </ComponentContainer>
             </InnerContainer>
           </Container>
         </OuterContainer>
+        {loginRequired &&
+          <LoginPrompt title={data.breakouts.header} message={'To view the breakouts'} />
+        }
       </PwaContentContainer>
     </>
   )

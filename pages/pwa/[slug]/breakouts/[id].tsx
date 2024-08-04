@@ -5,6 +5,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { getBreakoutsPageData } from 'lib/queries/breakouts-page'
 import { getJwt, generateThemeData } from 'utils/helpers'
+import ToastContainer from '@/components/StrapiComponents/PwaComponents/Common/Toast';
 
 const Layout = dnmc(() => import('components/StrapiComponents/PwaComponents/Layout'));
 const Breakouts = dnmc(() => import('@/components/Pages/Breakouts'));
@@ -38,22 +39,36 @@ export default function Page({
       logo={logo}
     // seoMeta={data?.SEO_Meta[0]}
     >
-      <Breakouts data={data} agenda={data.agenda} />
+      <Breakouts data={data} />
+      <ToastContainer />
     </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps<any> = async ({
-  query,
+  params,
   res,
   req,
 }) => {
   try {
     const jwt = getJwt(req, res)
     
-    const slug = query.slug;
+    if (!params) {
+      return {
+        props: {
+          error: {
+            statusCode: 404
+          }
+        }
+      }
+    };
+    
+    const slug = params.slug;
+    const pageSlug = params.id;
+
     const navigationData = await fetchNavigation(true);
-    let data = await getBreakoutsPageData(slug, jwt)
+    let data = await getBreakoutsPageData(slug, pageSlug, jwt)
+    console.log("page data", data)
     let logo = data?.event.logo;
     if (!data?.event?.eventId) {
       return {

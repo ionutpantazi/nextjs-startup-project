@@ -66,11 +66,6 @@ const Header = ({
   hideContentContainer,
   hideBody,
 }: any) => {
-
-  useEffect(() => {
-    console.log('Datatata', venueData)
-  }, [])
-
   const { session, isLoading } = useSession();
   const backgroundImage = headerImage?.path ? headerImage.path : null;
   const [venue] = useState(venueData);

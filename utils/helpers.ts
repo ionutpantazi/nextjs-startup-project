@@ -175,6 +175,23 @@ export function getSecondSegment(url: string): string | null {
   }
 }
 
+export function getSegment(url: string, segment: number): string | null {
+  try {
+    const parsedUrl = new URL(url);
+    const segments = parsedUrl.pathname.split('/').filter(segment => segment.length > 0);
+
+    // Return the second segment if it exists
+    if (segments.length >= segment) {
+      return segments[segment - 1];
+    } else {
+      return null; // No second segment found
+    }
+  } catch (error) {
+    console.error("Invalid URL:", error);
+    return null; // Return null if the URL is invalid
+  }
+}
+
 export function redirectToEventRoot() {
   const router = useRouter();
   const slug = router.query.slug;
@@ -522,14 +539,14 @@ export function generateMenuHref(segment: any) {
   const slug = router.query.slug;
   if (segment?.startsWith('https://')) {
     return segment;
-  } else if (segment?.startsWith('contenttabs/')) {
-    let id = segment.match(/\/(.*$)/)[1];
-    const href = `/pwa/${slug}/pages/${id}`;
-    return href;
-  } else if (segment.startsWith('exhibitors/')) {
-    let id = segment.match(/etid=(.*$)/)[1];
-    const href = `/pwa/${slug}/exhibitors/${id}`;
-    return href;
+  // } else if (segment?.startsWith('pages/')) {
+  //   let id = segment.match(/ctid=(.*$)/)[1];
+  //   const href = `/pwa/${slug}/pages/${id}`;
+  //   return href;
+  // } else if (segment.startsWith('exhibitors/')) {
+  //   let id = segment.match(/etid=(.*$)/)[1];
+  //   const href = `/pwa/${slug}/exhibitors/${id}`;
+  //   return href;
   } else {
     const href = `/pwa/${slug}/${segment}`;
     return href;

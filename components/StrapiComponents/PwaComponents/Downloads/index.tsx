@@ -8,6 +8,7 @@ import { ComponentContainer, Container, InnerContainer, OuterContainer, RadialCo
 import { Download, DownloadCategory, DownloadPageType, DownloadType } from '@/components/Pages/ContentPages'
 import SortAndSearch from '../Common/SortAndSearch'
 import { LeftEventTitle } from '../Header/styles';
+import Ruler from '../Common/Ruler';
 
 export interface ContentTabDownloadsProps {
   data: Downloads
@@ -188,6 +189,7 @@ const ContentTabDownloads = ({
             <LeftEventTitle>
               {data.title}
             </LeftEventTitle>
+            <Ruler />
             <SortAndSearch title='Choose a category:' dropDownPlaceholder={"Select Category"} dropdownValues={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
             {categories && categories.map((category: DownloadCategory, i) => (
               <Container key={i}>

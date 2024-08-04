@@ -86,31 +86,48 @@ export const SortCategoriesTitle = styled.div`
   color: ${props => props.theme.colors.white};
 `
 
+const applySearchAndSortStyle = (showSort: boolean) => {
+  if (!showSort) {
+    return {
+      display: 'flex',
+      'flex-direction': 'row-reverse',
+    }
+  }
+}
+
 const SortAndSearch = ({
   title,
   dropDownPlaceholder,
   dropdownValues,
   selectedValue,
   setSelectedValue,
+  showSearch,
+  showSort,
 }: any) => {
 
   return (
     <SortCategories>
-      <SortCategoriesTitle>
-        {title}
-      </SortCategoriesTitle>
-      <DropdownAndSearch>
-        <Dropdown placeholder={dropDownPlaceholder} values={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
-        <SearchContainer>
-          <SearchInput as='input' />
-          <SearchButton>
-            <FAIcon
-              icon={'fa-magnifying-glass'}
-              width={16}
-              height={16}
-            />
-          </SearchButton>
-        </SearchContainer>
+        {showSort &&
+          <SortCategoriesTitle>
+            {title}
+          </SortCategoriesTitle>
+        }
+      <DropdownAndSearch style={applySearchAndSortStyle(showSort)}>
+        {showSort &&
+          <Dropdown placeholder={dropDownPlaceholder} values={dropdownValues} selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
+        }
+        {showSearch && 
+          <SearchContainer>
+            <SearchInput as='input' />
+            <SearchButton>
+              <FAIcon
+                icon={'fa-magnifying-glass'}
+                width={16}
+                height={16}
+              />
+            </SearchButton>
+          </SearchContainer>
+        }
       </DropdownAndSearch>
     </SortCategories>
   )

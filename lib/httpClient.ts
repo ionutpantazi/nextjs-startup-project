@@ -19,10 +19,11 @@ const post = async (endpoint: string, postData: any, headers: any) => {
     const { data } = await axios.post(endpoint, postData, headers);
     return { data: data }
   } catch (error: any) {
+    console.log("error", error);
     let status = error.response.status
     let statusText = error.response.statusText
     let errorData = error.response.data
-    if (error?.response?.data) {
+    if (error?.response) {
       return {
         data: {}, err: { status: status, statusText: statusText, errorData: errorData }
       }

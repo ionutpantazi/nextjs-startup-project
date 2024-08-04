@@ -18,6 +18,7 @@ const DropdownButton = styled.div`
   color: ${props => props.theme.colors.black};
   padding: 10px;
   font-size: 16px;
+  line-height: 16px;
   border: 1px solid ${props => props.theme.colors.white};
   border-radius: ${props => props.theme.borderRadius?.components?.small};
   cursor: pointer;

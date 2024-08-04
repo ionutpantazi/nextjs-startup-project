@@ -19,12 +19,22 @@ export const SubTitle = styled.div`
 
 
 
-export const BreakoutContainerTitle = styled.div`
+export const BreakoutCategoryTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
   line-height: 20px;
   padding-bottom: 20px;
   color: ${props => props.theme.colors.grey1};
+`
+export const BreakoutOuterContainer = styled.div `
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1320px;
+  margin: 0px auto;
+  gap: 1.5rem;
+`
+
+export const BreakoutCategoryContainer = styled.div`
 `
 
 export const BreakoutContainer = styled.div`
@@ -106,7 +116,7 @@ export const BreakoutSubtitle = styled.div`
 export const BreakoutInfo = styled.div`
   font-size: 16px;
   font-weight: 200;
-  line-height: 14px;
+  line-height: 16px;
   color: ${props => props.theme.colors.grey1};
 `
 
