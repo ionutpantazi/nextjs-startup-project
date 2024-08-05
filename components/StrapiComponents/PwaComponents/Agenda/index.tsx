@@ -56,6 +56,13 @@ const Agenda = ({
   const [isMobile, setIsMobile] = useState(false);
   const sortData = sortAgendaItemsByStartDate(data);
   const router = useRouter();
+  const [agendaItemsList, setAgendaItemsList] = useState(sortData);
+  const [personalizedToggle, setPersonalizedToggle] = useState(false);
+
+  useEffect(() => {
+    setAgendaItemsList(sortData)
+    setPersonalizedToggle(false)
+  }, [data])
 
   useEffect(() => {
     if (width && width < Number(theme.screens['md'].replace('px', ''))) {
@@ -76,7 +83,7 @@ const Agenda = ({
     let agendaMethod = linkElement?.getAttribute('data-mode')
     let response = await post('/api/agenda/agendaitems', { eventId: 'hivedemo', agendaItemId: agendaItemId, method: agendaMethod }, {})
     if (response.data?.id) {
-      if(agendaMethod == 'add'){
+      if (agendaMethod == 'add') {
         linkElement.setAttribute('data-mode', 'remove')
         linkElement.innerText = 'Remove from agenda'
       } else {
@@ -86,11 +93,40 @@ const Agenda = ({
     }
   }
 
+  function togglePersonalizedAgenda(e: any) {
+    e.preventDefault()
+    let list = agendaItemsList.filter((agenda: any) => {
+      return agenda.isAttending
+    })
+    if (personalizedToggle) {
+      setPersonalizedToggle(false)
+      setAgendaItemsList(sortData)
+    } else {
+      setPersonalizedToggle(true)
+      setAgendaItemsList(list)
+    }
+  }
+
   return (
     <AgendaContainer className=''>
       <AgendaTitle className='mb-4'>
         {title}
       </AgendaTitle>
+      <button
+        onClick={(e: any) => togglePersonalizedAgenda(e)}
+      >
+        {
+          personalizedToggle
+            ?
+            <span>
+              full agenda
+            </span>
+            :
+            <span>
+              personalized
+            </span>
+        }
+      </button>
       <div className='md:hidden block'>
         <Swiper
           spaceBetween={10}
@@ -120,7 +156,7 @@ const Agenda = ({
         </Swiper>
       </div>
       <AgendaInnerContainer className='flex flex-col gap-4'>
-        {sortData.map((agenda: any, index: number) => (
+        {agendaItemsList.map((agenda: any, index: number) => (
           <AgendaItem className='md:flex grid grid-cols-2 flex-row flex-wrap content-start justify-around gap-4' key={index}>
             <DateBox className='md:flex hidden flex-col gap-2 justify-center'>
               <AgendaDateFrom className=''>
