@@ -391,7 +391,7 @@ const Header = ({
                           <EventDetailsItemContainer>
                             <EventDetailsItem className='flex flex-col gap-4'>
                               <div className='flex flex-row gap-4'>
-                                {isUserLoggedInFromApi
+                                {isUserLoggedInFromApi && session?.username
                                   ?
                                   <>
                                     <EventDetailsIcon className='row-span-3'>

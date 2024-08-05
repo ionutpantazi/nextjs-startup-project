@@ -18,9 +18,9 @@ export const ModalContent = styled.div`
 `
 
 export const ModalTitle = styled.div`
-  font-size: 57px;
+  font-size: 40px;
   font-weight: 400;
-  line-height: 60px;
+  line-height: 40px;
   color: ${props => props.theme.colors.brand};
 
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
@@ -115,10 +115,10 @@ export const Button = styled.button`
   }
   
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    padding: 14px 30px;
+    padding: 14px 50px;
   }
 
-  padding: 20px 36px;
+  padding: 20px 50px;
   border-radius: ${props => props.theme.borderRadius.components.small};
   background: ${props => props.theme.colors.brand};
 
