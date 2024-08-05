@@ -5,7 +5,7 @@ import { nextApolloPageError } from 'lib/serverHelpers';
 import { PAGES_QUERY } from 'lib/queries/pages';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
 import { sanitiseURLParam } from '@/utils/helpers';
-import { getJwt } from 'utils/helpers'
+import { getJwt, generateThemeData } from 'utils/helpers'
 import { theme } from '@/lib/theme';
 import { getExhibitorsPageData } from '@/lib/queries/exhibitors-page';
 import { getExhibitorTabData } from '@/lib/queries/exhibitors';
@@ -33,13 +33,8 @@ export default function Page({
   }
   // console.log(data)
 
-  let themeData = null
-
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
-    }
-  }
+  const { themeData, themeMeta } = generateThemeData(data)
+  const userLoggedInFromApi = data.resource.user
 
   return (
     <Layout
@@ -48,6 +43,7 @@ export default function Page({
       customTheme={themeData}
       themedata={null}
       logo={logo}
+      userLoggedInFromApi={userLoggedInFromApi}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <Exhibitors data={data} loginRequired={loginRequired} />

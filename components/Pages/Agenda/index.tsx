@@ -37,6 +37,7 @@ const AgendaPage = ({
   themeMeta,
   navigationData,
   agenda,
+  userLoggedInFromApi,
 }: any) => {
 
   const [selectedAgendaData, setSelectedAgendaDate] = useState<string | undefined>();
@@ -68,7 +69,7 @@ const AgendaPage = ({
                 </LeftEventTitle>
                 <Ruler />
                 <TextAndIcons icon={'fa-calendar-days'} title={'Activities'} intro={data.introduction} type={'agenda'} agendaItems={sortAgendaItemsByStartDate(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} />
-                <Agenda data={agendaData} isHomepage={false} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} title={'Your curated agenda'} />
+                <Agenda data={agendaData} isHomepage={false} agendaItems={generateAgendaDatesArray(agenda.data)} selectedAgendaData={selectedAgendaData} handleAgendaDateChange={handleAgendaDateChange} title={'Your curated agenda'} userLoggedInFromApi={userLoggedInFromApi}/>
               </ComponentContainer>
             </InnerContainer>
           </Container>

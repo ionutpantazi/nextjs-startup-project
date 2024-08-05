@@ -3,7 +3,7 @@ import dnmc from 'next/dynamic'
 import { fetchNavigation, NavigationData } from 'lib/queries/nav-data'
 import { nextApolloPageError } from 'lib/serverHelpers';
 import ErrorPageTemplate, { ErrorPageTemplateProps } from 'components/ErrorPageTemplate';
-import { getJwt } from 'utils/helpers'
+import { getJwt, generateThemeData } from 'utils/helpers'
 import { getContentTabPageData } from '@/lib/queries/content-tabs-page';
 import ContentPages from '@/components/Pages/ContentPages';
 
@@ -28,13 +28,8 @@ export default function Page({
   }
   // console.log(data)
 
-  let themeData = null
-
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data))
-    }
-  }
+  const { themeData, themeMeta } = generateThemeData(data)
+  const userLoggedInFromApi = data.resource.user
 
   return (
     <Layout
@@ -43,6 +38,7 @@ export default function Page({
       customTheme={themeData}
       themedata={null}
       logo={logo}
+      userLoggedInFromApi={userLoggedInFromApi}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <ContentPages data={data} />

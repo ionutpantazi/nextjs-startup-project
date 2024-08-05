@@ -48,15 +48,14 @@ const Agenda = ({
   handleAgendaDateChange,
   title,
   isHomepage,
+  userLoggedInFromApi,
 }: any) => {
 
-  const { session, isLoading } = useSession();
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState(false);
   const sortData = sortAgendaItemsByStartDate(data);
   const router = useRouter();
-  const isUserLoggedIn = session.isLoggedIn
 
   useEffect(() => {
     if (width && width < Number(theme.screens['md'].replace('px', ''))) {
@@ -202,7 +201,7 @@ const Agenda = ({
                 }
               </Participants>
             </ParticipantsBox> */}
-            {!isHomepage && isUserLoggedIn &&
+            {!isHomepage && userLoggedInFromApi &&
               <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
                 {agenda.isAttending
                   ?
@@ -217,7 +216,7 @@ const Agenda = ({
               </Button2>
             }
             <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
-              {!isHomepage && isUserLoggedIn &&
+              {!isHomepage && userLoggedInFromApi &&
                 <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='md:flex hidden flex-row gap-4 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
                   {agenda.isAttending
                     ?

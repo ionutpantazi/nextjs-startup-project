@@ -7,6 +7,7 @@ export const ModalBody = styled.div`
   background-color: white;
   border-radius: ${props => props.theme.components?.Common?.ComponentContainerBorder};
   padding: 60px 40px 20px;
+  font-family: greycliff-cf, sans-serif;
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
     border-radius: 0px;

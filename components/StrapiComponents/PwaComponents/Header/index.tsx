@@ -76,11 +76,6 @@ const Header = ({
   const backgroundImage = headerImage?.path ? headerImage.path : null;
   const [venue] = useState(venueData);
   const [date] = useState(startDate);
-  const [isUserLoggedInFromApi, setIsUserLoggedInFromApi] = useState(false);
-
-  useEffect(() => {
-    setIsUserLoggedInFromApi(userLoggedInFromApi ? true : false)
-  }, []);
 
   useEffect(() => {
     // update header image marging top
@@ -267,7 +262,7 @@ const Header = ({
                         <EventDetailsItemContainer>
                           <EventDetailsItem className='flex flex-col gap-4'>
                             <div className='flex flex-row gap-4'>
-                              {isUserLoggedInFromApi
+                              {userLoggedInFromApi
                                 ?
                                 <>
                                   <EventDetailsIcon className='row-span-3'>
@@ -281,7 +276,7 @@ const Header = ({
                                   </EventDetailsIcon>
                                   <EventDetailsContainer className='flex flex-col gap-2'>
                                     <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                      Hi {session.username}, welcome back to {eventTitle}
+                                      Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {eventTitle}
                                     </EventDetailsSubTitle>
                                   </EventDetailsContainer>
                                 </>
@@ -303,7 +298,7 @@ const Header = ({
                               }
 
                             </div>
-                            {isUserLoggedInFromApi &&
+                            {userLoggedInFromApi &&
                               <Toggle className='flex justify-between cursor-pointer w-fit'>
                                 <input
                                   type='checkbox'
@@ -391,7 +386,7 @@ const Header = ({
                           <EventDetailsItemContainer>
                             <EventDetailsItem className='flex flex-col gap-4'>
                               <div className='flex flex-row gap-4'>
-                                {isUserLoggedInFromApi && session?.username
+                                {userLoggedInFromApi
                                   ?
                                   <>
                                     <EventDetailsIcon className='row-span-3'>
@@ -405,7 +400,7 @@ const Header = ({
                                     </EventDetailsIcon>
                                     <EventDetailsContainer className='flex flex-col gap-2'>
                                       <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                        Hi {session.username}, welcome back to {eventTitle}
+                                        Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {eventTitle}
                                       </EventDetailsSubTitle>
                                     </EventDetailsContainer>
                                   </>
@@ -427,7 +422,7 @@ const Header = ({
                                 }
 
                               </div>
-                              {isUserLoggedInFromApi &&
+                              {userLoggedInFromApi &&
                                 <Toggle className='flex justify-between cursor-pointer w-fit'>
                                   <input
                                     type='checkbox'

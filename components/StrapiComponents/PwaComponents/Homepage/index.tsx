@@ -19,6 +19,7 @@ const DynamicContent = ({
   navigationData,
   userLoggedInFromApi,
 }: any) => {
+  console.log(data)
   if (!data) return <></>
 
   return (
