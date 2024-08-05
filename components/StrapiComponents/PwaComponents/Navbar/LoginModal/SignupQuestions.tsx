@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { Registration_Questions, Registration_Answers } from 'lib/queries/settings'
-import { Button } from './LoginForm'
+import { Button } from './styles'
 import { updateUser } from 'lib/queries/settings'
 import { JsonObject, pushUniqueToJson, allValuesSame } from 'utils/helpers'
 

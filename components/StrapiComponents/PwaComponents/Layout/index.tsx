@@ -42,6 +42,7 @@ const Layout = ({
   themeMeta,
   settings,
   logo,
+  userLoggedInFromApi,
 }: any) => {
 
   const defaultThemeData = {
@@ -87,7 +88,7 @@ const Layout = ({
   const mainArea = React.useMemo(() =>
     <PageContentComponents className='mb-auto'>
       {React.Children.map(children, child =>
-        React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp, themeMeta: themeMeta })
+        React.cloneElement(child as React.ReactElement<any>, { senddatatolayout: handleChildData, isdefaulttheme: isDefaultTheme, themedata: themeDataProp, themeMeta: themeMeta, userLoggedInFromApi: userLoggedInFromApi })
       )}
     </PageContentComponents>
     , [isDefaultTheme]
@@ -108,7 +109,7 @@ const Layout = ({
           }}
         >
           <HeaderWrap>
-            {navigationData?.header && <Navbar navigationData={navigationData.header} logo={logo} />}
+            {navigationData?.header && <Navbar navigationData={navigationData.header} logo={logo} userLoggedInFromApi={userLoggedInFromApi} />}
           </HeaderWrap>
 
           {mainArea}

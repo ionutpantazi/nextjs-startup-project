@@ -18,6 +18,7 @@ import {
 const LoginModal = ({
   data,
   questions,
+  refreshModal,
 }: any) => {
 
   const { session, isLoading } = useSession();
@@ -40,22 +41,22 @@ const LoginModal = ({
   return (
     <>
       <ModalBody key='login' className={`pointer-events-auto ${showQuestions ? 'hidden' : !isLogin ? 'hidden' : 'visible'}`}>
-        <ModalTitle className=''>
-          Log in
+        <ModalTitle className='mb-6 text-center'>
+          Login
         </ModalTitle>
         <ModalContent className='flex flex-col gap-4 items-center'>
-          <LoginForm />
+          <LoginForm refreshModal={refreshModal} />
           <StyledText className=''>
             Don&apos;t have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Sign up</button>
           </StyledText>
         </ModalContent>
       </ModalBody>
       <ModalBody key='signup' className={`pointer-events-auto ${showQuestions ? 'hidden' : isLogin ? 'hidden' : 'visible'}`}>
-        <ModalTitle className=''>
+        <ModalTitle className='mb-6 text-center'>
           Sign up
         </ModalTitle>
         <ModalContent className='flex flex-col gap-4 items-center'>
-          <SignupForm showQuestions={handleChildData} />
+          <SignupForm showQuestions={handleChildData} refreshModal={refreshModal} />
           <StyledText className=''>
             Already have an account? <button onClick={(e) => { e.preventDefault(), setIsLogin(!isLogin) }}>Log in</button>
           </StyledText>

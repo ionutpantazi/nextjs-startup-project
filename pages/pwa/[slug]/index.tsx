@@ -27,6 +27,7 @@ export default function Page({
   }
   
   const { themeData, themeMeta } = generateThemeData(data)
+  const userLoggedInFromApi = data.resource.user
   
   return (
     <Layout
@@ -36,6 +37,7 @@ export default function Page({
       themedata={null}
       logo={logo}
       themeMeta={themeMeta}
+      userLoggedInFromApi={userLoggedInFromApi}
     // seoMeta={data?.SEO_Meta[0]}
     >
       <DynamicContent data={data} />

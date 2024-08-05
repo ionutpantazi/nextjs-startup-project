@@ -17,8 +17,8 @@ const DynamicContent = ({
   themedata,
   themeMeta,
   navigationData,
+  userLoggedInFromApi,
 }: any) => {
-console.log(data)
   if (!data) return <></>
 
   return (
@@ -30,7 +30,7 @@ console.log(data)
             <div key={index}>
               {api.heading
                 ?
-                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} startDate={data.event.startDate} venueData={data.event.venue} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
+                <Header title={data.event.title} subtitle={data.event.subtitle} headerImage={data.event.homeBanner} startDate={data.event.startDate} venueData={data.event.venue} description={data.event.longDesc} tilesData={data.event.tilesData} hideBody={false} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} userLoggedInFromApi={userLoggedInFromApi} />
                 :
                 <>
                   {api.section.type == 'section' &&

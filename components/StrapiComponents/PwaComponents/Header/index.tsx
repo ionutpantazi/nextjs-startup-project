@@ -67,6 +67,7 @@ const Header = ({
   themeMeta,
   hideContentContainer,
   hideBody,
+  userLoggedInFromApi,
 }: any) => {
 
   const theme = useContext(ThemeContext);
@@ -75,6 +76,11 @@ const Header = ({
   const backgroundImage = headerImage?.path ? headerImage.path : null;
   const [venue] = useState(venueData);
   const [date] = useState(startDate);
+  const [isUserLoggedInFromApi, setIsUserLoggedInFromApi] = useState(false);
+
+  useEffect(() => {
+    setIsUserLoggedInFromApi(userLoggedInFromApi ? true : false)
+  }, []);
 
   useEffect(() => {
     // update header image marging top
@@ -261,7 +267,7 @@ const Header = ({
                         <EventDetailsItemContainer>
                           <EventDetailsItem className='flex flex-col gap-4'>
                             <div className='flex flex-row gap-4'>
-                              {session.isLoggedIn
+                              {isUserLoggedInFromApi
                                 ?
                                 <>
                                   <EventDetailsIcon className='row-span-3'>
@@ -297,7 +303,7 @@ const Header = ({
                               }
 
                             </div>
-                            {session.isLoggedIn &&
+                            {isUserLoggedInFromApi &&
                               <Toggle className='flex justify-between cursor-pointer w-fit'>
                                 <input
                                   type='checkbox'
@@ -385,7 +391,7 @@ const Header = ({
                           <EventDetailsItemContainer>
                             <EventDetailsItem className='flex flex-col gap-4'>
                               <div className='flex flex-row gap-4'>
-                                {session.isLoggedIn
+                                {isUserLoggedInFromApi
                                   ?
                                   <>
                                     <EventDetailsIcon className='row-span-3'>
@@ -421,7 +427,7 @@ const Header = ({
                                 }
 
                               </div>
-                              {session.isLoggedIn &&
+                              {isUserLoggedInFromApi &&
                                 <Toggle className='flex justify-between cursor-pointer w-fit'>
                                   <input
                                     type='checkbox'

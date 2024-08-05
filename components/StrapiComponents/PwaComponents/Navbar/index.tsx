@@ -27,15 +27,23 @@ const Navbar = ({
   navigationData,
   logo,
   context,
+  userLoggedInFromApi,
 }: any) => {
 
   const { session, isLoading, logout } = useSession();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [refreshModal, setRefreshModal] = useState(false);
+  const [isUserLoggedInFromApi, setIsUserLoggedInFromApi] = useState(false);
+
+  useEffect(() => {
+    setIsUserLoggedInFromApi(userLoggedInFromApi ? true : false)
+  }, []);
 
   const modalContext = useContext(ModalContext)
 
   const handleClick = () => {
-    modalContext.setModalContent(<LoginModal data={undefined} />)
+    setRefreshModal(!refreshModal)
+    modalContext.setModalContent(<LoginModal refreshModal={refreshModal} />)
     modalContext.setModalIsOpen(true)
   }
 
@@ -111,7 +119,7 @@ const Navbar = ({
   const RightButtons = (props: any) => {
     return (
       <RightButtonsContainer show={props.show} className={`flex items-center gap-x-1`}>
-        {session.isLoggedIn
+        {isUserLoggedInFromApi
           ? <RegisterBtn className='flex items-center justify-center gap-x-1'
             onClick={(event) => {
               event.preventDefault();

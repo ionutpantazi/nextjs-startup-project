@@ -22,11 +22,12 @@ export interface ValidationProps {
   children?: ReactNode
   message?: string
   ref: any
-  sendvalidation: any
+  sendvalidation: any,
+  className?: any,
 }
 
 export interface ValidationMethods {
-  updateErrorStatus: (type: string, i: number) => void;
+  updateErrorStatus: (type: string, i: number, removeError?: boolean) => void;
 }
 
 const ValidationContainer = styled.div`
@@ -46,7 +47,7 @@ const Validation = forwardRef<ValidationMethods, ValidationProps>((props, ref) =
     }
   }, [isValid]);
 
-  const updateErrorStatus = (type: string, i: number) => {
+  const updateErrorStatus = (type: string, i: number, removeError?: boolean) => {
     var emptyInput = props.input.length ? false : true
     setIsEmpty(emptyInput)
     var re = /^/i;
@@ -66,8 +67,11 @@ const Validation = forwardRef<ValidationMethods, ValidationProps>((props, ref) =
     setIsValid({ [type]: checker(errorArray) })
 
     // console.log(`input: ${props.input}; empty: ${emptyInput}; match: ${match ? true : false}; hasError: ${hasError}`)
-
-    if (!match && !emptyInput) {
+ 
+    if (removeError) {
+      setError(false)
+      setIsEmpty(false)
+    } else if (!match && !emptyInput) {
       setError(true)
     } else {
       setError(false)
@@ -79,13 +83,13 @@ const Validation = forwardRef<ValidationMethods, ValidationProps>((props, ref) =
   }));
 
   return (
-    <ValidationContainer className=''>
+    <ValidationContainer className={props.className}>
       {props.children}
       {isEmpty &&
-        <span className={`absolute top-full left-0 m-1 w-auto text-sm text-danger animate-[fade-in_0.3s_both]`}>{`${props.type} is required`}</span>
+        <span className={`mb-[-20px] top-full left-0 m-1 w-auto text-sm text-danger animate-[fade-in_0.3s_both] validation`}>{`${props.type} is required`}</span>
       }
       {error &&
-        <span className={`absolute top-full left-0 m-1 w-auto text-sm text-danger animate-[fade-in_0.3s_both]`}>{props.message}</span>
+        <span className={`mb-[-20px] top-full left-0 m-1 w-auto text-sm text-danger animate-[fade-in_0.3s_both] validation`}>{props.message}</span>
       }
     </ValidationContainer>
   )

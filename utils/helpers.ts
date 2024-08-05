@@ -231,13 +231,13 @@ export function getThemeSlugFromCookies(req: any, res: any, themeSlug?: string) 
 export function generateThemeData(data: any) {
   let themeData, themeMeta = null
 
-  if (data?.event?.themeData?.data) {
-    if (typeof (JSON.parse(JSON.parse(data?.event?.themeData?.data))) == 'object') {
-      themeData = JSON.parse(JSON.parse(data?.event?.themeData?.data));
+  if (data?.event?.theme?.data) {
+    if (typeof (JSON.parse(JSON.parse(data?.event?.theme?.data))) == 'object') {
+      themeData = JSON.parse(JSON.parse(data?.event?.theme?.data));
       themeMeta = {
-        title: data?.event?.themeData?.title,
-        slug: data?.event?.themeData?.slug,
-        faIcon: data?.event?.themeData?.faIcon,
+        title: data?.event?.theme?.title,
+        slug: data?.event?.theme?.slug,
+        faIcon: data?.event?.theme?.faIcon,
       }
     }
   }
