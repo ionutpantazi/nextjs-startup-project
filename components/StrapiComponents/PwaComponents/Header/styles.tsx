@@ -66,9 +66,9 @@ export const IntroLandingContainer = styled.div <{ hidebody?: any }>`
 
 export const EventTitle = styled.div`
   font-size: 57px;
-  font-weight: 400;
   line-height: 100px;
   text-align: center;
+  padding-top: 20px;
   color: ${props => props.theme.components?.Common?.ComponentTitle};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
@@ -82,7 +82,7 @@ export const EventIntroduction = styled.div`
   font-weight: 300;
   line-height: 24px;
   text-align: center;
-  padding-top: 20px;
+  padding-bottom: 20px;
   color: ${props => props.theme.components?.Common?.ComponentIntro};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {

@@ -20,7 +20,7 @@ const DynamicContent = ({
   userLoggedInFromApi,
 }: any) => {
   console.log(data)
-  if (!data) return <></>
+  
 
   var apiADNAPageStructure = data?.resource?.pageData?.pageStructure;
   var apiDefaultPageStructure = data?.resource?.defaultPageData?.pageStructure;
@@ -28,13 +28,15 @@ const DynamicContent = ({
 
   useEffect(() => {
     console.log(isdefaulttheme)
-    if(!isdefaulttheme){
-      setPageStructure(apiDefaultPageStructure)
-    } else {
+    if(isdefaulttheme == false){
       setPageStructure(apiADNAPageStructure)
+    } else {
+      setPageStructure(apiDefaultPageStructure)
     }
   }, [isdefaulttheme]);
 // console.log(apiADNAPageStructure,apiDefaultPageStructure)
+
+if (!data) return <></>
   return (
     <>
       {data?.resource?.pageData?.pageStructure?.length
