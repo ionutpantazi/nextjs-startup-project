@@ -244,7 +244,7 @@ export function generateThemeData(data: any) {
   return { themeData, themeMeta }
 }
 
-export function convertTempData(event: any, resource: any, delegates: any) {
+export function convertTempData(event: any, resource: any, delegates: any, slug?: any) {
   if (event) {
     // event.homeBanner = {
     //   alt: 'hive',
@@ -253,6 +253,15 @@ export function convertTempData(event: any, resource: any, delegates: any) {
     event.logo = {
       alt: 'hive',
       path: '/images/logo-live-group-vermilion.svg',
+    }
+    if (slug == 'gffconference2022') {
+      event.logo = {
+        alt: 'hive',
+        path: '/images/gffconference2022/logo.png',
+      }
+      event.homeBanner = {
+        path: '/images/gffconference2022/header.png',
+      }
     }
     // event.eventId = 1
     // event.eventDetails = [
@@ -268,182 +277,184 @@ export function convertTempData(event: any, resource: any, delegates: any) {
     return event
   }
   if (resource) {
-    resource.navigation = {
-      header: [
-        {
-          "id": "1",
-          "title": "Home",
-          "icon": "fa-house",
-          "slug": '',
-          "featured": false,
-        },
-        {
-          "id": "2",
-          "title": "Evaluation",
-          "icon": "fa-dna",
-          "slug": 'evaluation',
-          "featured": false,
-        },
-        {
-          "id": "3",
-          "title": "Agenda",
-          "icon": "fa-calendar-days",
-          "slug": 'agenda',
-          "featured": true,
-        },
-        {
-          "id": "4",
-          "title": "Breakouts",
-          "icon": "fa-mug-saucer",
-          "slug": 'breakouts',
-          "featured": true,
-        },
-        {
-          "id": "5",
-          "title": "Venue",
-          "icon": "fa-city",
-          "slug": 'venue',
-          "featured": false,
-        },
-        {
-          "id": "8",
-          "title": "Speakers",
-          "icon": "fa-person-chalkboard",
-          "slug": 'speakers',
-          "featured": true,
-        },
-        {
-          "id": "9",
-          "title": "Sustainability",
-          "icon": "fa-star",
-          "slug": 'sustainability',
-          "featured": false,
-        },
-        {
-          "id": "10",
-          "title": "Meet your peers",
-          "icon": "fa-people-arrows",
-          "slug": 'delegates',
-          "featured": false,
-        },
-        {
-          "id": "11",
-          "title": "Exhibitors",
-          "icon": "fa-city",
-          "slug": 'exhibitors',
-          "featured": true,
-        },
-        {
-          "id": "12",
-          "title": "Forum",
-          "icon": "fa-comments",
-          "slug": 'forum',
-          "featured": false,
-        },
-        {
-          "id": "13",
-          "title": "FAQs",
-          "icon": "fa-question",
-          "slug": 'faqs',
-          "featured": true,
-        },
-        {
-          "id": "14",
-          "title": "Get in touch",
-          "icon": "fa-address-book",
-          "slug": 'contact',
-          "featured": true,
-        },
-      ],
-      footer: [
-        {
-          "id": "1",
-          "title": "Menu",
-          "icon": null,
-          "slug": null,
-          "items": [
-            {
-              "id": "3",
-              "title": "Agenda",
-              "icon": "fa-calendar-days",
-              "slug": 'agenda',
-              "featured": true,
-            },
-            {
-              "id": "4",
-              "title": "Breakouts",
-              "icon": "fa-mug-saucer",
-              "slug": 'breakouts',
-              "featured": true,
-            },
-            {
-              "id": "8",
-              "title": "Speakers",
-              "icon": "fa-person-chalkboard",
-              "slug": 'speakers',
-              "featured": true,
-            },
-            {
-              "id": "11",
-              "title": "Exhibitors",
-              "icon": "fa-city",
-              "slug": 'exhibitors',
-              "featured": true,
-            },
-          ]
-        },
-        {
-          "id": "2",
-          "title": "Learn",
-          "icon": null,
-          "url": null,
-          "items": [
-            {
-              "id": "13",
-              "title": "FAQs",
-              "icon": "fa-question",
-              "slug": 'faqs',
-              "featured": true,
-            },
-            {
-              "id": "14",
-              "title": "Get in touch",
-              "icon": "fa-address-book",
-              "slug": 'contact',
-              "featured": true,
-            },
-          ]
-        },
-        {
-          "id": "3",
-          "title": "Legal",
-          "icon": null,
-          "url": null,
-          "items": [
-            {
-              "id": "1",
-              "title": "Privacy Policy",
-              "icon": "fa-address-book",
-              "slug": 'terms#privacypolicy',
-              "featured": true,
-            },
-            {
-              "id": "2",
-              "title": "Terms of Website Use",
-              "icon": "fa-address-book",
-              "slug": 'terms#terms',
-              "featured": true,
-            },
-            {
-              "id": "3",
-              "title": "Cookies Policy",
-              "icon": "fa-address-book",
-              "slug": 'terms#cookiepolicy',
-              "featured": true,
-            },
-          ]
-        }
-      ]
+    if (slug == 'gffconference2022') {
+      resource.navigation = {
+        header: [
+          {
+            "id": "1",
+            "title": "Home",
+            "icon": "fa-house",
+            "url": '',
+            "featured": false,
+          },
+          {
+            "id": "2",
+            "title": "Evaluation",
+            "icon": "fa-dna",
+            "url": 'evaluation',
+            "featured": false,
+          },
+          {
+            "id": "3",
+            "title": "Agenda",
+            "icon": "fa-calendar-days",
+            "url": 'agenda',
+            "featured": true,
+          },
+          {
+            "id": "4",
+            "title": "Breakouts",
+            "icon": "fa-mug-saucer",
+            "url": 'breakouts',
+            "featured": true,
+          },
+          {
+            "id": "5",
+            "title": "Venue",
+            "icon": "fa-city",
+            "url": 'venue',
+            "featured": false,
+          },
+          {
+            "id": "8",
+            "title": "Speakers",
+            "icon": "fa-person-chalkboard",
+            "url": 'speakers',
+            "featured": true,
+          },
+          {
+            "id": "9",
+            "title": "Sustainability",
+            "icon": "fa-star",
+            "url": 'sustainability',
+            "featured": false,
+          },
+          {
+            "id": "10",
+            "title": "Meet your peers",
+            "icon": "fa-people-arrows",
+            "url": 'delegates',
+            "featured": false,
+          },
+          {
+            "id": "11",
+            "title": "Exhibitors",
+            "icon": "fa-city",
+            "url": 'exhibitors',
+            "featured": true,
+          },
+          {
+            "id": "12",
+            "title": "Forum",
+            "icon": "fa-comments",
+            "url": 'forum',
+            "featured": false,
+          },
+          {
+            "id": "13",
+            "title": "FAQs",
+            "icon": "fa-question",
+            "url": 'faqs',
+            "featured": true,
+          },
+          {
+            "id": "14",
+            "title": "Get in touch",
+            "icon": "fa-address-book",
+            "url": 'contactus',
+            "featured": true,
+          },
+        ],
+        footer: [
+          {
+            "id": "1",
+            "title": "Menu",
+            "icon": null,
+            "url": null,
+            "items": [
+              {
+                "id": "3",
+                "title": "Agenda",
+                "icon": "fa-calendar-days",
+                "url": 'agenda',
+                "featured": true,
+              },
+              {
+                "id": "4",
+                "title": "Breakouts",
+                "icon": "fa-mug-saucer",
+                "url": 'breakouts',
+                "featured": true,
+              },
+              {
+                "id": "8",
+                "title": "Speakers",
+                "icon": "fa-person-chalkboard",
+                "url": 'speakers',
+                "featured": true,
+              },
+              {
+                "id": "11",
+                "title": "Exhibitors",
+                "icon": "fa-city",
+                "url": 'exhibitors',
+                "featured": true,
+              },
+            ]
+          },
+          {
+            "id": "2",
+            "title": "Learn",
+            "icon": null,
+            "url": null,
+            "items": [
+              {
+                "id": "13",
+                "title": "FAQs",
+                "icon": "fa-question",
+                "url": 'faqs',
+                "featured": true,
+              },
+              {
+                "id": "14",
+                "title": "Get in touch",
+                "icon": "fa-address-book",
+                "url": 'contact',
+                "featured": true,
+              },
+            ]
+          },
+          {
+            "id": "3",
+            "title": "Legal",
+            "icon": null,
+            "url": null,
+            "items": [
+              {
+                "id": "1",
+                "title": "Privacy Policy",
+                "icon": "fa-address-book",
+                "url": 'terms#privacypolicy',
+                "featured": true,
+              },
+              {
+                "id": "2",
+                "title": "Terms of Website Use",
+                "icon": "fa-address-book",
+                "url": 'terms#terms',
+                "featured": true,
+              },
+              {
+                "id": "3",
+                "title": "Cookies Policy",
+                "icon": "fa-address-book",
+                "url": 'terms#cookiepolicy',
+                "featured": true,
+              },
+            ]
+          }
+        ]
+      }
     }
     return resource
   }

@@ -10,7 +10,7 @@ const getEventData = async (slug: string, jwt: string) => {
     }
   }
   let { data } = await get(`${NEXT_PUBLIC_API_URL}/event/${slug}/page`, config);
-  data = convertTempData(data, null, null)
+  data = convertTempData(data, null, null, slug)
   return data
 };
 
