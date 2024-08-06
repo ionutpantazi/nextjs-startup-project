@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
-import useSession from "lib/use-session";
-import { defaultSession } from "lib/session";
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled, { css } from 'styled-components'
 import FAIcon from 'components/Bootstrap/FAIcon'
-import axios from 'axios'
-import { getJwt, getSecondSegment, getSegment } from 'utils/helpers'
 import Validation, { ValidationMethods } from '@/components/Bootstrap/Validation';
 import { post } from '@/lib/httpClient';
 import { useRouter } from 'next/router';
+import { ModalContext } from '../../Common/Modal';
 
 export type JoinForm = {
   id: number
@@ -54,6 +51,8 @@ export function JoinForm({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
 
+  const modalContext = useContext(ModalContext);
+
   useEffect(() => {
     const init = async () => {
       const {
@@ -72,6 +71,8 @@ export function JoinForm({
       .then((res) => {
         if (res.data && res.data.length > 0) {
           setPasswordValue('');
+          setIsValid({});
+          modalContext.setModalIsOpen(false);
           window.open(res.data, '_blank');
         }
       });
@@ -88,7 +89,7 @@ export function JoinForm({
   }
 
   function submitJoin(e: any) {
-    e.preventDefault()
+    e.preventDefault();
     if (joinPasswordValidationRef.current) {
         joinPasswordValidationRef.current.updateErrorStatus('join', 0);
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import dnmc from 'next/dynamic'
 import ComponentSectionsSection2 from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
 import ComponentSectionsSection1 from 'components/StrapiComponents/ComponentSectionsSection1/pwa'
@@ -22,12 +22,25 @@ const DynamicContent = ({
   console.log(data)
   if (!data) return <></>
 
+  var apiADNAPageStructure = data?.resource?.pageData?.pageStructure;
+  var apiDefaultPageStructure = data?.resource?.defaultPageData?.pageStructure;
+  const [pageStructure, setPageStructure] = useState(apiADNAPageStructure)
+
+  useEffect(() => {
+    console.log(isdefaulttheme)
+    if(!isdefaulttheme){
+      setPageStructure(apiDefaultPageStructure)
+    } else {
+      setPageStructure(apiADNAPageStructure)
+    }
+  }, [isdefaulttheme]);
+// console.log(apiADNAPageStructure,apiDefaultPageStructure)
   return (
     <>
       {data?.resource?.pageData?.pageStructure?.length
         ?
         <>
-          {data?.resource?.pageData?.pageStructure.map((api: any, index: number) => (
+          {pageStructure.map((api: any, index: number) => (
             <div key={index}>
               {api.heading
                 ?

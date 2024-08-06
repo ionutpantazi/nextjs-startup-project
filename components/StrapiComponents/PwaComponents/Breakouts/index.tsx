@@ -4,6 +4,7 @@ import FAIcon from 'components/Bootstrap/FAIcon'
 import SortAndSearch from '../Common/SortAndSearch'
 import { useWindowSize } from '@/lib/hooks/useWindowSize'
 import { ModalContext } from '../Common/Modal';
+import useSession from "lib/use-session";
 import {
   SubTitle,
   BreakoutContainer,
@@ -37,10 +38,11 @@ const Breakouts = ({
 }: any) => {
   const [categories, setCategories] = useState(data.breakoutCategories);
   const [selectedValue, setSelectedValue] = useState<{ label: string, slug: string } | undefined>(undefined);
+  const [breakoutIdsThrottled, setBreakoutIdsThrottled] = useState<string[]>([]);
 
   const router = useRouter();
-
-  const modalContext = useContext(ModalContext)
+  const { session, isLoading } = useSession();
+  const modalContext = useContext(ModalContext);
 
   const { width } = useWindowSize();
 
@@ -108,7 +110,7 @@ const Breakouts = ({
         } else {
           return {
             flex: '0 0 calc(50% - 12px)',
-            'min-width': '360px',
+            'minWidth': '360px',
           };
         }
       case 3:
@@ -147,31 +149,50 @@ const Breakouts = ({
   const toggleRating = (breakout: any) => {
     let method = breakout.breakoutRated ? 'remove' : 'add';
     let slugs = router.query;
+
+    if (breakoutIdsThrottled.includes(breakout.id)) return;
+
+    setBreakoutIdsThrottled([...breakoutIdsThrottled, breakout.id]);
+
+    setTimeout(() => {
+      setBreakoutIdsThrottled(breakoutIdsThrottled.filter((id) => id !== breakout.id));
+    }, 1000);
+
+    if (!session.isLoggedIn) {
+      document.getElementById('login_button')?.click();
+    } else {
+      rateBreakoutUpdateArray(breakout.id, method);
     
-    post(`/api/breakouts/${method}BreakoutRating`, { eventId: slugs.slug, breakoutId: breakout.id }, {})
-    .then((res) => {
-      if (res.err?.status === 401) {
-        document.getElementById('login_button')?.click();
-      } else {
-        let updatedCategories = categories.map((category: any) => {
-          let updatedBreakouts = category.breakouts.map((b: any) => {
-            if (b.id === breakout.id) {
-              b.breakoutRated = !b.breakoutRated;
-              b.breakoutRating = method === 'add' ? b.breakoutRating + 1 : b.breakoutRating - 1;
-            }
-            return b;
-          });
-          return { ...category, breakouts: updatedBreakouts };
-        });
-        setCategories(updatedCategories);
-      }
+      post(`/api/breakouts/${method}BreakoutRating`, { eventId: slugs.slug, breakoutId: breakout.id }, {})
+      .then((res) => {
+        if (res.err?.status === 401) {
+          document.getElementById('login_button')?.click();
+        } else if (res.err) {
+          // Failed response so revert the frontend change
+          rateBreakoutUpdateArray(breakout.id, method === 'add' ? 'remove' : 'add');
+        }
+      });
+    }
+  }
+
+  const rateBreakoutUpdateArray = (breakoutId: string, method: string) => {
+    let updatedCategories = categories.map((category: any) => {
+      let updatedBreakouts = category.breakouts.map((b: any) => {
+        if (b.id === breakoutId) {
+          b.breakoutRated = method === 'add' ? true : false;
+          b.breakoutRating = method === 'add' ? b.breakoutRating + 1 : b.breakoutRating - 1;
+        }
+        return b;
+      });
+      return { ...category, breakouts: updatedBreakouts };
     });
+    setCategories(updatedCategories);
   }
   
   const handleClick = (breakout: any) => {
     if (breakout.hasPassword) {
-      modalContext.setModalContent(<JoinModal data={{id: breakout.id, title: breakout.title}} />)
-      modalContext.setModalIsOpen(true)
+      modalContext.setModalContent(<JoinModal data={{id: breakout.id, title: breakout.title}} />);
+      modalContext.setModalIsOpen(true);
     } else {
       window.open(breakout.url, '_blank');
     }

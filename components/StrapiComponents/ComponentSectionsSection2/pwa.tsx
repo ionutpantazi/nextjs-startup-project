@@ -56,7 +56,7 @@ export const generateAgendaDatesArray = (agendaItems: any) => {
 }
 
 export function sortAgendaItemsByStartDate(agendaItems: AgendaItem[]): AgendaItem[] {
-  return agendaItems.sort((a, b) => {
+  return agendaItems?.sort((a, b) => {
     const dateA = new Date(a.start).getTime();
     const dateB = new Date(b.start).getTime();
     return dateA - dateB;

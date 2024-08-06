@@ -13,9 +13,12 @@ import { ThemeContext } from 'components/Layout';
 import { useRouter } from 'next/router'
 import { CommentContent } from '../Discussions/CommentContent'
 import { ActionButtons } from '../Discussions/ActionButtons'
-import { AuthorDetails, SpeakerImage, StyledInputContainer, UserAvatar } from '../Discussions/styles'
+import { AuthorDetails, SpeakerImage } from '../Discussions/styles'
 import { LeftEventTitle } from '../Header/styles'
 import Ruler from '../Common/Ruler'
+import CustomTextArea from '../Common/TextArea'
+import { post } from '@/lib/httpClient'
+import useSession from "lib/use-session";
 var moment = require('moment');
 
 const ForumItem = styled.div`
@@ -36,22 +39,11 @@ const StyledNextImage = styled(NextImage)`
   height: 140px;
 `
 
-const ForumItemTitle = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-  @media screen and (max-width: ${props => props.theme.screens.md}) {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-  }
-`
-
 const ForumItemSubTitle = styled.div`
   font-size: 14px;
   font-weight: 300;
   line-height: 20px;
-  color: ${props => props.theme.colors.lightgrey};
+  color: ${props => props.theme.colors.white};
   display: -webkit-box;
   // -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -69,6 +61,18 @@ const ForumItemContent = styled.div`
 
 const ForumItemResponses = styled.div`
   padding: 16px;
+`
+
+const CommentContainer = styled.div`
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    margin: auto;
+  }
+`
+
+const UserAvatar = styled.div`
+  @media screen and (max-width: ${props => props.theme.screens.md}) {
+    display: none;
+  }
 `
 
 export const DiscussionFilter = styled.div`
@@ -99,7 +103,10 @@ const DiscussionComponent = ({
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState(false);
+  const [responseValue, setResponseValue] = useState('');
   const router = useRouter();
+  const { session, isLoading } = useSession();
+  const [ responses, setResponses ] = useState(data.responses);
 
   useEffect(() => {
     if (width && width < Number(theme.screens['md'].replace('px', ''))) {
@@ -114,12 +121,40 @@ const DiscussionComponent = ({
     router.push(`${path}/${id}`);
   }
 
-  const applyInputContainerStyle = () => {
-    return {
-      width: '100%',
-      'margin-bottom': '10px'
-    };
+  const toggleImpression = (discussion: any) => {
+
   }
+  
+  const addComment = () => {
+    let slugs = router.query;
+
+    if (!session.isLoggedIn) {
+      document.getElementById('login_button')?.click();
+    } else {
+      post(`/api/discussions/addResponse`, { eventId: slugs.slug, discussionId: data, response: responseValue }, {})
+      .then((res) => {
+        if (res.err?.status === 401) {
+          document.getElementById('login_button')?.click();
+        } else if (res.err) {
+
+        }
+      });
+    }
+  }
+
+  // const updateResponseArray = (method: string) => {
+  //   let updatedResponses = responses.map((response: any) => {
+  //     let updatedBreakouts = category.breakouts.map((b: any) => {
+  //       if (b.id === breakoutId) {
+  //         b.breakoutRated = method === 'add' ? true : false;
+  //         b.breakoutRating = method === 'add' ? b.breakoutRating + 1 : b.breakoutRating - 1;
+  //       }
+  //       return b;
+  //     });
+  //     return { ...category, breakouts: updatedBreakouts };
+  //   });
+  //   setResponses(updatedCategories);
+  // }
 
   return (
     <OuterContainer className=''>
@@ -144,11 +179,6 @@ const DiscussionComponent = ({
                     {data.authorName} | {moment(data.datePosted).fromNow()}
                   </AuthorDetails>
                   <DetailsBox className='flex flex-col gap-2 justify-center w-full'>
-                    {/* {data.title &&
-                      <ForumItemTitle className=''>
-                        {data.title}
-                      </ForumItemTitle>
-                    } */}
                     {data.text &&
                       <ForumItemSubTitle className=''
                         dangerouslySetInnerHTML={{
@@ -157,13 +187,18 @@ const DiscussionComponent = ({
                       />
                     }
                   </DetailsBox>
-                  <ActionButtons impressions={data.impressions ?? 0} comments={data.responses?.length ?? 0} />
+                  <ActionButtons 
+                    impressions={data.impressions ?? 0}
+                    impressionClicked={data.rated}
+                    onImpressionClick={() => toggleImpression(data)}
+                    comments={responses.length ?? 0}
+                    onCommentClick={() => navigateToDiscussion(data.discussionId)} />
                 </Detail>
               </ForumItemContent>
             </ForumItem>
 
-            <StyledInputContainer className='flex flex-row gap-6' style={applyInputContainerStyle()}>
-              <UserAvatar className='row-span-3'>
+            <CommentContainer className='flex flex-row gap-4 !my-4 mx-[42px] flex-1 !w-auto'>
+              <UserAvatar className='row-span-3 ml-[5px]'>
                 <SpeakerImage>
                   <NextImage
                     src={'/images/avatar.png'}
@@ -174,10 +209,18 @@ const DiscussionComponent = ({
                   />
                 </SpeakerImage>
               </UserAvatar>
-              <input placeholder='Share your thoughts...' />
-            </StyledInputContainer>
+              <CustomTextArea className={'flex-1'} placeholder='Share your thoughts...' value={responseValue} setValue={setResponseValue} />
+              
+              <div className="absolute inset-y-0 right-0 flex items-center px-2" onClick={addComment}>
+                <FAIcon
+                  icon={'fa-plane-top'}
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </CommentContainer>
 
-            {data.responses?.length > 0 &&
+            {responses.length > 0 &&
               <ForumItem>
                 <ForumItemResponses>
                   <DiscussionFilter className='md:flex hidden flex-row gap-2 items-center'>
@@ -189,7 +232,7 @@ const DiscussionComponent = ({
                     />
                   </DiscussionFilter>
                   <CommentBox className='md:block'>
-                    {data.responses?.map((comment: any, index: number) => (
+                    {responses.map((comment: any, index: number) => (
                       <div key={comment.id}>
                         <CommentContent className='' comment={comment} hideComments={true} expand={false} />
                       </div>

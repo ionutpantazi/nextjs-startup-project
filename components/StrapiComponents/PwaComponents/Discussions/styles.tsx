@@ -64,7 +64,7 @@ export const StyledNextImage = styled(NextImage)`
 `
 
 export const AuthorDetails = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 16px;
   color: ${props => props.theme.colors.lightgrey};
@@ -113,7 +113,7 @@ export const StyledInputContainer = styled.div`
   padding: 10px 10px 10px 10px;
 
   input {
-    color: ${props => props.theme.colors.lightgrey};
+    color: ${props => props.theme.colors.white};
     background: transparent;
 
     &:focus {
@@ -122,7 +122,7 @@ export const StyledInputContainer = styled.div`
   }
 
   input {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     line-height: 16px;
   }
@@ -161,7 +161,7 @@ export const SpeakerImage = styled.div`
 export const CommentText = styled.div`
   padding: 6px 0px 0px 50px;
   color: ${props => props.theme.components?.Discussion?.CommentTextColor};
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 16px;
 `
@@ -172,6 +172,7 @@ export const OtherDiscussionCommentText = styled(CommentText)`
 `
 
 export const CommentInnerBox = styled.div`
+  padding-bottom: 16px;
 `
 
 export const LoadMore = styled.div`

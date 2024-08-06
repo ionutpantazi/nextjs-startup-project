@@ -2,24 +2,44 @@ import FAIcon from 'components/Bootstrap/FAIcon'
 import {
   ButtonsContainer,
 } from './styles'
+import styled from 'styled-components';
 
-export const ActionButtons = (props: any) => {
+interface ActionButtonProps {
+  impressions: number,
+  comments?: number,
+  impressionClicked?: boolean,
+  onImpressionClick?: () => void,
+  onCommentClick?: () => void,
+  onShareClick?: () => void,
+  hideImpressions?: boolean,
+  hideComments?: boolean,
+}
+
+const IconContainer = styled.div`
+  &:hover {
+    cursor: pointer;
+
+    &svg-inline--fa
+  }
+`;
+
+export const ActionButtons = (props: ActionButtonProps) => {
   return (
     <ButtonsContainer className='flex flex-row gap-4 justify-start items-center'>
       {!props.hideImpressions &&
-        <div className='flex flex-row items-center'>
+        <IconContainer className='flex flex-row items-center' onClick={props.onImpressionClick && props.onImpressionClick}>
           <FAIcon
-            icon={'fa-heart'}
+            icon={`${props.impressionClicked ? 'fa-solid' : 'fa-regular'} fa-heart`}
             width={16}
             height={16}
           />
           <span>
             {props.impressions}
           </span>
-        </div>
+        </IconContainer>
       }
       {!props.hideComments &&
-        <div className='flex flex-row items-center'>
+        <IconContainer className='flex flex-row items-center' onClick={props.onCommentClick && props.onCommentClick}>
           <FAIcon
             icon={'fa-comment'}
             width={16}
@@ -28,13 +48,15 @@ export const ActionButtons = (props: any) => {
           <span>
             {props.comments}
           </span>
-        </div>
+        </IconContainer>
       }
-      <FAIcon
-        icon={'fa-share'}
-        width={16}
-        height={16}
-      />
+      <IconContainer onClick={props.onShareClick && props.onShareClick}>
+        <FAIcon
+          icon={'fa-share'}
+          width={16}
+          height={16}
+        />
+      </IconContainer>
     </ButtonsContainer>
   )
 }

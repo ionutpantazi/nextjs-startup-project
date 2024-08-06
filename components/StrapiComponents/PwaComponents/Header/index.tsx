@@ -111,6 +111,18 @@ const Header = ({
     }
   }
 
+  const formatAddress = () => {
+    console.log("Venue", venue)
+    const formattedTitle: string = venue.title ? venue.title : '';
+    const formattedAddress: string = venue.address ? venue.address.replace(/,+$/, '') : '';
+    const formattedPostCode: string = venue.postcode ? venue.postcode : '';
+
+    const formattedTitlePart = formattedTitle.length > 0 && (formattedAddress.length > 0 || formattedPostCode.length > 0) ? `${formattedTitle}, ` : formattedTitle;
+    const formattedAddressPart = formattedAddress.length > 0 && formattedPostCode.length > 0 ? `${formattedAddress}, ` : formattedAddress;
+
+    return `${formattedTitlePart}${formattedAddressPart}${formattedPostCode}`
+  }
+
   const EventDetailsComponent = () => {
     return (
       <>
@@ -124,10 +136,10 @@ const Header = ({
             </EventDetailsIcon>
             <EventDetailsContainer className='flex flex-col gap-2'>
               <EventDetailsTitle className='col-span-2'>
-                {venue.title}
+                Venue
               </EventDetailsTitle>
               <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                {`${venue.address ? venue.address : ''}${venue.postcode ? `, ${venue.postcode}` : ''}`}
+                {formatAddress()}
               </EventDetailsSubTitle>
             </EventDetailsContainer>
           </EventDetailsItem>

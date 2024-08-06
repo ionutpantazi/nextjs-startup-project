@@ -133,7 +133,7 @@ const OtherDiscussion = (props: any) => {
         {discussion.attributes?.Content}
       </OtherDiscussionCommentText>
       <OtherDiscussionActionButtons>
-        <ActionButtons impressions={discussion.attributes.Impressions} discussion={discussion} />
+        <ActionButtons impressions={discussion.attributes.Impressions} discussion={discussion} hideComments={true} />
       </OtherDiscussionActionButtons>
     </OtherDiscussionInnerBox>
   )

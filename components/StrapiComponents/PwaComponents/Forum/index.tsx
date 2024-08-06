@@ -67,6 +67,8 @@ const StyledNextImage = styled(NextImage)`
 `
 
 const ButtonsBox = styled.div`
+  align-items: center;
+
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
     position: absolute;
     right: 0;
@@ -83,7 +85,7 @@ const Button = styled.div`
   }
   border-radius: ${props => props.theme.borderRadius?.components?.small};
   background-color: ${props => props.theme.colors.brand};
-  padding: 10px;
+  padding: 10px 16px;
 
   &:hover {
     background-color: ${props => props.theme.colors.brandlight};
@@ -111,7 +113,7 @@ const ForumItemSubTitle = styled.div`
   font-size: 14px;
   font-weight: 300;
   line-height: 20px;
-  color: ${props => props.theme.colors.lightgrey};
+  color: ${props => props.theme.colors.white};
   display: -webkit-box;
   // -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -171,6 +173,10 @@ const ForumComponent = ({
     router.push(`${path}/${id}`);
   }
 
+  const toggleImpression = (discussion: any) => {
+
+  }
+
   return (
     <Container>
       <InnerContainer>
@@ -185,12 +191,12 @@ const ForumComponent = ({
               <ForumItemContent className='md:flex grid flex-row flex-wrap content-start justify-around gap-4'>
                 <StyledNextImage
                   src={discussion.profilePic ?? ""}
-                  className=''
+                  className=' md:w-2/12 w-full'
                   alt={discussion.profilePic ?? ""}
                   width={140}
                   height={140}
                 />
-                <Detail className='flex flex-col gap-2 justify-center md:w-8/12 w-full'>
+                <Detail className='flex flex-col gap-2 justify-center md:w-7/12 w-full'>
                   <AuthorDetails className=''>
                     {discussion.authorName} | {moment(discussion.datePosted).fromNow()}
                   </AuthorDetails>
@@ -208,9 +214,14 @@ const ForumComponent = ({
                       />
                     }
                   </DetailsBox>
-                  <ActionButtons impressions={discussion.impressions ?? 0} comments={discussion.responses?.length ?? 0} />
+                  <ActionButtons 
+                    impressions={discussion.impressions ?? 0}
+                    impressionClicked={discussion.rated}
+                    onImpressionClick={() => toggleImpression(discussion)}
+                    comments={discussion.responses?.length ?? 0}
+                    onCommentClick={() => navigateToDiscussion(discussion.discussionId)} />
                 </Detail>
-                <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
+                <ButtonsBox className='flex flex-col gap-4 justify-center md:w-2/12 w-full'>
                   <Button as='a' onClick={() => navigateToDiscussion(discussion.discussionId)} className='w-fit'>
                     <span>
                       View post

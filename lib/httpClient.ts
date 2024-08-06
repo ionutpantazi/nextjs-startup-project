@@ -33,6 +33,44 @@ const post = async (endpoint: string, postData: any, headers: any) => {
   }
 };
 
+const update = async (endpoint: string, postData: any, headers: any) => {
+  try {
+    const { data } = await axios.put(endpoint, postData, headers);
+    return { data: data }
+  } catch (error: any) {
+    console.log("error", error);
+    let status = error.response.status
+    let statusText = error.response.statusText
+    let errorData = error.response.data
+    if (error?.response) {
+      return {
+        data: {}, err: { status: status, statusText: statusText, errorData: errorData }
+      }
+    } else {
+      return { data: {}, err: { status: undefined, statusText: undefined, errorData: 'axios post error' } }
+    }
+  }
+};
+
+const remove = async (endpoint: string, headers: any) => {
+  try {
+    const { data } = await axios.delete(endpoint, headers);
+    return { data: data }
+  } catch (error: any) {
+    console.log("error", error);
+    let status = error.response.status
+    let statusText = error.response.statusText
+    let errorData = error.response.data
+    if (error?.response) {
+      return {
+        data: {}, err: { status: status, statusText: statusText, errorData: errorData }
+      }
+    } else {
+      return { data: {}, err: { status: undefined, statusText: undefined, errorData: 'axios post error' } }
+    }
+  }
+};
+
 async function fetchGet(endpoint: string, headers: any) {
   try {
     const response = await fetch(endpoint, {
@@ -58,4 +96,4 @@ async function fetchPost(endpoint: string, postData: any, headers: any) {
   }
 }
 
-export { get, post, fetchGet, fetchPost };
+export { get, post, update, remove, fetchGet, fetchPost };

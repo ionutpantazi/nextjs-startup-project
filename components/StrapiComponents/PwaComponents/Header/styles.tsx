@@ -149,7 +149,7 @@ export const EventDetailsTitle = styled.div`
 `
 
 export const EventDetailsSubTitle = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 16px;
   color: ${props => props.theme.components?.Header?.EventDetailsSubTitle};
