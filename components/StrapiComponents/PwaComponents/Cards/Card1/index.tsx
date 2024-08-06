@@ -3,6 +3,7 @@ import FAIcon from 'components/Bootstrap/FAIcon'
 import NextImage from 'next/image'
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ThemeContext } from 'components/Layout';
+import { parseContent } from 'utils/helpers'
 import {
   CardContainer,
   ImageContainer,
@@ -59,9 +60,11 @@ const Delegates = ({
             <CardSubTitle>
               {data.company}
             </CardSubTitle>
-            <CardSubTitle>
-              {data.bio}
-            </CardSubTitle>
+            <CardSubTitle
+              dangerouslySetInnerHTML={{
+                __html: parseContent(data.bio),
+              }}
+            />
             <div className='flex flex-row gap-2'>
               <Badge active={'true'}>
                 <span>

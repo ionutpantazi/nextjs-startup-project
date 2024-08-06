@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import NextImage from 'next/image'
-import { theme } from 'lib/theme'
-import { IMAGE_DOMAIN } from 'lib/constants'
 import Layout from 'components/Layout'
-import Flex from 'components/Bootstrap/Flex'
 
 export interface ErrorPageTemplateProps {
   statusCode?: number,
@@ -16,22 +13,35 @@ const getError = (statusCode?: number, errorMessage?: string) => {
       return {
         title: 'Page not found',
         errorMessage: errorMessage,
-        message:
-          "The page you are looking for doesn't exist or has been moved.",
+        message: `
+        <div class="max-w-[700px] text-center">
+          <div class="mb-4">Page not found.</div>
+          <span>We're sorry we couldn't find the page you're looking for.</span>
+          <span>Please go back to the previous page or let us know what you were looking for here!</span>
+        </div>
+        `,
       }
     case 500:
       return {
         title: 'Server error',
         errorMessage: errorMessage,
-        message:
-          'Something went wrong on our end. Please contact support or try again later.',
+        message: `
+        <div class="max-w-[700px] text-center">
+          <div class="mb-4">Server error.</div>
+          <span>Something went wrong on our end. Please contact support or try again later.</span>
+        </div>
+        `
       }
     default:
       return {
         title: 'Bad request',
         errorMessage: errorMessage,
-        message:
-          'Something went wrong. Please contact support or try again later.',
+        message: `
+        <div class="max-w-[700px] text-center">
+          <div class="mb-4">Bad request.</div>
+          <span>Something went wrong. Please contact support or try again later.</span>
+        </div>
+        `
       }
   }
 }
@@ -41,11 +51,21 @@ const ErrorPageTemplate: React.FC<ErrorPageTemplateProps> = ({
   errorMessage,
 }) => {
   const [errTitle] = useState(getError(statusCode).title)
-  const [errMsg] = useState(getError(statusCode).message)
   return (
     <Layout title={`${statusCode} | ${errTitle}`} navigationData={undefined}>
-      <div className="grid h-screen place-content-center bg-white px-4">
-        <h1 className="uppercase tracking-widest text-gray-500">{statusCode} | {errMsg}</h1>
+      <div className="flex flex-col items-center gap-4 h-screen place-content-center bg-white px-4">
+        <NextImage
+          src={'/images/lg-favicon-32x32.png'}
+          className=''
+          alt=''
+          width={40}
+          height={40}
+        />
+        <div className="uppercase tracking-widest text-gray-500"
+          dangerouslySetInnerHTML={{
+            __html: getError(statusCode).message,
+          }}
+        />
       </div>
     </Layout>
   )

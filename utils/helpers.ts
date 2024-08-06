@@ -554,16 +554,20 @@ export function generateMenuHref(segment: any) {
 }
 
 function removeStyleAttributes(html: string): string {
-  // Load the HTML string into cheerio
-  const $ = cheerio.load(html);
+  if (html) {
+    // Load the HTML string into cheerio
+    const $ = cheerio.load(html);
 
-  // Select all elements with a style attribute and remove the attribute
-  $('[style]').each((index, element) => {
-    $(element).removeAttr('style');
-  });
+    // Select all elements with a style attribute and remove the attribute
+    $('[style]').each((index, element) => {
+      $(element).removeAttr('style');
+    });
 
-  // Serialize the modified HTML back to a string
-  return $.html();
+    // Serialize the modified HTML back to a string
+    return $.html();
+  } else {
+    return ''
+  }
 }
 
 export function parseContent(content: any) {

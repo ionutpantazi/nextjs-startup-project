@@ -12,6 +12,7 @@ import {
   sortAgendaItemsByStartDate,
 } from './utils'
 import { post } from 'lib/httpClient'
+import Toggle from 'components/StrapiComponents/PwaComponents/Common/Toggle';
 
 import {
   AgendaContainer,
@@ -58,10 +59,11 @@ const Agenda = ({
   const router = useRouter();
   const [agendaItemsList, setAgendaItemsList] = useState(sortData);
   const [personalizedToggle, setPersonalizedToggle] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     setAgendaItemsList(sortData)
-    setPersonalizedToggle(false)
+    // setPersonalizedToggle(false)
   }, [data])
 
   useEffect(() => {
@@ -72,29 +74,48 @@ const Agenda = ({
     }
   }, [])
 
+  useEffect(() => {
+    setRefresh(refresh + 1)
+    let list = sortData.filter((agenda: any) => {
+      return agenda.isAttending
+    })
+    if (personalizedToggle) {
+      setPersonalizedToggle(true)
+      setAgendaItemsList(list)
+    } else {
+      setPersonalizedToggle(false)
+      setAgendaItemsList(sortData)
+    }
+  }, [selectedAgendaData])
+
   const generateAgendaPageLink = () => {
     const path = router.asPath;
     return `${path}/agenda/`
   }
 
-  async function addOrRemoveAgendaItem(e: any, agendaItemId: any, method: any) {
+  async function addOrRemoveAgendaItem(e: any, agendaItemId: any, method: any, index: number) {
     e.preventDefault()
     let linkElement = e.target?.closest('a')
     let agendaMethod = linkElement?.getAttribute('data-mode')
     let response = await post('/api/agenda/agendaitems', { eventId: 'hivedemo', agendaItemId: agendaItemId, method: agendaMethod }, {})
     if (response.data?.id) {
+      setRefresh(refresh + 1)
       if (agendaMethod == 'add') {
-        linkElement.setAttribute('data-mode', 'remove')
-        linkElement.innerText = 'Remove from agenda'
+        updateAgendaItemsList(index, true)
       } else {
-        linkElement.setAttribute('data-mode', 'add')
-        linkElement.innerText = 'Add to agenda'
+        updateAgendaItemsList(index, false)
       }
     }
   }
 
+  function updateAgendaItemsList(index: any, state: boolean) {
+    agendaItemsList[index]['isAttending'] = state
+    setAgendaItemsList(agendaItemsList)
+
+  }
+
   function togglePersonalizedAgenda(e: any) {
-    e.preventDefault()
+    e?.preventDefault()
     let list = agendaItemsList.filter((agenda: any) => {
       return agenda.isAttending
     })
@@ -107,24 +128,31 @@ const Agenda = ({
     }
   }
 
+  const handleChildData = (state: any) => {
+    let list = agendaItemsList.filter((agenda: any) => {
+      return agenda.isAttending
+    })
+    if (!state) {
+      setPersonalizedToggle(false)
+      setAgendaItemsList(sortData)
+    } else {
+      setPersonalizedToggle(true)
+      setAgendaItemsList(list)
+    }
+  };
+
   return (
-    <AgendaContainer className=''>
+    <AgendaContainer key={refresh} className=''>
       <AgendaTitle className='mb-4'>
         {title}
       </AgendaTitle>
       <button
         onClick={(e: any) => togglePersonalizedAgenda(e)}
       >
-        {
-          personalizedToggle
-            ?
-            <span>
-              full agenda
-            </span>
-            :
-            <span>
-              personalized
-            </span>
+        {userLoggedInFromApi && !isHomepage &&
+          <div className='py-8'>
+            <Toggle onText={'full agenda'} offText={'personalized'} switchstate={handleChildData} isactive={personalizedToggle} />
+          </div>
         }
       </button>
       <div className='md:hidden block'>
@@ -213,32 +241,9 @@ const Agenda = ({
                   }}
                 />
               }
-              {/* <div className='flex flex-row gap-1'>
-                {agenda.attributes.Tags.data.map((tag: Tagsprops, index: number) => (
-                  <AgendaTag key={index} className=''>
-                    {tag.attributes.Name}
-                  </AgendaTag>
-                ))
-                }
-              </div> */}
             </DetailsBox>
-            {/* <ParticipantsBox className='md:flex hidden flex-col gap-3 justify-center md:w-fit w-full'>
-              <Participants className='flex flex-row'>
-                {isHomepage &&
-                  <>
-                    <ImageIcon className='flex justify-center items-center'>
-                      <FAIcon
-                        icon={'fa-leaf'}
-                        width={20}
-                        height={20}
-                      />
-                    </ImageIcon>
-                  </>
-                }
-              </Participants>
-            </ParticipantsBox> */}
             {!isHomepage && userLoggedInFromApi &&
-              <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
+              <Button2 as='a' href={'#'} data-mode={agenda.isAttending ? 'remove' : 'add'} className='flex md:hidden flex-row md:gap-4 gap-2 items-center w-[180px] justify-center' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending, index)}>
                 {agenda.isAttending
                   ?
                   <>
@@ -253,7 +258,7 @@ const Agenda = ({
             }
             <ButtonsBox className='flex flex-col gap-4 justify-center md:w-fit w-full'>
               {!isHomepage && userLoggedInFromApi &&
-                <Button2 as='a' href={generateAgendaPageLink()} data-mode={agenda.isAttending ? 'remove' : 'add'} className='md:flex hidden flex-row gap-4 items-center w-fit' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending)}>
+                <Button2 as='a' href={'#'} data-mode={agenda.isAttending ? 'remove' : 'add'} className='md:flex hidden flex-row gap-4 items-center w-[180px] justify-center' onClick={(e) => addOrRemoveAgendaItem(e, agenda.agendaItemId, agenda.isAttending, index)}>
                   {agenda.isAttending
                     ?
                     <>
