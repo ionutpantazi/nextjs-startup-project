@@ -46,7 +46,7 @@ export const CommentContent = (props: any) => {
         }}
       />
       <CommentActionButtons>
-          <ActionButtons impressions={comment.impressions} hideComments={props.hideComments} />
+          <ActionButtons impressions={comment.impressions} hideComments={props.hideComments} canDelete={props.canDelete} onDeleteClick={props.onDeleteClick} />
         </CommentActionButtons>
     </CommentInnerBox>
   )

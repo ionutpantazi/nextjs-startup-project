@@ -7,7 +7,7 @@ const removeResponse = async (slug: string, discussionId: string, responseId: st
   const config = {
     headers: {
       'Authorization': `Bearer ${jwt}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   }
 

@@ -24,7 +24,7 @@ const Forum = ({
       <PwaContentContainer>
         <Header headerImage={data.banner ? data.banner.upload : data.event.homeBanner} hideBody={true} senddatatolayout={senddatatolayout} isdefaulttheme={isdefaulttheme?.toString()} themedata={themedata} themeMeta={themeMeta} />
         {data?.discussions && data?.discussions?.data?.length > 0 && session?.isLoggedIn &&
-          <ForumComponent data={data.discussions} />
+          <ForumComponent data={data.discussions} userId={data.resource.user.userID}  />
         }
         {!session.isLoggedIn &&
           <LoginPrompt title={'Get involved in the discussion'} message={'To view the forum'} />

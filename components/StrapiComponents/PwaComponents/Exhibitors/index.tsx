@@ -20,7 +20,7 @@ import {
 import 'swiper/css';
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
 import { ExhibitorItem, CardWidth } from '../Exhibitor'
-import { DropdownAndSearch, SearchButton, SearchContainer, SearchInput } from '../Common/SortAndSearch'
+import SortAndSearch, { DropdownAndSearch, SearchButton, SearchContainer, SearchInput } from '../Common/SortAndSearch'
 import FAIcon from '@/components/Bootstrap/FAIcon'
 
 export type ComponentExhibitors = {
@@ -114,7 +114,23 @@ const ComponentExhibitorsPanel = ({
     }
   }
   
-  const applyExhibitorCardStyle = (columnSize: number) => {
+  const [windowWidth, setWindowWidth] = useState<number | undefined>();
+
+  // TODO: Clean this up (temp because the initial load doesn't have the correct width when using const { width } = useWindowSize())
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+    
+    // Set the initial width
+    setWindowWidth(window.innerWidth);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  const applyExhibitorCardStyle = (columnSize: number, screenWidth: number | undefined) => {
     switch (columnSize) {
       case 12:
         return {
@@ -123,7 +139,7 @@ const ComponentExhibitorsPanel = ({
           'border-radius': '10px'
         };
       case 6:
-        if(width && width < Number(theme.screens['lg'].replace('px', '')))
+        if(screenWidth && screenWidth < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
             flex: '0 0 100%',
@@ -139,14 +155,14 @@ const ComponentExhibitorsPanel = ({
           };
         }
       case 3:
-        if (width &&  width > Number(theme.screens['sm'].replace('px', '')) && width < Number(theme.screens['lg'].replace('px', '')))
+        if (screenWidth &&  screenWidth > Number(theme.screens['sm'].replace('px', '')) && screenWidth < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
             flex: '0 0 calc(50% - 8px)',
             height: '320px',
             'border-radius': '10px'
           };
-        } else if (width && width < Number(theme.screens['sm'].replace('px', ''))) {
+        } else if (screenWidth && screenWidth < Number(theme.screens['sm'].replace('px', ''))) {
           return {
             flex: '0 0 100%',
             height: '320px',
@@ -173,21 +189,9 @@ const ComponentExhibitorsPanel = ({
             <Ruler />
             <ExhibitorContainer className='w-full grid gap-4'>
               <SubTitle dangerouslySetInnerHTML={{ __html: data.header }} />
-              
-              <DropdownAndSearch>
-                <SearchContainer style={{padding: "0px"}}>
-                  <SearchInput as='input' onChange={(x) => setSearch(x.target.value || "")}/>
-                  <SearchButton>
-                    <FAIcon
-                      icon={'fa-magnifying-glass'}
-                      width={16}
-                      height={16}
-                    />
-                  </SearchButton>
-                </SearchContainer>
-              </DropdownAndSearch>
+              <SortAndSearch showSearch={true} showSort={false} dropDownPlaceholder={''} selectedValue={search} setSelectedValue={setSearch} />
               {exhibitors.map((exhibitor: ExhibitorItem) => (
-                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.cardColumnSize)} onClick={() => navigateToItem(exhibitor.url, exhibitor.target)}>
+                <ExhibitorCard key={exhibitor.id} style={applyExhibitorCardStyle(exhibitor.cardColumnSize, windowWidth)} onClick={() => navigateToItem(exhibitor.url, exhibitor.target)}>
                   <ExhibitorIcon className='row-span-1 grid content-end relative'>
                     {exhibitor?.upload &&
                       <>

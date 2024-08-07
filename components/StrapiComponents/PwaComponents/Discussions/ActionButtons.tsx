@@ -8,9 +8,11 @@ interface ActionButtonProps {
   impressions: number,
   comments?: number,
   impressionClicked?: boolean,
+  canDelete?: boolean,
   onImpressionClick?: () => void,
   onCommentClick?: () => void,
   onShareClick?: () => void,
+  onDeleteClick?: () => void,
   hideImpressions?: boolean,
   hideComments?: boolean,
 }
@@ -57,6 +59,15 @@ export const ActionButtons = (props: ActionButtonProps) => {
           height={16}
         />
       </IconContainer>
+      {props.canDelete &&
+        <IconContainer className='flex flex-row items-center' onClick={props.onDeleteClick && props.onDeleteClick}>
+          <FAIcon
+            icon={'fa-trash'}
+            width={16}
+            height={16}
+          />
+        </IconContainer>
+      }
     </ButtonsContainer>
   )
 }

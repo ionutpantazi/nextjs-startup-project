@@ -95,14 +95,30 @@ const Breakouts = ({
     setCategories(sortedCategories);
   }, [selectedValue, data.breakoutCategories]);
 
-  const applyBreakoutCardStyle = (columnSize: number) => {
+  const [windowWidth, setWindowWidth] = useState<number | undefined>();
+
+  // TODO: Clean this up (temp because the initial load doesn't have the correct width when using const { width } = useWindowSize())
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+    
+    // Set the initial width
+    setWindowWidth(window.innerWidth);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const applyBreakoutCardStyle = (columnSize: number, screenWidth: number | undefined) => {
     switch (columnSize) {
       case 12:
         return {
           flex: '0 0 100%',
         };
       case 6:
-        if(width && width < Number(theme.screens['lg'].replace('px', '')))
+        if(screenWidth && screenWidth < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
             flex: '0 0 100%',
@@ -114,12 +130,12 @@ const Breakouts = ({
           };
         }
       case 3:
-        if (width &&  width > Number(theme.screens['sm'].replace('px', '')) && width < Number(theme.screens['lg'].replace('px', '')))
+        if (screenWidth &&  screenWidth > Number(theme.screens['sm'].replace('px', '')) && screenWidth < Number(theme.screens['lg'].replace('px', '')))
         {
           return {
             flex: '0 0 calc(50% - 12px)',
           };
-        } else if (width && width < Number(theme.screens['sm'].replace('px', ''))) {
+        } else if (screenWidth && screenWidth < Number(theme.screens['sm'].replace('px', ''))) {
           return {
             flex: '0 0 100%',
           };
@@ -213,7 +229,7 @@ const Breakouts = ({
             </BreakoutCategoryTitle>
             <BreakoutOuterContainer>
               {category.breakouts.map((breakout: any, index: number) => (
-                <BreakoutContainer key={index} id={`breakout-${breakout.id}`} style={applyBreakoutCardStyle(breakout.cardColumnSize)}>
+                <BreakoutContainer key={index} id={`breakout-${breakout.id}`} style={applyBreakoutCardStyle(breakout.cardColumnSize, windowWidth)}>
                   <BreakoutItem>
                     <BreakoutImage>
                       <NextImage

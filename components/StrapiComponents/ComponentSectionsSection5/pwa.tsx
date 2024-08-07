@@ -12,6 +12,10 @@ import { ThemeContext } from 'components/Layout';
 import FAIcon from 'components/Bootstrap/FAIcon'
 import { IconsProps, SocialsContainer, Social } from 'components/StrapiComponents/ComponentSectionsSection1/TextAndIcons'
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 export type ContactProps = {
   Title: string,
   Sub_Title: string
@@ -83,7 +87,7 @@ export const StyledSocial = styled(Social)`
 export const DetailsBox = styled.div`
   padding-right: 100px;
   @media screen and (max-width: ${props => props.theme.screens.lg}) {
-    margin-top: 40px;
+    // margin-top: 40px;
     padding-right: 0px;
   }
 `
@@ -292,44 +296,6 @@ const ComponentSectionsSection5 = ({
                   </Detail>
                 }
               </DetailsBox>
-              {/* <SocialsContainer className='flex flex-wrap gap-x-14 gap-y-6'>
-                {contactData.email &&
-                  <StyledSocial as='a' href='#' className='flex flex-row items-center gap-4 w-fit'>
-                    <FAIcon
-                      icon={'fa-envelope'}
-                      width={28}
-                      height={28}
-                    />
-                    <span>
-                      {contactData.email}
-                    </span>
-                  </StyledSocial>
-                }
-                {contactData.phone &&
-                  <StyledSocial as='a' href='#' className='flex flex-row items-center gap-4 w-fit'>
-                    <FAIcon
-                      icon={'fa-phone'}
-                      width={28}
-                      height={28}
-                    />
-                    <span>
-                      {contactData.phone}
-                    </span>
-                  </StyledSocial>
-                }
-                {contactData.address &&
-                  <StyledSocial as='a' href='#' className='flex flex-row items-center gap-4 w-fit'>
-                    <FAIcon
-                      icon={'fa-map-pin'}
-                      width={28}
-                      height={28}
-                    />
-                    <span>
-                      {contactData.address}
-                    </span>
-                  </StyledSocial>
-                }
-              </SocialsContainer> */}
             </FirstColumn>
             <SecondColumn className='flex flex-col lg:w-1/2 w-auto'>
               <InterestsTitle>
@@ -343,7 +309,7 @@ const ComponentSectionsSection5 = ({
                     slidesPerView={'auto'}
                     className='w-full'
                   >
-                    {contactData.interests.map((interest: any, index: number) => (
+                    {contactData.interests && contactData.interests.map((interest: any, index: number) => (
                       <SwiperSlide key={index} style={{ 'width': 'fit-content' }}>
                         <Interest as='a' href='#' className='flex flex-row items-center gap-4 w-fit' active={index == 0 ? 'true' : 'false'}>
                           <span>
@@ -357,7 +323,7 @@ const ComponentSectionsSection5 = ({
                 </InterestsList>
                 :
                 <InterestsList className='flex flex-wrap gap-4'>
-                  {contactData.interests.map((interest: any, index: number) => (
+                  {contactData.interests && contactData.interests.map((interest: any, index: number) => (
                     <Interest as='a' href='#' key={index} className='flex flex-row items-center gap-4' active={index == 0 ? 'true' : 'false'}>
                       <span>
                         {interest}

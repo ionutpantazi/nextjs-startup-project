@@ -98,8 +98,8 @@ const Detail = styled.div`
 
 const DiscussionComponent = ({
   data,
+  userId
 }: any) => {
-
   const theme = useContext(ThemeContext);
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState(false);
@@ -116,13 +116,24 @@ const DiscussionComponent = ({
     }
   }, [])
 
-  const navigateToDiscussion = (id: string) => {
-    const path = router.asPath;
-    router.push(`${path}/${id}`);
-  }
-
   const toggleImpression = (discussion: any) => {
+    // let slugs = router.query;
 
+    // if (!session.isLoggedIn) {
+    //   document.getElementById('login_button')?.click();
+    // } else {
+    //   post(`/api/discussions/addResponse`, { eventId: slugs.slug, discussionId: data.discussionId, responseText: responseValue }, {})
+    //   .then((res) => {
+    //     if (res.data) {
+    //       addResponseArray(res.data);
+    //       setResponseValue('');
+    //     } else if (res.err?.status === 401) {
+    //       document.getElementById('login_button')?.click();
+    //     } else if (res.err) {
+
+    //     }
+    //   });
+    // }
   }
   
   const addComment = () => {
@@ -131,9 +142,31 @@ const DiscussionComponent = ({
     if (!session.isLoggedIn) {
       document.getElementById('login_button')?.click();
     } else {
-      post(`/api/discussions/addResponse`, { eventId: slugs.slug, discussionId: data, response: responseValue }, {})
+      post(`/api/discussions/addResponse`, { eventId: slugs.slug, discussionId: data.discussionId, responseText: responseValue }, {})
       .then((res) => {
-        if (res.err?.status === 401) {
+        if (!res.err && res.data) {
+          addResponseArray(res.data);
+          setResponseValue('');
+        } else if (res.err?.status === 401) {
+          document.getElementById('login_button')?.click();
+        } else if (res.err) {
+
+        }
+      });
+    }
+  }
+  
+  const removeComment = (responseId: number) => {
+    let slugs = router.query;
+
+    if (!session.isLoggedIn) {
+      document.getElementById('login_button')?.click();
+    } else {
+      post(`/api/discussions/removeResponse`, { eventId: slugs.slug, discussionId: data.discussionId, responseId: responseId }, {})
+      .then((res) => {
+        if (!res.err && res.data) {
+          removeResponseArray(responseId);
+        } else if (res.err?.status === 401) {
           document.getElementById('login_button')?.click();
         } else if (res.err) {
 
@@ -142,19 +175,28 @@ const DiscussionComponent = ({
     }
   }
 
-  // const updateResponseArray = (method: string) => {
-  //   let updatedResponses = responses.map((response: any) => {
-  //     let updatedBreakouts = category.breakouts.map((b: any) => {
-  //       if (b.id === breakoutId) {
-  //         b.breakoutRated = method === 'add' ? true : false;
-  //         b.breakoutRating = method === 'add' ? b.breakoutRating + 1 : b.breakoutRating - 1;
-  //       }
-  //       return b;
-  //     });
-  //     return { ...category, breakouts: updatedBreakouts };
-  //   });
-  //   setResponses(updatedCategories);
-  // }
+  const addResponseArray = (res: any) => {
+    let response = {
+      id: res.id,
+      text: res.responseText,
+      datePosted: res.datePosted,
+      impressions: 0,
+      responseBy: res.name,
+      responseById: userId,
+      profliePic: ''
+    }
+
+    setResponses((prevResponses: any) => {
+      const newResponses = [...prevResponses];
+      newResponses.unshift(response);
+      return newResponses;
+    });
+  }
+
+  const removeResponseArray = (responseId: number) => {
+    let updatedResponses = responses.filter((response: any) => response.id !== responseId);
+    setResponses(updatedResponses);
+  }
 
   return (
     <OuterContainer className=''>
@@ -192,7 +234,9 @@ const DiscussionComponent = ({
                     impressionClicked={data.rated}
                     onImpressionClick={() => toggleImpression(data)}
                     comments={responses.length ?? 0}
-                    onCommentClick={() => navigateToDiscussion(data.discussionId)} />
+                    onDeleteClick={() => {}}
+                    canDelete={data.responseById == userId}
+                    />
                 </Detail>
               </ForumItemContent>
             </ForumItem>
@@ -209,15 +253,7 @@ const DiscussionComponent = ({
                   />
                 </SpeakerImage>
               </UserAvatar>
-              <CustomTextArea className={'flex-1'} placeholder='Share your thoughts...' value={responseValue} setValue={setResponseValue} />
-              
-              <div className="absolute inset-y-0 right-0 flex items-center px-2" onClick={addComment}>
-                <FAIcon
-                  icon={'fa-plane-top'}
-                  width={20}
-                  height={20}
-                />
-              </div>
+              <CustomTextArea className={'flex-1'} placeholder='Share your thoughts...' value={responseValue} setValue={setResponseValue} handleSubmit={addComment} />
             </CommentContainer>
 
             {responses.length > 0 &&
@@ -232,9 +268,9 @@ const DiscussionComponent = ({
                     />
                   </DiscussionFilter>
                   <CommentBox className='md:block'>
-                    {responses.map((comment: any, index: number) => (
+                    {responses.map((comment: any) => (
                       <div key={comment.id}>
-                        <CommentContent className='' comment={comment} hideComments={true} expand={false} />
+                        <CommentContent className='' comment={comment} hideComments={true} expand={false} canDelete={comment.responseById == userId} onDeleteClick={() => removeComment(comment.id)}/>
                       </div>
                     ))
                     }

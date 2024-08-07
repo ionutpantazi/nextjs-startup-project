@@ -5,6 +5,7 @@ interface TextAreaProps {
     className: string,
     value: string;
     setValue: (value: string) => void;
+    handleSubmit: () => void;
 }
 
 const TextAreaContainer = styled.div`
@@ -71,7 +72,8 @@ const CustomTextArea = ({
     placeholder,
     className,
     value,
-    setValue
+    setValue,
+    handleSubmit
   }: TextAreaProps) => {
   
     return (
@@ -83,7 +85,7 @@ const CustomTextArea = ({
                 className={className}
             />
             <SendBtn>
-                <span>Submit</span>
+                <span onClick={handleSubmit}>Submit</span>
             </SendBtn>
         </TextAreaContainer>
     )
