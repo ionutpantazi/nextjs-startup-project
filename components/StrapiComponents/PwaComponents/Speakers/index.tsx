@@ -57,10 +57,22 @@ const Speakers = ({
   ]
 
   const toggleExpand = (isExpanded: any, index: any, e: any) => {
+    // e.preventDefault()
+    // const newExpandedIndices = [...expandedIndices];
+    // newExpandedIndices[index] = !newExpandedIndices[index];
+    // setExpandedIndices(newExpandedIndices);
+    // reorderSpeakersFlex(isExpanded, index)
+
     e.preventDefault()
-    const newExpandedIndices = [...expandedIndices];
-    newExpandedIndices[index] = !newExpandedIndices[index];
-    setExpandedIndices(newExpandedIndices);
+    var newExpandedIndices = [...expandedIndices];
+
+    var x:any = []
+    newExpandedIndices.forEach((i: any, index: any) => {
+      x[index] = false
+    })
+
+    x[index] = !x[index];
+    setExpandedIndices(x);
     reorderSpeakersFlex(isExpanded, index)
   };
 

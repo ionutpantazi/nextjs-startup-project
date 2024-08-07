@@ -31,6 +31,14 @@ export const ImageContainer = styled.div <{ hidebody?: any }>`
       ${props => hidebody == 'true' ? 'margin-bottom: -300px;' : 'margin-bottom: -100px;'};
     `}
   }
+
+  overflow: visible;
+  img {
+    height: auto!important;
+    max-width: 100%!important;
+    min-width: 100%!important;
+  }
+  
 `
 
 export const StyledRadialContainer = styled(RadialContainer)`

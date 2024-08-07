@@ -111,6 +111,11 @@ const Header = ({
     }
   }
 
+  function openLoginModal(e: any) {
+    e.preventDefault()
+    document.getElementById('login_button')?.click()
+  }
+
   const formatAddress = () => {
     console.log("Venue", venue)
     const formattedTitle: string = venue.title ? venue.title : '';
@@ -424,8 +429,7 @@ const Header = ({
                                     <EventDetailsContainer className='flex flex-col gap-2'>
                                       <EventDetailsSubTitle className='row-span-2 col-span-2'>
                                         <button className="login underline"
-                                          data-twe-toggle="modal"
-                                          data-twe-target="#loginModal"
+                                          onClick={(e: any) => openLoginModal(e)}
                                         >Log in
                                         </button> to view your personalised content
                                       </EventDetailsSubTitle>
