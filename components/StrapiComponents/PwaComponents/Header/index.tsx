@@ -10,7 +10,7 @@ import {
 import useSession from "lib/use-session";
 import ReadMore from '@/components/Bootstrap/ReadMore'
 import { RadialContainer } from '@/components/Bootstrap/Common'
-import { setFECookie, generateMenuHref, extractDate, extractTime } from 'utils/helpers'
+import { setFECookie, generateMenuHref, extractDate, extractTime, getEventSlug, } from 'utils/helpers'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { parseContent, mobileCheck } from 'utils/helpers'
 import { useWindowSize } from '@/lib/hooks/useWindowSize';
@@ -216,7 +216,7 @@ const Header = ({
   return (
     <OuterContainer className=''>
       {backgroundImage &&
-        <ImageContainer id="imageContainer" className='relative' hidebody={hideBody ? 'true' : 'false'}>
+        <ImageContainer id="imageContainer" className='relative' hidebody={hideBody ? 'true' : 'false'} iscustomtheme={getEventSlug() == 'gffconference2022' ? 'true' : 'false'}>
           {backgroundImage &&
             <>
               <StyledRadialContainer />

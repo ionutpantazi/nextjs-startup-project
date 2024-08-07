@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import NextImage from 'next/image'
 import { RadialContainer } from '@/components/Bootstrap/Common'
 
-export const ImageContainer = styled.div <{ hidebody?: any }>`
+export const ImageContainer = styled.div <{ hidebody?: any, iscustomtheme?: any }>`
   height: ${props => props.theme.components?.Header?.ImageContainerHeight};
 
   @media screen and (max-width: ${props => props.theme.screens.sm}) {
@@ -32,12 +32,15 @@ export const ImageContainer = styled.div <{ hidebody?: any }>`
     `}
   }
 
-  overflow: visible;
-  img {
-    height: auto!important;
-    max-width: 100%!important;
-    min-width: 100%!important;
-  }
+  ${({ iscustomtheme }) => css`
+    ${iscustomtheme == 'true' ? 'overflow: visible;img {height: auto!important;max-width: 100%!important;min-width: 100%!important;}' : ''};
+  `}
+  // overflow: visible;
+  // img {
+  //   height: auto!important;
+  //   max-width: 100%!important;
+  //   min-width: 100%!important;
+  // }
   
 `
 
