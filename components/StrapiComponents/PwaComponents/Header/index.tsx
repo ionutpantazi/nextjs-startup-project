@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useMemo } from 'react'
 import NextImage from 'next/image'
 import FAIcon from 'components/Bootstrap/FAIcon'
 import {
@@ -94,7 +94,14 @@ const Header = ({
         imageContainer.style.marginTop = `56px`;
       }
     }
-
+    // update radial container height to match the header image -> don't need this now
+    // let headerImage = document.getElementById('headerimage') as any;
+    // let radialContainer = document.getElementById('radialcontainer') as any;
+    // let headerImageHeight = headerImage?.offsetHeight
+    
+    // setTimeout(() => {
+    //   radialContainer.style.height = `${headerImageHeight}px`;
+    // }, 10);
   }, [width]);
 
   function handleDefaultThemeChange() {
@@ -117,7 +124,7 @@ const Header = ({
   }
 
   const formatAddress = () => {
-    console.log("Venue", venue)
+    // console.log("Venue", venue)
     const formattedTitle: string = venue.title ? venue.title : '';
     const formattedAddress: string = venue.address ? venue.address.replace(/,+$/, '') : '';
     const formattedPostCode: string = venue.postcode ? venue.postcode : '';
@@ -219,8 +226,9 @@ const Header = ({
         <ImageContainer id="imageContainer" className='relative' hidebody={hideBody ? 'true' : 'false'} iscustomtheme={getEventSlug() == 'gffconference2022' ? 'true' : 'false'}>
           {backgroundImage &&
             <>
-              <StyledRadialContainer />
+              <StyledRadialContainer id="radialcontainer" iscustomtheme={getEventSlug() == 'gffconference2022' ? 'true' : 'false'} />
               <HeaderImage
+                id="headerimage"
                 src={backgroundImage}
                 className=''
                 alt=''
@@ -293,7 +301,7 @@ const Header = ({
                                   </EventDetailsIcon>
                                   <EventDetailsContainer className='flex flex-col gap-2'>
                                     <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                      Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {eventTitle}
+                                      Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {title}
                                     </EventDetailsSubTitle>
                                   </EventDetailsContainer>
                                 </>
@@ -315,7 +323,7 @@ const Header = ({
                               }
 
                             </div>
-                            {userLoggedInFromApi &&
+                            {userLoggedInFromApi && themeMeta &&
                               <Toggle className='flex justify-between cursor-pointer w-fit'>
                                 <input
                                   type='checkbox'
@@ -335,16 +343,6 @@ const Header = ({
                                     </span>
                                   </CustomThemeToggle>
                                 }
-                                <DefaultThemeToggle className='flex flex-row items-center gap-2' isdefaulttheme={isdefaulttheme?.toString()}>
-                                  <span>
-                                    Default View
-                                  </span>
-                                  <FAIcon
-                                    icon={'fa-solid fa-circle-xmark'}
-                                    width={20}
-                                    height={20}
-                                  />
-                                </DefaultThemeToggle>
                               </Toggle>
                             }
                           </EventDetailsItem>
@@ -417,7 +415,7 @@ const Header = ({
                                     </EventDetailsIcon>
                                     <EventDetailsContainer className='flex flex-col gap-2'>
                                       <EventDetailsSubTitle className='row-span-2 col-span-2'>
-                                        Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {eventTitle}
+                                        Hi {userLoggedInFromApi.firstName} {userLoggedInFromApi.lastName}, welcome back to {title}
                                       </EventDetailsSubTitle>
                                     </EventDetailsContainer>
                                   </>
@@ -438,7 +436,7 @@ const Header = ({
                                 }
 
                               </div>
-                              {userLoggedInFromApi &&
+                              {userLoggedInFromApi && themeMeta &&
                                 <Toggle className='flex justify-between cursor-pointer w-fit'>
                                   <input
                                     type='checkbox'

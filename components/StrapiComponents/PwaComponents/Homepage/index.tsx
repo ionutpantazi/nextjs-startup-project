@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import dnmc from 'next/dynamic'
 import ComponentSectionsSection2 from 'components/StrapiComponents/ComponentSectionsSection2/pwa'
 import ComponentSectionsSection1 from 'components/StrapiComponents/ComponentSectionsSection1/pwa'
@@ -19,31 +19,30 @@ const DynamicContent = ({
   navigationData,
   userLoggedInFromApi,
 }: any) => {
-  console.log(data)
-  
+  console.log(themeMeta)
 
-  // var apiADNAPageStructure = data?.resource?.pageData?.pageStructure;
-  // var apiDefaultPageStructure = data?.resource?.defaultPageData?.pageStructure;
-  // const [pageStructure, setPageStructure] = useState(apiADNAPageStructure)
 
-  // useEffect(() => {
-  //   console.log(isdefaulttheme)
-  //   if(isdefaulttheme == false){
-  //     setPageStructure(apiADNAPageStructure)
-  //   } else {
-  //     setPageStructure(apiDefaultPageStructure)
-  //   }
-  // }, [isdefaulttheme]);
+  var apiADNAPageStructure = data?.resource?.pageData?.pageStructure;
+  var apiDefaultPageStructure = data?.resource?.defaultPageData?.pageStructure;
+  const [pageStructure, setPageStructure] = useState(apiADNAPageStructure)
 
-if (!data) return <></>
+  useEffect(() => {
+    if (isdefaulttheme == 'true') {
+      setPageStructure(apiDefaultPageStructure)
+    } else {
+      setPageStructure(apiADNAPageStructure)
+    }
+  }, [isdefaulttheme]);
+
+  if (!data) return <></>
 
   return (
     <>
       {data?.resource?.pageData?.pageStructure?.length
         ?
         <>
-          {/* {pageStructure.map((api: any, index: number) => ( */}
-          {data?.resource?.pageData?.pageStructure.map((api: any, index: number) => (
+          {/* {data?.resource?.pageData?.pageStructure.map((api: any, index: number) => ( */}
+          {pageStructure.map((api: any, index: number) => (
             <div key={index}>
               {api.heading
                 ?

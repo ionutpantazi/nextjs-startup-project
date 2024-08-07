@@ -44,8 +44,11 @@ export const ImageContainer = styled.div <{ hidebody?: any, iscustomtheme?: any 
   
 `
 
-export const StyledRadialContainer = styled(RadialContainer)`
+export const StyledRadialContainer = styled(RadialContainer) <{ iscustomtheme?: any }>`
   ${props => props.theme.components?.Header?.StyledRadialContainer == 'unset' ? 'background: unset' : ''};
+  ${({ iscustomtheme }) => css`
+    ${iscustomtheme == 'true' ? 'display: none;' : ''};
+  `}
 `
 
 export const HeaderImage = styled(NextImage)`
